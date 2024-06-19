@@ -539,66 +539,202 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-xl-8  d-flex justify-content-end ">
+                    <div class=" d-flex align-items-baseline ">
+
+                        <form class="app-search d-none d-lg-block d-flex align-items-center ">
+                            <div class="position-relative mt-3 d-flex align-items-baseline">
+                                <input type="text" class="form-control bg-danger" placeholder="Search...">
+                                <span class="mdi mdi-magnify"></span>
+                                <a href="addplayer.html" type="button" class="btn btn-danger waves-effect waves-light">Add New</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
               </div>
               <!-- end row -->
 
               <div class="row">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                        <div class="row">
-                                            <div class="table-rep-plugin">
-                                                <div class="table-responsive mb-0" data-pattern="priority-columns">
-                                                    <table id="tech-companies-1" class="table table-striped text-center align-items-center">
-                                                        <thead class="align-items-center">
-                                                            <tr>
-                                                                <th>No.</th>
-                                                                <th data-filter-type="text">League Full Name <input type="text" id="filter-league-name"></th>
-                                                                <th data-filter-type="text">League Short Name <input type="text" id="filter-short-name"></th>
-                                                                <th data-filter-type="text">Start & End Date <input type="text" id="filter-date"></th>
-                                                                <th data-filter-type="text">Status <input type="text" id="filter-status"></th>
-                                                                <th>Edit</th>
-                                                                <th>Delete</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody></tbody>
-                                                    </table>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div
+                            id="datatable_wrapper"
+                            class="dataTables_wrapper dt-bootstrap4 no-footer"
+                          >
+                            <div class="row">
+                              <div class="table-rep-plugin">
+                                <div
+                                  class="table-responsive mb-0"
+                                  data-pattern="priority-columns"
+                                >
+                                  <table
+                                    id="tech-companies-1"
+                                    class="table table-striped text-center align-items-center"
+                                  >
+                                    <thead class="align-items-center">
+                                      <tr>
+                                        <th data-priority="">No.</th>
+                                        <th data-priority="" class="sortable" data-column="league_name">League Full Name   <i class="fas fa-sort"></i>
+                                          
+                                        </th>
+                                        <th data-priority="">
+                                          League Short Name<i class="fas fa-sort"></i>
+                                        </th>
+                                        <th data-priority="">Logo</th>
+                                        <th data-priority="">
+                                          Start & End Date<i class="fas fa-sort"></i>
+                                        </th>
+                                        <th data-priority="" >
+                                            <div class="dropdown">
+                                                <span class="dropbtn">Status</span>
+                                                <div class="dropdown-content">
+                                                    <a href="#" data-status="all">All</a>
+                                                    <a href="#" data-status="completed">Completed</a>
+                                                    <a href="#" data-status="upcoming">Upcoming</a>
+                                                    <a href="#" data-status="running">Running</a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-5">
-                                                <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
-                                                    Showing 1 to 10 of 57 entries
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
-                                                    <ul class="pagination">
-                                                        <li class="paginate_button page-item previous disabled" id="datatable_previous">
-                                                            <a aria-controls="datatable" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a>
-                                                        </li>
-                                                        <!-- Pagination links will be dynamically generated here -->
-                                                        <li class="paginate_button page-item next" id="datatable_next">
-                                                            <a href="#" aria-controls="datatable" role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </th>
+                                        <th data-priority="">Edit</th>
+                                        <th data-priority="">Delete</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                  </table>
+                                
                                 </div>
+                              </div>
                             </div>
+                            <div class="row">
+                              <div class="col-sm-12 col-md-5">
+                                <div
+                                  class="dataTables_info"
+                                  id="datatable_info"
+                                  role="status"
+                                  aria-live="polite"
+                                >
+                                  Showing 1 to 10 of 57 entries
+                                </div>
+                              </div>
+                              <div class="col-sm-12 col-md-7">
+                                <div
+                                  class="dataTables_paginate paging_simple_numbers"
+                                  id="datatable_paginate"
+                                >
+                                  <ul class="pagination">
+                                    <li
+                                      class="paginate_button page-item previous disabled"
+                                      id="datatable_previous"
+                                    >
+                                      <a
+                                        aria-controls="datatable"
+                                        aria-disabled="true"
+                                        role="link"
+                                        data-dt-idx="previous"
+                                        tabindex="-1"
+                                        class="page-link"
+                                        >Previous</a
+                                      >
+                                    </li>
+                                    <li
+                                      class="paginate_button page-item active"
+                                    >
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        aria-current="page"
+                                        data-dt-idx="0"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >1</a
+                                      >
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        data-dt-idx="1"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >2</a
+                                      >
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        data-dt-idx="2"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >3</a
+                                      >
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        data-dt-idx="3"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >4</a
+                                      >
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        data-dt-idx="4"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >5</a
+                                      >
+                                    </li>
+                                    <li class="paginate_button page-item">
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        data-dt-idx="5"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >6</a
+                                      >
+                                    </li>
+                                    <li
+                                      class="paginate_button page-item next"
+                                      id="datatable_next"
+                                    >
+                                      <a
+                                        href="#"
+                                        aria-controls="datatable"
+                                        role="link"
+                                        data-dt-idx="next"
+                                        tabindex="0"
+                                        class="page-link"
+                                        >Next</a
+                                      >
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <!-- end col -->
+                      </div>
                     </div>
-                    <!-- end row -->
+                    <!-- end col -->
+                  </div>
+                  <!-- end row -->
                 </div>
-            </div>
-            
+              </div>
               <!-- end row -->
             </div>
             <!-- container-fluid -->
@@ -1260,51 +1396,45 @@
     <script src="assets/js/app.js"></script>
 
     <script>
-        let currentPage = 1;
-        const rowsPerPage = 10;
-        let totalEntries = 0;
-    
+        
+
         async function myFetch(url, type, data) {
             try {
                 let responseData;
-    
+
                 if (type === "GET") {
-                    const res = await fetch(`${url}?page=${currentPage}&limit=${rowsPerPage}`, {
-                        method: type,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-    
-                    if (res.ok) {
-                        console.log("HTTP request successful");
-                    } else {
-                        console.log("HTTP request unsuccessful");
-                    }
-    
-                    responseData = await res.json();
-                    console.log(responseData);
-                    totalEntries = responseData.total; // Assuming the API returns total number of entries
-                }
-    
-                else if (type === "DELETE") {
                     const res = await fetch(url, {
                         method: type,
                         headers: {
                             'Content-Type': 'application/json'
                         }
                     });
-    
+
                     if (res.ok) {
                         console.log("HTTP request successful");
                     } else {
                         console.log("HTTP request unsuccessful");
                     }
-    
+
+                    responseData = await res.json();
+                    console.log(responseData);
+                     // Assuming the API returns total number of entries
+                } else if (type === "DELETE") {
+                    const res = await fetch(url, {
+                        method: type,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (res.ok) {
+                        console.log("HTTP request successful");
+                    } else {
+                        console.log("HTTP request unsuccessful");
+                    }
+
                     return res;
-                }
-    
-                else if (type === "POST" || type === "PUT") {
+                } else if (type === "POST" || type === "PUT") {
                     const res = await fetch(url, {
                         method: type,
                         headers: {
@@ -1312,85 +1442,119 @@
                         },
                         body: JSON.stringify(data)
                     });
-    
+
                     if (res.ok) {
                         console.log("HTTP request successful");
                     } else {
                         console.log("HTTP request unsuccessful");
                     }
-    
+
                     responseData = await res.json();
                 }
-    
+
                 if (responseData) {
                     populateTable(responseData.data);
-                    updatePagination();
+                    
                 }
             } catch (error) {
                 console.error("Fetch error:", error);
             }
         }
-    
+
         function populateTable(data) {
             const tbody = document.querySelector("#tech-companies-1 tbody");
             tbody.innerHTML = "";
-    
+
             if (Array.isArray(data)) {
                 data.forEach((item, index) => {
                     const row = document.createElement("tr");
-    
+
                     const noCell = document.createElement("td");
-                    noCell.textContent = (currentPage - 1) * rowsPerPage + index + 1;
+                    noCell.textContent =  index + 1;
                     row.appendChild(noCell);
-    
+
                     const fullNameCell = document.createElement("td");
                     fullNameCell.textContent = item.league_name;
                     row.appendChild(fullNameCell);
-    
+
                     const shortNameCell = document.createElement("td");
                     shortNameCell.textContent = item.short_league_name;
                     row.appendChild(shortNameCell);
-    
+
+                    const logoCell = document.createElement("td");
+                    const logoImg = document.createElement("img");
+                    logoImg.src = `https://jadavnilesh.pythonanywhere.com/${item.league_image}`;
+                    logoImg.alt = item.league_image;
+                    logoImg.style.width = "50px";
+                    logoCell.appendChild(logoImg);
+                    row.appendChild(logoCell);
+
                     const dateCell = document.createElement("td");
                     dateCell.textContent = `${item.start_league_date} - ${item.end_league_date}`;
                     row.appendChild(dateCell);
-    
+
                     const statusCell = document.createElement("td");
                     statusCell.textContent = getStatus(item.start_league_date, item.end_league_date);
                     row.appendChild(statusCell);
-    
+
+                    if (statusCell.textContent === 'completed') {
+                        row.classList.add('disabled-row');
+                    }
+
                     const editCell = document.createElement("td");
                     const editButton = document.createElement("span");
                     editButton.innerHTML = '<i class="far fa-edit"></i>';
-                    editButton.addEventListener("click", () => {
-                        // Add edit functionality here
+                    editButton.addEventListener("click", async() => {
+                        // Traverse up the DOM to find the parent <tr> element
+                            
+                            const row = editButton.closest('tr');
+
+// Assuming your data structure allows you to identify the player's data within the row
+const playerId = row.dataset.playerId; // Example: Assuming you have set a data attribute 'data-player-id' on the <tr>
+
+// Retrieve player data from the row
+const playerData = {
+    id: playerId,
+    // Retrieve other relevant data from the row as needed
+    // Example: playerName: row.querySelector('.player-name').textContent,
+    // Example: playerAge: row.querySelector('.player-age').textContent,
+    // Example: playerPosition: row.querySelector('.player-position').textContent,
+    // Modify this based on your actual HTML structure and data retrieval logic
+};
+
+// Store the player data in localStorage or pass it to the edit page
+localStorage.setItem('editPlayerData', JSON.stringify(playerData));
+
+// Redirect to the edit player page
+window.location.href = 'editplayer.html'; 
+
+
+
                     });
                     editCell.appendChild(editButton);
                     row.appendChild(editCell);
-    
+
                     const deleteCell = document.createElement("td");
                     const deleteButton = document.createElement("span");
                     deleteButton.innerHTML = '<i class="far fa-trash-alt"></i>';
-                    deleteButton.addEventListener("click", () => {
-                        // Add delete functionality here
+                    deleteButton.addEventListener("click", async () => {
+                        await handleDelete(item.id);
                     });
                     deleteCell.appendChild(deleteButton);
                     row.appendChild(deleteCell);
-    
-                    tbody.appendChild(row);
+
+                    tbody.prepend(row);
                 });
             } else {
                 console.error("Data is not an array:", data);
             }
-    
-            applyFilters(); // Apply filters after populating the table
         }
-    
+
         function getStatus(startDate, endDate) {
             const now = new Date();
             const start = new Date(startDate);
             const end = new Date(endDate);
-    
+
             if (now < start) {
                 return 'upcoming';
             } else if (now > end) {
@@ -1399,86 +1563,99 @@
                 return 'running';
             }
         }
-    
-        function updatePagination() {
-            const prevBtn = document.getElementById("datatable_previous");
-            const nextBtn = document.getElementById("datatable_next");
-            const infoDiv = document.getElementById("datatable_info");
-    
-            const totalPages = Math.ceil(totalEntries / rowsPerPage);
-    
-            if (currentPage === 1) {
-                prevBtn.classList.add("disabled");
-            } else {
-                prevBtn.classList.remove("disabled");
+
+        async function handleDelete(id) {
+            const url = `https://jadavnilesh.pythonanywhere.com/get/${id}/`;
+            const response = await myFetch(url, "DELETE");
+
+            if (response.ok) {
+                // Fetch the updated data and repopulate the table
+                await myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
             }
-    
-            if (currentPage === totalPages) {
-                nextBtn.classList.add("disabled");
-            } else {
-                nextBtn.classList.remove("disabled");
-            }
-    
-            infoDiv.textContent = `Showing ${(currentPage - 1) * rowsPerPage + 1} to ${Math.min(currentPage * rowsPerPage, totalEntries)} of ${totalEntries} entries`;
         }
-    
-        function changePage(page) {
-            currentPage = page;
-            myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
-        }
-    
-        document.getElementById("datatable_previous").addEventListener("click", () => {
-            if (currentPage > 1) {
-                changePage(currentPage - 1);
-            }
-        });
-    
-        document.getElementById("datatable_next").addEventListener("click", () => {
-            if (currentPage < Math.ceil(totalEntries / rowsPerPage)) {
-                changePage(currentPage + 1);
-            }
-        });
-    
-        document.querySelectorAll(".page-link").forEach(page => {
-            page.addEventListener("click", () => {
-                const pageNumber = parseInt(page.textContent);
-                if (!isNaN(pageNumber)) {
-                    changePage(pageNumber);
-                }
-            });
-        });
-    
-        document.getElementById('filter-league-name').addEventListener('input', applyFilters);
-        document.getElementById('filter-short-name').addEventListener('input', applyFilters);
-        document.getElementById('filter-date').addEventListener('input', applyFilters);
-        document.getElementById('filter-status').addEventListener('input', applyFilters);
-    
-        function applyFilters() {
-            const filterLeagueName = document.getElementById('filter-league-name').value.toLowerCase();
-            const filterShortName = document.getElementById('filter-short-name').value.toLowerCase();
-            const filterDate = document.getElementById('filter-date').value.toLowerCase();
-            const filterStatus = document.getElementById('filter-status').value.toLowerCase();
-    
-            const rows = document.querySelectorAll('#tech-companies-1 tbody tr');
-    
-            rows.forEach(row => {
-                const leagueName = row.children[1].textContent.toLowerCase();
-                const shortName = row.children[2].textContent.toLowerCase();
-                const date = row.children[3].textContent.toLowerCase();
-                const status = row.children[4].textContent.toLowerCase();
-    
-                if (leagueName.includes(filterLeagueName) &&
-                    shortName.includes(filterShortName) &&
-                    date.includes(filterDate) &&
-                    status.includes(filterStatus)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-    
-        // Initial fetch and setup
+       
+
+        // function updatePagination() {
+        //     const prevBtn = document.getElementById("datatable_previous");
+        //     const nextBtn = document.getElementById("datatable_next");
+        //     const infoDiv = document.getElementById("datatable_info");
+
+        //     const totalPages = Math.ceil(totalEntries / rowsPerPage);
+
+        //     if (currentPage === 1) {
+        //         prevBtn.classList.add("disabled");
+        //     } else {
+        //         prevBtn.classList.remove("disabled");
+        //     }
+
+        //     if (currentPage === totalPages) {
+        //         nextBtn.classList.add("disabled");
+        //     } else {
+        //         nextBtn.classList.remove("disabled");
+        //     }
+
+        //     infoDiv.textContent = `Showing ${(currentPage - 1) * rowsPerPage + 1} to ${Math.min(currentPage * rowsPerPage, totalEntries)} of ${totalEntries} entries`;
+        // }
+
+        // function changePage(page) {
+        //     currentPage = page;
+        //     myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+        // }
+
+        // document.getElementById("datatable_previous").addEventListener("click", () => {
+        //     if (currentPage > 1) {
+        //         changePage(currentPage - 1);
+        //     }
+        // });
+
+        // document.getElementById("datatable_next").addEventListener("click", () => {
+        //     if (currentPage < Math.ceil(totalEntries / rowsPerPage)) {
+        //         changePage(currentPage + 1);
+        //     }
+        // });
+
+        // document.querySelectorAll(".page-link").forEach(page => {
+        //     page.addEventListener("click", () => {
+        //         const pageNumber = parseInt(page.textContent);
+        //         if (!isNaN(pageNumber)) {
+        //             changePage(pageNumber);
+        //         }
+        //     });
+        // });
+
+        // document.querySelectorAll('.sort-icon').forEach(icon => {
+        //     icon.addEventListener('click', () => {
+        //         const column = icon.getAttribute('data-column');
+
+        //         if (column) {
+        //             if (currentSortColumn === column) {
+        //                 currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+        //             } else {
+        //                 currentSortColumn = column;
+        //                 currentSortOrder = 'asc';
+        //             }
+
+        //             document.querySelectorAll('.sort-icon').forEach(sortIcon => {
+        //                 sortIcon.classList.remove('fa-sort-up', 'fa-sort-down');
+        //                 sortIcon.classList.add('fa-sort');
+        //             });
+
+        //             icon.classList.remove('fa-sort');
+        //             icon.classList.add(currentSortOrder === 'asc' ? 'fa-sort-up' : 'fa-sort-down');
+
+        //             myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+        //         }
+        //     });
+        // });
+
+        // document.querySelectorAll('.dropdown-content a').forEach(item => {
+        //     item.addEventListener('click', (event) => {
+        //         event.preventDefault();
+        //         currentFilterStatus = item.getAttribute('data-status');
+        //         myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+        //     });
+        // });
+
         myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
     </script>
     
