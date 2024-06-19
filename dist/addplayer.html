@@ -25,111 +25,140 @@
 
     </head>
 
-    <body data-topbar="colored">
 
-        <!-- Begin page -->
-        <div id="layout-wrapper">
+  <body data-topbar="colored">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+      <header id="page-topbar">
+        <div class="navbar-header">
+          <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+              <a href="index.html" class="logo logo-dark">
+                <span class="logo-sm">
+                  <img
+                    src="assets/images/logo-sm-dark.png"
+                    alt=""
+                    height="22"
+                  />
+                </span>
+                <span class="logo-lg">
+                  <img src="assets/images/logo-dark.png" alt="" height="20" />
+                </span>
+              </a>
 
-            <header id="page-topbar">
-                <div class="navbar-header">
-                    <div class="d-flex">
-                        <!-- LOGO -->
-                        <div class="navbar-brand-box">
-                            <a href="index.html" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="assets/images/logo-sm-dark.png" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="assets/images/logo-dark.png" alt="" height="20">
-                                </span>
-                            </a>
+              <a href="index.html" class="logo logo-light">
+                <span class="logo-sm">
+                  <img
+                    src="assets/images/logo-sm-light.png"
+                    alt=""
+                    height="22"
+                  />
+                </span>
+                <span class="logo-lg">
+                  <img src="assets/images/logo-light.png" alt="" height="20" />
+                </span>
+              </a>
+            </div>
 
-                            <a href="index.html" class="logo logo-light">
-                                <span class="logo-sm">
-                                    <img src="assets/images/logo-sm-light.png" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="assets/images/logo-light.png" alt="" height="20">
-                                </span>
-                            </a>
-                        </div>
+            <button
+              type="button"
+              class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+              id="vertical-menu-btn"
+            >
+              <i class="mdi mdi-backburger"></i>
+            </button>
 
-                        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                            <i class="mdi mdi-backburger"></i>
-                        </button>
-
-                        <!-- App Search-->
-                        <form class="app-search d-none d-lg-block">
+            <!-- App Search-->
+            <!-- <form class="app-search d-none d-lg-block">
                             <div class="position-relative mt-3">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="mdi mdi-magnify"></span>
                             </div>
-                        </form>
+                        </form> -->
+          </div>
+
+          <div class="d-flex">
+            <div class="dropdown d-inline-block d-lg-none ms-2">
+              <button
+                type="button"
+                class="btn header-item noti-icon waves-effect"
+                id="page-header-search-dropdown"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="mdi mdi-magnify"></i>
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                aria-labelledby="page-header-search-dropdown"
+              >
+                <form class="p-3">
+                  <div class="form-group mt-3">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search ..."
+                        aria-label="Recipient's username"
+                      />
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                          <i class="mdi mdi-magnify"></i>
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                </form>
+              </div>
+            </div>
 
-                    <div class="d-flex">
-
-                        <div class="dropdown d-inline-block d-lg-none ms-2">
-                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-magnify"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
-
-                                <form class="p-3">
-                                    <div class="form-group mt-3">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="dropdown d-inline-block language-switch">
+            <!-- <div class="dropdown d-inline-block language-switch">
                             <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img id="header-lang-img" src="assets/images/flags/us.jpg" alt="Header Language" height="14">
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
+                            <div class="dropdown-menu dropdown-menu-end"> -->
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
                                     <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Spanish</span>
-                                </a>
+                                </a> -->
 
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
                                     <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">German</span>
-                                </a>
+                                </a> -->
 
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
                                     <img src="assets/images/flags/italy.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Italian</span>
-                                </a>
+                                </a> -->
 
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
                                     <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Russian</span>
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="dropdown d-inline-block">
+            <!-- <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                                 <i class="mdi mdi-tune"></i>
                             </button>
-                        </div>
+                        </div> -->
 
-                        <!-- light dark btn -->
-                        <div class="dropdown d-none d-sm-inline-block">
-                            <button type="button" class="btn header-item" id="light-dark-mode">
-                                <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
-                            </button>
-                        </div>
+            <!-- light dark btn -->
+            <div class="dropdown d-none d-sm-inline-block">
+              <button
+                type="button"
+                class="btn header-item"
+                id="light-dark-mode"
+              >
+                <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
+              </button>
+            </div>
 
-            
-
+            <!-- 
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
@@ -144,52 +173,91 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                             </div>
-                        </div>
+                        </div> -->
+          </div>
+        </div>
+      </header>
 
+      <!-- ========== Left Sidebar Start ========== -->
+      <div class="vertical-menu">
+        <div data-simplebar class="h-100">
+          <!--- Sidemenu -->
+          <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+              <li class="menu-title">Menu</li>
 
-                    </div>
-                </div>
+              <li>
+                <a href="index.html" class="waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-airplay"></i>
+                  </div>
+                  <span class="badge rounded-pill text-bg-success float-end"
+                    >3</span
+                  >
+                  <span>Dashboard</span>
+                </a>
+              </li>
 
-            </header>
+              <li>
+                <a href="calendar.html" class="waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-schedule"></i>
+                  </div>
+                  <span>User</span>
+                </a>
+              </li>
 
-            <!-- ========== Left Sidebar Start ========== -->
-            <div class="vertical-menu">
+              <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-comment-message"></i>
+                  </div>
+                  <span>Sports Configuration</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                  <li><a href="manage-league.html">Manage Leagues</a></li>
+                  <li><a href="email-read.html">Manage Teams</a></li>
+                  <li><a href="email-compose.html">Manage Players</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="calendar.html" class="waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-schedule"></i>
+                  </div>
+                  <span>Manage Pools</span>
+                </a>
+              </li>
 
-                <div data-simplebar class="h-100">
+              <li>
+                <a href="calendar.html" class="waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-schedule"></i>
+                  </div>
+                  <span>All Transaction</span>
+                </a>
+              </li>
 
-                    <!--- Sidemenu -->
-                    <div id="sidebar-menu">
-                        <!-- Left Menu Start -->
-                        <ul class="metismenu list-unstyled" id="side-menu">
-                            <li class="menu-title">Menu</li>
+              <li>
+                <a href="calendar.html" class="waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-schedule"></i>
+                  </div>
+                  <span>Account Setting</span>
+                </a>
+              </li>
 
-                            <li>
-                                <a href="index.html" class="waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-airplay"></i></div><span class="badge rounded-pill text-bg-success float-end">3</span>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
+              <li>
+                <a href="calendar.html" class="waves-effect">
+                  <div class="d-inline-block icons-sm me-1">
+                    <i class="uim uim-schedule"></i>
+                  </div>
+                  <span>Logout</span>
+                </a>
+              </li>
 
-                            <li>
-                                <a href="calendar.html" class=" waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-schedule"></i></div>
-                                    <span>Calendar</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-comment-message"></i></div>
-                                    <span>Email</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="email-inbox.html">Inbox</a></li>
-                                    <li><a href="email-read.html">Email Read</a></li>
-                                    <li><a href="email-compose.html">Email Compose</a></li>
-                                </ul>
-                            </li>
-
-                            <li>
+              <!-- <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-sign-in-alt"></i></div>
                         
@@ -364,28 +432,24 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
+            </ul>
+          </div>
+          <!-- Sidebar -->
+        </div>
+      </div>
+      <!-- Left Sidebar End -->
 
-                        </ul>
-
-                    </div>
-                    <!-- Sidebar -->
-                </div>
-            </div>
-            <!-- Left Sidebar End -->
-
-            <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
-            <div class="main-content">
-
-                <div class="page-content">
-                    
-                    <!-- Page-Title -->
-                    <div class="page-title-box">
-                        <div class="container-fluid">
-                            <div class="row align-items-center">
-                                <!-- <div class="col-md-8">
+      <!-- ============================================================== -->
+      <!-- Start right Content here -->
+      <!-- ============================================================== -->
+      <div class="main-content">
+        <div class="page-content">
+          <!-- Page-Title -->
+          <div class="page-title-box">
+            <div class="container-fluid">
+              <div class="row align-items-center">
+                <!-- <div class="col-md-8">
                                     <h4 class="page-title mb-1">Dashboard</h4>
                                     <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item active">Welcome to Xoric Dashboard</li>
@@ -407,730 +471,747 @@
                                         </div>
                                     </div>
                                 </div> -->
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- end page title end breadcrumb -->
-
-                    <div class="page-content-wrapper">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-xl-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                        <div class="row">
-                                                <div class="col-6">
-                                                    <h5>Welcome Back !</h5>
-                                                    <p class="text-muted">Xoric Dashboard</p>
-
-                                                    <div class="mt-4">
-                                                        <a href="#" class="btn btn-primary btn-sm">View more <i class="mdi mdi-arrow-right ms-1"></i></a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-5 ms-auto">
-                                                    <div>
-                                                        <img src="assets/images/widget-img.png" alt="" class="img-fluid">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="header-title mb-4">Monthy sale Report</h5>
-                                            <div class="d-flex">
-                                                <div class="media-body flex-grow-1">
-                                                    <p class="text-muted mb-2">This month Sale</p>
-                                                    <h4>$ 13,425</h4>
-                                                </div>
-                                                <div dir="ltr" class="ms-2">
-                                                    <input data-plugin="knob" data-width="56" data-height="56" data-linecap=round data-displayInput=false
-                                                    data-fgColor="#3051d3" value="56" data-skin="tron" data-angleOffset="56"
-                                                    data-readOnly=true data-thickness=".17" />
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="d-flex">
-                                                <div class="media-body flex-grow-1">
-                                                    <p class="text-muted">Sale status</p>
-                                                    <h5 class="mb-0"> + 12 % <span class="font-size-14 text-muted ms-1">From previous period</span></h5>
-                                                </div>
-
-                                                <div class="align-self-end ms-2">
-                                                    <a href="#" class="btn btn-primary btn-sm">View more</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="col-xl-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <form class="form-inline float-end">
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control form-control-sm datepicker-here" data-range="true"  data-multiple-dates-separator=" - " data-language="en" placeholder="Select Date" />
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="far fa-calendar font-size-12"></i></span>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <h5 class="header-title mb-4">Sales Report</h5>
-                                            <div id="yearly-sale-chart" class="apex-charts"></div>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                            </div>
-                            <!-- end row -->
-
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="card">
-                                        <div class="card-header bg-transparent p-3">
-                                            <h5 class="header-title mb-0">Sales Status</h5>
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <div class="d-flex my-2">
-                                                    
-                                                    <div class="media-body flex-grow-1">
-                                                        <p class="text-muted mb-2">Number of Sales</p>
-                                                        <h5 class="mb-0">1,625</h5>
-                                                    </div>
-                                                    <div class="icons-lg ms-2 align-self-center">
-                                                        <i class="uim uim-layer-group"></i>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="d-flex my-2">
-                                                    <div class="media-body flex-grow-1">
-                                                        <p class="text-muted mb-2">Sales Revenue </p>
-                                                        <h5 class="mb-0">$ 42,235</h5>
-                                                    </div>
-                                                    <div class="icons-lg ms-2 align-self-center">
-                                                        <i class="uim uim-analytics"></i>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="d-flex my-2">
-                                                    <div class="media-body flex-grow-1">
-                                                        <p class="text-muted mb-2">Average Price</p>
-                                                        <h5 class="mb-0">$ 14.56</h5>
-                                                    </div>
-                                                    <div class="icons-lg ms-2 align-self-center">
-                                                        <i class="uim uim-ruler"></i>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="d-flex my-2">
-                                                    <div class="media-body flex-grow-1">
-                                                        <p class="text-muted mb-2">Product Sold</p>
-                                                        <h5 class="mb-0">8,235</h5>
-                                                    </div>
-                                                    <div class="icons-lg ms-2 align-self-center">
-                                                        <i class="uim uim-box"></i>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="header-title mb-4">Social Source</h5>
-                                            <div id="radial-chart" class="apex-charts"></div>
-
-                                            <div class="text-center mt-3">
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div>
-                                                            <p class="text-muted"><i class="mdi mdi-circle text-primary me-1"></i> Facebook</p>
-                                                            <h5>$ 1,625</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div>
-                                                            <p class="text-muted"><i class="mdi mdi-circle text-warning me-1"></i> Twitter</p>
-                                                            <h5>$ 1,504</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="header-title">Recent Activity</h5>
-
-                                            <div id="activity-chart" class="apex-charts"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end row -->
-
-                            <div class="row">
-                                <div class="col-lg-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="float-end ms-2">
-                                                <a href="#">View all</a>
-                                            </div>
-                                            <h5 class="header-title mb-4">Latest Transaction</h5>
-
-                                            <div class="table-responsive">
-                                                <table class="table table-centered table-hover mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Transaction ID</th>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Date</th>
-                                                            <th scope="col">status</th>
-                                                            <th scope="col">Amount</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <a href="#"># XO1345</a>
-                                                            </th>
-                                                            <td>Danny Johnson</td>
-                                                            <td>26 Jan</td>
-                                                            <td>
-                                                                <div class="badge bg-primary-subtle text-primary">Confirm</div>
-                                                            </td>
-                                                            <td>$124</td>
-                                                            <td>
-                                                                <div class="btn-group" role="group">
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                                        <i class="mdi mdi-eye"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                        <i class="mdi mdi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                        <i class="mdi mdi-trash-can"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <a href="#"># XO1346</a>
-                                                            </th>
-                                                            <td>Alvin Newton</td>
-                                                            <td>21 Jan</td>
-                                                            <td>
-                                                                <div class="badge bg-warning-subtle text-warning">Pending</div>
-                                                            </td>
-                                                            <td>$112</td>
-                                                            <td>
-                                                                <div class="btn-group" role="group">
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                                        <i class="mdi mdi-eye"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                        <i class="mdi mdi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                        <i class="mdi mdi-trash-can"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <a href="#"># XO1347</a>
-                                                            </th>
-                                                            <td>Bennie Perez</td>
-                                                            <td>15 Jan</td>
-                                                            <td>
-                                                                <div class="badge bg-primary-subtle text-primary">Confirm</div>
-                                                            </td>
-                                                            <td>$106</td>
-                                                            <td>
-                                                                <div class="btn-group" role="group">
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                                        <i class="mdi mdi-eye"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                        <i class="mdi mdi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                        <i class="mdi mdi-trash-can"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <a href="#"># XO1348</a>
-                                                            </th>
-                                                            <td>Steven Kwon</td>
-                                                            <td>11 Jan</td>
-                                                            <td>
-                                                                <div class="badge bg-primary-subtle text-primary">Confirm</div>
-                                                            </td>
-                                                            <td>$115</td>
-                                                            <td>
-                                                                <div class="btn-group" role="group">
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                                        <i class="mdi mdi-eye"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                        <i class="mdi mdi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                        <i class="mdi mdi-trash-can"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <a href="#"># XO1349</a>
-                                                            </th>
-                                                            <td>Bryan Roark</td>
-                                                            <td>08 Jan</td>
-                                                            <td>
-                                                                <div class="badge badge-soft-danger">Cancel</div>
-                                                            </td>
-                                                            <td>$105</td>
-                                                            <td>
-                                                                <div class="btn-group" role="group">
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                                        <i class="mdi mdi-eye"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                        <i class="mdi mdi-pencil"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                                        <i class="mdi mdi-trash-can"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div class="mt-4">
-                                                <ul class="pagination pagination-rounded justify-content-center mb-0">
-                                                    <li class="page-item disabled">
-                                                        <a class="page-link" href="#" aria-label="Previous">
-                                                            <i class="mdi mdi-chevron-left"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item"><a class="page-link me-2" href="#">1</a></li>
-                                                    <li class="page-item active"><a class="page-link me-2" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link me-2" href="#">3</a></li>
-                                                    <li class="page-item"><a class="page-link me-2" href="#">4</a></li>
-                                                    <li class="page-item">
-                                                        <a class="page-link me-2" href="#" aria-label="Next">
-                                                            <i class="mdi mdi-chevron-right"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="header-title mb-4">Revenue by Location</h5>
-
-                                            <div id="usa-map"  style="height: 150px" class="mb-5"></div>
-
-                                            <div class="table-responsive">
-                                                <table class="table table-centered">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">California</th>
-                                                            <td>$ 8,257</td>
-                                                            <td>
-                                                                <div dir="ltr" class="ms-2">
-                                                                    <input data-plugin="knob" data-width="36" data-height="36" data-linecap=round data-displayInput=false
-                                                                    data-fgColor="#3051d3" value="56" data-skin="tron" data-angleOffset="36"
-                                                                    data-readOnly=true data-thickness=".2" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">New York</th>
-                                                            <td>$ 7,253</td>
-                                                            <td>
-                                                                <div dir="ltr" class="ms-2">
-                                                                    <input data-plugin="knob" data-width="36" data-height="36" data-linecap=round data-displayInput=false
-                                                                    data-fgColor="#3051d3" value="42" data-skin="tron" data-angleOffset="36"
-                                                                    data-readOnly=true data-thickness=".2" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <div class="text-center">
-                                                    <a href="#" class="btn btn-primary btn-sm">View more <i class="mdi mdi-arrow-right ms-1"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end row -->
-
-                        </div> <!-- container-fluid -->
-                    </div>
-                    <!-- end page-content-wrapper -->
+                <div>
+                  <h4 class="page-title mb-1">Manage Leagues</h4>
                 </div>
-                <!-- End Page-content -->
-
-                
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                2020 © Xoric.
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-end d-none d-sm-block">
-                                    Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+              </div>
             </div>
-            <!-- end main content-->
+          </div>
+          <!-- end page title end breadcrumb -->
 
-        </div>
-        <!-- END layout-wrapper -->
+          <div class="page-content-wrapper">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xl-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-6">
+                          <h5>Total League</h5>
+                          <!-- <p class="text-muted">Xoric Dashboard</p> -->
 
-        <!-- Right Sidebar -->
-        <div class="right-bar">
-            <div data-simplebar class="h-100">
-
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#chat-tab" role="tab" aria-selected="true">
-                            <span class="d-none d-sm-block"><i class="mdi mdi-message-text font-size-22"></i></span>
-                        </a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" href="#tasks-tab" role="tab" aria-selected="false" tabindex="-1">
-                            <span class="d-none d-sm-block"><i class="mdi mdi-format-list-checkbox font-size-22"></i></span>
-                        </a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" href="#settings-tab" role="tab" aria-selected="false" tabindex="-1">
-                            <span class="d-none d-sm-block"><i class="mdi mdi-settings font-size-22"></i></span>
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content text-muted" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="chat-tab" role="tabpanel" aria-labelledby="chat-tab" tabindex="0">
-
-                        <form class="search-bar py-4 px-3">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form>
-
-                        <h6 class="px-4 py-3 mt-2 bg-light">Group Chats</h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-                                <span class="mb-0 mt-1">App Development</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-warning"></i>
-                                <span class="mb-0 mt-1">Office Work</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-danger"></i>
-                                <span class="mb-0 mt-1">Personal Group</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                <span class="mb-0 mt-1">Freelance</span>
-                            </a>
+                          <div class="mt-4">
+                            <span
+                              href="#"
+                              class="btn btn-primary btn-sm"
+                              id="total-league-data"
+                              >100
+                            </span>
+                          </div>
                         </div>
 
-                        <h6 class="px-4 py-3 mt-4 bg-light">Favourites</h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-10.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="media-body flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Andrew Mackie</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="media-body  flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Rory Dalyell</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">To an English person, it will seem like simplified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-9.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status busy"></i>
-                                    </div>
-                                    <div class="media-body  flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Jaxon Dunhill</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">To achieve this, it would be necessary.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                        <div class="col-5 ms-auto">
+                          <div>
+                            <img
+                              src="assets/images/widget-img.png"
+                              alt=""
+                              class="img-fluid"
+                            />
+                          </div>
                         </div>
-
-                        <h6 class="px-4 py-3 mt-4 bg-light">Other Chats</h6>
-
-                        <div class="p-2 pb-4">
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-2.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="media-body  flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Jackson Therry</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">Everyone realizes why a new common language.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="media-body flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Charles Deakin</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-5.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="media-body  flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Ryan Salting</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">If several languages coalesce the grammar of the resulting.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-6.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="media-body  flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Sean Howse</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-7.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status busy"></i>
-                                    </div>
-                                    <div class="media-body  flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Dean Coward</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">The new common language will be more simple.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex media">
-                                    <div class="position-relative align-self-center me-3">
-                                        <img src="assets/images/users/avatar-8.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="media-body flex-grow-1 overflow-hidden">
-                                        <h6 class="mt-0 mb-1">Hayley East</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-0 text-truncate">One could refuse to pay expensive translators.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
+                      </div>
                     </div>
-
-                    <div class="tab-pane fade" id="tasks-tab" role="tabpanel" aria-labelledby="tasks-tab" tabindex="0">
-                        <h6 class="p-3 mb-0 mt-4 bg-light">Working Tasks</h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                                <p class="text-muted mb-0">App Development<span class="float-end">75%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                                <p class="text-muted mb-0">Database Repair<span class="float-end">37%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                                <p class="text-muted mb-0">Backup Create<span class="float-end">52%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <h6 class="p-3 mb-0 mt-4 bg-light">Upcoming Tasks</h6>
-
-                        <div class="p-2">
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                                <p class="text-muted mb-0">Sales Reporting<span class="float-end">12%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                                <p class="text-muted mb-0">Redesign Website<span class="float-end">67%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                                <p class="text-muted mb-0">New Admin Design<span class="float-end">84%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 84%" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="p-3 mt-2">
-                            <a href="javascript: void(0);" class="btn btn-success d-block w-100 waves-effect waves-light">Create Task</a>
-                        </div>
-
-                    </div>
-                    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab" tabindex="0">
-                        <h6 class="px-4 py-3 bg-light">General Settings</h6>
-
-                        <div class="p-4">
-                            <h6 class="font-weight-medium">Online Status</h6>
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="settings-check1" name="settings-check1" checked="">
-                                <label class="custom-control-label font-weight-normal" for="settings-check1">Show your status to all</label>
-                            </div>
-
-                            <h6 class="mt-4">Auto Updates</h6>
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="settings-check2" name="settings-check2" checked="">
-                                <label class="custom-control-label font-weight-normal" for="settings-check2">Keep up to date</label>
-                            </div>
-
-                            <h6 class="mt-4">Backup Setup</h6>
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="settings-check3" name="settings-check3">
-                                <label class="custom-control-label font-weight-normal" for="settings-check3">Auto backup</label>
-                            </div>
-
-                        </div>
-
-                        <h6 class="px-4 py-3 mt-2 bg-light">Advanced Settings</h6>
-
-                        <div class="p-4">
-                            <h6 class="font-weight-medium">Application Alerts</h6>
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="settings-check4" name="settings-check4" checked="">
-                                <label class="custom-control-label font-weight-normal" for="settings-check4">Email Notifications</label>
-                            </div>
-
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="settings-check5" name="settings-check5">
-                                <label class="custom-control-label font-weight-normal" for="settings-check5">SMS Notifications</label>
-                            </div>
-
-                            <h6 class="mt-4">API</h6>
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="settings-check6" name="settings-check6">
-                                <label class="custom-control-label font-weight-normal" for="settings-check6">Enable access</label>
-                            </div>
-
-                        </div>
-                    </div>
+                  </div>
                 </div>
+              </div>
+              <!-- end row -->
 
-            </div> <!-- end slimscroll-menu-->
+            
+            
+              <!-- end row -->
+            </div>
+            <!-- container-fluid -->
+          </div>
+          <!-- end page-content-wrapper -->
         </div>
-        <!-- /Right-bar -->
+        <!-- End Page-content -->
 
-        <!-- Right bar overlay-->
-        <div class="rightbar-overlay"></div>
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6">2020 © Xoric.</div>
+              <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                  Crafted with <i class="mdi mdi-heart text-danger"></i> by
+                  Themesdesign
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Right Sidebar -->
+    <div class="right-bar">
+      <div data-simplebar class="h-100">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              data-bs-toggle="tab"
+              href="#chat-tab"
+              role="tab"
+              aria-selected="true"
+            >
+              <span class="d-none d-sm-block"
+                ><i class="mdi mdi-message-text font-size-22"></i
+              ></span>
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              data-bs-toggle="tab"
+              href="#tasks-tab"
+              role="tab"
+              aria-selected="false"
+              tabindex="-1"
+            >
+              <span class="d-none d-sm-block"
+                ><i class="mdi mdi-format-list-checkbox font-size-22"></i
+              ></span>
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              data-bs-toggle="tab"
+              href="#settings-tab"
+              role="tab"
+              aria-selected="false"
+              tabindex="-1"
+            >
+              <span class="d-none d-sm-block"
+                ><i class="mdi mdi-settings font-size-22"></i
+              ></span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content text-muted" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="chat-tab"
+            role="tabpanel"
+            aria-labelledby="chat-tab"
+            tabindex="0"
+          >
+            <form class="search-bar py-4 px-3">
+              <div class="position-relative">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search..."
+                />
+                <span class="mdi mdi-magnify"></span>
+              </div>
+            </form>
+
+            <h6 class="px-4 py-3 mt-2 bg-light">Group Chats</h6>
+
+            <div class="p-2">
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item ps-3 mb-2 d-block"
+              >
+                <i
+                  class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"
+                ></i>
+                <span class="mb-0 mt-1">App Development</span>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item ps-3 mb-2 d-block"
+              >
+                <i
+                  class="mdi mdi-checkbox-blank-circle-outline me-1 text-warning"
+                ></i>
+                <span class="mb-0 mt-1">Office Work</span>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item ps-3 mb-2 d-block"
+              >
+                <i
+                  class="mdi mdi-checkbox-blank-circle-outline me-1 text-danger"
+                ></i>
+                <span class="mb-0 mt-1">Personal Group</span>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item ps-3 d-block"
+              >
+                <i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
+                <span class="mb-0 mt-1">Freelance</span>
+              </a>
+            </div>
+
+            <h6 class="px-4 py-3 mt-4 bg-light">Favourites</h6>
+
+            <div class="p-2">
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-10.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status online"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Andrew Mackie</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        It will seem like simplified English.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-1.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status away"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Rory Dalyell</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        To an English person, it will seem like simplified
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-9.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status busy"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Jaxon Dunhill</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        To achieve this, it would be necessary.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <h6 class="px-4 py-3 mt-4 bg-light">Other Chats</h6>
+
+            <div class="p-2 pb-4">
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-2.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status online"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Jackson Therry</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        Everyone realizes why a new common language.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-4.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status away"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Charles Deakin</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        The languages only differ in their grammar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-5.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status online"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Ryan Salting</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        If several languages coalesce the grammar of the
+                        resulting.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-6.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status online"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Sean Howse</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        It will seem like simplified English.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-7.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status busy"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Dean Coward</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        The new common language will be more simple.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset notification-item"
+              >
+                <div class="d-flex media">
+                  <div class="position-relative align-self-center me-3">
+                    <img
+                      src="assets/images/users/avatar-8.jpg"
+                      class="rounded-circle avatar-xs"
+                      alt="user-pic"
+                    />
+                    <i class="mdi mdi-circle user-status away"></i>
+                  </div>
+                  <div class="media-body flex-grow-1 overflow-hidden">
+                    <h6 class="mt-0 mb-1">Hayley East</h6>
+                    <div class="font-size-12 text-muted">
+                      <p class="mb-0 text-truncate">
+                        One could refuse to pay expensive translators.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="tasks-tab"
+            role="tabpanel"
+            aria-labelledby="tasks-tab"
+            tabindex="0"
+          >
+            <h6 class="p-3 mb-0 mt-4 bg-light">Working Tasks</h6>
+
+            <div class="p-2">
+              <a
+                href="javascript: void(0);"
+                class="text-reset item-hovered d-block p-3"
+              >
+                <p class="text-muted mb-0">
+                  App Development<span class="float-end">75%</span>
+                </p>
+                <div class="progress mt-2" style="height: 4px">
+                  <div
+                    class="progress-bar bg-success"
+                    role="progressbar"
+                    style="width: 75%"
+                    aria-valuenow="75"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset item-hovered d-block p-3"
+              >
+                <p class="text-muted mb-0">
+                  Database Repair<span class="float-end">37%</span>
+                </p>
+                <div class="progress mt-2" style="height: 4px">
+                  <div
+                    class="progress-bar bg-info"
+                    role="progressbar"
+                    style="width: 37%"
+                    aria-valuenow="37"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset item-hovered d-block p-3"
+              >
+                <p class="text-muted mb-0">
+                  Backup Create<span class="float-end">52%</span>
+                </p>
+                <div class="progress mt-2" style="height: 4px">
+                  <div
+                    class="progress-bar bg-warning"
+                    role="progressbar"
+                    style="width: 52%"
+                    aria-valuenow="52"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </a>
+            </div>
+
+            <h6 class="p-3 mb-0 mt-4 bg-light">Upcoming Tasks</h6>
+
+            <div class="p-2">
+              <a
+                href="javascript: void(0);"
+                class="text-reset item-hovered d-block p-3"
+              >
+                <p class="text-muted mb-0">
+                  Sales Reporting<span class="float-end">12%</span>
+                </p>
+                <div class="progress mt-2" style="height: 4px">
+                  <div
+                    class="progress-bar bg-danger"
+                    role="progressbar"
+                    style="width: 12%"
+                    aria-valuenow="12"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset item-hovered d-block p-3"
+              >
+                <p class="text-muted mb-0">
+                  Redesign Website<span class="float-end">67%</span>
+                </p>
+                <div class="progress mt-2" style="height: 4px">
+                  <div
+                    class="progress-bar bg-primary"
+                    role="progressbar"
+                    style="width: 67%"
+                    aria-valuenow="67"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </a>
+
+              <a
+                href="javascript: void(0);"
+                class="text-reset item-hovered d-block p-3"
+              >
+                <p class="text-muted mb-0">
+                  New Admin Design<span class="float-end">84%</span>
+                </p>
+                <div class="progress mt-2" style="height: 4px">
+                  <div
+                    class="progress-bar bg-success"
+                    role="progressbar"
+                    style="width: 84%"
+                    aria-valuenow="84"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </a>
+            </div>
+
+            <div class="p-3 mt-2">
+              <a
+                href="javascript: void(0);"
+                class="btn btn-success d-block w-100 waves-effect waves-light"
+                >Create Task</a
+              >
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="settings-tab"
+            role="tabpanel"
+            aria-labelledby="settings-tab"
+            tabindex="0"
+          >
+            <h6 class="px-4 py-3 bg-light">General Settings</h6>
+
+            <div class="p-4">
+              <h6 class="font-weight-medium">Online Status</h6>
+              <div class="custom-control custom-switch mb-1">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="settings-check1"
+                  name="settings-check1"
+                  checked=""
+                />
+                <label
+                  class="custom-control-label font-weight-normal"
+                  for="settings-check1"
+                  >Show your status to all</label
+                >
+              </div>
+
+              <h6 class="mt-4">Auto Updates</h6>
+              <div class="custom-control custom-switch mb-1">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="settings-check2"
+                  name="settings-check2"
+                  checked=""
+                />
+                <label
+                  class="custom-control-label font-weight-normal"
+                  for="settings-check2"
+                  >Keep up to date</label
+                >
+              </div>
+
+              <h6 class="mt-4">Backup Setup</h6>
+              <div class="custom-control custom-switch mb-1">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="settings-check3"
+                  name="settings-check3"
+                />
+                <label
+                  class="custom-control-label font-weight-normal"
+                  for="settings-check3"
+                  >Auto backup</label
+                >
+              </div>
+            </div>
+
+            <h6 class="px-4 py-3 mt-2 bg-light">Advanced Settings</h6>
+
+            <div class="p-4">
+              <h6 class="font-weight-medium">Application Alerts</h6>
+              <div class="custom-control custom-switch mb-1">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="settings-check4"
+                  name="settings-check4"
+                  checked=""
+                />
+                <label
+                  class="custom-control-label font-weight-normal"
+                  for="settings-check4"
+                  >Email Notifications</label
+                >
+              </div>
+
+              <div class="custom-control custom-switch mb-1">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="settings-check5"
+                  name="settings-check5"
+                />
+                <label
+                  class="custom-control-label font-weight-normal"
+                  for="settings-check5"
+                  >SMS Notifications</label
+                >
+              </div>
+
+              <h6 class="mt-4">API</h6>
+              <div class="custom-control custom-switch mb-1">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="settings-check6"
+                  name="settings-check6"
+                />
+                <label
+                  class="custom-control-label font-weight-normal"
+                  for="settings-check6"
+                  >Enable access</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay">
+    <!-- const totaldataleague = document.querySelector("#total-league-data"); -->
+
+    </div>
+
+
+
+    <script>
+       
+    
+        async function myFetch(url, type, data) {
+            try {
+                let responseData;
+    
+                if (type === "GET") {
+                    const res = await fetch(`${url}?page=${currentPage}&limit=${rowsPerPage}`, {
+                        method: type,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+    
+                    if (res.ok) {
+                        console.log("HTTP request successful");
+                    } else {
+                        console.log("HTTP request unsuccessful");
+                    }
+    
+                    responseData = await res.json();
+                    console.log(responseData);
+                    totalEntries = responseData.total; // Assuming the API returns total number of entries
+                }
+    
+                else if (type === "DELETE") {
+                    const res = await fetch(url, {
+                        method: type,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+    
+                    if (res.ok) {
+                        console.log("HTTP request successful");
+                    } else {
+                        console.log("HTTP request unsuccessful");
+                    }
+    
+                    return res;
+                }
+    
+                else if (type === "POST" || type === "PUT") {
+                    const res = await fetch(url, {
+                        method: type,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+    
+                    if (res.ok) {
+                        console.log("HTTP request successful");
+                    } else {
+                        console.log("HTTP request unsuccessful");
+                    }
+    
+                    responseData = await res.json();
+                }
+    
+                if (responseData) {
+                    // populateTable(responseData.data);
+                    // updatePagination();
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+            }
+        }
+    
+    // Initial fetch and setup
+        myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+    </script>
+    
 
         <!-- JAVASCRIPT -->
         <script src="assets/libs/jquery/jquery.min.js"></script>
