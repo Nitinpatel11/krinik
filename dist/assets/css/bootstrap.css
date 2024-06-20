@@ -131,6 +131,8 @@ File: Custom Bootstrap Css File
   --bs-form-valid-border-color: theme-color("success");
   --bs-form-invalid-color: theme-color("danger");
   --bs-form-invalid-border-color: theme-color("danger");
+  --bs-btn-hover-bg : #E20101;
+  --bs-btn-hover-border-color:#E20101;
 }
 
 [data-bs-theme=dark] {
@@ -2980,12 +2982,12 @@ textarea.form-control-lg {
   --bs-btn-bg: #E20101;
   --bs-btn-border-color: #E20101;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #2945b3;
-  --bs-btn-hover-border-color: #2641a9;
+  --bs-btn-hover-bg: #E20101 !important;
+  --bs-btn-hover-border-color:#E20101 !important;
   --bs-btn-focus-shadow-rgb: 79, 107, 218;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #2641a9;
-  --bs-btn-active-border-color: #243d9e;
+  --bs-btn-active-bg: #E20101;
+  --bs-btn-active-border-color: #E20101;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #E20101;

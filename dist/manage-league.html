@@ -104,7 +104,7 @@
                         </form> -->
           </div>
 
-          <div class="d-flex">
+          <div class="d-flex ">
             <div class="dropdown d-inline-block d-lg-none ms-2">
               <button
                 type="button"
@@ -126,6 +126,7 @@
                       <input
                         type="text"
                         class="form-control"
+                        id="filter-input"
                         placeholder="Search ..."
                         aria-label="Recipient's username"
                       />
@@ -539,15 +540,45 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-8  d-flex justify-content-end ">
-                    <div class=" d-flex align-items-baseline ">
+                <div class="col-xl-8  d-flex justify-content-end">
+                    <div class=" d-flex align-items-end  ">
 
-                        <form class="app-search d-none d-lg-block d-flex align-items-center ">
-                            <div class="position-relative mt-3 d-flex align-items-baseline">
-                                <input type="text" class="form-control bg-danger" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                                <a href="addplayer.html" type="button" class="btn btn-danger waves-effect waves-light">Add New</a>
-                            </div>
+                        <form class="app-search  d-lg-block d-flex  ">
+                          <div class="d-flex gap-4">
+                            <div class="dropdown">
+                              <a class="btn dropbtn-color dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                start & end date <i class="mdi mdi-chevron-down"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="#">Action</a></li>
+                                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                              </ul>
+                          </div>
+                          <div class="dropdown">
+                            <a class="btn dropbtn-color dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                status <i class="mdi mdi-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Running</a></li>
+                                <li><a class="dropdown-item" href="#">Completed</a></li>
+                                <li><a class="dropdown-item" href="#">Upcoming</a></li>
+                            </ul>
+                        </div>
+                        <div class="align-items-center d-flex dropbtn-color justify-content-between ">
+                           <div> 
+                          <span class="mdi mdi-magnify dropbtn-color-2"></span>
+                        </div>  
+                        <div>
+                          <input type="text" class=" dropbtn-color-2" placeholder="Search...">
+                        </div>
+                        </div>
+                        <div>
+  
+                          <a href="addplayer.html" type="button" class="btn dropbtn-color waves-effect waves-light">Add New</a>
+                        </div>
+                      </div>
+                           
                         </form>
                     </div>
                 </div>
@@ -577,18 +608,18 @@
                                     <thead class="align-items-center">
                                       <tr>
                                         <th data-priority="">No.</th>
-                                        <th data-priority="" class="sortable" data-column="league_name">League Full Name   <i class="fas fa-sort"></i>
+                                        <th data-priority="" class="sortable" data-column="league_name">League Full Name   
                                           
                                         </th>
                                         <th data-priority="">
-                                          League Short Name<i class="fas fa-sort"></i>
+                                          League Short Name
                                         </th>
                                         <th data-priority="">Logo</th>
                                         <th data-priority="">
-                                          Start & End Date<i class="fas fa-sort"></i>
+                                          Start & End Date
                                         </th>
-                                        <th data-priority="" >
-                                            <div class="dropdown">
+                                        <th data-priority="" >Status
+                                            <!-- <div class="dropdown">
                                                 <span class="dropbtn">Status</span>
                                                 <div class="dropdown-content">
                                                     <a href="#" data-status="all">All</a>
@@ -596,8 +627,10 @@
                                                     <a href="#" data-status="upcoming">Upcoming</a>
                                                     <a href="#" data-status="running">Running</a>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </th>
+                                        <th data-priority="">View</th>
+
                                         <th data-priority="">Edit</th>
                                         <th data-priority="">Delete</th>
                                       </tr>
@@ -621,13 +654,13 @@
                               </div>
                               <div class="col-sm-12 col-md-7">
                                 <div
-                                  class="dataTables_paginate paging_simple_numbers"
+                                  class="dataTables_paginate paging_simple_numbers pagination"
                                   id="datatable_paginate"
                                 >
-                                  <ul class="pagination">
+                                  <ul class="pagination-list d-flex list-unstyled">
                                     <li
                                       class="paginate_button page-item previous disabled"
-                                      id="datatable_previous"
+                                      id="prev-button"
                                     >
                                       <a
                                         aria-controls="datatable"
@@ -636,6 +669,7 @@
                                         data-dt-idx="previous"
                                         tabindex="-1"
                                         class="page-link"
+                                         
                                         >Previous</a
                                       >
                                     </li>
@@ -710,7 +744,7 @@
                                     </li>
                                     <li
                                       class="paginate_button page-item next"
-                                      id="datatable_next"
+                                      id="next-button"
                                     >
                                       <a
                                         href="#"
@@ -1396,268 +1430,239 @@
     <script src="assets/js/app.js"></script>
 
     <script>
-        
+      let currentPage = 1;
+      const itemsPerPage = 10;
+      let totalItems = 50;
+      let allData = [];
+  
+      async function myFetch(url, type, data) {
+          try {
+              let responseData;
+  
+              if (type === "GET") {
+                  const res = await fetch(url, {
+                      method: type,
+                      headers: {
+                          'Content-Type': 'application/json'
+                      }
+                  });
+  
+                  if (res.ok) {
+                      console.log("HTTP request successful");
+                      responseData = await res.json();
+                  } else {
+                      console.log("HTTP request unsuccessful");
+                  }
+              } else if (type === "DELETE") {
+                  const res = await fetch(url, {
+                      method: type,
+                      headers: {
+                          'Content-Type': 'application/json'
+                      }
+                  });
+  
+                  if (res.ok) {
+                      console.log("HTTP request successful");
+                      return res;
+                  } else {
+                      console.log("HTTP request unsuccessful");
+                  }
+              } else if (type === "POST" || type === "PUT") {
+                  const res = await fetch(url, {
+                      method: type,
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(data)
+                  });
+  
+                  if (res.ok) {
+                      console.log("HTTP request successful");
+                      responseData = await res.json();
+                  } else {
+                      console.log("HTTP request unsuccessful");
+                  }
+              }
+  
+              if (responseData) {
+                  allData = responseData.data;
+                  populateTable(allData);
+                  
+              }
+          } catch (error) {
+              console.error("Fetch error:", error);
+          }
+      }
 
-        async function myFetch(url, type, data) {
-            try {
-                let responseData;
+      function populateTable(data) {
+          const tbody = document.querySelector("#tech-companies-1 tbody");
+          tbody.innerHTML = "";
+  
+          const start = (currentPage - 1) * itemsPerPage;
+          const end = start + itemsPerPage;
+          const paginatedData = data.slice(start, end);
+  
+          if (Array.isArray(paginatedData)) {
+              paginatedData.forEach((item, index) => {
+                  const row = document.createElement("tr");
+                  row.style.alignItems = "center";
+  
+                  const noCell = document.createElement("td");
+                  noCell.textContent = start + index + 1;
+                 
+                  row.appendChild(noCell);
+  
+                  const fullNameCell = document.createElement("td");
+                  fullNameCell.textContent = item.league_name;
+                  row.appendChild(fullNameCell);
+                  
+  
+                  const shortNameCell = document.createElement("td");
+                  shortNameCell.textContent = item.short_league_name;
+                  row.appendChild(shortNameCell);
+  
+                  const logoCell = document.createElement("td");
+                  const logoImg = document.createElement("img");
+                  logoImg.src = `https://jadavnilesh.pythonanywhere.com/${item.league_image}/`;
+                  logoImg.alt = item.league_image;
+                  logoImg.style.width = "50px";
+                  logoImg.style.height = "50px";
+                  logoImg.style.borderRadius = "50%";
+                  logoCell.appendChild(logoImg);
+                  row.appendChild(logoCell);
+  
+                  const dateCell = document.createElement("td");
+                  dateCell.textContent = `${item.start_league_date} - ${item.end_league_date}`;
+                  row.appendChild(dateCell);
+  
+                  const statusCell = document.createElement("td");
+                  statusCell.textContent = getStatus(item.start_league_date, item.end_league_date);
+                  row.appendChild(statusCell);
+  
+                  const viewCell = document.createElement("td");
+                  const viewButton = document.createElement("span");
+                  viewButton.innerHTML = '<i class="far fa-eye"></i>';
+                  viewButton.classList.add('sortable')
+                  viewButton.addEventListener("click", async() => {
+                      // Add your view logic here
+                  });
+                  viewCell.appendChild(viewButton);
+                  row.appendChild(viewCell);
+  
+                  const editCell = document.createElement("td");
+                  const editButton = document.createElement("span");
+                  editButton.innerHTML = '<i class="far fa-edit"></i>';
+                  editButton.classList.add('sortable')
+                  editButton.addEventListener("click", async() => {
+                      await handleEdit(item.id);
+                  });
+                  editCell.appendChild(editButton);
+                  row.appendChild(editCell);
+  
+                  const deleteCell = document.createElement("td");
+                  const deleteButton = document.createElement("span");
+                  deleteButton.innerHTML = '<i class="far fa-trash-alt"></i>';
+                  deleteButton.classList.add('sortable')
+                  deleteButton.addEventListener("click", async () => {
+                      await handleDelete(item.id);
+                  });
+                  deleteCell.appendChild(deleteButton);
+                  row.appendChild(deleteCell);
+  
+                  if (statusCell.textContent === 'completed') {
+                      noCell.classList.add('disabled-row');
+                      fullNameCell.classList.add('disabled-row');
+                      shortNameCell.classList.add('disabled-row');
+                      logoCell.classList.add('disabled-row');
+                      dateCell.classList.add('disabled-row');
+                      statusCell.classList.add('disabled-row');
+                      
+                      editCell.classList.add('disabled-row');
+                  }
+  
+                  tbody.appendChild(row);
+              });
+          }
+      }
+  
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-                if (type === "GET") {
-                    const res = await fetch(url, {
-                        method: type,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
 
-                    if (res.ok) {
-                        console.log("HTTP request successful");
-                    } else {
-                        console.log("HTTP request unsuccessful");
-                    }
-
-                    responseData = await res.json();
-                    console.log(responseData);
-                     // Assuming the API returns total number of entries
-                } else if (type === "DELETE") {
-                    const res = await fetch(url, {
-                        method: type,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (res.ok) {
-                        console.log("HTTP request successful");
-                    } else {
-                        console.log("HTTP request unsuccessful");
-                    }
-
-                    return res;
-                } else if (type === "POST" || type === "PUT") {
-                    const res = await fetch(url, {
-                        method: type,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    if (res.ok) {
-                        console.log("HTTP request successful");
-                    } else {
-                        console.log("HTTP request unsuccessful");
-                    }
-
-                    responseData = await res.json();
-                }
-
-                if (responseData) {
-                    populateTable(responseData.data);
-                    
-                }
-            } catch (error) {
-                console.error("Fetch error:", error);
-            }
-        }
-
-        function populateTable(data) {
-            const tbody = document.querySelector("#tech-companies-1 tbody");
-            tbody.innerHTML = "";
-
-            if (Array.isArray(data)) {
-                data.forEach((item, index) => {
-                    const row = document.createElement("tr");
-
-                    const noCell = document.createElement("td");
-                    noCell.textContent =  index + 1;
-                    row.appendChild(noCell);
-
-                    const fullNameCell = document.createElement("td");
-                    fullNameCell.textContent = item.league_name;
-                    row.appendChild(fullNameCell);
-
-                    const shortNameCell = document.createElement("td");
-                    shortNameCell.textContent = item.short_league_name;
-                    row.appendChild(shortNameCell);
-
-                    const logoCell = document.createElement("td");
-                    const logoImg = document.createElement("img");
-                    logoImg.src = `https://jadavnilesh.pythonanywhere.com/${item.league_image}`;
-                    logoImg.alt = item.league_image;
-                    logoImg.style.width = "50px";
-                    logoCell.appendChild(logoImg);
-                    row.appendChild(logoCell);
-
-                    const dateCell = document.createElement("td");
-                    dateCell.textContent = `${item.start_league_date} - ${item.end_league_date}`;
-                    row.appendChild(dateCell);
-
-                    const statusCell = document.createElement("td");
-                    statusCell.textContent = getStatus(item.start_league_date, item.end_league_date);
-                    row.appendChild(statusCell);
-
-                    if (statusCell.textContent === 'completed') {
-                        row.classList.add('disabled-row');
-                    }
-
-                    const editCell = document.createElement("td");
-                    const editButton = document.createElement("span");
-                    editButton.innerHTML = '<i class="far fa-edit"></i>';
-                    editButton.addEventListener("click", async() => {
-                        // Traverse up the DOM to find the parent <tr> element
-                            
-                            const row = editButton.closest('tr');
-
-// Assuming your data structure allows you to identify the player's data within the row
-const playerId = row.dataset.playerId; // Example: Assuming you have set a data attribute 'data-player-id' on the <tr>
-
-// Retrieve player data from the row
-const playerData = {
-    id: playerId,
-    // Retrieve other relevant data from the row as needed
-    // Example: playerName: row.querySelector('.player-name').textContent,
-    // Example: playerAge: row.querySelector('.player-age').textContent,
-    // Example: playerPosition: row.querySelector('.player-position').textContent,
-    // Modify this based on your actual HTML structure and data retrieval logic
-};
-
-// Store the player data in localStorage or pass it to the edit page
-localStorage.setItem('editPlayerData', JSON.stringify(playerData));
-
-// Redirect to the edit player page
-window.location.href = 'editplayer.html'; 
+      function getStatus(startDate, endDate) {
+          const now = new Date();
+          const start = new Date(startDate);
+          const end = new Date(endDate);
+  
+          if (now < start) {
+              return 'upcoming';
+          } else if (now > end) {
+              return 'completed';
+          } else {
+              return 'running';
+          }
+      }
 
 
 
-                    });
-                    editCell.appendChild(editButton);
-                    row.appendChild(editCell);
 
-                    const deleteCell = document.createElement("td");
-                    const deleteButton = document.createElement("span");
-                    deleteButton.innerHTML = '<i class="far fa-trash-alt"></i>';
-                    deleteButton.addEventListener("click", async () => {
-                        await handleDelete(item.id);
-                    });
-                    deleteCell.appendChild(deleteButton);
-                    row.appendChild(deleteCell);
 
-                    tbody.prepend(row);
-                });
-            } else {
-                console.error("Data is not an array:", data);
-            }
-        }
-
-        function getStatus(startDate, endDate) {
-            const now = new Date();
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-
-            if (now < start) {
-                return 'upcoming';
-            } else if (now > end) {
-                return 'completed';
-            } else {
-                return 'running';
-            }
-        }
-
-        async function handleDelete(id) {
-            const url = `https://jadavnilesh.pythonanywhere.com/get/${id}/`;
-            const response = await myFetch(url, "DELETE");
-
-            if (response.ok) {
-                // Fetch the updated data and repopulate the table
-                await myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
-            }
-        }
-       
-
-        // function updatePagination() {
-        //     const prevBtn = document.getElementById("datatable_previous");
-        //     const nextBtn = document.getElementById("datatable_next");
-        //     const infoDiv = document.getElementById("datatable_info");
-
-        //     const totalPages = Math.ceil(totalEntries / rowsPerPage);
-
-        //     if (currentPage === 1) {
-        //         prevBtn.classList.add("disabled");
-        //     } else {
-        //         prevBtn.classList.remove("disabled");
-        //     }
-
-        //     if (currentPage === totalPages) {
-        //         nextBtn.classList.add("disabled");
-        //     } else {
-        //         nextBtn.classList.remove("disabled");
-        //     }
-
-        //     infoDiv.textContent = `Showing ${(currentPage - 1) * rowsPerPage + 1} to ${Math.min(currentPage * rowsPerPage, totalEntries)} of ${totalEntries} entries`;
-        // }
-
-        // function changePage(page) {
-        //     currentPage = page;
-        //     myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
-        // }
-
-        // document.getElementById("datatable_previous").addEventListener("click", () => {
-        //     if (currentPage > 1) {
-        //         changePage(currentPage - 1);
-        //     }
-        // });
-
-        // document.getElementById("datatable_next").addEventListener("click", () => {
-        //     if (currentPage < Math.ceil(totalEntries / rowsPerPage)) {
-        //         changePage(currentPage + 1);
-        //     }
-        // });
-
-        // document.querySelectorAll(".page-link").forEach(page => {
-        //     page.addEventListener("click", () => {
-        //         const pageNumber = parseInt(page.textContent);
-        //         if (!isNaN(pageNumber)) {
-        //             changePage(pageNumber);
-        //         }
-        //     });
-        // });
-
-        // document.querySelectorAll('.sort-icon').forEach(icon => {
-        //     icon.addEventListener('click', () => {
-        //         const column = icon.getAttribute('data-column');
-
-        //         if (column) {
-        //             if (currentSortColumn === column) {
-        //                 currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
-        //             } else {
-        //                 currentSortColumn = column;
-        //                 currentSortOrder = 'asc';
-        //             }
-
-        //             document.querySelectorAll('.sort-icon').forEach(sortIcon => {
-        //                 sortIcon.classList.remove('fa-sort-up', 'fa-sort-down');
-        //                 sortIcon.classList.add('fa-sort');
-        //             });
-
-        //             icon.classList.remove('fa-sort');
-        //             icon.classList.add(currentSortOrder === 'asc' ? 'fa-sort-up' : 'fa-sort-down');
-
-        //             myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
-        //         }
-        //     });
-        // });
-
-        // document.querySelectorAll('.dropdown-content a').forEach(item => {
-        //     item.addEventListener('click', (event) => {
-        //         event.preventDefault();
-        //         currentFilterStatus = item.getAttribute('data-status');
-        //         myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
-        //     });
-        // });
-
-        myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
-    </script>
+// Call the function to generate initial pagination
+// generatePaginationLinks();
+      async function handleDelete(id) {
+          const url = `https://jadavnilesh.pythonanywhere.com/get/${id}/`;
+          const response = await myFetch(url, "DELETE");
+  
+          if (response.ok) {
+              await myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+          }
+      }
+  
+      async function handleEdit(id) {
+          const url = `https://jadavnilesh.pythonanywhere.com/get/${id}/`;
+          try {
+              await myFetch(url, "GET");
+              window.location.href = `editleague.html?id=${id}`;
+          } catch (error) {
+              console.error("Error fetching data:", error);
+          }
+      }
+  
+      function filterTable() {
+          const filterInput = document.querySelector('#filter-input').value.toLowerCase();
+          const filteredData = allData.filter(item => {
+              const rowText = `${item.league_name} ${item.short_league_name} ${item.start_league_date} ${item.end_league_date}`.toLowerCase();
+             
+          
+              return rowText.includes(filterInput);
+          });
+          currentPage = 1; // Reset to the first page
+          populateTable(filteredData);
+          updatePagination(filteredData);
+         
+      }
+  
+      function updatePagination(data = allData) {
+          const totalPages = Math.ceil(data.length / itemsPerPage);
+          // document.querySelector('#page-info').value = `Page ${currentPage} of ${totalPages}`;
+  
+          document.querySelector('#prev-button').disabled = currentPage === 1;
+          document.querySelector('#next-button').disabled = currentPage === totalPages;
+      }
+  
+      function goToPage(page) {
+          currentPage = page;
+          populateTable(allData);
+          updatePagination();
+      }
+  
+      window.addEventListener('DOMContentLoaded', () => {
+          document.querySelector('#filter-input').addEventListener('input', filterTable);
+          document.querySelector('#prev-button').addEventListener('click', () => goToPage(currentPage - 1));
+          document.querySelector('#next-button').addEventListener('click', () => goToPage(currentPage + 1));
+          myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+        });
+  </script>
+  
     
       
   </body>
