@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Date Range Picker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+    .datepicker-container {
+        position: relative;
+        width: 300px; /* Adjust width as needed */
+    }
+    .date-button {
+        position: relative;
+        display: inline-block;
+        padding: 12px 30px 12px 12px; /* Added padding-right for the icons */
+        font-size: 14px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .date-button:focus {
+        border-color: #007bff; /* Highlight border on focus */
+    }
+    .date-button:hover {
+        background-color: #f0f0f0;
+    }
+    .date-icon {
+        position: absolute;
+        right: 10px; /* Adjust as needed */
+        top: 22px; /* Center vertically */
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: #007bff;
+        cursor: pointer;
+    }
+    .date-icon2 {
+        position: absolute;
+        right: 10px; /* Adjust as needed */
+        top: 78%; /* Center vertically */
+        transform: translateY(0%);
+        font-size: 16px;
+        color: #007bff;
+        cursor: pointer;
+    }
+    
+    .date-icon:hover {
+        color: #0056b3;
+    }
+
+    /* Styling for Flatpickr calendar */
+    .flatpickr-calendar {
+        z-index: 9999; /* Ensure calendar appears above other elements */
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        background-color: #fff;
+    }
+    .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+        background-color: #007bff !important; /* Custom selection color */
+        color: #fff !important;
+    }
+    .flatpickr-day.flatpickr-disabled {
+        color: #ccc !important; /* Grey color for disabled dates */
+        opacity: 0.5 !important; /* Reduced opacity for disabled dates */
+        cursor: not-allowed !important;
+    }
+    .flatpickr-day:not(.flatpickr-disabled) {
+        color: #000 !important; /* Black color for enabled dates */
+    }
+</style>
+</head>
+<body>
+
+<div class="datepicker-container">
+    <div>
+        <input type="text" id="startDate1" class="date-button" placeholder="Start date">
+        <i id="calendarIconStart" class="fas fa-calendar-alt date-icon"></i>
+    </div>
+    <div>
+        <input type="text" id="endDate" style="margin-top: 50px;" class="date-button" placeholder="End date">
+        <i id="calendarIconEnd" class="fas fa-calendar-alt date-icon2"></i>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize Flatpickr for the start date with minimum date as today
+        let startPicker = flatpickr('#startDate', {
+            dateFormat: 'd/m/Y',
+            minDate: 'today', // Disable past dates
+            onChange: function(selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    endPicker.set('minDate', selectedDates[0]);
+                }
+            }
+        });
+        
+
+        // Initialize Flatpickr for the end date
+        let endPicker = flatpickr('#endDate', {
+            dateFormat: 'd/m/Y',
+            onOpen: function(selectedDates, dateStr, instance) {
+                const startDate = startPicker.selectedDates[0];
+                if (startDate) {
+                    instance.set('minDate', startDate);
+                }
+            }
+        });
+
+        // Open Flatpickr on calendar icon click
+        $('#calendarIconStart').click(function() {
+            startPicker.open();
+        });
+        $('#calendarIconEnd').click(function() {
+            endPicker.open();
+        });
+    });
+</script>
+
+</body>
+</html>

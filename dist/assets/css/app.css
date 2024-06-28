@@ -249,6 +249,16 @@ body[data-topbar=colored] .app-search .form-control {
   background-color: rgba(244, 248, 249, 0.07);
   color: #fff;
 }
+.start-end-input-div {
+  display: flex;
+  align-items: center;
+}
+.clear-btn {
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 10px;
+  color: #808080; /* Adjust color as needed */
+}
 body[data-topbar=colored] .app-search span,
 body[data-topbar=colored] .app-search input.form-control::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.5);
@@ -2529,35 +2539,49 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
   transform: none !important;
   top: 100% !important;
 }
+
 .circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #f2f2f2;
+  width: 100px; /* Width of the circle */
+  height: 100px; /* Height of the circle */
+  border-radius: 50%; /* Make sure the container is a perfect circle */
+  overflow: hidden; /* Hide any content that exceeds the circle */
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  /* overflow: hidden; */
   position: relative;
+  outline: 7px solid #c9c8c8;
   margin: 0 auto;
-  /* background-color: red; */
+  background-color: #f2f2f2; /* Optional: Background color for the circle */
 }
 
 .circle img {
-  width: 85%;
-  height: 85%;
-  border-radius: 50%;
- 
+  width: auto; /* Ensure the image maintains its aspect ratio */
+  height: 100%; /* Stretch the image vertically to fill the circle */
+  object-fit: contain; /* Cover the entire area of the circle, cropping as needed */
+  object-position: center; /* Center the image within the circle */
+  border-radius: 50%; /* Ensure the image itself is a circle */
  
 }
 
-.circle i {
+.icon-circle{
   position: absolute;
   bottom: 0px;
-  right: -5px;
-  font-size: 25px;
-  color: #555;
+  border-radius: 50%;
+
+  right: 200px;
+  width: 30px;
+  height: 30px;
+  background-color: #E20101;
+}
+.image-div-set{
+  position:relative ;
+}
+.circle i {
+  /* transform: translate(50%,-50%); */
+  font-size: 15px;
+  color: #fff;
+  z-index: 100;
 }
 
 .bb {
@@ -2565,9 +2589,8 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
 }
 
 .ff {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  transform: translate(50%,35%);
+  color: #fff;
   z-index: 999;
 }
 .table-rep-plugin tbody th {
@@ -2606,9 +2629,10 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
 .dropbtn-color:hover{
   background-color: #fff;
   color: grey;
-  border:1px solid grey;
+  /* border:1px solid grey; */
 }
 .dropbtn-color-2{
+  outline: none;
   background-color:#fff;
   color: grey !important;
   border:none;
@@ -3413,4 +3437,168 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
   top: 0;
   clip-path: polygon(0% 0%, 40% 0%, 100% 50%, 40% 100%, 0% 100%);
 }
+.addnew{
+  background-color: #E20101 !important;
+  color: #fff;
+  border: none;
+}
+/* table.fixed {width: 100%;table-layout: fixed}
+table.fixed td {overflow:hidden;}Setting the table width is important! */
+/*Hide text outside the cell.*/
+/* table.fixed td:nth-of-type(1) {width:5px;}
+table.fixed td:nth-of-type(2) {width:55px;}
+table.fixed td:nth-of-type(3) {width:55px;}
+table.fixed td:nth-of-type(4) {width:5px;}
+table.fixed td:nth-of-type(5) {width:5px;}
+table.fixed td:nth-of-type(6) {width:5px;}
+table.fixed td:nth-of-type(7) {width:5px;}
+table.fixed td:nth-of-type(8) {width:5px;}
+table.fixed td:nth-of-type(9) {width:5px;} */
 
+/* .table-scroll{
+  width: 100%;
+  overflow: auto !important;
+} */
+
+body::-webkit-scrollbar{
+  display: none;
+}
+
+.datepicker-wrapper {
+  position: relative;
+  display: block;
+  margin-bottom: 10px;
+}
+.datepicker-wrapper input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 30px;
+  /* color: #E20101; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.datepicker-wrapper .fa-calendar-alt {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+}
+/* styles.css */
+.team-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.no-data-div{
+  width: 100%;
+  height: 425px;
+  /* background-color: #E20101; */
+}
+.no-data-div img{
+  width: 100%;
+  height: 100%;
+  /* background-color: #E20101; */
+}
+
+
+.grey-btn{
+  background-color: rgb(100, 100, 100);
+  border: none;
+}
+.grey-btn:hover{
+  background-color: rgb(100, 100, 100) !important;
+  border: none;
+}
+
+.datepicker-container {
+  position: relative;
+  width: 200px; /* Adjust width as needed */
+}
+.date-button {
+  position: relative;
+  display: inline-block;
+  padding: 8px 30px 8px 12px; /* Added padding-right for the icons */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px  solid grey;
+}
+.date-button:focus {
+  border-color: #E20101; /* Highlight border on focus */
+}
+.date-button:hover {
+  background-color: #f0f0f0;
+}
+.date-icon, #clearDates {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  top: 50%; /* Center vertically */
+  transform: translateY(-60%);
+  font-size: 16px;
+  color: #E20101;
+  cursor: pointer;
+}
+.date-icon {
+  color: #E20101 !important;  
+  cursor: pointer;
+  display: inline-block; /* Initially shown */
+}
+.date-icon2 {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  top: 78%; /* Center vertically */
+  transform: translateY(0%);
+  font-size: 16px;
+  color: #E20101 !important;
+  cursor: pointer;
+}
+#clearDates {
+  display: none; /* Initially hidden */
+}
+#clearDates:hover {
+  color: #E20101;
+}
+#clearDates:focus {
+  outline: none;
+}
+
+/* Styling for Flatpickr calendar */
+.flatpickr-calendar {
+  z-index: 9999; /* Ensure calendar appears above other elements */
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+  background-color: #E20101 !important; /* Custom selection color */
+  color: #fff !important;
+}
+
+.flatpickr-day.flatpickr-disabled {
+  color: #ccc !important; /* Grey color for disabled dates */
+  opacity: 0.5 !important; /* Reduced opacity for disabled dates */
+  cursor: not-allowed !important;
+}
+.flatpickr-day:not(.flatpickr-disabled) {
+  color: #000 !important; /* Black color for enabled dates */
+}
+.table th{
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 425px) {
+  .fixed-table{
+  table-layout: auto !important;
+  width: 150% !important;
+}
+}
+
+.fixed-table{
+  table-layout: fixed;
+  width: 150%;
+}
