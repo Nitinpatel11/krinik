@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <!-- datepicker -->
-    <link href="./assets/libs/air-datepicker/css/datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" type="text/css" />
 
     <!-- jvectormap -->
     <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" />
@@ -25,7 +25,7 @@
     <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -169,7 +169,7 @@
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li class="menu-title">Menu</li>
-
+        
                         <li>
                             <a href="./index.html" class="waves-effect">
                                 <div class="d-inline-block icons-sm me-1">
@@ -179,7 +179,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-
+        
                         <li>
                             <a href="calendar.html" class="waves-effect">
                                 <div class="d-inline-block icons-sm me-1">
@@ -188,29 +188,33 @@
                                 <span>User</span>
                             </a>
                         </li>
-
+        
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-comment-message"></i>
-                                </div>
-                                <span>Sports Configuration</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="./manage-league.html">Manage Leagues</a></li>
-                                <li><a href="./manage-team.html">Manage Teams</a></li>
-                                <li><a href="./manage-player.html">Manage Players</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="calendar.html" class="waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-schedule"></i>
-                                </div>
-                                <span>Manage Pools</span>
-                            </a>
-                        </li>
-
+                          <a href="javascript: void(0);" class="has-arrow waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-comment-message"></i>
+                              </div>
+                              <span>Sports Configuration</span>
+                          </a>
+                          <ul class="sub-menu" aria-expanded="false">
+                              <li><a href="./manage-league.html">Manage Leagues</a></li>
+                              <li><a href="./manage-team.html">Manage Teams</a></li>
+                              <li><a href="./manage-player.html">Manage Players</a></li>
+                          </ul>
+                      </li>
+                      <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-schedule"></i>
+                              </div>
+                              <span>Manage Pools</span>
+                          </a>
+                          <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="./manage-pool.html">Manage Pools</a></li>
+                            <li><a href="./manage-match.html">Manage Match</a></li>
+                        </ul>
+                      </li>
+        
                         <li>
                             <a href="calendar.html" class="waves-effect">
                                 <div class="d-inline-block icons-sm me-1">
@@ -219,7 +223,7 @@
                                 <span>All Transaction</span>
                             </a>
                         </li>
-
+        
                         <li>
                             <a href="calendar.html" class="waves-effect">
                                 <div class="d-inline-block icons-sm me-1">
@@ -228,7 +232,7 @@
                                 <span>Account Setting</span>
                             </a>
                         </li>
-
+        
                         <li>
                             <a href="calendar.html" class="waves-effect">
                                 <div class="d-inline-block icons-sm me-1">
@@ -237,7 +241,7 @@
                                 <span>Logout</span>
                             </a>
                         </li>
-
+        
                         <!-- <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-sign-in-alt"></i></div>
@@ -251,7 +255,7 @@
                                     <li><a href="auth-lock-screen.html">Lock Screen</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-grids"></i></div>
@@ -269,9 +273,9 @@
                                     <li><a href="pages-500.html">Error 500</a></li>
                                 </ul>
                             </li>
-
+        
                             <li class="menu-title">Components</li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-box"></i></div>
@@ -297,7 +301,7 @@
                                     <li><a href="ui-grid.html">Grid</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-layer-group"></i></div>
@@ -312,7 +316,7 @@
                                     <li><a href="advanced-lightbox.html">Lightbox</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-object-ungroup"></i></div>
@@ -326,7 +330,7 @@
                                     <li><a href="icons-unicons.html">Unicons - Dual Tone</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-table"></i></div>
@@ -339,7 +343,7 @@
                                     <li><a href="tables-editable.html">Editable Table</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-document-layout-left"></i></div>
@@ -356,7 +360,7 @@
                                     <li><a href="form-summernote.html">Summernote</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-chart-pie"></i></div>
@@ -372,7 +376,7 @@
                                     <li><a href="charts-knob.html">Jquery Knob</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-comment-plus"></i></div>
@@ -383,7 +387,7 @@
                                     <li><a href="maps-vector.html">Vector map</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-window-grid"></i></div>
@@ -398,7 +402,7 @@
                                     <li><a href="layouts-boxed.html">Boxed Layout</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-layers-alt"></i></div>
@@ -464,54 +468,64 @@
                                             <div class="bb">
                                                 <div class="image-div-set">
                                                     <div class="circle " id="image-circle">
-                                                        <img id="preview-image" src="././assets/images/cricket.png" alt="Click to upload image"
-                                                             />
-                                                            
+                                                        <img id="preview-image" src="././assets/images/cricket.png"
+                                                            alt="Click to upload image" />
+
+                                                            <div class="icon-circle">
+                                                                <label for="file-input">
+                                                                    <i class="fa-solid fa-camera-retro ff"
+                                                                        id="label-input"></i></label>
+                                                            </div>
                                                     </div>
-                                                    <div class="icon-circle">
-                                                        <label for="file-input" >
-                                                    <i class="fa-solid fa-camera-retro ff" id="label-input"></i></label></div>
                                                 </div>
-                                                
-                                                <input type="file" id="file-input" accept="image/*"
+
+                                                <input type="file" id="file-input" accept=".jpg, .jpeg, .png"
                                                     style="display: none" />
                                             </div>
 
                                         </div>
                                         <form id="league-form">
                                             <div class="form-group form-group-custom mb-4">
-                                                <input type="text" class="form-control" name="leagueName" id="league-name" placeholder="Enter League Name">
+                                                <input type="text" class="form-control" name="leagueName"
+                                                    id="league-name" placeholder="Enter League Name">
                                                 <span id="error-league-name" class="span-error">Enter league name</span>
                                             </div>
-                                        
+
                                             <div class="form-group form-group-custom mb-4">
-                                                <input type="text" class="form-control" name="shortLeagueName" id="short-league-name" placeholder="Enter Short League Name">
-                                                <span id="error-short-league-name" class="span-error">Enter  short league name</span>
+                                                <input type="text" class="form-control" name="shortLeagueName"
+                                                    id="short-league-name" placeholder="Enter Short League Name">
+                                                <span id="error-short-league-name" class="span-error">Enter short league
+                                                    name</span>
                                             </div>
-                                        
+
                                             <div class="form-group form-group-custom mb-4 ">
                                                 <div class="datepicker-wrapper">
-                                                <input class="form-control" type="text" name="start_league_date" id="startDate"  placeholder="dd-mm-yyyy" >
-                                                
-                                                <i id="calendarIconStart" class="fas fa-calendar-alt date-icon"></i>
+                                                    <input class="form-control " type="text" name="start_league_date"
+                                                        id="startDate" placeholder="dd-mm-yyyy">
+
+                                                    <i id="calendarIconStart" class="fas fa-calendar-alt date-icon"></i>
+                                                </div>
+                                                <span id="error-startDate" class="span-error">Select start league
+                                                    date</span>
                                             </div>
-                                            <span id="error-startDate" class="span-error">Select start league date</span>
-                                            </div>
-                                        
+
                                             <div class="form-group form-group-custom mb-4 ">
                                                 <div class="datepicker-wrapper">
-                                                <input class="form-control" type="text" name="end_league_date" id="end-league-date"  placeholder="dd-mm-yyyy">
-                                                <i id="calendarIconEnd" class="fas fa-calendar-alt date-icon2"></i>
+                                                    <input class="form-control" type="text" name="end_league_date"
+                                                        id="end-league-date" placeholder="dd-mm-yyyy">
+                                                    <i id="calendarIconEnd" class="fas fa-calendar-alt date-icon2"></i>
+                                                </div>
+                                                <span id="error-end-league-date" class="span-error">Select end league
+                                                    date</span>
                                             </div>
-                                            <span id="error-end-league-date" class="span-error">Select end league date</span>
-                                            </div>
-                                        
+
                                             <div class="mt-4 text-center d-flex justify-content-center gap-5">
                                                 <button class="btn btn-primary" type="submit">Submit</button>
-                                                <button class="btn btn-primary grey-btn" type="button" id="cancel-btn" onclick="window.history.back()">Cancel</button>
+                                                <button class="btn btn-primary grey-btn" type="button" id="cancel-btn"
+                                                    onclick=browserback()>Cancel</button>
                                             </div>
                                         </form>
-                                        
+
 
 
 
@@ -926,7 +940,7 @@
     </div>
 
 
-   
+
 
 
     <!-- JAVASCRIPT -->
@@ -958,50 +972,50 @@
     <script src="./assets/js/app.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-   
-     <script>
-        $(function() {
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        $(function () {
             let startPicker = flatpickr('#startDate', {
                 dateFormat: 'd-m-Y',
                 minDate: 'today', // Disable past dates
-                onChange: function(selectedDates, dateStr, instance) {
+                onChange: function (selectedDates, dateStr, instance) {
                     if (selectedDates.length > 0) {
                         endPicker.set('minDate', selectedDates[0]);
                     }
                 }
             });
-    
+
             let endPicker = flatpickr('#end-league-date', {
                 dateFormat: 'd-m-Y',
-                onOpen: function(selectedDates, dateStr, instance) {
+                onOpen: function (selectedDates, dateStr, instance) {
                     const startDate = startPicker.selectedDates[0];
                     if (startDate) {
                         instance.set('minDate', startDate);
                     }
                 }
             });
-            
-        // Open Flatpickr on calendar icon click
-        $('#calendarIconStart').click(function() {
-            startPicker.open();
+
+            // Open Flatpickr on calendar icon click
+            $('#calendarIconStart').click(function () {
+                startPicker.open();
+            });
+            $('#calendarIconEnd').click(function () {
+                endPicker.open();
+            });
         });
-        $('#calendarIconEnd').click(function() {
-            endPicker.open();
-        });
-        });
-    
+
         document.addEventListener('DOMContentLoaded', async () => {
             const noNumberOrWhitespaceRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/;
             const dateFormatRegex = /^\d{2}-\d{2}-\d{4}$/; // Adjusted to match DD/MM/YYYY format
-            const defaultImageSrc = '././assets/images/cricket.png'; // Default image path
-    
+            const defaultImageSrc = '/assets/images/cricket.png'; // Default image path
+
             let existingLeagues = []; // Define an empty array to store fetched leagues
-    
+
             async function myFetch(url, type, data) {
                 try {
                     let responseData;
-    
+
                     if (type === "GET") {
                         const res = await fetch(url, {
                             method: type,
@@ -1009,13 +1023,13 @@
                                 'Content-Type': 'application/json'
                             }
                         });
-    
+
                         if (res.ok) {
                             console.log("HTTP request successful");
                         } else {
                             console.log("HTTP request unsuccessful");
                         }
-    
+
                         responseData = await res.json();
                         return responseData.data; // Assuming the API returns data array
                     } else if (type === "DELETE") {
@@ -1025,13 +1039,13 @@
                                 'Content-Type': 'application/json'
                             }
                         });
-    
+
                         if (res.ok) {
                             console.log("HTTP request successful");
                         } else {
                             console.log("HTTP request unsuccessful");
                         }
-    
+
                         return res;
                     } else if (type === "POST" || type === "PUT") {
                         const res = await fetch(url, {
@@ -1041,13 +1055,13 @@
                             },
                             body: JSON.stringify(data)
                         });
-    
+
                         if (res.ok) {
                             console.log("HTTP request successful");
                         } else {
                             console.log("HTTP request unsuccessful");
                         }
-    
+
                         responseData = await res.json();
                         return responseData;
                     }
@@ -1056,12 +1070,12 @@
                     throw error; // Re-throw the error to handle it where myFetch is called
                 }
             }
-            myFetch("https://goldfish-app-esdkb.ondigitalocean.app/league_get/","GET")
-    
+            myFetch("https://krinik.pythonanywhere.com/league_get/", "GET")
+
             function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
                 const input = document.getElementById(inputId);
                 const error = document.getElementById(errorId);
-    
+
                 function validate() {
                     const value = input.value.trim();
                     if (value === '') {
@@ -1077,154 +1091,63 @@
                         return true;
                     }
                 }
-    
+
                 input.addEventListener('input', validate);
                 input.addEventListener('change', validate);
-    
+
                 return validate();
             }
-    
+
             function checkLeagueOverlap(leagueName, shortLeagueName, existingLeagues) {
-                if (existingLeagues.length === 0) {
-                    return false; // Return false if existingLeagues is empty or undefined
+                if (!existingLeagues || existingLeagues.length === 0) {
+                    return { leagueNameOverlap: false, shortLeagueNameOverlap: false };
                 }
-    
+
                 const normalizedName = leagueName.trim().toLowerCase();
                 const normalizedShortName = shortLeagueName.trim().toLowerCase();
-    
-                const overlapExists = existingLeagues.some(league => {
+
+                const leagueNameOverlap = existingLeagues.some(league => {
                     const normalizedExistingName = league.league_name.trim().toLowerCase();
-                    const normalizedExistingShortName = league.short_league_name.trim().toLowerCase();
-                    return (normalizedExistingName === normalizedName || normalizedExistingShortName === normalizedShortName);
+                    return normalizedExistingName === normalizedName;
                 });
-    
-                return overlapExists;
+
+                const shortLeagueNameOverlap = existingLeagues.some(league => {
+                    const normalizedExistingShortName = league.short_league_name.trim().toLowerCase();
+                    return normalizedExistingShortName === normalizedShortName;
+                });
+
+                return { leagueNameOverlap, shortLeagueNameOverlap };
             }
-    
+
             function convertDateFormat(dateString) {
                 const parts = dateString.split('/');
                 return parts.length === 3 ? `${parts[0]}/${parts[1]}/${parts[2]}` : dateString;
             }
-    
-    // // Enter key navigation between fields
-    document.getElementById('league-name').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('short-league-name').focus();
-        }
-    });
 
-    document.getElementById('short-league-name').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('startDate').focus();
-        }
-    });
-
-    document.getElementById('startDate').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('end-league-date').focus();
-        }
-    });
-    document.getElementById('end-league-date').addEventListener('keydown',async function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            const isValidLeagueName = validateInput(
-                        'league-name',
-                        'error-league-name',
-                        noNumberOrWhitespaceRegex,
-                        'Please enter a league name',
-                        'Please enter a valid league name'
-                    );
-    
-                    const isValidShortLeagueName = validateInput(
-                        'short-league-name',
-                        'error-short-league-name',
-                        noNumberOrWhitespaceRegex,
-                        'Please enter a short league name',
-                        'Please enter a valid short league name'
-                    );
-    
-                    const isValidStartLeagueDate = validateInput(
-                        'startDate',
-                        'error-startDate',
-                        dateFormatRegex,
-                        'Please enter start league date',
-                        'Please enter a valid start league date (dd/mm/yyyy)'
-                    );
-    
-                    const isValidEndLeagueDate = validateInput(
-                        'end-league-date',
-                        'error-end-league-date',
-                        dateFormatRegex,
-                        'Please enter end league date',
-                        'Please enter a valid end league date (dd/mm/yyyy)'
-                    );
-    
-                    const leagueName = document.getElementById('league-name').value.trim();
-                    const shortLeagueName = document.getElementById('short-league-name').value.trim();
-                    const startDate1 = document.getElementById('startDate').value.trim();
-                    const endDate = document.getElementById('end-league-date').value.trim();
-    
-                    const dateOverlap = checkLeagueOverlap(leagueName, shortLeagueName, existingLeagues);
-    
-                    if (isValidLeagueName && isValidShortLeagueName && isValidStartLeagueDate && isValidEndLeagueDate) {
-                        if (dateOverlap) {
-                            console.log('League overlap exists. Data not added.');
-                            alert('League already exists!');
-                        } else {
-                            if(confirm('Are you sure you want to add this league?')) {
-                                let formData = new FormData();
-                                formData.append('league_name', leagueName);
-                                formData.append('short_league_name', shortLeagueName);
-                                formData.append('start_league_date', convertDateFormat(startDate1));
-                                formData.append('end_league_date', convertDateFormat(endDate));
-    
-                                const imageFile = document.getElementById('file-input').files[0];
-                                if (imageFile) {
-                                    formData.append('league_image', imageFile);
-                                } else {
-                                    const defaultImageBlob = await fetch(defaultImageSrc).then(res => res.blob());
-                                    formData.append('league_image', defaultImageBlob, 'cricket.png');
-                                }
-    
-                                try {
-                                    const response = await fetch('https://goldfish-app-esdkb.ondigitalocean.app/league_get/', {
-                                        method: 'POST',
-                                        body: formData
-                                    });
-    
-                                    if (!response.ok) {
-                                        throw new Error('Failed to add league');
-                                    }
-    
-                                    document.getElementById('league-form').reset();
-                                    document.getElementById('preview-image').src = defaultImageSrc;
-                                    window.location.href = 'manage-league.html';
-                                } catch (error) {
-                                    console.error('Error:', error);
-                                    alert('An error occurred while adding the league.');
-                                }
-                            }
-                        }
-                    } else {
-                        console.log('Form validation failed. Please check all fields.');
-                    }
-            
-        }else {
-                        console.log('Form validation failed. Please check all fields.');
-                    }
-    });
-
-            try {
-                existingLeagues = await myFetch("https://goldfish-app-esdkb.ondigitalocean.app/league_get/", "GET");
-    
-console.log(existingLeagues)
-
-                document.getElementById('league-form').addEventListener('submit', async function (event) {
+            // // Enter key navigation between fields
+            document.getElementById('league-name').addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
                     event.preventDefault();
-    
+                    document.getElementById('short-league-name').focus();
+                }
+            });
+
+            document.getElementById('short-league-name').addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    document.getElementById('startDate').focus();
+                }
+            });
+
+            document.getElementById('startDate').addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    document.getElementById('end-league-date').focus();
+                }
+            });
+            document.getElementById('end-league-date').addEventListener('keydown', async function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
                     const isValidLeagueName = validateInput(
                         'league-name',
                         'error-league-name',
@@ -1232,7 +1155,7 @@ console.log(existingLeagues)
                         'Please enter a league name',
                         'Please enter a valid league name'
                     );
-    
+
                     const isValidShortLeagueName = validateInput(
                         'short-league-name',
                         'error-short-league-name',
@@ -1240,42 +1163,42 @@ console.log(existingLeagues)
                         'Please enter a short league name',
                         'Please enter a valid short league name'
                     );
-    
+
                     const isValidStartLeagueDate = validateInput(
                         'startDate',
                         'error-startDate',
                         dateFormatRegex,
                         'Please select start league date',
-                        'Please selecy valid start league date '
+                        'Please select valid start league date'
                     );
-    
+
                     const isValidEndLeagueDate = validateInput(
                         'end-league-date',
                         'error-end-league-date',
                         dateFormatRegex,
-                        'Please enter end league date',
-                        'Please select a valid end league date'
+                        'Please select end league date',
+                        'Please select valid end league date'
                     );
-    
+
                     const leagueName = document.getElementById('league-name').value.trim();
                     const shortLeagueName = document.getElementById('short-league-name').value.trim();
                     const startDate1 = document.getElementById('startDate').value.trim();
                     const endDate = document.getElementById('end-league-date').value.trim();
-    
+
                     const dateOverlap = checkLeagueOverlap(leagueName, shortLeagueName, existingLeagues);
-    
+
                     if (isValidLeagueName && isValidShortLeagueName && isValidStartLeagueDate && isValidEndLeagueDate) {
                         if (dateOverlap) {
                             console.log('League overlap exists. Data not added.');
                             alert('League already exists!');
                         } else {
-                            if(confirm('Are you sure you want to add this league?')) {
+                            if (confirm('Are you sure you want to add this league?')) {
                                 let formData = new FormData();
                                 formData.append('league_name', leagueName);
                                 formData.append('short_league_name', shortLeagueName);
                                 formData.append('start_league_date', convertDateFormat(startDate1));
                                 formData.append('end_league_date', convertDateFormat(endDate));
-    
+
                                 const imageFile = document.getElementById('file-input').files[0];
                                 if (imageFile) {
                                     formData.append('league_image', imageFile);
@@ -1283,19 +1206,125 @@ console.log(existingLeagues)
                                     const defaultImageBlob = await fetch(defaultImageSrc).then(res => res.blob());
                                     formData.append('league_image', defaultImageBlob, 'cricket.png');
                                 }
-    
+
                                 try {
-                                    const response = await fetch('https://goldfish-app-esdkb.ondigitalocean.app/league_get/', {
+                                    const response = await fetch('https://krinik.pythonanywhere.com/league_get/', {
                                         method: 'POST',
                                         body: formData
                                     });
-    // console.log(response)
+
                                     if (!response.ok) {
                                         throw new Error('Failed to add league');
                                     }
-    
-                                    document.getElementById('league-form').reset();
-                                    document.getElementById('preview-image').src = defaultImageSrc;
+                                    window.location.href = 'manage-league.html';
+                                } catch (error) {
+                                    console.error('Error:', error);
+                                    alert('An error occurred while adding the league.');
+                                }
+
+
+                            }
+                        }
+                    } else {
+                        console.log('Form validation failed. Please check all fields.');
+                    }
+
+                } else {
+                    console.log('Form validation failed. Please check all fields.');
+                }
+                // document.getElementById('league-form').reset();
+                // document.getElementById('preview-image').src = defaultImageSrc;
+            });
+
+            try {
+                existingLeagues = await myFetch("https://krinik.pythonanywhere.com/league_get/", "GET");
+                // existingLeagues = existingLeagues1.data
+                console.log(existingLeagues)
+
+                document.getElementById('league-form').addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const isValidLeagueName = validateInput(
+                        'league-name',
+                        'error-league-name',
+                        noNumberOrWhitespaceRegex,
+                        'Please enter a league name',
+                        'Please enter a valid league name'
+                    );
+
+                    const isValidShortLeagueName = validateInput(
+                        'short-league-name',
+                        'error-short-league-name',
+                        noNumberOrWhitespaceRegex,
+                        'Please enter a short league name',
+                        'Please enter a valid short league name'
+                    );
+
+                    const isValidStartLeagueDate = validateInput(
+                        'startDate',
+                        'error-startDate',
+                        dateFormatRegex,
+                        'Please select start league date',
+                        'Please select valid start league date '
+                    );
+
+                    const isValidEndLeagueDate = validateInput(
+                        'end-league-date',
+                        'error-end-league-date',
+                        dateFormatRegex,
+                        'Please select end league date',
+                        'Please select a valid end league date'
+                    );
+                    const errorLeagueName = document.getElementById('error-league-name');
+                    const errorShortLeagueName = document.getElementById('error-short-league-name');
+
+                    const leagueName = document.getElementById('league-name').value.trim();
+                    const shortLeagueName = document.getElementById('short-league-name').value.trim();
+                    const startDate1 = document.getElementById('startDate').value.trim();
+                    const endDate = document.getElementById('end-league-date').value.trim();
+
+                    const overlapResult = checkLeagueOverlap(leagueName, shortLeagueName, existingLeagues);
+
+                    if (isValidLeagueName && isValidShortLeagueName && isValidStartLeagueDate && isValidEndLeagueDate) {
+                        if(overlapResult.leagueNameOverlap && overlapResult.shortLeagueNameOverlap){
+                            document.getElementById('error-league-name').innerHTML = 'League name already exists.';
+                            document.getElementById('error-league-name').style.display = 'inline';
+                            document.getElementById('error-short-league-name').innerHTML = 'Short league name already exists.';
+                            document.getElementById('error-short-league-name').style.display = 'inline';
+
+                        }else if (overlapResult.leagueNameOverlap) {
+                            document.getElementById('error-league-name').innerHTML = 'League name already exists.';
+                            document.getElementById('error-league-name').style.display = 'inline';
+                        } else if (overlapResult.shortLeagueNameOverlap) {
+                            document.getElementById('error-short-league-name').innerHTML = 'Short league name already exists.';
+                            document.getElementById('error-short-league-name').style.display = 'inline';
+                        } else {
+                            if (confirm('Are you sure you want to add this league?')) {
+                                let formData = new FormData();
+                                formData.append('league_name', leagueName);
+                                formData.append('short_league_name', shortLeagueName);
+                                formData.append('start_league_date', convertDateFormat(startDate1));
+                                formData.append('end_league_date', convertDateFormat(endDate));
+
+                                const imageFile = document.getElementById('file-input').files[0];
+                                if (imageFile) {
+                                    formData.append('league_image', imageFile);
+                                } else {
+                                    const defaultImageBlob = await fetch(defaultImageSrc).then(res => res.blob());
+                                    formData.append('league_image', defaultImageBlob, 'cricket.png');
+                                }
+
+                                try {
+                                    const response = await fetch('https://krinik.pythonanywhere.com/league_get/', {
+                                        method: 'POST',
+                                        body: formData
+                                    });
+                                    // console.log(response)
+                                    if (!response.ok) {
+                                        throw new Error('Failed to add league');
+                                    }
+
+
                                     window.location.href = 'manage-league.html';
                                 } catch (error) {
                                     console.error('Error:', error);
@@ -1306,12 +1335,14 @@ console.log(existingLeagues)
                     } else {
                         console.log('Form validation failed. Please check all fields.');
                     }
+                    // document.getElementById('league-form').reset();
+                    //                 document.getElementById('preview-image').src = defaultImageSrc;
                 });
-    
+
                 document.getElementById('short-league-name').addEventListener('input', function (event) {
                     this.value = this.value.toUpperCase();
                 });
-    
+
                 document.getElementById('file-input').addEventListener('change', function (event) {
                     const file = event.target.files[0];
                     if (file) {
@@ -1323,16 +1354,39 @@ console.log(existingLeagues)
                     }
                 });
 
-             
+
             } catch (error) {
                 console.error('Error fetching existing leagues:', error);
             }
-            
-        });
-    </script>
-    
 
+        });
+        
+//         function browserback() {
+//     // Add an entry to the history stack
     
+//     // Redirect to the match-league page
+//     window.location.replace('./manage-league.html');
+//     history.pushState(null, null, window.location.href = ('./manage-league.html'));
+// }
+
+// Listen for popstate event which triggers when the active history entry changes
+
+// window.onload = function() {
+//             // Disable forward button initially
+//             history.pushState(null, null, location.href);
+//             window.onpopstate = function() {
+//                 history.go(-1);
+//             };
+//         };
+        
+        // browserback()
+    // window.history.forward()
+
+
+    </script>
+
+
+
 </body>
 
 </html>

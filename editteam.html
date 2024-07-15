@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="./assets/images/favicon.ico">
 
     <!-- datepicker -->
-    <link href="./assets/libs/air-datepicker/css/datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" type="text/css" />
 
     <!-- jvectormap -->
     <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" />
@@ -200,12 +200,16 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="calendar.html" class="waves-effect">
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <div class="d-inline-block icons-sm me-1">
                                     <i class="uim uim-schedule"></i>
                                 </div>
                                 <span>Manage Pools</span>
                             </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="./manage-pool.html">Manage Pools</a></li>
+                                <li><a href="./manage-match.html">Manage Match</a></li>
+                            </ul>
                         </li>
 
                         <li>
@@ -248,7 +252,7 @@
                                     <li><a href="auth-lock-screen.html">Lock Screen</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-grids"></i></div>
@@ -266,9 +270,9 @@
                                     <li><a href="pages-500.html">Error 500</a></li>
                                 </ul>
                             </li>
-
+        
                             <li class="menu-title">Components</li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-box"></i></div>
@@ -294,7 +298,7 @@
                                     <li><a href="ui-grid.html">Grid</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-layer-group"></i></div>
@@ -309,7 +313,7 @@
                                     <li><a href="advanced-lightbox.html">Lightbox</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-object-ungroup"></i></div>
@@ -323,7 +327,7 @@
                                     <li><a href="icons-unicons.html">Unicons - Dual Tone</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-table"></i></div>
@@ -336,7 +340,7 @@
                                     <li><a href="tables-editable.html">Editable Table</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-document-layout-left"></i></div>
@@ -353,7 +357,7 @@
                                     <li><a href="form-summernote.html">Summernote</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-chart-pie"></i></div>
@@ -369,7 +373,7 @@
                                     <li><a href="charts-knob.html">Jquery Knob</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-comment-plus"></i></div>
@@ -380,7 +384,7 @@
                                     <li><a href="maps-vector.html">Vector map</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-window-grid"></i></div>
@@ -395,7 +399,7 @@
                                     <li><a href="layouts-boxed.html">Boxed Layout</a></li>
                                 </ul>
                             </li>
-
+        
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <div class="d-inline-block icons-sm me-1"><i class="uim uim-layers-alt"></i></div>
@@ -459,66 +463,49 @@
 
                                         <div class="form-group mb-4">
                                             <div class="bb">
-                                                <div class="circle " id="image-circle">
-                                                    <img id="preview-image" src="" alt="Click to upload image"
-                                                         />
-                                                        <label for="file-input">
-                                                    <i class="fa-solid fa-camera-retro ff"></i></label>
+                                                <div class="image-div-set">
+                                                    <div class="circle" id="image-circle">
+                                                        <img id="preview-team-image" src="././assets/images/cricket.png"
+                                                            alt="Click to upload image" />
+                                                        <div class="icon-circle">
+                                                            <label for="file-input">
+                                                                <i class="fa-solid fa-camera-retro ff"
+                                                                    id="label-input"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <input type="file" id="file-input" accept="image/*"
-                                                    style="display: none" />
+                                                <input type="file" id="file-input" accept=".jpg, .jpeg, .png"
+                                                style="display: none" />
                                             </div>
-
                                         </div>
-                                        <form id="league-form">
-
+                                        <form id="team-form">
                                             <div class="form-group form-group-custom mb-4">
-                                                <select class="form-select" name="" id="">
+                                                <select class="form-select" name="leagueName" id="league-name">
                                                     <option value="">Select League</option>
-                                                    <option value="">1</option>
-                                                    <option value="">2</option>
+                                                    <!-- Options populated dynamically from JavaScript -->
                                                 </select>
-                                                <span id="error-start-league-date" class="span-error">Please enter start league date</span>
+                                                <span id="error-league-name" class="span-error">Select league
+                                                    team</span>
                                             </div>
                                             <div class="form-group form-group-custom mb-4">
-                                                <input type="text" class="form-control" name="leagueName"
-                                                    id="league-name" required placeholder="Enter Team Name">
-
+                                                <input type="text" class="form-control" name="teamName" id="team-name"
+                                                    placeholder="Enter Team Name">
+                                                <span id="error-team-name" class="span-error">Enter a team name</span>
                                             </div>
-
                                             <div class="form-group form-group-custom mb-4">
-                                                <input type="text" class="form-control" name="shortLeagueName"
-                                                    id="short-league-name" required
-                                                    placeholder="Enter Team Short Name">
-
+                                                <input type="text" class="form-control" name="shortTeamName"
+                                                    id="short-team-name" placeholder="Enter Team Short Name">
+                                                <span id="error-short-team-name" class="span-error">Enter a short team
+                                                    name</span>
                                             </div>
-
-
-                                            <!-- <div class="form-group form-group-custom mb-4">
-
-
-                                                <input class="form-control" type="date" value="Start League Date"
-                                                    name="startLeagueDate" id="start-league-date">
-
-
-                                            </div>
-
-                                            <div class="form-group form-group-custom mb-4">
-
-
-                                                <input class="form-control" type="date" value="End League Date"
-                                                    name="endLeagueDate" id="end-league-date">
-
-
-                                            </div> -->
-
                                             <div class="mt-4 text-center d-flex justify-content-center gap-5">
-                                                <button class="btn btn-primary"
-                                                    type="submit">Submit</button>
-                                                    <button class="btn btn-primary "
-                                                    type="button" id="cancel-btn">Cancel</button>
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="btn btn-primary grey-btn" type="button" id="cancel-btn1"
+                                                    onclick="window.location.replace('./manage-team.html')">Cancel</button>
                                             </div>
                                         </form>
+
 
 
 
@@ -928,13 +915,13 @@
 
     <!-- Right bar overlay-->
     <div class="rightbar-overlay">
-        <!-- const totaldataleague = document.querySelector("#total-league-data"); -->
+        <!-- const totaldatateam = document.querySelector("#total-team-data"); -->
 
     </div>
 
 
-<img src="" alt="" id="img-tag">
-  
+    <img src="" alt="" id="img-tag">
+
 
 
     <!-- JAVASCRIPT -->
@@ -963,186 +950,362 @@
 
     <script src="./assets/js/app.js"></script>
 
-    <script>
-     async function myFetch(url, type, data) {
-    try {
-        let responseData;
 
-        if (type === "GET") {
-            const res = await fetch(url, {
-                method: type,
-                headers: {
-                    'Content-Type': 'application/json'
+
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                const noNumberOrWhitespaceRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/;
+                const defaultImageSrc = '././assets/images/cricket.png';
+                let existingTeams = [];
+                let existingLeagues = [];
+                let initialData = {};
+
+                async function fetchExistingLeagues() {
+                    try {
+                        const response = await fetch("https://krinik.pythonanywhere.com/league_get/");
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        const existingLeagues1 = await response.json();
+                        existingLeagues = existingLeagues1.data;
+                        populateSelect(existingLeagues); // Populate league dropdown
+                    } catch (error) {
+                        console.error('Error fetching or processing existing leagues:', error);
+                    }
                 }
-            });
 
-            if (res.ok) {
-                console.log("HTTP request successful");
-            } else {
-                console.log("HTTP request unsuccessful");
-            }
-
-            responseData = await res.json();
-            console.log(responseData);
-            // Assuming the API returns total number of entries
-        } else if (type === "DELETE") {
-            const res = await fetch(url, {
-                method: type,
-                headers: {
-                    'Content-Type': 'application/json'
+                async function fetchExistingTeams() {
+                    try {
+                        const response = await fetch("https://krinik.pythonanywhere.com/team_get/");
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        const existingTeams1 = await response.json();
+                        existingTeams = existingTeams1.data;
+                    } catch (error) {
+                        console.error('Error fetching or processing existing teams:', error);
+                    }
                 }
-            });
 
-            if (res.ok) {
-                console.log("HTTP request successful");
-            } else {
-                console.log("HTTP request unsuccessful");
-            }
+                await fetchExistingLeagues();
+                await fetchExistingTeams();
 
-            return res;
-        } else if (type === "POST" || type === "PATCH") {
-            const res = await fetch(url, {
-                method: type,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
+                function populateSelect(data) {
+                    const selectElement = document.getElementById('league-name');
+                    if (!selectElement) {
+                        console.error('Select element not found');
+                        return;
+                    }
+                    selectElement.innerHTML = '<option value="">Select League</option>'; // Clear existing options
+                    data.forEach(league => {
+                        const option = document.createElement('option');
+                        option.value = league.league_name;
+                        option.textContent = league.league_name;
+                        selectElement.appendChild(option);
+                    });
+                }
 
-            if (res.ok) {
-                console.log("HTTP request successful");
-            } else {
-                console.log("HTTP request unsuccessful");
-            }
+                function editTeamData(response, allLeagues) {
+                    const teamName = document.getElementById('team-name');
+                    const shortTeamName = document.getElementById('short-team-name');
+                    const imageFile = document.getElementById('preview-team-image');
+                    const leagueSelect = document.getElementById('league-name');
 
-            responseData = await res.json();
-        }
+                    if (!teamName || !shortTeamName || !imageFile || !leagueSelect) {
+                        console.error('Form elements not found');
+                        return;
+                    }
 
-        if (responseData) {
-            console.log(responseData.data);
-            editplayerdata(responseData.data);
-        }
-    } catch (error) {
-        console.error("Fetch error:", error);
-    }
-}
+                    if (response) {
+                        imageFile.src = `https://krinik.pythonanywhere.com${response.team_image}`;
+                        teamName.value = response.team_name;
+                        shortTeamName.value = response.team_short_name;
 
+                        const leagueOption = allLeagues.find(league => league.league_name === response.league_name);
+                        if (leagueOption) {
+                            leagueSelect.value = leagueOption.league_name;
+                        }
 
+                        initialData = {
+                            team_name: teamName.value,
+                            team_short_name: shortTeamName.value,
+                            team_image: imageFile.src,
+                            league_name: leagueSelect.value
+                        };
+                    }
+                }
 
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+                if (id) {
+                    try {
+                        const response = await fetch(`https://krinik.pythonanywhere.com/team_get/${id}/`);
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch team data');
+                        }
+                        const teamData1 = await response.json();
+                        const teamData = teamData1.data;
 
+                        editTeamData(teamData, existingLeagues);
+                    } catch (error) {
+                        console.error('Error fetching team data:', error);
+                    }
+                }
 
+                async function submitFormData(data, method) {
+                    const formData = new FormData();
+                    formData.append('team_name', data.team_name);
+                    formData.append('team_short_name', data.team_short_name);
+                    formData.append('league_name', data.league_name);
+                    if (data.team_image instanceof File) {
+                        formData.append('team_image', data.team_image);
+                    }
 
-// Get the id from the URL query string
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
+                    try {
+                        const response = await fetch(`https://krinik.pythonanywhere.com/team_get/${id}/`, {
+                            method: method,
+                            body: formData
+                        });
 
-if (id) {
-    myFetch(`https://jadavnilesh.pythonanywhere.com/get/${id}/`, "GET")
-        
-} else {
-    console.error("No id parameter found in the URL.");
-}
+                        if (!response.ok) {
+                            throw new Error('Failed to edit team');
+                        }
 
-function editplayerdata(response) {
-    const leagueName = document.getElementById('league-name');
-    const shortLeagueName = document.getElementById('short-league-name');
-    const startLeagueDate = document.getElementById('start-league-date');
-    const endLeagueDate = document.getElementById('end-league-date');
-    const imageFile = document.getElementById('preview-image');
-const imagetag = document.querySelector('#img-tag') 
-    if (response) {
-        imageFile.src = `https://jadavnilesh.pythonanywhere.com/${response.league_image}`;
+                        alert('Team edited successfully!');
+                        window.location.href = "manage-team.html"
 
-        leagueName.value = response.league_name
-        ;
-        shortLeagueName.value = response.short_league_name;
-       
-        startLeagueDate.value = response.start_league_date;
-        endLeagueDate.value = response.end_league_date;
-    }else{
-         console.error("Data is not in the expected format:", response);
-    }
-    const cancelbtn = document.querySelector('#cancel-btn')
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while editing the team.');
+                    }
+                }
 
-cancelbtn.addEventListener('click', async function (event) {
-    window.location.href = "manage-team.html"
-})
-    // if (response && response.status === 'success' && response.data) {
-    //     const data = response.data;
-    //     imageFile.src = `https://jadavnilesh.pythonanywhere.com/${data.league_image}`;
-    //     leagueName.textContent = data.league_name;
-    //     shortLeagueName.textContent = data.short_league_name;
-    //     // startLeagueDate.textContent = data.start_league_date;
-    //     // endLeagueDate.textContent = data.end_league_date;
-       
-    // } else {
-    //     // console.error("Data is not in the expected format:", response);
-    // }
-}
+                document.getElementById('team-form').addEventListener('submit', async function (event) {
+                    event.preventDefault();
 
-document.getElementById('league-form').addEventListener('submit', async function (event) {
-            event.preventDefault(); // Prevent the form from submitting the traditional way
+                    const teamNameInput = document.getElementById('team-name');
+                    const shortTeamNameInput = document.getElementById('short-team-name');
+                    const leagueSelect = document.getElementById('league-name');
+                    const imageFileInput = document.getElementById('file-input');
+                    const previewImage = document.getElementById('preview-team-image');
 
-            // Get form data
-            const leagueName = document.getElementById('league-name').value;
-            const shortLeagueName = document.getElementById('short-league-name').value;
-            const startLeagueDate = document.getElementById('start-league-date').value;
-            const endLeagueDate = document.getElementById('end-league-date').value;
-            const imageFile = document.getElementById('file-input').files[0];
-          
+                    if (!teamNameInput || !shortTeamNameInput || !leagueSelect || !imageFileInput || !previewImage) {
+                        console.error('Form elements not found');
+                        return;
+                    }
 
-            // Create FormData object
-            const formData = new FormData();
-            formData.append('league_name', leagueName);
-            formData.append('short_league_name', shortLeagueName);
-            formData.append('start_league_date', startLeagueDate);
-            formData.append('end_league_date', endLeagueDate);
-            if (imageFile) {
-                formData.append('league_image', imageFile);
-            }
+                    const isValidTeamName = validateInput(
+                        'team-name',
+                        'error-team-name',
+                        noNumberOrWhitespaceRegex,
+                        'Please enter team name',
+                        'Please enter valid team name'
+                    );
 
-            try {
-                // Send the form data to the API
-                const response = await fetch(`https://jadavnilesh.pythonanywhere.com/get/${id}/`, {
-                    method: 'PATCH',
-                    body: formData
+                    const isValidShortTeamName = validateInput(
+                        'short-team-name',
+                        'error-short-team-name',
+                        noNumberOrWhitespaceRegex,
+                        'Please enter short team name',
+                        'Please enter valid short team name'
+                    );
+
+                    const isValidLeagueSelection = validateLeagueSelection();
+
+                    if (isValidTeamName && isValidShortTeamName && isValidLeagueSelection) {
+                        const currentData = {
+                            team_name: teamNameInput.value.trim(),
+                            team_short_name: shortTeamNameInput.value.trim(),
+                            league_name: leagueSelect.value,
+                            team_image: imageFileInput.files[0] || previewImage.src
+                        };
+
+                        const hasTeamNameChanged = currentData.team_name !== initialData.team_name;
+                        const hasShortTeamNameChanged = currentData.team_short_name !== initialData.team_short_name;
+                        const hasLeagueChanged = currentData.league_name !== initialData.league_name;
+                        const hasImageChanged = currentData.team_image !== initialData.team_image;
+
+                        const overlapResult = checkTeamOverlap(teamNameInput, shortTeamNameInput, leagueSelect.value, existingTeams);
+
+                        // Check all possible combinations
+                        if (hasLeagueChanged && hasTeamNameChanged && hasShortTeamNameChanged) {
+                            if (overlapResult.teamNameOverlap || overlapResult.shortTeamNameOverlap) {
+                                if (overlapResult.teamNameOverlap) {
+                                    document.getElementById('error-team-name').innerHTML = 'Team name already exists in this league.';
+                                    document.getElementById('error-team-name').style.display = 'inline';
+                                }
+                                if (overlapResult.shortTeamNameOverlap) {
+                                    document.getElementById('error-short-team-name').innerHTML = 'Short team name already exists in this league.';
+                                    document.getElementById('error-short-team-name').style.display = 'inline';
+                                }
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasLeagueChanged && hasTeamNameChanged) {
+                            if (overlapResult.teamNameOverlap) {
+                                document.getElementById('error-team-name').innerHTML = 'Team name already exists in this league.';
+                                document.getElementById('error-team-name').style.display = 'inline';
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasLeagueChanged && hasShortTeamNameChanged) {
+                            if (overlapResult.shortTeamNameOverlap) {
+                                document.getElementById('error-short-team-name').innerHTML = 'Short team name already exists in this league.';
+                                document.getElementById('error-short-team-name').style.display = 'inline';
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasTeamNameChanged && hasShortTeamNameChanged) {
+                            if (overlapResult.teamNameOverlap || overlapResult.shortTeamNameOverlap) {
+                                if (overlapResult.teamNameOverlap) {
+                                    document.getElementById('error-team-name').innerHTML = 'Team name already exists in this league.';
+                                    document.getElementById('error-team-name').style.display = 'inline';
+                                }
+                                if (overlapResult.shortTeamNameOverlap) {
+                                    document.getElementById('error-short-team-name').innerHTML = 'Short team name already exists in this league.';
+                                    document.getElementById('error-short-team-name').style.display = 'inline';
+                                }
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasLeagueChanged) {
+                            if (overlapResult.teamNameOverlap || overlapResult.shortTeamNameOverlap) {
+                                if (overlapResult.teamNameOverlap) {
+                                    document.getElementById('error-team-name').innerHTML = 'Team name already exists in this league.';
+                                    document.getElementById('error-team-name').style.display = 'inline';
+                                }
+                                if (overlapResult.shortTeamNameOverlap) {
+                                    document.getElementById('error-short-team-name').innerHTML = 'Short team name already exists in this league.';
+                                    document.getElementById('error-short-team-name').style.display = 'inline';
+                                }
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasTeamNameChanged) {
+                            if (overlapResult.teamNameOverlap) {
+                                document.getElementById('error-team-name').innerHTML = 'Team name already exists in this league.';
+                                document.getElementById('error-team-name').style.display = 'inline';
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasShortTeamNameChanged) {
+                            if (overlapResult.shortTeamNameOverlap) {
+                                document.getElementById('error-short-team-name').innerHTML = 'Short team name already exists in this league.';
+                                document.getElementById('error-short-team-name').style.display = 'inline';
+                            } else {
+                                if (confirm("are you confirm to edit it?")) {
+
+                                    await submitFormData(currentData, 'PATCH');
+                                }
+                            }
+                        } else if (hasImageChanged) {
+                            if (confirm("are you confirm to edit it?")) {
+
+                                await submitFormData(currentData, 'PATCH');
+                            }
+                        } else {
+                            if (confirm("are you confirm to edit it?")) {
+
+                                await submitFormData(initialData, 'PATCH');
+                            }
+                        }
+                    }
                 });
-                // console.log(response)
-                if (response.ok) {
-                    // Reset the form
-                    // Reset the image preview
-                    alert('League added successfully!');
-                    window.location.href = 'manage-team.html'
-                } else {
-                    alert('Failed to add league.');
+                document.getElementById('short-team-name').addEventListener('input', function () {
+                    this.value = this.value.toUpperCase();
+                });
+
+                document.getElementById('file-input').addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    const previewImage = document.getElementById('preview-team-image');
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            previewImage.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
+                    const inputElement = document.getElementById(inputId);
+                    const errorElement = document.getElementById(errorId);
+
+                    if (!inputElement || !errorElement) {
+                        console.error('Input or error element not found');
+                        return false;
+                    }
+
+                    const value = inputElement.value.trim();
+                    if (value === '') {
+                        errorElement.innerHTML = emptyMessage;
+                        errorElement.style.display = 'inline';
+                        return false;
+                    } else if (!regex.test(value)) {
+                        errorElement.innerHTML = invalidMessage;
+                        errorElement.style.display = 'inline';
+                        return false;
+                    } else {
+                        errorElement.style.display = 'none';
+                        return true;
+                    }
                 }
 
-                // Optional: Log response data to console for debugging
-                const responseData = await response.json(); // Assuming API returns JSON data
-                console.log('Response Data:', responseData);
+                function checkTeamOverlap(teamNameInput, shortTeamNameInput, leagueName, existingTeams) {
+                    const teamName = teamNameInput.value.trim();
+                    const shortTeamName = shortTeamNameInput.value.trim();
+                    const teamNameOverlap = existingTeams.some(team => team.team_name === teamName && team.league_name === leagueName);
+                    const shortTeamNameOverlap = existingTeams.some(team => team.team_short_name === shortTeamName && team.league_name === leagueName);
+                    return { teamNameOverlap, shortTeamNameOverlap };
+                }
 
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while adding the league.');
-            }
-        });
 
-        // Optional: Image preview functionality
-        document.getElementById('file-input').addEventListener('change', function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('preview-image').src = e.target.result;
-                    
-                };
-                reader.readAsDataURL(file);
-                
-            }
-           
-        });
+                function validateLeagueSelection() {
+                    const leagueSelect = document.getElementById('league-name');
+                    const errorSpan = document.getElementById('error-league-name');
 
-    </script>
+                    if (!leagueSelect || !errorSpan) {
+                        console.error('League selection elements not found');
+                        return false;
+                    }
+
+                    function validate() {
+                        if (leagueSelect.value === '') {
+                            errorSpan.innerHTML = 'Please select a league';
+                            errorSpan.style.display = 'inline';
+                            return false;
+                        } else {
+                            errorSpan.style.display = 'none';
+                            return true;
+                        }
+                    }
+
+                    leagueSelect.addEventListener('change', validate);
+                    return validate();
+                }
+            });
+
+        </script>
+
 </body>
 
 </html>

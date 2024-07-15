@@ -39,8 +39,119 @@ File: Main Css File
   background-color: var(--bs-header-bg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
+  /* .form-group {
+            margin-bottom: 1rem;
+        } */
+
+        .dropdown1 {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropbtn1 {
+            width: 100%;
+            padding: 0.5rem;
+            text-align: left;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+      
+
+        .dropdown-content input {
+            width: calc(100% - 16px);
+            margin: 8px;
+            box-sizing: border-box;
+            padding: 8px;
+            background-color: white;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        /* TEAM-B CSS */
+
+        .dropdown2 {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropbtn2 {
+            width: 100%;
+            padding: 0.5rem;
+            text-align: left;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .flatpickr-calendar .flatpickr-footer {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 10px;
+      }
+      .flatpickr-ok-button{
+        background-color: #E20101;
+        color: white;
+    border: none;
+
+      }
+      .flatpickr-clear-button{
+        background-color: rgb(100, 100, 100);
+    border: none;
+        color: white;
+      }
+        .dropdown-content1 {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content1 input {
+            width: calc(100% - 16px);
+            margin: 8px;
+            box-sizing: border-box;
+            padding: 8px;
+            background-color: white;
+        }
+
+        .dropdown-content1 a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content1 a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown1.show .dropdown-content1 {
+            display: block;
+        }
+
+
+
 body{
-  user-select: none;
+  /* user-select: none; */
 }
 .navbar-header {
   display: flex;
@@ -201,6 +312,21 @@ body{
 .dropdown {
   position: relative;
   display: inline-block;
+}
+@media screen and (max-width: 424px){
+  .drop-padd{
+    padding: 7px 15px;
+  }
+}
+/* Large screens (lg) */
+
+
+/* Medium screens (md) */
+
+
+/* Small screens (sm) */
+.error-message{
+  color: red;
 }
 .dropdown-content {
   display: none;
@@ -522,7 +648,7 @@ body[data-layout=horizontal] .footer {
 }
 #sidebar-menu ul li ul.sub-menu li a {
   padding: 0.4rem 1.5rem 0.4rem 3.7rem;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--bs-sidebar-menu-item-color);
 }
 #sidebar-menu ul li ul.sub-menu li ul.sub-menu {
@@ -2515,6 +2641,10 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
 .table-rep-plugin .table-responsive {
   border: none !important;
 }
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .table-rep-plugin .btn-group .btn-default {
   background-color: #7c8a96;
   color: #fff;
@@ -2525,6 +2655,9 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
   border-color:  #E20101;
   color: #fff;
   box-shadow: 0 0 0 2px rgba(48, 81, 211, 0.5);
+}
+.form-control,.form-select{
+  border: 1px solid #CCCCCC
 }
 .btn:hover{
   background-color:  #E20101 !important;
@@ -2540,29 +2673,7 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
   top: 100% !important;
 }
 
-.circle {
-  width: 100px; /* Width of the circle */
-  height: 100px; /* Height of the circle */
-  border-radius: 50%; /* Make sure the container is a perfect circle */
-  overflow: hidden; /* Hide any content that exceeds the circle */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
-  outline: 7px solid #c9c8c8;
-  margin: 0 auto;
-  background-color: #f2f2f2; /* Optional: Background color for the circle */
-}
-
-.circle img {
-  width: auto; /* Ensure the image maintains its aspect ratio */
-  height: 100%; /* Stretch the image vertically to fill the circle */
-  object-fit: contain; /* Cover the entire area of the circle, cropping as needed */
-  object-position: center; /* Center the image within the circle */
-  border-radius: 50%; /* Ensure the image itself is a circle */
- 
-}
+/*  */
 
 .icon-circle{
   position: absolute;
@@ -2581,7 +2692,7 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
   /* transform: translate(50%,-50%); */
   font-size: 15px;
   color: #fff;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .bb {
@@ -2746,6 +2857,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .table-editable .editable-buttons .btn.btn-sm {
   font-size: 12px;
 }
+.data-padding{
+  padding: 5px 15px;
+}
 .table-editable .editable-buttons .editable-submit .glyphicon-ok::before {
   content: "\f12c";
   font-family: "Material Design Icons";
@@ -2767,7 +2881,45 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .table-editable tbody td.focus {
   box-shadow: inset 0 0 1px 1px  #E20101 !important;
 }
+div.dataTables_wrapper div.dataTables_paginate {
+  justify-content: end;
+  margin: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+.paginate_button {
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 5px 15px;
 
+  cursor: pointer;
+}
+
+.paginate_button:hover {
+  background-color: #ddd;
+}
+
+.page-item {
+  display: inline-block;
+}
+
+.previous {
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.next {
+  font-weight: bold;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.index_buttons ul button.active {
+  background-color: #E20101;
+  color: white;
+}
 .dt-autofill-list {
   border: none !important;
   background-color: var(--bs-secondary-bg) !important;
@@ -3472,7 +3624,7 @@ body::-webkit-scrollbar{
 .datepicker-wrapper input {
   width: 100%;
   padding: 10px;
-  padding-right: 30px;
+  /* padding-right: 30px; */
   /* color: #E20101; */
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -3480,7 +3632,7 @@ body::-webkit-scrollbar{
 }
 .datepicker-wrapper .fa-calendar-alt {
   position: absolute;
-  right: 10px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: #999;
@@ -3491,6 +3643,8 @@ body::-webkit-scrollbar{
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
+  object-position: center;  
 }
 .no-data-div{
   width: 100%;
@@ -3601,4 +3755,110 @@ body::-webkit-scrollbar{
 .fixed-table{
   table-layout: fixed;
   width: 150%;
+}
+/* .form-group{
+  border: 1px solid #CCCCCC
+} */
+
+.circle {
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%; 
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  outline: 7px solid #c9c8c8;
+  margin: 0 auto;
+  background-color: #f2f2f2; 
+}
+
+.circle img {
+  width: auto; 
+  height: 100%; 
+  object-fit: cover;
+  border-radius: 50%; 
+  overflow: hidden;
+
+}
+
+.icon-circle {
+  position: absolute;
+  bottom: -5px;
+  right: 0px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #e20101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 9;  */
+}
+
+.icon-circle i {
+  font-size: 15px;
+  color: #fff;
+  line-height: 5px;
+  margin-left: -14px;
+}
+
+.image-div-set {
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .icon-circle {
+    width: 25px; 
+    height: 25px;
+  }
+
+  .icon-circle i {
+    font-size: 12px; 
+    line-height: 0px; 
+    margin-left: -11px;
+  }
+}
+
+
+@media (max-width: 425px) {
+  .circle {
+    width: 80px; 
+    height: 80px;
+  }
+
+  .icon-circle {
+    width: 25px; 
+    height: 25px;
+    bottom: 0px; 
+    right: -7px;
+  }
+
+  .icon-circle i {
+    font-size: 12px;
+    line-height: 0px;
+    margin-left: -11px; 
+  }
+} 
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+/* input[type="date" i]{
+  visibility: hidden;
+} */
+tbody td {
+  text-align: center; /* or left, right depending on your alignment preference */
+  vertical-align: middle; /* or top, bottom depending on your alignment preference */
 }

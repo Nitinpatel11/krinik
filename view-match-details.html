@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard | Xoric - Responsive Bootstrap 4 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="./assets/images/favicon.ico" />
+    <!-- DataTables -->
+    <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+    <!-- Responsive datatable examples -->
+    <link href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- datepicker -->
+    <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" />
+
+    <!-- jvectormap -->
+    <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Css -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <style>
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .btn-disable {
+            background: transparent;
+            border: none;
+            color: red;
+            font-size: 1.5em;
+        }
+
+        .btn-disable:focus {
+            outline: none;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .status-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .status-buttons .btn {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .team-logo {
+            background-color: #d3d3d3;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .team {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .match-info {
+            text-align: center;
+        }
+
+        .compact {
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 576px) {
+            .team {
+                flex-direction: column;
+            }
+
+            .team-logo {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .team-container {
+                flex: 1 1 auto;
+                max-width: 25%;
+            }
+
+            .match-info {
+                flex: 0 1 auto;
+                max-width: 20%;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .team-container,
+            .match-info {
+                max-width: 100%;
+            }
+
+            .match-info {
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body data-topbar="colored">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="../../dashboard/index.html" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="./assets/images/logo-sm-dark.png" alt="" height="22" />
+                            </span>
+                            <span class="logo-lg">
+                                <img src="./assets/images/logo-dark.png" alt="" height="20" />
+                            </span>
+                        </a>
+
+                        <a href="../../dashboard/index.html" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="./assets/images/logo-sm-light.png" alt="" height="22" />
+                            </span>
+                            <span class="logo-lg">
+                                <img src="./assets/images/logo-light.png" alt="" height="20" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+                        id="vertical-menu-btn">
+                        <i class="mdi mdi-backburger"></i>
+                    </button>
+
+                </div>
+
+                <div class="d-flex ">
+                    <div class="dropdown d-inline-block d-lg-none ms-2">
+                        <button type="button" class="btn header-item noti-icon waves-effect"
+                            id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="mdi mdi-magnify"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                            aria-labelledby="page-header-search-dropdown">
+                            <form class="p-3">
+                                <div class="form-group mt-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="filter-input"
+                                            placeholder="Search ..." aria-label="Recipient's username" />
+                                    </div>
+
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="mdi mdi-magnify"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- light dark btn -->
+                <div class="dropdown d-none d-sm-inline-block">
+                    <button type="button" class="btn header-item" id="light-dark-mode">
+                        <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
+                    </button>
+                </div>
+
+
+            </div>
+    </div>
+    </header>
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="vertical-menu">
+        <div data-simplebar class="h-100">
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <!-- Left Menu Start -->
+                <ul class="metismenu list-unstyled" id="side-menu">
+                    <li class="menu-title">Menu</li>
+
+                    <li>
+                        <a href="./index.html" class="waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-airplay"></i>
+                            </div>
+                            <span class="badge rounded-pill text-bg-success float-end">3</span>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-schedule"></i>
+                            </div>
+                            <span>User</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-comment-message"></i>
+                            </div>
+                            <span>Sports Configuration</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="./manage-league.html">Manage Leagues</a></li>
+                            <li><a href="./manage-team.html">Manage Teams</a></li>
+                            <li><a href="./manage-player.html">Manage Players</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="calendar.html" class="waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-schedule"></i>
+                            </div>
+                            <span>Manage Pools</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-schedule"></i>
+                            </div>
+                            <span>All Transaction</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-schedule"></i>
+                            </div>
+                            <span>Account Setting</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect">
+                            <div class="d-inline-block icons-sm me-1">
+                                <i class="uim uim-schedule"></i>
+                            </div>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- Sidebar -->
+        </div>
+    </div>
+    <!-- Left Sidebar End -->
+
+
+    <div class="main-content">
+        <div class="page-content">
+            <!-- Page-Title -->
+            <div class="page-title-box">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+
+                        <div>
+                            <h4 class="page-title mb-1">View Match Details</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="mainDiv">
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 text-center">
+                                <!-- Center align on small screens -->
+                                <div class="card mb-5">
+                                    <div class="py-2">
+                                        <div
+                                            class="d-flex align-items-center flex-wrap justify-content-xl-start justify-content-center">
+                                            <!-- Left align on xl screens, center align on smaller screens -->
+                                            <div class="team-container compact">
+                                                <div class="team">
+                                                    <div class="team-logo">Team Logo</div>
+                                                    <div class="ml-md-2 mt-2 mt-md-0 ms-1 fs-6 fw-bold">IND</div>
+                                                </div>
+                                            </div>
+                                            <div class="match-info compact">
+                                                <div>2h 30m</div>
+                                            </div>
+                                            <div class="team-container compact">
+                                                <div class="team">
+                                                    <div class="team-logo">Team Logo</div>
+                                                    <div class="ml-md-2 mt-2 mt-md-0 ms-1 fs-6 fw-bold">MUM</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="page-content-wrapper">
+                        <div class="container-fluid ">
+                            <div class="row mt-4">
+
+                                <div class="col-xl-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <h5>Total Amount</h5>
+                                                <div class="col-6">
+
+                                                    <div class="mt-2">
+                                                        <span href="#"
+                                                            class="btn btn-primary btn-sm data-padding text-center"
+                                                            id="total-league-data">10000
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-xl-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <h5>Total Win</h5>
+                                                <div class="col-6">
+
+                                                    <div class="mt-2">
+                                                        <span href="#"
+                                                            class="btn btn-primary btn-sm data-padding text-center"
+                                                            id="total-league-data">100
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xl-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <h5>Total Available</h5>
+                                                <div class="col-6">
+
+                                                    <div class="mt-2">
+                                                        <span href="#"
+                                                            class="btn btn-primary btn-sm data-padding text-center"
+                                                            id="total-league-data">10000
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6 col-md-12 col-sm-11">
+
+                                    <div class="card p-2">
+                                        <div class="card-body">
+                                            <h3 class="text-center">Team A</h3>
+
+
+                                            <div class="container mt-3">
+                                                <div class="table-wrapper">
+                                                    <table class="table table-bordered text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Name</th>
+                                                                <th>Pic</th>
+                                                                <th>Disable</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>Player 1</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>Player 2</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>Player 3</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4</td>
+                                                                <td>Player 4</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5</td>
+                                                                <td>Player Alternate...</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>6</td>
+                                                                <td>Player Alternate...</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>7</td>
+                                                                <td>Player Alternate...</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-3">
+                                                    <button class="btn btn-primary">+ Add Player Alternate...</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xl-6 col-md-12 col-sm-11">
+
+                                    <div class="card p-2">
+                                        <div class="card-body">
+
+                                            <h3 class="text-center">Team B</h3>
+
+
+
+                                            <div class="container mt-3">
+                                                <div class="table-wrapper">
+                                                    <table class="table table-bordered text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Name</th>
+                                                                <th>Pic</th>
+                                                                <th>Disable</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>Player 1</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>Player 2</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>Player 3</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4</td>
+                                                                <td>Player 4</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5</td>
+                                                                <td>Player Alternate...</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>6</td>
+                                                                <td>Player Alternate...</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>7</td>
+                                                                <td>Player Alternate...</td>
+                                                                <td><img src="https://via.placeholder.com/40" alt="Pic">
+                                                                </td>
+                                                                <td><button class="btn-disable"><i
+                                                                            class="fa-solid fa-ban"></i></button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-3">
+                                                    <button class="btn btn-primary">+ Add Player Alternate...</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xl-12 col-md-12 col-sm-11">
+
+                                <div class="card p-2">
+                                    <div class="card-body">
+
+                                        <div class="container">
+                                            <div class="status-buttons">
+                                                <button class="btn btn-primary">Status (Live/Completed)</button>
+                                                <button class="btn btn-primary mt-2">Declare Result</button>
+                                            </div>
+                                            <div class="table-wrapper mt-3">
+                                                <table class="table table-bordered text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Username</th>
+                                                            <th>Enter Amount</th>
+                                                            <th>Pair</th>
+                                                            <th>Total Pool</th>
+                                                            <th>Refund/Kick</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>User1</td>
+                                                            <td>100</td>
+                                                            <td>1</td>
+                                                            <td>1</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>User2</td>
+                                                            <td>150</td>
+                                                            <td>2</td>
+                                                            <td>2</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>User3</td>
+                                                            <td>200</td>
+                                                            <td>2</td>
+                                                            <td>3</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>User4</td>
+                                                            <td>452</td>
+                                                            <td>4</td>
+                                                            <td>6</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>User5</td>
+                                                            <td>310</td>
+                                                            <td>5</td>
+                                                            <td>5</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>6</td>
+                                                            <td>User6</td>
+                                                            <td>470</td>
+                                                            <td>6</td>
+                                                            <td>6</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>7</td>
+                                                            <td>User7</td>
+                                                            <td>120</td>
+                                                            <td>7</td>
+                                                            <td>7</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>8</td>
+                                                            <td>User8</td>
+                                                            <td>270</td>
+                                                            <td>8</td>
+                                                            <td>8</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>9</td>
+                                                            <td>User9</td>
+                                                            <td>770</td>
+                                                            <td>9</td>
+                                                            <td>9</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>10</td>
+                                                            <td>User10</td>
+                                                            <td>570</td>
+                                                            <td>10</td>
+                                                            <td>10</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <footer class="footer">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-6">2020 © Xoric.</div>
+                                    <div class="col-sm-6">
+                                        <div class="text-sm-end d-none d-sm-block">
+                                            Crafted with <i class="mdi mdi-heart text-danger"></i> by
+                                            Themesdesign
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+
+
+                    </div>
+                </div>
+
+
+</body>
+
+</html>
