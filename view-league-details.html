@@ -21,7 +21,7 @@
     <!-- Icons Css -->
     <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="./assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -39,7 +39,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        /* overflow: hidden; */
+        overflow: hidden;
         position: relative;
 
     }
@@ -101,156 +101,336 @@
     <div id="layout-wrapper">
         <header id="page-topbar">
             <div class="navbar-header">
-                <div class="d-flex">
-                    <!-- LOGO -->
-                    <div class="navbar-brand-box">
-                        <a href="../../dashboard/index.html" class="logo logo-dark">
-                            <span class="logo-sm">
-                                <img src="./assets/images/logo-sm-dark.png" alt="" height="22" />
-                            </span>
-                            <span class="logo-lg">
-                                <img src="./assets/images/logo-dark.png" alt="" height="20" />
-                            </span>
-                        </a>
-
-                        <a href="../../dashboard/index.html" class="logo logo-light">
-                            <span class="logo-sm">
-                                <img src="./assets/images/logo-sm-light.png" alt="" height="22" />
-                            </span>
-                            <span class="logo-lg">
-                                <img src="./assets/images/logo-light.png" alt="" height="20" />
-                            </span>
-                        </a>
-                    </div>
-
-                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
-                        id="vertical-menu-btn">
-                        <i class="mdi mdi-backburger"></i>
-                    </button>
-
-                    <!-- App Search-->
-                    <!-- <form class="app-search d-none d-lg-block">
-                            <div class="position-relative mt-3">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form> -->
+              <div class="d-flex">
+                <!-- LOGO -->
+              <div class="navbar-brand-box">
+                  <a href="index.html" class="logo logo-dark">
+                    <span class="logo-sm">
+                      <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_15_554)">
+                          <path
+                            d="M2.66316 6.45349C0.984637 8.87847 0 11.8225 0 14.9991C0 18.1757 0.984637 21.1197 2.66316 23.5465C4.67346 21.1519 5.77226 18.1435 5.77226 15.0009C5.77226 11.8583 4.67167 8.84984 2.66316 6.45528V6.45349Z"
+                            fill="#E20101" />
+                          <path
+                            d="M4.95889 3.84239C4.38808 4.35781 3.85652 4.91619 3.37134 5.51214C5.66347 8.14651 6.92103 11.495 6.92103 14.9991C6.92103 18.5033 5.66347 21.8517 3.37134 24.4861C3.85831 25.082 4.38808 25.6404 4.95889 26.1558C7.70767 23.0776 9.21495 19.1386 9.21495 14.9991C9.21495 10.8596 7.70945 6.91881 4.95889 3.84239Z"
+                            fill="#E20101" />
+                          <path
+                            d="M19.386 14.9991C19.386 18.1883 22.1258 21.2718 27.1186 23.7165C28.8703 21.2593 29.9013 18.2509 29.9013 14.9991C29.9013 11.7473 28.8703 8.73889 27.1186 6.28169C22.1276 8.72636 19.386 11.8099 19.386 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M10.0944 18.0916C9.52713 21.3506 8.06801 24.3876 5.84009 26.8932C8.36233 28.8403 11.5214 30 14.9498 30C17.192 30 19.3182 29.5043 21.2286 28.6166C15.2477 25.6547 11.4161 22.0128 10.0944 18.0916Z"
+                            fill="#E20101" />
+                          <path
+                            d="M21.2286 1.3834C19.32 0.495735 17.192 0 14.9498 0C11.5214 0 8.36233 1.1597 5.84009 3.10684C8.06979 5.61236 9.52891 8.64225 10.0944 11.9048C11.4179 7.98544 15.2494 4.34528 21.2268 1.38519L21.2286 1.3834Z"
+                            fill="#E20101" />
+                          <path
+                            d="M18.239 14.9991C18.239 11.3965 21.1305 7.99081 26.3997 5.35464C25.2991 4.04104 23.9791 2.92071 22.4968 2.04915C14.9016 5.62667 10.724 10.2136 10.724 14.9991C10.724 19.7846 14.9016 24.3715 22.4968 27.949C23.9809 27.0775 25.3009 25.9554 26.3997 24.6436C21.1305 22.0074 18.239 18.6035 18.239 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M40.6466 23.9778V5.76627H43.2473V14.0792H43.299L47.0966 5.76627H49.6974L46.153 13.0555L50.3591 23.9778H47.605L44.6475 15.8957L43.2455 18.5301V23.9778H40.6448H40.6466Z"
+                            fill="#E20101" />
+                          <path
+                            d="M51.3545 23.9778V11.01H53.9552V12.3916C54.4814 11.9137 55.0005 11.5397 55.5107 11.2659C56.0208 10.9939 56.6487 10.856 57.3979 10.856V13.6193C57.1428 13.5173 56.8788 13.4654 56.6077 13.4654C56.3365 13.4654 56.0422 13.5119 55.7283 13.6067C55.4143 13.6998 55.1289 13.8591 54.8739 14.0792C54.6009 14.3011 54.3815 14.5911 54.2103 14.949C54.0408 15.3069 53.9552 15.7508 53.9552 16.2787V23.9778H51.3545Z"
+                            fill="#E20101" />
+                          <path
+                            d="M58.4414 8.37558V5.76627H61.0421V8.37558H58.4414ZM58.4414 23.9778V11.01H61.0421V23.9778H58.4414Z"
+                            fill="#E20101" />
+                          <path
+                            d="M63.1826 23.9778V11.01H65.7833V12.2627H65.8351C66.1062 11.8529 66.4344 11.5164 66.8161 11.2516C67.1979 10.9867 67.6866 10.8543 68.2824 10.8543C68.6053 10.8543 68.9281 10.9097 69.251 11.0207C69.5738 11.1317 69.8628 11.3142 70.1179 11.5701C70.373 11.826 70.5763 12.1536 70.7297 12.5544C70.8831 12.9553 70.9598 13.4457 70.9598 14.0255V23.976H68.3591V14.9991C68.3591 14.5213 68.2485 14.1472 68.0273 13.8734C67.8061 13.6014 67.4922 13.4636 67.0837 13.4636C66.5914 13.4636 66.2507 13.6175 66.0634 13.9235C65.8761 14.2313 65.7833 14.6734 65.7833 15.2532V23.9742H63.1826V23.9778Z"
+                            fill="#E20101" />
+                          <path
+                            d="M73.1003 8.37558V5.76627H75.7011V8.37558H73.1003ZM73.1003 23.9778V11.01H75.7011V23.9778H73.1003Z"
+                            fill="#E20101" />
+                          <path
+                            d="M77.8416 23.9778V5.76627H80.4423V16.6617H80.494L83.6299 11.01H86.2306L83.1465 16.2787L86.8692 23.9778H84.0401L81.6945 18.3762L80.4458 20.3448V23.976H77.8451L77.8416 23.9778Z"
+                            fill="#E20101" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_15_554">
+                            <rect width="86.8657" height="30" fill="#E20101" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <!-- <img src="./assets/images/krinikIn_Logo.svg" alt="" height="22" /> -->
+                    </span>
+                    <span class="logo-lg">
+                      <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_15_554)">
+                          <path
+                            d="M2.66316 6.45349C0.984637 8.87847 0 11.8225 0 14.9991C0 18.1757 0.984637 21.1197 2.66316 23.5465C4.67346 21.1519 5.77226 18.1435 5.77226 15.0009C5.77226 11.8583 4.67167 8.84984 2.66316 6.45528V6.45349Z"
+                            fill="#E20101" />
+                          <path
+                            d="M4.95889 3.84239C4.38808 4.35781 3.85652 4.91619 3.37134 5.51214C5.66347 8.14651 6.92103 11.495 6.92103 14.9991C6.92103 18.5033 5.66347 21.8517 3.37134 24.4861C3.85831 25.082 4.38808 25.6404 4.95889 26.1558C7.70767 23.0776 9.21495 19.1386 9.21495 14.9991C9.21495 10.8596 7.70945 6.91881 4.95889 3.84239Z"
+                            fill="#E20101" />
+                          <path
+                            d="M19.386 14.9991C19.386 18.1883 22.1258 21.2718 27.1186 23.7165C28.8703 21.2593 29.9013 18.2509 29.9013 14.9991C29.9013 11.7473 28.8703 8.73889 27.1186 6.28169C22.1276 8.72636 19.386 11.8099 19.386 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M10.0944 18.0916C9.52713 21.3506 8.06801 24.3876 5.84009 26.8932C8.36233 28.8403 11.5214 30 14.9498 30C17.192 30 19.3182 29.5043 21.2286 28.6166C15.2477 25.6547 11.4161 22.0128 10.0944 18.0916Z"
+                            fill="#E20101" />
+                          <path
+                            d="M21.2286 1.3834C19.32 0.495735 17.192 0 14.9498 0C11.5214 0 8.36233 1.1597 5.84009 3.10684C8.06979 5.61236 9.52891 8.64225 10.0944 11.9048C11.4179 7.98544 15.2494 4.34528 21.2268 1.38519L21.2286 1.3834Z"
+                            fill="#E20101" />
+                          <path
+                            d="M18.239 14.9991C18.239 11.3965 21.1305 7.99081 26.3997 5.35464C25.2991 4.04104 23.9791 2.92071 22.4968 2.04915C14.9016 5.62667 10.724 10.2136 10.724 14.9991C10.724 19.7846 14.9016 24.3715 22.4968 27.949C23.9809 27.0775 25.3009 25.9554 26.3997 24.6436C21.1305 22.0074 18.239 18.6035 18.239 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M40.6466 23.9778V5.76627H43.2473V14.0792H43.299L47.0966 5.76627H49.6974L46.153 13.0555L50.3591 23.9778H47.605L44.6475 15.8957L43.2455 18.5301V23.9778H40.6448H40.6466Z"
+                            fill="#E20101" />
+                          <path
+                            d="M51.3545 23.9778V11.01H53.9552V12.3916C54.4814 11.9137 55.0005 11.5397 55.5107 11.2659C56.0208 10.9939 56.6487 10.856 57.3979 10.856V13.6193C57.1428 13.5173 56.8788 13.4654 56.6077 13.4654C56.3365 13.4654 56.0422 13.5119 55.7283 13.6067C55.4143 13.6998 55.1289 13.8591 54.8739 14.0792C54.6009 14.3011 54.3815 14.5911 54.2103 14.949C54.0408 15.3069 53.9552 15.7508 53.9552 16.2787V23.9778H51.3545Z"
+                            fill="#E20101" />
+                          <path
+                            d="M58.4414 8.37558V5.76627H61.0421V8.37558H58.4414ZM58.4414 23.9778V11.01H61.0421V23.9778H58.4414Z"
+                            fill="#E20101" />
+                          <path
+                            d="M63.1826 23.9778V11.01H65.7833V12.2627H65.8351C66.1062 11.8529 66.4344 11.5164 66.8161 11.2516C67.1979 10.9867 67.6866 10.8543 68.2824 10.8543C68.6053 10.8543 68.9281 10.9097 69.251 11.0207C69.5738 11.1317 69.8628 11.3142 70.1179 11.5701C70.373 11.826 70.5763 12.1536 70.7297 12.5544C70.8831 12.9553 70.9598 13.4457 70.9598 14.0255V23.976H68.3591V14.9991C68.3591 14.5213 68.2485 14.1472 68.0273 13.8734C67.8061 13.6014 67.4922 13.4636 67.0837 13.4636C66.5914 13.4636 66.2507 13.6175 66.0634 13.9235C65.8761 14.2313 65.7833 14.6734 65.7833 15.2532V23.9742H63.1826V23.9778Z"
+                            fill="#E20101" />
+                          <path
+                            d="M73.1003 8.37558V5.76627H75.7011V8.37558H73.1003ZM73.1003 23.9778V11.01H75.7011V23.9778H73.1003Z"
+                            fill="#E20101" />
+                          <path
+                            d="M77.8416 23.9778V5.76627H80.4423V16.6617H80.494L83.6299 11.01H86.2306L83.1465 16.2787L86.8692 23.9778H84.0401L81.6945 18.3762L80.4458 20.3448V23.976H77.8451L77.8416 23.9778Z"
+                            fill="#E20101" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_15_554">
+                            <rect width="86.8657" height="30" fill="#E20101" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <!-- <img src="./assets/images/krinikIn_Logo.svg" alt="" height="20" /> -->
+                    </span>
+                  </a>
+      
+                  <a href="index.html" class="logo logo-light">
+                    <span class="logo-sm">
+                      <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_15_554)">
+                          <path
+                            d="M2.66316 6.45349C0.984637 8.87847 0 11.8225 0 14.9991C0 18.1757 0.984637 21.1197 2.66316 23.5465C4.67346 21.1519 5.77226 18.1435 5.77226 15.0009C5.77226 11.8583 4.67167 8.84984 2.66316 6.45528V6.45349Z"
+                            fill="#E20101" />
+                          <path
+                            d="M4.95889 3.84239C4.38808 4.35781 3.85652 4.91619 3.37134 5.51214C5.66347 8.14651 6.92103 11.495 6.92103 14.9991C6.92103 18.5033 5.66347 21.8517 3.37134 24.4861C3.85831 25.082 4.38808 25.6404 4.95889 26.1558C7.70767 23.0776 9.21495 19.1386 9.21495 14.9991C9.21495 10.8596 7.70945 6.91881 4.95889 3.84239Z"
+                            fill="#E20101" />
+                          <path
+                            d="M19.386 14.9991C19.386 18.1883 22.1258 21.2718 27.1186 23.7165C28.8703 21.2593 29.9013 18.2509 29.9013 14.9991C29.9013 11.7473 28.8703 8.73889 27.1186 6.28169C22.1276 8.72636 19.386 11.8099 19.386 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M10.0944 18.0916C9.52713 21.3506 8.06801 24.3876 5.84009 26.8932C8.36233 28.8403 11.5214 30 14.9498 30C17.192 30 19.3182 29.5043 21.2286 28.6166C15.2477 25.6547 11.4161 22.0128 10.0944 18.0916Z"
+                            fill="#E20101" />
+                          <path
+                            d="M21.2286 1.3834C19.32 0.495735 17.192 0 14.9498 0C11.5214 0 8.36233 1.1597 5.84009 3.10684C8.06979 5.61236 9.52891 8.64225 10.0944 11.9048C11.4179 7.98544 15.2494 4.34528 21.2268 1.38519L21.2286 1.3834Z"
+                            fill="#E20101" />
+                          <path
+                            d="M18.239 14.9991C18.239 11.3965 21.1305 7.99081 26.3997 5.35464C25.2991 4.04104 23.9791 2.92071 22.4968 2.04915C14.9016 5.62667 10.724 10.2136 10.724 14.9991C10.724 19.7846 14.9016 24.3715 22.4968 27.949C23.9809 27.0775 25.3009 25.9554 26.3997 24.6436C21.1305 22.0074 18.239 18.6035 18.239 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M40.6466 23.9778V5.76627H43.2473V14.0792H43.299L47.0966 5.76627H49.6974L46.153 13.0555L50.3591 23.9778H47.605L44.6475 15.8957L43.2455 18.5301V23.9778H40.6448H40.6466Z"
+                            fill="#E20101" />
+                          <path
+                            d="M51.3545 23.9778V11.01H53.9552V12.3916C54.4814 11.9137 55.0005 11.5397 55.5107 11.2659C56.0208 10.9939 56.6487 10.856 57.3979 10.856V13.6193C57.1428 13.5173 56.8788 13.4654 56.6077 13.4654C56.3365 13.4654 56.0422 13.5119 55.7283 13.6067C55.4143 13.6998 55.1289 13.8591 54.8739 14.0792C54.6009 14.3011 54.3815 14.5911 54.2103 14.949C54.0408 15.3069 53.9552 15.7508 53.9552 16.2787V23.9778H51.3545Z"
+                            fill="#E20101" />
+                          <path
+                            d="M58.4414 8.37558V5.76627H61.0421V8.37558H58.4414ZM58.4414 23.9778V11.01H61.0421V23.9778H58.4414Z"
+                            fill="#E20101" />
+                          <path
+                            d="M63.1826 23.9778V11.01H65.7833V12.2627H65.8351C66.1062 11.8529 66.4344 11.5164 66.8161 11.2516C67.1979 10.9867 67.6866 10.8543 68.2824 10.8543C68.6053 10.8543 68.9281 10.9097 69.251 11.0207C69.5738 11.1317 69.8628 11.3142 70.1179 11.5701C70.373 11.826 70.5763 12.1536 70.7297 12.5544C70.8831 12.9553 70.9598 13.4457 70.9598 14.0255V23.976H68.3591V14.9991C68.3591 14.5213 68.2485 14.1472 68.0273 13.8734C67.8061 13.6014 67.4922 13.4636 67.0837 13.4636C66.5914 13.4636 66.2507 13.6175 66.0634 13.9235C65.8761 14.2313 65.7833 14.6734 65.7833 15.2532V23.9742H63.1826V23.9778Z"
+                            fill="#E20101" />
+                          <path
+                            d="M73.1003 8.37558V5.76627H75.7011V8.37558H73.1003ZM73.1003 23.9778V11.01H75.7011V23.9778H73.1003Z"
+                            fill="#E20101" />
+                          <path
+                            d="M77.8416 23.9778V5.76627H80.4423V16.6617H80.494L83.6299 11.01H86.2306L83.1465 16.2787L86.8692 23.9778H84.0401L81.6945 18.3762L80.4458 20.3448V23.976H77.8451L77.8416 23.9778Z"
+                            fill="#E20101" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_15_554">
+                            <rect width="86.8657" height="30" fill="#E20101" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <!-- <img src="./assets/images/krinikIn_Logo.svg" alt="" height="22" /> -->
+                    </span>
+                    <span class="logo-lg">
+                      <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_15_554)">
+                          <path
+                            d="M2.66316 6.45349C0.984637 8.87847 0 11.8225 0 14.9991C0 18.1757 0.984637 21.1197 2.66316 23.5465C4.67346 21.1519 5.77226 18.1435 5.77226 15.0009C5.77226 11.8583 4.67167 8.84984 2.66316 6.45528V6.45349Z"
+                            fill="#E20101" />
+                          <path
+                            d="M4.95889 3.84239C4.38808 4.35781 3.85652 4.91619 3.37134 5.51214C5.66347 8.14651 6.92103 11.495 6.92103 14.9991C6.92103 18.5033 5.66347 21.8517 3.37134 24.4861C3.85831 25.082 4.38808 25.6404 4.95889 26.1558C7.70767 23.0776 9.21495 19.1386 9.21495 14.9991C9.21495 10.8596 7.70945 6.91881 4.95889 3.84239Z"
+                            fill="#E20101" />
+                          <path
+                            d="M19.386 14.9991C19.386 18.1883 22.1258 21.2718 27.1186 23.7165C28.8703 21.2593 29.9013 18.2509 29.9013 14.9991C29.9013 11.7473 28.8703 8.73889 27.1186 6.28169C22.1276 8.72636 19.386 11.8099 19.386 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M10.0944 18.0916C9.52713 21.3506 8.06801 24.3876 5.84009 26.8932C8.36233 28.8403 11.5214 30 14.9498 30C17.192 30 19.3182 29.5043 21.2286 28.6166C15.2477 25.6547 11.4161 22.0128 10.0944 18.0916Z"
+                            fill="#E20101" />
+                          <path
+                            d="M21.2286 1.3834C19.32 0.495735 17.192 0 14.9498 0C11.5214 0 8.36233 1.1597 5.84009 3.10684C8.06979 5.61236 9.52891 8.64225 10.0944 11.9048C11.4179 7.98544 15.2494 4.34528 21.2268 1.38519L21.2286 1.3834Z"
+                            fill="#E20101" />
+                          <path
+                            d="M18.239 14.9991C18.239 11.3965 21.1305 7.99081 26.3997 5.35464C25.2991 4.04104 23.9791 2.92071 22.4968 2.04915C14.9016 5.62667 10.724 10.2136 10.724 14.9991C10.724 19.7846 14.9016 24.3715 22.4968 27.949C23.9809 27.0775 25.3009 25.9554 26.3997 24.6436C21.1305 22.0074 18.239 18.6035 18.239 14.9991Z"
+                            fill="#E20101" />
+                          <path
+                            d="M40.6466 23.9778V5.76627H43.2473V14.0792H43.299L47.0966 5.76627H49.6974L46.153 13.0555L50.3591 23.9778H47.605L44.6475 15.8957L43.2455 18.5301V23.9778H40.6448H40.6466Z"
+                            fill="#E20101" />
+                          <path
+                            d="M51.3545 23.9778V11.01H53.9552V12.3916C54.4814 11.9137 55.0005 11.5397 55.5107 11.2659C56.0208 10.9939 56.6487 10.856 57.3979 10.856V13.6193C57.1428 13.5173 56.8788 13.4654 56.6077 13.4654C56.3365 13.4654 56.0422 13.5119 55.7283 13.6067C55.4143 13.6998 55.1289 13.8591 54.8739 14.0792C54.6009 14.3011 54.3815 14.5911 54.2103 14.949C54.0408 15.3069 53.9552 15.7508 53.9552 16.2787V23.9778H51.3545Z"
+                            fill="#E20101" />
+                          <path
+                            d="M58.4414 8.37558V5.76627H61.0421V8.37558H58.4414ZM58.4414 23.9778V11.01H61.0421V23.9778H58.4414Z"
+                            fill="#E20101" />
+                          <path
+                            d="M63.1826 23.9778V11.01H65.7833V12.2627H65.8351C66.1062 11.8529 66.4344 11.5164 66.8161 11.2516C67.1979 10.9867 67.6866 10.8543 68.2824 10.8543C68.6053 10.8543 68.9281 10.9097 69.251 11.0207C69.5738 11.1317 69.8628 11.3142 70.1179 11.5701C70.373 11.826 70.5763 12.1536 70.7297 12.5544C70.8831 12.9553 70.9598 13.4457 70.9598 14.0255V23.976H68.3591V14.9991C68.3591 14.5213 68.2485 14.1472 68.0273 13.8734C67.8061 13.6014 67.4922 13.4636 67.0837 13.4636C66.5914 13.4636 66.2507 13.6175 66.0634 13.9235C65.8761 14.2313 65.7833 14.6734 65.7833 15.2532V23.9742H63.1826V23.9778Z"
+                            fill="#E20101" />
+                          <path
+                            d="M73.1003 8.37558V5.76627H75.7011V8.37558H73.1003ZM73.1003 23.9778V11.01H75.7011V23.9778H73.1003Z"
+                            fill="#E20101" />
+                          <path
+                            d="M77.8416 23.9778V5.76627H80.4423V16.6617H80.494L83.6299 11.01H86.2306L83.1465 16.2787L86.8692 23.9778H84.0401L81.6945 18.3762L80.4458 20.3448V23.976H77.8451L77.8416 23.9778Z"
+                            fill="#E20101" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_15_554">
+                            <rect width="86.8657" height="30" fill="#E20101" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <!-- <img src="./assets/images/krinikIn_Logo.svg" alt="" height="20" /> -->
+                    </span>
+                  </a>
                 </div>
-
-                <div class="d-flex">
-                    <div class="dropdown d-inline-block d-lg-none ms-2">
-                        <button type="button" class="btn header-item noti-icon waves-effect"
-                            id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="mdi mdi-magnify"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
-                            aria-labelledby="page-header-search-dropdown">
-                            <form class="p-3">
-                                <div class="form-group mt-3">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search ..."
-                                            aria-label="Recipient's username" />
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit">
-                                                <i class="mdi mdi-magnify"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+      
+                <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                  <i class="mdi mdi-backburger"></i>
+                </button>
+      
+                <!-- App Search-->
+                <!-- <form class="app-search d-none d-lg-block">
+                                  <div class="position-relative mt-3">
+                                      <input type="text" class="form-control" placeholder="Search...">
+                                      <span class="mdi mdi-magnify"></span>
+                                  </div>
+                              </form> -->
+              </div>
+      
+              <div class="d-flex ">
+                <div class="dropdown d-inline-block d-lg-none ms-2">
+                  <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mdi mdi-magnify"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                    aria-labelledby="page-header-search-dropdown">
+                    <form class="p-3">
+                      <div class="form-group mt-3">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="filter-input" placeholder="Search ..."
+                            aria-label="Recipient's username" />
                         </div>
-                    </div>
-
-                    <!-- <div class="dropdown d-inline-block language-switch">
-                            <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img id="header-lang-img" src="./assets/images/flags/us.jpg" alt="Header Language" height="14">
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end"> -->
-                    <!-- item-->
-                    <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
-                                    <img src="./assets/images/flags/spain.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Spanish</span>
-                                </a> -->
-
-                    <!-- item-->
-                    <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
-                                    <img src="./assets/images/flags/germany.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">German</span>
-                                </a> -->
-
-                    <!-- item-->
-                    <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
-                                    <img src="./assets/images/flags/italy.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Italian</span>
-                                </a> -->
-
-                    <!-- item-->
-                    <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
-                                    <img src="./assets/images/flags/russia.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Russian</span>
-                                </a>
-                            </div>
-                        </div> -->
-
-                    <!-- <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                                <i class="mdi mdi-tune"></i>
-                            </button>
-                        </div> -->
-
-                    <!-- light dark btn -->
-                    <div class="dropdown d-none d-sm-inline-block">
-                        <button type="button" class="btn header-item" id="light-dark-mode">
-                            <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
-                        </button>
-                    </div>
-
-                    <!-- 
-                        <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="./assets/images/users/avatar-1.jpg" alt="Header Avatar">
-                                <span class="d-none d-sm-inline-block ms-1">Smith</span>
-                                <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end ">
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-credit-card-outline font-size-16 align-middle me-1"></i> Billing</a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-settings font-size-16 align-middle me-1"></i> Settings</a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock screen</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
-                            </div>
-                        </div> -->
+      
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="submit">
+                            <i class="mdi mdi-magnify"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
+      
+              <!-- <div class="dropdown d-inline-block language-switch">
+                                  <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <img id="header-lang-img" src="./assets/images/flags/us.jpg" alt="Header Language" height="14">
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-end"> -->
+              <!-- item-->
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
+                                          <img src="./assets/images/flags/spain.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Spanish</span>
+                                      </a> -->
+      
+              <!-- item-->
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
+                                          <img src="./assets/images/flags/germany.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">German</span>
+                                      </a> -->
+      
+              <!-- item-->
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
+                                          <img src="./assets/images/flags/italy.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Italian</span>
+                                      </a> -->
+      
+              <!-- item-->
+              <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
+                                          <img src="./assets/images/flags/russia.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Russian</span>
+                                      </a>
+                                  </div>
+                              </div> -->
+      
+              <!-- <div class="dropdown d-inline-block">
+                                  <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                                      <i class="mdi mdi-tune"></i>
+                                  </button>
+                              </div> -->
+      
+              <!-- light dark btn -->
+              <div class="dropdown d-none d-sm-inline-block">
+                <button type="button" class="btn header-item" id="light-dark-mode">
+                  <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
+                </button>
+              </div>
+      
+              <!-- 
+                              <div class="dropdown d-inline-block">
+                                  <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <img class="rounded-circle header-profile-user" src="./assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                      <span class="d-none d-sm-inline-block ms-1">Smith</span>
+                                      <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-end ">
+                                      <a class="dropdown-item" href="#"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profile</a>
+                                      <a class="dropdown-item" href="#"><i class="mdi mdi-credit-card-outline font-size-16 align-middle me-1"></i> Billing</a>
+                                      <a class="dropdown-item" href="#"><i class="mdi mdi-account-settings font-size-16 align-middle me-1"></i> Settings</a>
+                                      <a class="dropdown-item" href="#"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock screen</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
+                                  </div>
+                              </div> -->
             </div>
-        </header>
-
+          </header>
+        
+      
         <!-- ========== Left Sidebar Start ========== -->
         <div class="vertical-menu">
-            <div data-simplebar class="h-100">
-                <!--- Sidemenu -->
-                <div id="sidebar-menu">
-                    <!-- Left Menu Start -->
-                    <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title">Menu</li>
-        
-                        <li>
-                            <a href="./index.html" class="waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-airplay"></i>
-                                </div>
-                                <span class="badge rounded-pill text-bg-success float-end">3</span>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-        
-                        <li>
-                            <a href="calendar.html" class="waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-schedule"></i>
-                                </div>
-                                <span>User</span>
-                            </a>
-                        </li>
-        
-                        <li>
+          <div data-simplebar class="h-100">
+              <!--- Sidemenu -->
+              <div id="sidebar-menu">
+                  <!-- Left Menu Start -->
+                  <ul class="metismenu list-unstyled" id="side-menu">
+                      <li class="menu-title">Menu</li>
+      
+                      <li>
+                          <a href="./index.html" class="waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-airplay"></i>
+                              </div>
+                              <span class="badge rounded-pill text-bg-success float-end">3</span>
+                              <span>Dashboard</span>
+                          </a>
+                      </li>
+      
+                      <li>
+                          <a href="calendar.html" class="waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-schedule"></i>
+                              </div>
+                              <span>User</span>
+                          </a>
+                      </li>
+      
+                      <li>
                           <a href="javascript: void(0);" class="has-arrow waves-effect">
                               <div class="d-inline-block icons-sm me-1">
                                   <i class="uim uim-comment-message"></i>
@@ -275,215 +455,215 @@
                             <li><a href="./manage-match.html">Manage Match</a></li>
                         </ul>
                       </li>
-        
-                        <li>
-                            <a href="calendar.html" class="waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-schedule"></i>
-                                </div>
-                                <span>All Transaction</span>
-                            </a>
-                        </li>
-        
-                        <li>
-                            <a href="calendar.html" class="waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-schedule"></i>
-                                </div>
-                                <span>Account Setting</span>
-                            </a>
-                        </li>
-        
-                        <li>
-                            <a href="calendar.html" class="waves-effect">
-                                <div class="d-inline-block icons-sm me-1">
-                                    <i class="uim uim-schedule"></i>
-                                </div>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-        
-                        <!-- <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-sign-in-alt"></i></div>
-                        
-                                    <span>Authentication</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="auth-login.html">Login</a></li>
-                                    <li><a href="auth-register.html">Register</a></li>
-                                    <li><a href="auth-recoverpw.html">Recover Password</a></li>
-                                    <li><a href="auth-lock-screen.html">Lock Screen</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-grids"></i></div>
-                                    <span>Pages</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="pages-starter.html">Starter Page</a></li>
-                                    <li><a href="pages-maintenance.html">Maintenance</a></li>
-                                    <li><a href="pages-comingsoon.html">Coming Soon</a></li>
-                                    <li><a href="pages-timeline.html">Timeline</a></li>
-                                    <li><a href="pages-gallery.html">Gallery</a></li>
-                                    <li><a href="pages-faqs.html">FAQs</a></li>
-                                    <li><a href="pages-pricing.html">Pricing</a></li>
-                                    <li><a href="pages-404.html">Error 404</a></li>
-                                    <li><a href="pages-500.html">Error 500</a></li>
-                                </ul>
-                            </li>
-        
-                            <li class="menu-title">Components</li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-box"></i></div>
-                                    <span>Bootstrap UI</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="ui-alerts.html">Alerts</a></li>
-                                    <li><a href="ui-badge.html">Badge</a></li>
-                                    <li><a href="ui-buttons.html">Buttons</a></li>
-                                    <li><a href="ui-cards.html">Cards</a></li>
-                                    <li><a href="ui-dropdowns.html">Dropdowns</a></li>
-                                    <li><a href="ui-navs.html">Navs</a></li>
-                                    <li><a href="ui-tabs-accordions.html">Tabs &amp; Accordions</a></li>
-                                    <li><a href="ui-modals.html">Modals</a></li>
-                                    <li><a href="ui-images.html">Images</a></li>
-                                    <li><a href="ui-progressbars.html">Progress Bars</a></li>
-                                    <li><a href="ui-pagination.html">Pagination</a></li>
-                                    <li><a href="ui-popover-tooltips.html">Popover & Tooltips</a></li>
-                                    <li><a href="ui-spinner.html">Spinner</a></li>
-                                    <li><a href="ui-carousel.html">Carousel</a></li>
-                                    <li><a href="ui-video.html">Video</a></li>
-                                    <li><a href="ui-typography.html">Typography</a></li>
-                                    <li><a href="ui-grid.html">Grid</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-layer-group"></i></div>
-                                    <span>Advanced UI</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="advanced-alertify.html">Alertify</a></li>
-                                    <li><a href="advanced-rating.html">Rating</a></li>
-                                    <li><a href="advanced-nestable.html">Nestable</a></li>
-                                    <li><a href="advanced-rangeslider.html">Range Slider</a></li>
-                                    <li><a href="advanced-sweet-alert.html">Sweet-Alert</a></li>
-                                    <li><a href="advanced-lightbox.html">Lightbox</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-object-ungroup"></i></div>
-                                    <span>Icons</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="icons-materialdesign.html">Material Design</a></li>
-                                    <li><a href="icons-dripicons.html">Dripicons</a></li>
-                                    <li><a href="icons-fontawesome.html">Font Awesome 5</a></li>
-                                    <li><a href="icons-themify.html">Themify</a></li>
-                                    <li><a href="icons-unicons.html">Unicons - Dual Tone</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-table"></i></div>
-                                    <span>Tables</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="tables-basic.html">Basic Tables</a></li>
-                                    <li><a href="tables-datatable.html">Data Tables</a></li>
-                                    <li><a href="tables-responsive.html">Responsive Table</a></li>
-                                    <li><a href="tables-editable.html">Editable Table</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-document-layout-left"></i></div>
-                                    <span class="badge rounded-pill text-bg-danger float-end">07</span>
-                                    <span>Forms</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="form-elements.html">Form Elements</a></li>
-                                    <li><a href="form-validation.html">Form Validation</a></li>
-                                    <li><a href="form-advanced.html">Form Advanced</a></li>
-                                    <li><a href="form-editors.html">Form Editors</a></li>
-                                    <li><a href="form-uploads.html">Form File Upload</a></li>
-                                    <li><a href="form-mask.html">Form Mask</a></li>
-                                    <li><a href="form-summernote.html">Summernote</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-chart-pie"></i></div>
-                                    <span>Charts</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="charts-morris.html">Morris</a></li>
-                                    <li><a href="charts-apex.html">Apex</a></li>
-                                    <li><a href="charts-chartist.html">Chartist</a></li>
-                                    <li><a href="charts-chartjs.html">Chartjs</a></li>
-                                    <li><a href="charts-flot.html">Flot</a></li>
-                                    <li><a href="charts-sparkline.html">Sparkline</a></li>
-                                    <li><a href="charts-knob.html">Jquery Knob</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-comment-plus"></i></div>
-                                    <span>Maps</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="maps-google.html">Google map</a></li>
-                                    <li><a href="maps-vector.html">Vector map</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-window-grid"></i></div>
-                                    <span>Layouts</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="layouts-horizontal.html">Horizontal</a></li>
-                                    <li><a href="layouts-dark-sidebar.html">Dark Sidebar</a></li>
-                                    <li><a href="layouts-sidebar-sm.html">Small Sidebar</a></li>
-                                    <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>
-                                    <li><a href="layouts-colored-sidebar.html">Colored Sidebar</a></li>
-                                    <li><a href="layouts-boxed.html">Boxed Layout</a></li>
-                                </ul>
-                            </li>
-        
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <div class="d-inline-block icons-sm me-1"><i class="uim uim-layers-alt"></i></div>
-                                    <span>Multi Level</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="javascript: void(0);">Level 1.1</a></li>
-                                    <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                                        <ul class="sub-menu" aria-expanded="true">
-                                            <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                            <li><a href="javascript: void(0);">Level 2.2</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li> -->
-                    </ul>
-                </div>
-                <!-- Sidebar -->
-            </div>
-        </div>
+      
+                      <li>
+                          <a href="calendar.html" class="waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-schedule"></i>
+                              </div>
+                              <span>All Transaction</span>
+                          </a>
+                      </li>
+      
+                      <li>
+                          <a href="calendar.html" class="waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-schedule"></i>
+                              </div>
+                              <span>Account Setting</span>
+                          </a>
+                      </li>
+      
+                      <li>
+                          <a href="calendar.html" class="waves-effect">
+                              <div class="d-inline-block icons-sm me-1">
+                                  <i class="uim uim-schedule"></i>
+                              </div>
+                              <span>Logout</span>
+                          </a>
+                      </li>
+      
+                      <!-- <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-sign-in-alt"></i></div>
+                      
+                                  <span>Authentication</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="auth-login.html">Login</a></li>
+                                  <li><a href="auth-register.html">Register</a></li>
+                                  <li><a href="auth-recoverpw.html">Recover Password</a></li>
+                                  <li><a href="auth-lock-screen.html">Lock Screen</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-grids"></i></div>
+                                  <span>Pages</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="pages-starter.html">Starter Page</a></li>
+                                  <li><a href="pages-maintenance.html">Maintenance</a></li>
+                                  <li><a href="pages-comingsoon.html">Coming Soon</a></li>
+                                  <li><a href="pages-timeline.html">Timeline</a></li>
+                                  <li><a href="pages-gallery.html">Gallery</a></li>
+                                  <li><a href="pages-faqs.html">FAQs</a></li>
+                                  <li><a href="pages-pricing.html">Pricing</a></li>
+                                  <li><a href="pages-404.html">Error 404</a></li>
+                                  <li><a href="pages-500.html">Error 500</a></li>
+                              </ul>
+                          </li>
+      
+                          <li class="menu-title">Components</li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-box"></i></div>
+                                  <span>Bootstrap UI</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="ui-alerts.html">Alerts</a></li>
+                                  <li><a href="ui-badge.html">Badge</a></li>
+                                  <li><a href="ui-buttons.html">Buttons</a></li>
+                                  <li><a href="ui-cards.html">Cards</a></li>
+                                  <li><a href="ui-dropdowns.html">Dropdowns</a></li>
+                                  <li><a href="ui-navs.html">Navs</a></li>
+                                  <li><a href="ui-tabs-accordions.html">Tabs &amp; Accordions</a></li>
+                                  <li><a href="ui-modals.html">Modals</a></li>
+                                  <li><a href="ui-images.html">Images</a></li>
+                                  <li><a href="ui-progressbars.html">Progress Bars</a></li>
+                                  <li><a href="ui-pagination.html">Pagination</a></li>
+                                  <li><a href="ui-popover-tooltips.html">Popover & Tooltips</a></li>
+                                  <li><a href="ui-spinner.html">Spinner</a></li>
+                                  <li><a href="ui-carousel.html">Carousel</a></li>
+                                  <li><a href="ui-video.html">Video</a></li>
+                                  <li><a href="ui-typography.html">Typography</a></li>
+                                  <li><a href="ui-grid.html">Grid</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-layer-group"></i></div>
+                                  <span>Advanced UI</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="advanced-alertify.html">Alertify</a></li>
+                                  <li><a href="advanced-rating.html">Rating</a></li>
+                                  <li><a href="advanced-nestable.html">Nestable</a></li>
+                                  <li><a href="advanced-rangeslider.html">Range Slider</a></li>
+                                  <li><a href="advanced-sweet-alert.html">Sweet-Alert</a></li>
+                                  <li><a href="advanced-lightbox.html">Lightbox</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-object-ungroup"></i></div>
+                                  <span>Icons</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="icons-materialdesign.html">Material Design</a></li>
+                                  <li><a href="icons-dripicons.html">Dripicons</a></li>
+                                  <li><a href="icons-fontawesome.html">Font Awesome 5</a></li>
+                                  <li><a href="icons-themify.html">Themify</a></li>
+                                  <li><a href="icons-unicons.html">Unicons - Dual Tone</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-table"></i></div>
+                                  <span>Tables</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="tables-basic.html">Basic Tables</a></li>
+                                  <li><a href="tables-datatable.html">Data Tables</a></li>
+                                  <li><a href="tables-responsive.html">Responsive Table</a></li>
+                                  <li><a href="tables-editable.html">Editable Table</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-document-layout-left"></i></div>
+                                  <span class="badge rounded-pill text-bg-danger float-end">07</span>
+                                  <span>Forms</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="form-elements.html">Form Elements</a></li>
+                                  <li><a href="form-validation.html">Form Validation</a></li>
+                                  <li><a href="form-advanced.html">Form Advanced</a></li>
+                                  <li><a href="form-editors.html">Form Editors</a></li>
+                                  <li><a href="form-uploads.html">Form File Upload</a></li>
+                                  <li><a href="form-mask.html">Form Mask</a></li>
+                                  <li><a href="form-summernote.html">Summernote</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-chart-pie"></i></div>
+                                  <span>Charts</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="charts-morris.html">Morris</a></li>
+                                  <li><a href="charts-apex.html">Apex</a></li>
+                                  <li><a href="charts-chartist.html">Chartist</a></li>
+                                  <li><a href="charts-chartjs.html">Chartjs</a></li>
+                                  <li><a href="charts-flot.html">Flot</a></li>
+                                  <li><a href="charts-sparkline.html">Sparkline</a></li>
+                                  <li><a href="charts-knob.html">Jquery Knob</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-comment-plus"></i></div>
+                                  <span>Maps</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="maps-google.html">Google map</a></li>
+                                  <li><a href="maps-vector.html">Vector map</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-window-grid"></i></div>
+                                  <span>Layouts</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                  <li><a href="layouts-horizontal.html">Horizontal</a></li>
+                                  <li><a href="layouts-dark-sidebar.html">Dark Sidebar</a></li>
+                                  <li><a href="layouts-sidebar-sm.html">Small Sidebar</a></li>
+                                  <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>
+                                  <li><a href="layouts-colored-sidebar.html">Colored Sidebar</a></li>
+                                  <li><a href="layouts-boxed.html">Boxed Layout</a></li>
+                              </ul>
+                          </li>
+      
+                          <li>
+                              <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                  <div class="d-inline-block icons-sm me-1"><i class="uim uim-layers-alt"></i></div>
+                                  <span>Multi Level</span>
+                              </a>
+                              <ul class="sub-menu" aria-expanded="true">
+                                  <li><a href="javascript: void(0);">Level 1.1</a></li>
+                                  <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
+                                      <ul class="sub-menu" aria-expanded="true">
+                                          <li><a href="javascript: void(0);">Level 2.1</a></li>
+                                          <li><a href="javascript: void(0);">Level 2.2</a></li>
+                                      </ul>
+                                  </li>
+                              </ul>
+                          </li> -->
+                  </ul>
+              </div>
+              <!-- Sidebar -->
+          </div>
+      </div>
         <!-- Left Sidebar End -->
 
         <!-- ============================================================== -->
@@ -517,108 +697,50 @@
 
 
                                         <div class="form-group mb-4">
-
                                             <div class="bb">
-                                                <div class=""> 
-                                                <div class="circle " id="image-circle">
-                                                    <img id="image-preview" src="" alt="Click to upload image"
-                                                        style="display: none" />
-                                                
-                                                     
+                                                <div>
+                                                    <div class="circle" id="image-circle">
+                                                        <img id="leagueImagePreview" src="" alt="League Image">
+                                                    </div>
+                                                    <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                                                    <div class="mt-3">
+                                                        <h5 id="leagueNameHeading">League Name</h5>
+                                                    </div>
                                                 </div>
-<div class="mt-3">
-    <h5>League Name</h5>
-</div>
-                                               
-                                            </div>
-
-
-
+                                        
                                                 <div class="form-group form-group-custom mb-4">
-
-
-                                                    <span value="Start League Date"
-                                                        id="example-datetime-local-input">DD-MM-YYYY
-                                                        </span>
-
-
+                                                    <!-- <label for="startLeagueDate">Start League Date</label> -->
+                                                    <input type="text" class="form-control" id="startLeagueDate" readonly>
                                                 </div>
-
+                                        
                                                 <div class="form-group form-group-custom mb-4">
-
-
-                                                    <span  type="datetime" value="End League Date"
-                                                        id="example-datetime-local-input">
-                                                        DD-MM-YYYY
-                                                        </span>
-
-
+                                                    <!-- <label for="endLeagueDate">End League Date</label> -->
+                                                    <input type="text" class="form-control" id="endLeagueDate" readonly>
                                                 </div>
-
                                             </div>
-
-
                                         </div>
-
+                                        
 
                                     </div>
-
-
                                     <div class="page-content-wrapper mt-4">
                                         <div class="container-fluid">
                                             <div class="row">
-
-
-                                                <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                                    style="
-                  border-collapse: collapse;
-                  border-spacing: 0;
-                  width: 100%;
-                ">
+                                                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                     <thead>
-                                                        <tr class="text-center fs-5 ">
+                                                        <tr class="text-center fs-5">
                                                             <th style="width: 15%; text-align: center;">No.</th>
-                                                            <th>League's Total Teams</th>
+                                                            <th>Team Logo</th>
+                                                            <th>Team Short Name</th>
+                                                            <th>Team Name</th>
+                                                            <!-- Add more headers as needed -->
                                                         </tr>
                                                     </thead>
-
-
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>INDIA</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>INDIA</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>INDIA</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>INDIA</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>INDIA</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>6</td>
-                                                            <td>INDIA</td>
-                                                        </tr>
-
-
-
+                                                    <tbody id="teamTableBody">
+                                                        <!-- Team rows will be dynamically inserted here -->
                                                     </tbody>
                                                 </table>
                                             </div>
-
-
                                         </div>
-
                                     </div>
 
 
@@ -1074,81 +1196,109 @@
 
                 </div>
 
-
-
-                <script>
-
-
-                    async function myFetch(url, type, data) {
-                        try {
-                            let responseData;
-
-                            if (type === "GET") {
-                                const res = await fetch(`${url}?page=${currentPage}&limit=${rowsPerPage}`, {
-                                    method: type,
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    }
-                                });
-
-                                if (res.ok) {
-                                    console.log("HTTP request successful");
-                                } else {
-                                    console.log("HTTP request unsuccessful");
-                                }
-
-                                responseData = await res.json();
-                                console.log(responseData);
-                                totalEntries = responseData.total; // Assuming the API returns total number of entries
-                            }
-
-                            else if (type === "DELETE") {
-                                const res = await fetch(url, {
-                                    method: type,
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    }
-                                });
-
-                                if (res.ok) {
-                                    console.log("HTTP request successful");
-                                } else {
-                                    console.log("HTTP request unsuccessful");
-                                }
-
-                                return res;
-                            }
-
-                            else if (type === "POST" || type === "PUT") {
-                                const res = await fetch(url, {
-                                    method: type,
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(data)
-                                });
-
-                                if (res.ok) {
-                                    console.log("HTTP request successful");
-                                } else {
-                                    console.log("HTTP request unsuccessful");
-                                }
-
-                                responseData = await res.json();
-                            }
-
-                            if (responseData) {
-                                // populateTable(responseData.data);
-                                // updatePagination();
-                            }
-                        } catch (error) {
-                            console.error("Fetch error:", error);
+                <!-- <script>
+                    // script.js
+                function previewImage(event) {
+                    const imagePreview = document.getElementById('image-preview');
+                    const file = event.target.files[0];
+                
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = 'block';
                         }
+                        reader.readAsDataURL(file);
                     }
+                }
+                 </script> -->
 
-                    // Initial fetch and setup
-                    myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
+                 <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Get the league name from the URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const leagueName = urlParams.get('leagueName');
+                
+                        // Get reference to the table body
+                        const teamTableBody = document.getElementById('teamTableBody');
+                
+                        // Fetch team data from the API
+                        fetch('https://krinik.pythonanywhere.com/team_get/')
+                            .then(response => response.json())
+                            .then(data => {
+                                const teamData = data.data;
+                
+                                // Filter the team data based on the league name
+                                const filteredTeams = teamData.filter(team => team.league_name === leagueName);
+                
+                                // Update table with filtered team data
+                                teamTableBody.innerHTML = ''; // Clear existing rows
+                                filteredTeams.forEach((team, index) => {
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `
+                                        <td>${index + 1}</td>
+                                         <td class="view-image-div"><img src="  https://krinik.pythonanywhere.com${team.team_image}" height="30px" width="30px"></td>
+                                          <td>${team.team_short_name}</td>
+                                        <td>${team.team_name}</td>
+                                       
+                                    
+                                        <!-- Add more cells as needed -->
+                                    `;
+                                    teamTableBody.appendChild(row);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error fetching team data:', error);
+                                // Handle error, such as displaying a message to the user
+                            });
+                    });
                 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the league name from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const leagueName = urlParams.get('leagueName');
+
+        // Get references to HTML elements
+        const leagueNameHeading = document.getElementById('leagueNameHeading');
+        const startLeagueDateInput = document.getElementById('startLeagueDate');
+        const endLeagueDateInput = document.getElementById('endLeagueDate');
+        const leagueImagePreview = document.getElementById('leagueImagePreview');
+
+        // Fetch league details based on league name
+        fetch('https://krinik.pythonanywhere.com/league_get/')
+            .then(response => response.json())
+            .then(data => {
+                const leagueData = data.data;
+
+                // Find the league data with matching league name
+                const filteredLeague = leagueData.find(league => league.league_name === leagueName);
+
+                if (filteredLeague) {
+                    // Update HTML elements with league details
+                    leagueNameHeading.textContent = filteredLeague.league_name;
+                    startLeagueDateInput.value = filteredLeague.start_league_date;
+                    endLeagueDateInput.value = filteredLeague.end_league_date;
+
+                    // Display league image
+                    if (filteredLeague.league_image) {
+                        leagueImagePreview.src = 'https://krinik.pythonanywhere.com' + filteredLeague.league_image;
+                    } else {
+                        leagueImagePreview.src = ''; // Clear image source if no image available
+                    }
+                } else {
+                    console.error('League details not found for league name:', leagueName);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching league data:', error);
+                // Handle error, such as displaying a message to the user
+            });
+    });
+</script>
+
+
+
 
 
                 <!-- JAVASCRIPT -->

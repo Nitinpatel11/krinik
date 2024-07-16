@@ -2857,8 +2857,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .table-editable .editable-buttons .btn.btn-sm {
   font-size: 12px;
 }
+.btn-font{
+  font-size: 16px !important;
+  background-color: #E20101 !important;
+  color: white !important;
+}
 .data-padding{
-  padding: 5px 15px;
+  padding: 3px 15px;
 }
 .table-editable .editable-buttons .editable-submit .glyphicon-ok::before {
   content: "\f12c";
@@ -3619,7 +3624,7 @@ body::-webkit-scrollbar{
 .datepicker-wrapper {
   position: relative;
   display: block;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .datepicker-wrapper input {
   width: 100%;
@@ -3861,4 +3866,17 @@ body::-webkit-scrollbar{
 tbody td {
   text-align: center; /* or left, right depending on your alignment preference */
   vertical-align: middle; /* or top, bottom depending on your alignment preference */
+}
+
+.view-image-div{
+  height:30px !important;
+   width:30px !important;
+  
+}
+
+.view-image-div img{
+  height: 50px !important;
+  width: 50px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;    
 }
