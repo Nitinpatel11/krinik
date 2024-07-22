@@ -3,7 +3,9 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Manage League</title>
+  <!-- <title>Dashboard | Xoric - Responsive Bootstrap 4 Admin Dashboard</title> -->
+  <title>User</title>
+   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesdesign" name="author" />
@@ -14,10 +16,10 @@
   <!-- <link rel="shortcut icon" href="./assets/images/favicon.ico" /> -->
   <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon" >
   <!-- DataTables -->
-  <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-  <link href="./assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+  <!-- <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /> -->
+  <!-- <link href="./asset  s/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" -->
     type="text/css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
 
 
   <!-- Responsive datatable examples -->
@@ -36,14 +38,26 @@
   <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
   <!-- App Css-->
   <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+
+<!-- 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
 
   <style>
+    .btn-view {
+      background: transparent;
+      border: none;
+      color: red;
+      font-size: 1.3em;
+    }
 
+    .btn-view :focus {
+      outline: none;
+    }
   </style>
-
-
-
 </head>
 
 <body data-topbar="colored">
@@ -350,315 +364,249 @@
                         </div> -->
       </div>
     </header>
+
+
+   <!-- ========== Left Sidebar Start ========== -->
+   <div class="vertical-menu">
+    <div data-simplebar class="h-100">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
+          <li class="menu-title">Menu</li>
+
+          <li>
+            <a href="./index.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-airplay"></i>
+              </div>
+              <!-- <span class="badge rounded-pill text-bg-success float-end">3</span> -->
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="./user.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-user small-icons"></i>
+              </div>
+              <span>User</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-comment-message"></i>
+              </div>
+              <span>Sports Configuration</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./manage-league.html">Manage Leagues</a></li>
+              <li><a href="./manage-team.html">Manage Teams</a></li>
+              <li><a href="./manage-player.html">Manage Players</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-schedule"></i>
+              </div>
+              <span>Manage Fantacy</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./manage-match.html">Manage Match</a></li>
+              <li><a href="./manage-pool.html">Manage Pools</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="ti-wallet small-icons"></i>
+              </div>
+              <span>All Transaction</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-cog small-icons"></i>
+              </div>
+              <span>Account Setting</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-sign-out-alt small-icons"></i>
+              </div>
+              <span>Logout</span>
+            </a>
+          </li>
+
+         
+                  </ul>
+      </div>
+      <!-- Sidebar -->
+    </div>
+  </div>
+  <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+      <div class="page-content">
+        <!-- Page-Title -->
+        <div class="page-title-box">
+          <div class="container-fluid">
+            <div class="row align-items-center">
+
+              <div>
+                <h4 class="page-title mb-1">All Users</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+
+        <div class="page-content-wrapper">
+          <div class="container-fluid">
+            <div class="row">
+
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  d-flex justify-content-end">
+                <div class=" d-flex align-items-end  ">
+
+                  <form class="app-search  d-lg-block d-flex  ">
+                    <div class="d-flex gap-3 flex-wrap">
+
+
+                      <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd ">
+                        <div>
+                          <span class="mdi mdi-magnify dropbtn-color-2"></span>
+                        </div>
+                        <div>
+                          <input type="text" class=" dropbtn-color-2 dropbtn-color-3 p-2 " placeholder="Search..." id="tab_filter_text"
+                            onkeyup="filterRankList()">
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <br /><br />
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                          <div class="row">
+                            <div class="table-rep-plugin">
+                              <div class="table-responsive mb-0 table table-scroll" data-pattern="priority-columns"
+                                id="table-scrolling">
+                                <table id="tech-companies-1"
+                                  class="table table-striped text-center align-items-center fixed-table">
+                                  <thead class="align-items-center">
+                                    <tr>
+                                      <th data-priority="">No.</th>
+                                      
+                                    </th>
+                                    <th data-priority="" colspan="2">
+                                      Name  
+                                    </th>
+                                    <th data-priority="" class="sortable" data-column="league_name" colspan="2">Mobile No
+                                      <th data-priority="" colspan="3">Email</th>
+                                      <th data-priority="" colspan="3">
+                                        Wallet Amount
+                                      </th>
+                                      <th data-priority="" colspan="3">Winning Amount
+                                        <!-- <div class="dropdown">
+                                                  <span class="dropbtn">Status</span>
+                                                  <div class="dropdown-content">
+                                                      <a href="#" data-status="all">All</a>
+                                                      <a href="#" data-status="completed">Completed</a>
+                                                      <a href="#" data-status="upcoming">Upcoming</a>
+                                                      <a href="#" data-status="running">Running</a>
+                                                  </div>
+                                              </div> -->
+                                      </th>
+                                      <th data-priority="">Status</th>
   
-
- <!-- ========== Left Sidebar Start ========== -->
- <div class="vertical-menu">
-  <div data-simplebar class="h-100">
-    <!--- Sidemenu -->
-    <div id="sidebar-menu">
-      <!-- Left Menu Start -->
-      <ul class="metismenu list-unstyled" id="side-menu">
-        <li class="menu-title">Menu</li>
-
-        <li>
-          <a href="./index.html" class="waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="uim uim-airplay"></i>
-            </div>
-            <!-- <span class="badge rounded-pill text-bg-success float-end">3</span> -->
-            <span>Dashboard</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="./user.html" class="waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="fas fa-user small-icons"></i>
-            </div>
-            <span>User</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="uim uim-comment-message"></i>
-            </div>
-            <span>Sports Configuration</span>
-          </a>
-          <ul class="sub-menu" aria-expanded="false">
-            <li><a href="./manage-league.html">Manage Leagues</a></li>
-            <li><a href="./manage-team.html">Manage Teams</a></li>
-            <li><a href="./manage-player.html">Manage Players</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="javascript: void(0);" class="has-arrow waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="uim uim-schedule"></i>
-            </div>
-            <span>Manage Fantacy</span>
-          </a>
-          <ul class="sub-menu" aria-expanded="false">
-            <li><a href="./manage-match.html">Manage Match</a></li>
-            <li><a href="./manage-pool.html">Manage Pools</a></li>
-          </ul>
-        </li>
-
-        <li>
-          <a href="calendar.html" class="waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="ti-wallet small-icons"></i>
-            </div>
-            <span>All Transaction</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="calendar.html" class="waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="fas fa-cog small-icons"></i>
-            </div>
-            <span>Account Setting</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="calendar.html" class="waves-effect">
-            <div class="d-inline-block icons-sm me-1">
-              <i class="fas fa-sign-out-alt small-icons"></i>
-            </div>
-            <span>Logout</span>
-          </a>
-        </li>
-
-      
-                </ul>
-    </div>
-    <!-- Sidebar -->
-  </div>
-</div>
-<!-- Left Sidebar End -->
-
-  <!-- ============================================================== -->
-  <!-- Start right Content here -->
-  <!-- ============================================================== -->
-  <div class="main-content">
-    <div class="page-content">
-      <!-- Page-Title -->
-      <div class="page-title-box">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <!-- <div class="col-md-8">
-                                    <h4 class="page-title mb-1">Dashboard</h4>
-                                    <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item active">Welcome to Xoric Dashboard</li>
-                                    </ol>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="float-end d-none d-md-block">
-                                        <div class="dropdown d-inline-block">
-                                            <button type="button" class="btn btn-light rounded-pill user text-start d-flex align-items-center" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-settings-outline me-1"></i> Settings
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Separated link</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-            <div>
-              <h4 class="page-title mb-1">Manage Leagues</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end page title end breadcrumb -->
-
-      <div class="page-content-wrapper">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xl-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <h5>Total League</h5>
-                    <div class="col-6">
-                      <!-- <p class="text-muted">Xoric Dashboard</p> -->
-
-                      <div class="mt-4">
-                        <span href="#" class="btn btn-primary btn-sm data-padding btn-font" id="total-league-data">
-                        </span>
-                      </div>
-                    </div>
-
-                    <div class="col-5 ms-auto">
-                      <div>
-                        <img src="./assets/images/widget-img.png" alt="" class="img-fluid" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  d-flex justify-content-end">
-              <div class=" d-flex align-items-end  ">
-
-                <form class="app-search  d-lg-block d-flex  ">
-                  <div class="d-flex gap-3 flex-wrap">
-                    <div class="dropdown">
-
-                      <!-- <div class="datepicker-container"> -->
-                      <div id="rangePicker" class="date-button">Start & End Date
-                      </div>
-                      <i id="calendarIcon" class="fas fa-calendar-alt date-icon"></i>
-                      <i id="clearDates" class="fas fa-times-circle"></i>
-                      <!-- </div> -->
-
-                      <!-- <i class="mdi mdi-chevron-down"></i> -->
-
-                    </div>
-
-                    <div class="dropdown">
-                      <select id="statusDropdown" class="form-select dropbtn-color dropbtn"
-                        onchange="filterRankList(this.value)">
-                        <option value="">All Status</option>
-                        <option value="Running">Running</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Upcoming">Upcoming</option>
-                      </select>
-
-                    </div>
-
-                    <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
-                      <div>
-                        <span class="mdi mdi-magnify dropbtn-color-2"></span>
-                      </div>
-                      <div>
-                        <input type="text" class=" dropbtn-color-2" placeholder="Search..." id="tab_filter_text"
-                          onkeyup="filterRankList()">
-                      </div>
-                    </div>
-                    <div>
-                      <!-- <button onclick=navigateTo() class="btn dropbtn-color addnew">Add New</button> -->
-                      <a href="./addleague.html" type="button" id="add-new-btn" class="btn dropbtn-color addnew">Add New</a>
-                    </div>
-                  </div>
-
-                </form>
-              </div>
-            </div>
-          </div>
-          <!-- end row -->
-
-          <div class="row">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                        <div class="row">
-                          <div class="table-rep-plugin">
-                            <div class="table-responsive mb-0 table table-scroll" data-pattern="priority-columns"
-                              id="table-scrolling">
-                              <table id="tech-companies-1"
-                                class="table table-striped text-center align-items-center fixed-table">
-                                <thead class="align-items-center">
-                                  <tr>
-                                    <th data-priority="">No.</th>
-                                    <th data-priority="" class="sortable" data-column="league_name" colspan="2">League Full Name
-
-                                    </th>
-                                    <th data-priority="" colspan="2">
-                                      League Short Name
-                                    </th>
-                                    <th data-priority="">Logo</th>
-                                    <th data-priority="" colspan="2">
-                                      Start & End Date
-                                    </th>
-                                    <th data-priority="" colspan="2">Status
-                                      <!-- <div class="dropdown">
-                                                <span class="dropbtn">Status</span>
-                                                <div class="dropdown-content">
-                                                    <a href="#" data-status="all">All</a>
-                                                    <a href="#" data-status="completed">Completed</a>
-                                                    <a href="#" data-status="upcoming">Upcoming</a>
-                                                    <a href="#" data-status="running">Running</a>
-                                                </div>
-                                            </div> -->
-                                    </th>
-                                    <th data-priority="">View</th>
-
-                                    <th data-priority="">Edit</th>
-                                    <th data-priority="">Delete</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                              </table>
-
-                            </div>
-                            <div id="noDataFound" style="display:none;" class="no-data-div">
-                              <img src="./assets/images/no-data.jpg" alt="No Data Found">
+                                      <th data-priority="">View</th>
+                                      <!-- <th data-priority="">Delete</th> -->
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  </tbody>
+                                </table>
+  
+                              </div>
+                              <div id="noDataFound" style="display:none;" class="no-data-div">
+                                <img src="./assets/images/no-data.jpg" alt="No Data Found">
+                              </div>
                             </div>
                           </div>
-                        </div>
-
-                        <div class="row" id="pagination" style="display:none">
-                          <div class="col-sm-12 col-md-5">
-                            <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
-                              Showing 1 to 10 of 57 leagues
+  
+                          <div class="row" id="pagination" style="display:none">
+                            <div class="col-sm-12 col-md-5">
+                              <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                                Showing 1 to 10 of 57 leagues
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-sm-12 col-md-7">
-                            <div class="dataTables_paginate paging_simple_numbers pagination index_buttons"
-                              id="datatable_paginate">
-                              <ul class="pagination-list d-flex list-unstyled"></ul>
+                            <div class="col-sm-12 col-md-7">
+                              <div class="dataTables_paginate paging_simple_numbers pagination index_buttons"
+                                id="datatable_paginate">
+                                <ul class="pagination-list d-flex list-unstyled"></ul>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <!-- end col -->
                 </div>
-                <!-- end col -->
+                <!-- end row -->
               </div>
-              <!-- end row -->
             </div>
+            <!-- end row -->
           </div>
-          <!-- end row -->
+          <!-- container-fluid -->
         </div>
-        <!-- container-fluid -->
+        <!-- end page-content-wrapper -->
       </div>
-      <!-- end page-content-wrapper -->
-    </div>
-    <!-- End Page-content -->
+      <!-- End Page-content -->
 
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-6">2024 © Krinik.</div>
-          <div class="col-sm-6">
-            <div class="text-sm-end d-none d-sm-block">
-              Crafted with <i class="mdi mdi-heart text-danger"></i> by
-              Themesdesign
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">2024 © Krinik.</div>
+            <div class="col-sm-6">
+              <div class="text-sm-end d-none d-sm-block">
+                Crafted with <i class="mdi mdi-heart text-danger"></i> by
+                Themesdesign
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
-  </div>
-  <!-- end main content-->
+      </footer>
+    </div>
+    <!-- end main content-->
   </div>
   <!-- END layout-wrapper -->
 
-  
+ 
 
   <!-- JAVASCRIPT -->
   <script src="./assets/libs/jquery/jquery.min.js"></script>
@@ -691,7 +639,7 @@
   <script src="./assets/libs/air-datepicker/air-datepicker.css"></script>
   <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
   <!-- apexcharts -->
   <script src="./assets/libs/apexcharts/apexcharts.min.js"></script>
 
@@ -704,15 +652,12 @@
   <script src="./assets/js/pages/dashboard.init.js"></script>
 
   <script src="./assets/js/app.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-  <!-- <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script> -->
- 
-
-  <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script>
+ -->
 
 
   <script>
@@ -729,7 +674,7 @@
     async function fetchData() {
       try {
         const data = await $.ajax({
-          url: "https://krinik.pythonanywhere.com/league_get/",
+          url: "https://krinik.pythonanywhere.com/user_get/",
           method: "GET"
         });
 
@@ -761,45 +706,45 @@
       max_index = Math.ceil(array_length / table_size);
     }
 
-    $(document).ready(function () {
-      $('#tab_filter_text').on('input', filterRankList);
-      let picker = flatpickr('#rangePicker', {
-        mode: 'range',
-        dateFormat: 'd/m/Y',
-        onClose: function (selectedDates, dateStr, instance) {
-          if (!selectedDates || selectedDates.length === 0) {
-            instance.clear();
-            $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-            $('#clearDates').hide();
-            $('#calendarIcon').show();
-          } else {
-            $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd/m/Y')).join(' - ')).addClass('has-dates');
-            $('#clearDates').show();
-            $('#calendarIcon').hide();
-          }
-          filterRankList();
-        },
-        clickOpens: false,
-        allowInput: false
-      });
+    // $(document).ready(function () {
+    //   $('#tab_filter_text').on('input', filterRankList);
+    //   let picker = flatpickr('#rangePicker', {
+    //     mode: 'range',
+    //     dateFormat: 'd/m/Y',
+    //     onClose: function (selectedDates, dateStr, instance) {
+    //       if (!selectedDates || selectedDates.length === 0) {
+    //         instance.clear();
+    //         $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+    //         $('#clearDates').hide();
+    //         $('#calendarIcon').show();
+    //       } else {
+    //         $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd/m/Y')).join(' - ')).addClass('has-dates');
+    //         $('#clearDates').show();
+    //         $('#calendarIcon').hide();
+    //       }
+    //       filterRankList();
+    //     },
+    //     clickOpens: false,
+    //     allowInput: false
+    //   });
 
-      $('#rangePicker, #calendarIcon').click(function () {
-        if (!$('#rangePicker').hasClass('has-dates')) {
-          picker.open();
-        }
-      });
+    //   $('#rangePicker, #calendarIcon').click(function () {
+    //     if (!$('#rangePicker').hasClass('has-dates')) {
+    //       picker.open();
+    //     }
+    //   });
 
-      $('#clearDates').click(function () {
-        picker.clear();
-        $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-        $('#clearDates').hide();
-        $('#calendarIcon').show();
-        filterRankList();
-      });
+    //   $('#clearDates').click(function () {
+    //     picker.clear();
+    //     $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+    //     $('#clearDates').hide();
+    //     $('#calendarIcon').show();
+    //     filterRankList();
+    //   });
 
-      $('#statusDropdown').change(filterRankList);
-      fetchData();
-    });
+    //   $('#statusDropdown').change(filterRankList);
+    //   fetchData();
+    // });
 
     function filterRankList() {
         var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
@@ -965,47 +910,52 @@
 
       for (var i = tab_start; i < tab_end; i++) {
         var showdata = array[i];
-        var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+        // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
 
         var tr = $("<tr></tr>");
 
         var noCell = $("<td></td>").text(i + 1);
-        var fullNameCell = $("<td colspan='2'></td>").text(showdata["league_name"] || "");
-        var shortNameCell = $("<td colspan='2'> </td>").text(showdata["short_league_name"] || "");
-
-        var logoCell = $("<td></td>").html(
-          showdata["league_image"]
-            ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
-            : ""
-        );
+        var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
+        var shortNameCell = $("<td colspan='2'> </td>").text(showdata["modile_no"] || "");
+        var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
+        var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
+        var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
 
 
-        var dateCell = $("<td colspan='2'></td>").text(
-          (showdata["start_league_date"] || "") +
-          " - " +
-          (showdata["end_league_date"] || "")
-        );
-        var statusCell = $("<td colspan='2'></td>").text(status);
+
+        // var logoCell = $("<td></td>").html(
+        //   showdata["league_image"]
+        //     ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
+        //     : ""
+        // );
+
+
+        // var dateCell = $("<td colspan='2'></td>").text(
+        //   (showdata["start_league_date"] || "") +
+        //   " - " +
+        //   (showdata["end_league_date"] || "")
+        // );
+        var statusCell = $("<td ></td>").text("status");
         var viewCell = $("<td></td>").html(
           // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
             '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
         );
-        var editCell = $("<td></td>").html(
-          '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
-        );
-        var deleteCell = $("<td></td>").html(
-          '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-        );
+        // var editCell = $("<td></td>").html(
+        //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
+        // );
+        // var deleteCell = $("<td></td>").html(
+        //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
+        // );
 
         tr.append(noCell)
           .append(fullNameCell)
           .append(shortNameCell)
-          .append(logoCell)
-          .append(dateCell)
+          .append(emailCell)
+          .append(walletCell)
+          .append(winningCell)
           .append(statusCell)
           .append(viewCell)
-          .append(editCell)
-          .append(deleteCell);
+          // .append(deleteCell);
 
         if (status === "Completed") {
           noCell.addClass("disabled-row");
@@ -1022,70 +972,12 @@
       // lazyLoadImages(); // Call the lazy loading function after adding rows
     }
 
-    async function handleDelete(id) {
-      if (confirm('Are you sure you want to delete this league?')) {
-        const url = `https://krinik.pythonanywhere.com/league_get/${id}/`;
-        try {
-          const response = await fetch(url, { method: "DELETE" });
-
-          if (response.ok) {
-            await fetchData();
-          } else {
-            console.error("Failed to delete the league");
-          }
-        } catch (error) {
-          console.error("Error deleting data:", error);
-        }
-      }
-    }
-    function viewLeagueDetails(leagueName) {
-    // Encode league name for URL
-    var encodedLeagueName = encodeURIComponent(leagueName);
-    // Redirect to view league details page with league name as query parameter
-    window.location.href = 'view-league-details.html?leagueName=' + encodedLeagueName;
-}
-
-    async function handleEdit(id) {
-      const url = `https://krinik.pythonanywhere.com/league_get/${id}/`;
-      try {
-        const response = await fetch(url);
-
-        if (response.ok) {
-          window.location.href = `editleague.html?id=${id}`;
-        } else {
-          console.error("Failed to fetch the league data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
+   
 
   
 
     // Lazy load images function
-    function lazyLoadImages() {
-      const images = document.querySelectorAll('.lazyload');
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.remove('lazyload');
-            observer.unobserve(img);
-          }
-        });
-      }, options);
-
-      images.forEach(img => {
-        observer.observe(img);
-      });
-    }
+ 
 
     // function navigateTo() {
     //         // Use pushState to add a new history entry
@@ -1124,7 +1016,8 @@
 //         }
 
   </script>
-  
+
+
 
 </body>
 

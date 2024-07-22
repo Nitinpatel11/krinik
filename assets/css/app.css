@@ -3880,3 +3880,37 @@ tbody td {
   object-fit: cover !important;
   border-radius: 50% !important;    
 }
+
+.dropbtn-color-3{
+  border-radius: 15px;
+}
+
+.price-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f8f8f8;
+  margin-right: 10px;
+}
+
+.price-item span {
+  cursor: pointer;
+  color: #ff0000;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.small-icons{
+  min-width: 1.75rem;
+  padding-left: 7px;
+  color: #E20101 !important;
+  /* fill: var(--bs-sidebar-menu-item-icon-color) !important */
+}
+.small-icons:hover{
+  color: #E20101 !important;
+
+}

@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pool B</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- App favicon -->
+    <!-- <link rel="shortcut icon" href="./assets/images/favicon.ico" /> -->
+    <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon" >
+    <!-- DataTables -->
+    <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="./assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+    <!-- Responsive datatable examples -->
+    <link href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- datepicker -->
+    <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" />
+
+    <!-- jvectormap -->
+    <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Css -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <style>
+        .select-box-wrapper {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 30px;
+        }
+
+        .select-wrapper .select-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #555;
+        }
+
+        .mainnn {
+
+            margin-top: 70px !important;
+        }
+
+        input {
+            text-align: center;
+
+        }
+
+        .page-content-wrapper {
+            background-color: white;
+            padding-bottom: 35px;
+        }
+
+        
+    </style>
+</head>
+
+<body data-topbar="colored">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="../../dashboard/index.html" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="./assets/images/logo-sm-dark.png" alt="" height="22" />
+                            </span>
+                            <span class="logo-lg">
+                                <img src="./assets/images/logo-dark.png" alt="" height="20" />
+                            </span>
+                        </a>
+
+                        <a href="../../dashboard/index.html" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="./assets/images/logo-sm-light.png" alt="" height="22" />
+                            </span>
+                            <span class="logo-lg">
+                                <img src="./assets/images/logo-light.png" alt="" height="20" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+                        id="vertical-menu-btn">
+                        <i class="mdi mdi-backburger"></i>
+                    </button>
+
+                </div>
+
+                <div class="d-flex ">
+                    <div class="dropdown d-inline-block d-lg-none ms-2">
+                        <button type="button" class="btn header-item noti-icon waves-effect"
+                            id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="mdi mdi-magnify"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                            aria-labelledby="page-header-search-dropdown">
+                            <form class="p-3">
+                                <div class="form-group mt-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="filter-input"
+                                            placeholder="Search ..." aria-label="Recipient's username" />
+                                    </div>
+
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="mdi mdi-magnify"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- light dark btn -->
+                <div class="dropdown d-none d-sm-inline-block">
+                    <button type="button" class="btn header-item" id="light-dark-mode">
+                        <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </header>
+    </div>
+
+ <!-- ========== Left Sidebar Start ========== -->
+ <div class="vertical-menu">
+    <div data-simplebar class="h-100">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
+          <li class="menu-title">Menu</li>
+
+          <li>
+            <a href="./index.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-airplay"></i>
+              </div>
+              <!-- <span class="badge rounded-pill text-bg-success float-end">3</span> -->
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="./user.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-user small-icons"></i>
+              </div>
+              <span>User</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-comment-message"></i>
+              </div>
+              <span>Sports Configuration</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./manage-league.html">Manage Leagues</a></li>
+              <li><a href="./manage-team.html">Manage Teams</a></li>
+              <li><a href="./manage-player.html">Manage Players</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-schedule"></i>
+              </div>
+              <span>Manage Fantacy</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./manage-match.html">Manage Match</a></li>
+              <li><a href="./manage-pool.html">Manage Pools</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="ti-wallet small-icons"></i>
+              </div>
+              <span>All Transaction</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-cog small-icons"></i>
+              </div>
+              <span>Account Setting</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-sign-out-alt small-icons"></i>
+              </div>
+              <span>Logout</span>
+            </a>
+          </li>
+
+                </ul>
+      </div>
+      <!-- Sidebar -->
+    </div>
+  </div>
+  <!-- Left Sidebar End -->
+
+
+ 
+    <div class="main-content">
+        <div class="page-content">
+            <div class="page-title-box">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div>
+                            <h4 class="page-title mb-1">Create Pairs</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-content-wrapper">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card-body mt-4">
+                                <h5 class="text-center" id="matchHeading">Enter Pairs</h5>
+                                <div id="pairsInputContainer">
+                                    <!-- Dynamic pair inputs will be inserted here -->
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-secondary" type="button" id="addPairButton">Add Pair</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-12">
+                            <div class="card-body mt-4">
+                                <h5 class="text-center" id="createdPairsHeading">Created Pairs</h5>
+                                <div id="createdPairsContainer">
+                                    <!-- Display created pairs here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center d-flex justify-content-center gap-3">
+                        <button class="btn btn-primary" type="button" id="submitPairsButton">Submit Pairs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+const playerPairsContainer = document.getElementById('createdPairsContainer');
+const submitPairsButton = document.getElementById('submitPairsButton');
+const pairsInputContainer = document.getElementById('pairsInputContainer');
+const matchHeading = document.getElementById('matchHeading');
+const addPairButton = document.getElementById('addPairButton');
+const urlParams = new URLSearchParams(window.location.search);
+const matchName = urlParams.get('match');
+const poolName = urlParams.get('pool_name');
+
+let allPlayers = [];
+let createdPairs = [];
+
+fetch('https://krinik.pythonanywhere.com/match_get/')
+ .then(response => response.json())
+ .then(data => {
+     const matchData = data.data;
+     const selectedMatch = matchData.find(match => match.match_display_name.includes(matchName));
+
+     if (selectedMatch) {
+         const teamAName = selectedMatch.select_team_A.team_name;
+         const teamBName = selectedMatch.select_team_B.team_name;
+         matchHeading.textContent = `${teamAName} vs ${teamBName}`;
+
+         allPlayers = [
+             ...selectedMatch.select_player_A.map(player => player.player_name),
+             ...selectedMatch.select_player_B.map(player => player.player_name)
+         ];
+
+         createPlayerPairDropdown();
+
+         addPairButton.addEventListener('click', createPlayerPairDropdown);
+     }
+ })
+ .catch(error => console.error('Error fetching match data:', error));
+
+function createPlayerPairDropdown() {
+ const inputGroup = document.createElement('div');
+ inputGroup.className = 'input-group mb-3';
+
+ const selectA = createPlayerDropdown(allPlayers);
+ const selectB = createPlayerDropdown(allPlayers);
+
+ const limitInput = document.createElement('input');
+ limitInput.type = 'text';
+ limitInput.className = 'form-control';
+ limitInput.placeholder = 'Limit';
+
+ selectA.addEventListener('change', function () {
+     handleSelectionChange(selectA, selectB, limitInput);
+ });
+
+ selectB.addEventListener('change', function () {
+     handleSelectionChange(selectA, selectB, limitInput);
+ });
+
+ limitInput.addEventListener('input', function () {
+     updateCreatedPairs(selectA, selectB, limitInput);
+ });
+
+ inputGroup.appendChild(selectA);
+ inputGroup.appendChild(selectB);
+ inputGroup.appendChild(limitInput);
+ pairsInputContainer.appendChild(inputGroup);
+}
+
+function createPlayerDropdown(players) {
+ const selectElement = document.createElement('select');
+ selectElement.className = 'form-control player-dropdown';
+ const defaultOption = document.createElement('option');
+ defaultOption.value = '';
+ defaultOption.textContent = 'Select Player';
+ selectElement.appendChild(defaultOption);
+
+ players.forEach(player => {
+     const option = document.createElement('option');
+     option.value = player;
+     option.textContent = player;
+     selectElement.appendChild(option);
+ });
+
+ return selectElement;
+}
+
+function handleSelectionChange(selectA, selectB, limitInput) {
+ const playerA = selectA.value;
+ const playerB = selectB.value;
+
+ if (playerA && playerB) {
+     if (playerA === playerB) {
+         alert('Player A and Player B cannot be the same.');
+         selectA.value = '';
+         selectB.value = '';
+     } else if (pairExists(playerA, playerB)) {
+         alert('This pair already exists.');
+         selectA.value = '';
+         selectB.value = '';
+     } else {
+         limitInput.value = '';
+         createdPairs = createdPairs.filter(pair => !(pair.player_1 === playerA && pair.player_2 === playerB || pair.player_1 === playerB && pair.player_2 === playerA));
+         displayCreatedPairs();
+     }
+ }
+}
+
+function updateCreatedPairs(selectA, selectB, limitInput) {
+ const playerA = selectA.value;
+ const playerB = selectB.value;
+ const limit = limitInput.value;
+
+ if (playerA && playerB && limit) {
+     const existingPairIndex = createdPairs.findIndex(pair => (pair.player_1 === playerA && pair.player_2 === playerB) || (pair.player_1 === playerB && pair.player_2 === playerA));
+
+     if (existingPairIndex !== -1) {
+         createdPairs[existingPairIndex].limit = parseInt(limit, 10);
+     } else {
+         createdPairs.push({
+             player_1: playerA,
+             player_2: playerB,
+             limit: parseInt(limit, 10)
+         });
+     }
+     displayCreatedPairs();
+ }
+}
+
+function pairExists(playerA, playerB) {
+ return createdPairs.some(pair => {
+     return (pair.player_1 === playerA && pair.player_2 === playerB) ||
+         (pair.player_1 === playerB && pair.player_2 === playerA);
+ });
+}
+
+function displayCreatedPairs() {
+ playerPairsContainer.innerHTML = '';
+ createdPairs.forEach(pair => {
+     const pairText = document.createElement('div');
+     pairText.textContent = `[${pair.player_1}, ${pair.player_2}, Limit: ${pair.limit}]`;
+     playerPairsContainer.appendChild(pairText);
+ });
+}
+
+submitPairsButton.addEventListener('click', function () {
+ if (createdPairs.length === 0) {
+     alert('No pairs created.');
+     return;
+ }
+
+ createdPairs.forEach(pair => {
+     const payload = {
+         pool_name: poolName,
+         select_match: matchName,
+         player_1: pair.player_1,
+         player_2: pair.player_2,
+         limit: pair.limit
+     };
+
+     fetch('https://krinik.pythonanywhere.com/pair_captain_get/', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(payload),
+     })
+         .then(response => {
+             if (!response.ok) {
+                 console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
+                 throw new Error('Network response was not ok');
+             }
+             return response.json();
+         })
+         .then(data => {
+             console.log('Success:', data);
+         })
+         .catch(error => {
+             console.error('Error:', error);
+         });
+ });
+});
+});
+
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+    const playerPairsContainer = document.getElementById('createdPairsContainer');
+    const submitPairsButton = document.getElementById('submitPairsButton');
+    const pairsInputContainer = document.getElementById('pairsInputContainer');
+    const matchHeading = document.getElementById('matchHeading');
+    const addPairButton = document.getElementById('addPairButton');
+    const urlParams = new URLSearchParams(window.location.search);
+    const matchName = urlParams.get('match');
+    const poolName = urlParams.get('pool_name');
+
+    let allPlayers = [];
+    let createdPairs = [];
+
+    try {
+        const response = await fetch('https://krinik.pythonanywhere.com/match_get/');
+        const data = await response.json();
+        const matchData = data.data;
+        const selectedMatch = matchData.find(match => match.match_display_name.includes(matchName));
+
+        if (selectedMatch) {
+            const teamAName = selectedMatch.select_team_A.team_name;
+            const teamBName = selectedMatch.select_team_B.team_name;
+            matchHeading.textContent = `${teamAName} vs ${teamBName}`;
+
+            allPlayers = [
+                ...selectedMatch.select_player_A.map(player => player.player_name),
+                ...selectedMatch.select_player_B.map(player => player.player_name)
+            ];
+
+            createPlayerPairDropdown();
+            addPairButton.addEventListener('click', createPlayerPairDropdown);
+        }
+    } catch (error) {
+        console.error('Error fetching match data:', error);
+    }
+
+    function createPlayerPairDropdown() {
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group mb-3';
+
+        const selectA = createPlayerDropdown(allPlayers);
+        const selectB = createPlayerDropdown(allPlayers);
+
+        const limitInput = document.createElement('input');
+        limitInput.type = 'text';
+        limitInput.className = 'form-control';
+        limitInput.placeholder = 'Limit';
+
+        selectA.addEventListener('change', function () {
+            handleSelectionChange(selectA, selectB, limitInput);
+        });
+
+        selectB.addEventListener('change', function () {
+            handleSelectionChange(selectA, selectB, limitInput);
+        });
+
+        limitInput.addEventListener('input', function () {
+            updateCreatedPairs(selectA, selectB, limitInput);
+        });
+
+        inputGroup.appendChild(selectA);
+        inputGroup.appendChild(selectB);
+        inputGroup.appendChild(limitInput);
+        pairsInputContainer.appendChild(inputGroup);
+    }
+
+    function createPlayerDropdown(players) {
+        const selectElement = document.createElement('select');
+        selectElement.className = 'form-control player-dropdown';
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Select Player';
+        selectElement.appendChild(defaultOption);
+
+        players.forEach(player => {
+            const option = document.createElement('option');
+            option.value = player;
+            option.textContent = player;
+            selectElement.appendChild(option);
+        });
+
+        return selectElement;
+    }
+
+    function handleSelectionChange(selectA, selectB, limitInput) {
+        const playerA = selectA.value;
+        const playerB = selectB.value;
+
+        if (playerA && playerB) {
+            if (playerA === playerB) {
+                alert('Player A and Player B cannot be the same.');
+                selectA.value = '';
+                selectB.value = '';
+            } else if (pairExists(playerA, playerB)) {
+                alert('This pair already exists.');
+                selectA.value = '';
+                selectB.value = '';
+            } else {
+                limitInput.value = '';
+                createdPairs = createdPairs.filter(pair => !(pair.player_1 === playerA && pair.player_2 === playerB || pair.player_1 === playerB && pair.player_2 === playerA));
+                displayCreatedPairs();
+            }
+        }
+    }
+
+    function updateCreatedPairs(selectA, selectB, limitInput) {
+        const playerA = selectA.value;
+        const playerB = selectB.value;
+        const limit = limitInput.value;
+
+        if (playerA && playerB && limit) {
+            const existingPairIndex = createdPairs.findIndex(pair => (pair.player_1 === playerA && pair.player_2 === playerB) || (pair.player_1 === playerB && pair.player_2 === playerA));
+
+            if (existingPairIndex !== -1) {
+                createdPairs[existingPairIndex].limit = parseInt(limit, 10);
+            } else {
+                createdPairs.push({
+                    player_1: playerA,
+                    player_2: playerB,
+                    limit: parseInt(limit, 10)
+                });
+            }
+            displayCreatedPairs();
+        }
+    }
+
+    function pairExists(playerA, playerB) {
+        return createdPairs.some(pair => {
+            return (pair.player_1 === playerA && pair.player_2 === playerB) ||
+                (pair.player_1 === playerB && pair.player_2 === playerA);
+        });
+    }
+
+    function displayCreatedPairs() {
+        playerPairsContainer.innerHTML = '';
+        createdPairs.forEach(pair => {
+            const pairText = document.createElement('div');
+            pairText.textContent = `[${pair.player_1}, ${pair.player_2}, Limit: ${pair.limit}]`;
+            playerPairsContainer.appendChild(pairText);
+        });
+    }
+
+    submitPairsButton.addEventListener('click', async function () {
+        if (createdPairs.length === 0) {
+            alert('No pairs created.');
+            return;
+        }
+
+        for (const pair of createdPairs) {
+            const payload = {
+                pool_name: poolName,
+                select_match: matchName,
+                player_1: pair.player_1,
+                player_2: pair.player_2,
+                limit: pair.limit
+            };
+
+            try {
+                const response = await fetch('https://krinik.pythonanywhere.com/pair_captain_get/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                console.log('Success:', data);
+                  window.location.href = "./manage-pool.html"
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    });
+});
+
+</script>
+
+<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+
+        <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+
+
+        <script src="assets/js/app.js"></script>
+
+
+
+
+</html>
