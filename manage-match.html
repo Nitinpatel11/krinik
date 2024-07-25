@@ -636,7 +636,7 @@
                                       
                                         <th data-priority="">View</th>
 
-                                        <th data-priority="">Edit</th>
+                                        <!-- <th data-priority="">Edit</th> -->
                                         <th data-priority="">Delete</th>
                                       </tr>
                                     </thead>
@@ -977,9 +977,9 @@
         var viewCell = $("<td></td>").html(
             '<span class="sortable" onclick="window.location.href=\'view-match-details.html\'"><i class="far fa-eye"></i></span>'
         );
-        var editCell = $("<td></td>").html(
-            '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'
-        );
+        // var editCell = $("<td></td>").html(
+        //     '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'
+        // );
         var deleteCell = $("<td></td>").html(
             '<span class="sortable" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt"></i></span>'
         );
@@ -994,7 +994,7 @@
             .append(totalPlayersCell)
             .append(statusCell)
             .append(viewCell)
-            .append(editCell)
+            // .append(editCell)
             .append(deleteCell);
 
         // Append the row to the table body
@@ -1024,20 +1024,20 @@
 
       }
   
-      async function handleEdit(id) {
-      const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
-      try {
-        const response = await fetch(url);
+    //   async function handleEdit(id) {
+    //   const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
+    //   try {
+    //     const response = await fetch(url);
 
-        if (response.ok) {
-          window.location.href = `edit-match.html?id=${id}`;
-        } else {
-          console.error("Failed to fetch the league data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
+    //     if (response.ok) {
+    //       window.location.href = `edit-match.html?id=${id}`;
+    //     } else {
+    //       console.error("Failed to fetch the league data");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // }
 
     function prev() {
       if (current_index > 1) {

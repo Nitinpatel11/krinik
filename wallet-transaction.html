@@ -466,7 +466,7 @@
             <div class="row align-items-center">
 
               <div>
-                <h4 class="page-title mb-1">All Users</h4>
+                <h4 class="page-title mb-1">Wallet Transaction</h4>
               </div>
             </div>
           </div>
@@ -522,15 +522,15 @@
                                       <th data-priority="">No.</th>
                                       
                                     </th>
-                                    <th data-priority="" colspan="2">
-                                      Name  
+                                    <th data-priority="" colspan="3">
+                                      Username  
                                     </th>
-                                    <th data-priority="" class="sortable" data-column="league_name" colspan="2">Mobile No
-                                      <th data-priority="" colspan="3">Email</th>
-                                      <th data-priority="" colspan="3">
-                                        Wallet Amount
+                                    <th data-priority="" class="sortable" data-column="league_name" colspan="3">Mobile No
+                                      <th data-priority="" colspan="3">Transaction Id</th>
+                                      <th data-priority="" colspan="2">
+                                     Mode  
                                       </th>
-                                      <th data-priority="" colspan="3">Winning Amount
+                                      <th data-priority="" colspan="3">Amount
                                         <!-- <div class="dropdown">
                                                   <span class="dropbtn">Status</span>
                                                   <div class="dropdown-content">
@@ -543,7 +543,7 @@
                                       </th>
                                       <th data-priority="" colspan="2">Status</th>
   
-                                      <th data-priority="">View</th>
+                                      <th data-priority="" colspan="2">Date & Time</th>
                                       <!-- <th data-priority="">Delete</th> -->
                                     </tr>
                                   </thead>
@@ -652,12 +652,12 @@
   <script src="./assets/js/pages/dashboard.init.js"></script>
 
   <script src="./assets/js/app.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script>
-
+ -->
 
 
   <script>
@@ -674,7 +674,7 @@
     async function fetchData() {
       try {
         const data = await $.ajax({
-          url: "https://krinik.pythonanywhere.com/user_get/",
+          url: "https://krinik.pythonanywhere.com/wallet_transaction/",
           method: "GET"
         });
 
@@ -682,8 +682,8 @@
           rankList = data.data;
           array = rankList;
           filterAndDisplay();
-          // totaldataleague.innerHTML = array.length;
           console.log(array)
+        //   totaldataleague.innerHTML = array.length;
         } else {
           console.error("Error: Invalid data format");
         }
@@ -916,11 +916,11 @@
         var tr = $("<tr></tr>");
 
         var noCell = $("<td></td>").text(i + 1);
-        var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
-        var shortNameCell = $("<td colspan='2'> </td>").text(showdata["mobile_no"] || "");
-        var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
-        var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
-        var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
+        var fullNameCell = $("<td colspan='3'></td>").text(showdata["username"] || "");
+        var shortNameCell = $("<td colspan='3'> </td>").text(showdata["mobile_no"] || "");
+        var emailCell = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
+        var walletCell = $("<td colspan='2'> </td>").text(showdata["mode"] || "");
+        var winningCell = $("<td colspan='3'> </td>").text(showdata["amount"] || "");
 
 
 
@@ -936,11 +936,13 @@
         //   " - " +
         //   (showdata["end_league_date"] || "")
         // );
-        var statusCell = $("<td colspan='2'></td>").text(showdata["status"] || "");
-        var viewCell = $("<td></td>").html(
-          // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-            '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
-        );
+        var statusCell = $("<td colspan='2'></td>").text(showdata["status"]);
+        var dateCell = $("<td colspan='2'></td>").text(showdata["date_time"]);
+
+        // var viewCell = $("<td></td>").html(
+        //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
+        //     '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
+        // );
         // var editCell = $("<td></td>").html(
         //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
         // );
@@ -955,17 +957,17 @@
           .append(walletCell)
           .append(winningCell)
           .append(statusCell)
-          .append(viewCell)
+          .append(dateCell)
           // .append(deleteCell);
 
-        if (status === "block") {
+        if (status === "Completed") {
           noCell.addClass("disabled-row");
           fullNameCell.addClass("disabled-row");
           shortNameCell.addClass("disabled-row");
-          emailCell.addClass("disabled-row");
-          walletCell.addClass("disabled-row");
-          winningCell.addClass("disabled-row");
+          logoCell.addClass("disabled-row");
+          dateCell.addClass("disabled-row");
           statusCell.addClass("disabled-row");
+          editCell.addClass("disabled-row");
         }
 
         $("table tbody").append(tr);

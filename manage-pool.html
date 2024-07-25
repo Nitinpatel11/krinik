@@ -563,7 +563,7 @@
                                   <thead class="align-items-center">
                                     <tr>
                                       <th data-priority="">No.</th>
-                                      <th data-priority="" class="sortable" data-column="team_name" colspan="2">Pool
+                                      <th data-priority="" class="sortable" data-column="team_name" colspan="4">Pool
                                         Name
 
                                       </th>
@@ -1471,9 +1471,11 @@ fetchData();
         console.log(object)
         var tr = $("<tr></tr>");
 
+        var poolType = object.pool_type
+
         // Populate table cells with match data
         var noCell = $("<td></td>").text(i + 1);
-        var teamNameCell = $("<td colspan='2'></td>").text(object.pool_name);
+        var teamNameCell = $("<td colspan='4'></td>").text(`${poolType} - ${object.pool_name}`);
         var totalPoolCell = $("<td colspan='2'></td>").text(object.select_match.match_display_name);
         var fantacyStartCell = $("<td colspan='2'></td>").text(object.fantacy_start_date);
         var fantacyEndCell = $("<td colspan='2'></td>").text(object.fantacy_end_date);
@@ -1482,7 +1484,7 @@ fetchData();
         var statusCell = $("<td colspan='2'></td>").text(getStatus(object.fantacy_start_date, object.fantacy_end_date));
         console.log(statusCell)
         var viewCell = $("<td></td>").html(
-          '<span class="sortable" onclick="window.location.href=\'view-match-details.html\'"><i class="far fa-eye"></i></span>'
+          '<span class="sortable" onclick="window.location.href=\'view-pool-details.html\'"><i class="far fa-eye"></i></span>'
         );
         var editCell = $("<td></td>").html(
           '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'
@@ -1537,7 +1539,7 @@ fetchData();
         const response = await fetch(url);
 
         if (response.ok) {
-          window.location.href = `edit-match.html?id=${id}`;
+          window.location.href = `edit-pool.html?id=${id}`;
         } else {
           console.error("Failed to fetch the league data");
         }
