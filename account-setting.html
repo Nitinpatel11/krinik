@@ -2,16 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Manage Player</title>
+    <title>Dashboard | Xoric - Responsive Bootstrap 4 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       content="Premium Multipurpose Admin & Dashboard Template"
       name="description"
     />
     <meta content="Themesdesign" name="author" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <!-- App favicon -->
-    <!-- <link rel="shortcut icon" href="./assets/images/favicon.ico" /> -->
-    <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon" >
+    <link rel="shortcut icon" href="./assets/images/favicon.ico" />
     <!-- DataTables -->
     <link
       href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
@@ -23,6 +31,11 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
 
     <!-- Responsive datatable examples -->
     <link
@@ -33,9 +46,8 @@
 
     <!-- datepicker -->
     <link
-      href="./assets/libs/air-datepicker/css/datepicker.min.css"
+      href="./assets/libs/air-datepicker/air-datepicker.css"
       rel="stylesheet"
-      type="text/css"
     />
 
     <!-- jvectormap -->
@@ -51,6 +63,31 @@
     <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      .btn-view {
+        background: transparent;
+        border: none;
+        color: red;
+        font-size: 1.3em;
+      }
+
+      .btn-view :focus {
+        outline: none;
+      }
+    </style>
   </head>
 
   <body data-topbar="colored">
@@ -60,7 +97,7 @@
         <div class="navbar-header">
           <div class="d-flex">
             <!-- LOGO -->
-          <div class="navbar-brand-box">
+            <div class="navbar-brand-box">
               <a href="index.html" class="logo logo-dark">
                 <span class="logo-sm">
                   <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -273,7 +310,7 @@
                           </form> -->
           </div>
   
-          <div class="d-flex ">
+          <div class="d-flex">
             <div class="dropdown d-inline-block d-lg-none ms-2">
               <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -284,62 +321,60 @@
                 <form class="p-3">
                   <div class="form-group mt-3">
                     <div class="input-group">
-                      <input type="text" class="form-control" id="filter-input" placeholder="Search ..."
+                      <input type="text" class="form-control" placeholder="Search ..."
                         aria-label="Recipient's username" />
-                    </div>
-  
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="submit">
-                        <i class="mdi mdi-magnify"></i>
-                      </button>
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                          <i class="mdi mdi-magnify"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
               </div>
             </div>
-          </div>
   
-          <!-- <div class="dropdown d-inline-block language-switch">
+            <!-- <div class="dropdown d-inline-block language-switch">
                               <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <img id="header-lang-img" src="./assets/images/flags/us.jpg" alt="Header Language" height="14">
                               </button>
                               <div class="dropdown-menu dropdown-menu-end"> -->
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
                                       <img src="./assets/images/flags/spain.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Spanish</span>
                                   </a> -->
   
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
                                       <img src="./assets/images/flags/germany.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">German</span>
                                   </a> -->
   
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
                                       <img src="./assets/images/flags/italy.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Italian</span>
                                   </a> -->
   
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
+            <!-- item-->
+            <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
                                       <img src="./assets/images/flags/russia.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Russian</span>
                                   </a>
                               </div>
                           </div> -->
   
-          <!-- <div class="dropdown d-inline-block">
+            <!-- <div class="dropdown d-inline-block">
                               <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                                   <i class="mdi mdi-tune"></i>
                               </button>
                           </div> -->
   
-          <!-- light dark btn -->
-          <div class="dropdown d-none d-sm-inline-block">
-            <!-- <button type="button" class="btn header-item" id="light-dark-mode">
-              <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
-            </button> -->
-          </div>
+            <!-- light dark btn -->
+            <div class="dropdown d-none d-sm-inline-block">
+              <!-- <button type="button" class="btn header-item" id="light-dark-mode">
+                <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
+              </button> -->
+            </div>
   
-          <!-- 
+            <!-- 
                           <div class="dropdown d-inline-block">
                               <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <img class="rounded-circle header-profile-user" src="./assets/images/users/avatar-1.jpg" alt="Header Avatar">
@@ -355,10 +390,11 @@
                                   <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                               </div>
                           </div> -->
+          </div>
         </div>
       </header>
 
-     <!-- ========== Left Sidebar Start ========== -->
+      <!-- ========== Left Sidebar Start ========== -->
     <div class="vertical-menu">
       <div data-simplebar class="h-100">
         <!--- Sidemenu -->
@@ -460,30 +496,8 @@
           <div class="page-title-box">
             <div class="container-fluid">
               <div class="row align-items-center">
-                <!-- <div class="col-md-8">
-                                    <h4 class="page-title mb-1">Dashboard</h4>
-                                    <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item active">Welcome to Xoric Dashboard</li>
-                                    </ol>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="float-end d-none d-md-block">
-                                        <div class="dropdown d-inline-block">
-                                            <button type="button" class="btn btn-light rounded-pill user text-start d-flex align-items-center" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-settings-outline me-1"></i> Settings
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Separated link</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                 <div>
-                  <h4 class="page-title mb-1">Manage Players</h4>
+                  <h4 class="page-title mb-1">Change Password</h4>
                 </div>
               </div>
             </div>
@@ -493,254 +507,101 @@
           <div class="page-content-wrapper">
             <div class="container-fluid">
               <div class="row">
-                <div class="col-xl-3">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-6">
-                          <h5>Total Player</h5>
-                          <!-- <p class="text-muted">Xoric Dashboard</p> -->
-
-                          <div class="mt-4">
-                            <span
-                              href="#"
-                              class="btn btn-primary btn-sm data-padding btn-font"
-                              id="total-player-data"
-                              >
-                            </span>
-                          </div>
-                        </div>
-
-                        <div class="col-5 ms-auto">
+                <div
+                  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end"
+                >
+                  <div class="d-flex align-items-end">
+                    <!-- <form class="app-search d-lg-block d-flex">
+                      <div class="d-flex gap-3 flex-wrap">
+                        <div
+                          class="align-items-center d-flex dropbtn-color justify-content-between drop-padd rounded-0"
+                        >
                           <div>
-                            <img
-                              src="./assets/images/widget-img.png"
-                              alt=""
-                              class="img-fluid"
+                            <span
+                              class="mdi mdi-magnify dropbtn-color-2"
+                            ></span>
+                          </div>
+                          <div>
+                            <input
+                              type="text"
+                              class="dropbtn-color-2 p-2"
+                              placeholder="Search..."
+                              id="tab_filter_text"
+                              onkeyup="filterRankList()"
                             />
                           </div>
                         </div>
                       </div>
-                    </div>
+                      <br /><br />
+                    </form> -->
                   </div>
-                </div>
-                <div class="col-xl-12 col-lg-12  col-md-12 col-sm-12  d-flex justify-content-end">
-                    <div class=" d-flex align-items-end  ">
-
-                        <form class="app-search d-lg-block d-md-block d-sm-block d-flex">
-                          <div class="d-flex gap-3 flex-wrap">
-                            
-                        <div class="dropdown">
-                          <select id="leagueDropdown" class="form-select dropbtn-color dropbtn" onchange="filterRankList()">
-                              <option value="">All Leagues</option>
-                          </select>
-                      </div>
-                      <div class="dropdown">
-                        <select id="teamDropdown" class="form-select dropbtn-color dropbtn" onchange="filterRankList()">
-                            <option value="">All Teams</option>
-                        </select>
-                    </div>
-                        <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
-                           <div> 
-                          <span class="mdi mdi-magnify dropbtn-color-2"></span>
-                        </div>  
-                        <div>
-                          <input type="text" class=" dropbtn-color-2" placeholder="Search..." id="tab_filter_text">
-                        </div>
-                        </div>
-                        <div>
-  
-                          <a href="addplayer.html" type="button" class="btn dropbtn-color addnew">Add New</a>
-                        </div>
-                      </div>
-                           
-                        </form>
-                    </div>
                 </div>
               </div>
               <!-- end row -->
 
-              <div class="row">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div
-                            id="datatable_wrapper"
-                            class="dataTables_wrapper dt-bootstrap4 no-footer"
-                          >
-                            <div class="row">
-                              <div class="table-rep-plugin">
-                                <div
-                                  class="table-responsive mb-0 table table-scroll"
-                                  data-pattern="priority-columns" id="table-scrolling"
-                                >
-                                  <table
-                                  id="playerTable"
-                                    class="table table-striped text-center align-items-center fixed-table"
-                                  >
-                                    <thead class="align-items-center">
-                                      <tr>
-                                        <th data-priority="">No.</th>
-                                        <th data-priority="" class="sortable" data-column="league_name" colspan="2">Player Name   
-                                          
-                                        </th>
-                                        <th data-priority="" colspan="2">
-                                          Player Short Name
-                                        </th>
-                                        <th data-priority="" colspan="2">
-                                          Team Name
-                                        </th>
-                                        <th data-priority="" colspan="2">
-                                          League Name
-                                        </th>
-                                        <th data-priority="">
-                                          Total Run
-                                        </th>
-                                        <th data-priority="">Logo</th>
-                                      
-                                        <th data-priority="">View</th>
-
-                                        <th data-priority="">Edit</th>
-                                        <th data-priority="">Delete</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                  </table>
-                                
-                                </div>
-                                <div id="noDataFound" style="display:none;" class="no-data-div">
-                                  <img src="./assets/images/no-data.jpg" alt="No Data Found">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row" id="pagination" style="display:none">
-                              <div class="col-sm-12 col-md-5">
-                                <div
-                                  class="dataTables_info"
-                                  id="datatable_info"
-                                  role="status"
-                                  aria-live="polite"
-                                >
-                                  Showing 1 to 10 of 57 entries
-                                </div>
-                              </div>
-                              <div class="col-sm-12 col-md-7">
-                                <div
-                                  class="dataTables_paginate paging_simple_numbers pagination index_buttons"
-                                  id="datatable_paginate"
-                                >
-                                  <ul class="pagination-list d-flex list-unstyled">
-                                    <!-- <li
-                                      class="paginate_button page-item previous disabled"
-                                      id="prev-button"
-                                    >
-                                      <a
-                                        aria-controls="datatable"
-                                        aria-disabled="true"
-                                        role="link"
-                                        data-dt-idx="previous"
-                                        tabindex="-1"
-                                        class="page-link"
-                                         
-                                        >Previous</a
-                                      >
-                                    </li>
-                                    <li
-                                      class="paginate_button page-item active"
-                                    >
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        aria-current="page"
-                                        data-dt-idx="0"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >1</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="1"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >2</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="2"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >3</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="3"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >4</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="4"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >5</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="5"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >6</a
-                                      >
-                                    </li>
-                                    <li
-                                      class="paginate_button page-item next"
-                                      id="next-button"
-                                    >
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="next"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >Next</a
-                                      >
-                                    </li> -->
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+              <div class="row justify-content-center">
+                <div class="col-xl-5 col-sm-8">
+                  <div class="card">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div
+                          class="text-center justify-content-center align-items-center"
+                        >
+                          <h2 class="text-dark mb-1 mt-4">CHANGE PASSWORD</h2>
                         </div>
                       </div>
                     </div>
-                    <!-- end col -->
+                    <div class="card-body p-4">
+                      <div class="p-2">
+                        <form class="form-horizontal">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group form-group-custom mb-4">
+                                <input
+                                  type="password"
+                                  class="form-control"
+                                  id="username"
+                                  required
+                                />
+                                <label for="username">Enter Old Password</label>
+                              </div>
+
+                              <div class="form-group form-group-custom mb-4">
+                                <input
+                                  type="password"
+                                  class="form-control"
+                                  id="username"
+                                  required
+                                />
+                                <label for="username">Enter New Password</label>
+                              </div>
+
+                              <div class="form-group form-group-custom mb-4">
+                                <input
+                                  type="password"
+                                  class="form-control"
+                                  id="username"
+                                  required
+                                />
+                                <label for="username"
+                                  >Enter Confirm Password</label
+                                >
+                              </div>
+
+                              <div class="mt-4 text-center">
+                                <button
+                                  class="btn btn-primary w-50"
+                                  type="submit"
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
                   </div>
-                  <!-- end row -->
                 </div>
               </div>
               <!-- end row -->
@@ -754,7 +615,7 @@
         <footer class="footer">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-sm-6">2024 © Krinik.</div>
+              <div class="col-sm-6">2020 © Krinik.</div>
               <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
                   Crafted with <i class="mdi mdi-heart text-danger"></i> by
@@ -769,8 +630,7 @@
     </div>
     <!-- END layout-wrapper -->
 
-   
-
+  
     <!-- JAVASCRIPT -->
     <script src="./assets/libs/jquery/jquery.min.js"></script>
     <script src="./assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -779,6 +639,8 @@
     <script src="./assets/libs/node-waves/waves.min.js"></script>
 
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
     <!-- Required datatable js -->
     <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -797,9 +659,10 @@
     <script src="./assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
     <!-- datepicker -->
-    <script src="./assets/libs/air-datepicker/js/datepicker.min.js"></script>
-    <script src="./assets/libs/air-datepicker/js/i18n/datepicker.en.js"></script>
-
+    <script src="./assets/libs/air-datepicker/air-datepicker.css"></script>
+    <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- apexcharts -->
     <script src="./assets/libs/apexcharts/apexcharts.min.js"></script>
 
@@ -812,369 +675,19 @@
     <script src="./assets/js/pages/dashboard.init.js"></script>
 
     <script src="./assets/js/app.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
 
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- 
-<script>
-  var rankList = [];
-    var array = [];
-    var array_length = 0;
-    var table_size = 10;
-    var start_index = 1;
-    var end_index = 0;
-    var current_index = 1;
-    var max_index = 0;
-  let totaldataplayer = document.querySelector("#total-player-data");
-  
-
-  async function fetchData() {
-      try {
-          const teamsResponse = await fetch("https://krinik.pythonanywhere.com/team_get/", {
-              method: "GET",
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-
-          const leaguesResponse = await fetch("https://krinik.pythonanywhere.com/league_get/", {
-              method: "GET",
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-
-          const playersResponse = await fetch("https://krinik.pythonanywhere.com/player_get/", {
-              method: "GET",
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-
-          if (teamsResponse.ok && leaguesResponse.ok && playersResponse.ok) {
-              const teamsData = await teamsResponse.json();
-              const leaguesData = await leaguesResponse.json();
-              const playersData = await playersResponse.json();
-
-              array = playersData.data
-              totaldataplayer.innerHTML = array.length;
-              if (teamsData.status === "success" && leaguesData.status === "success" && playersData.status === "success") {
-                  rankList = playersData.data;
-                  array = rankList.slice();
-                  populateLeagueDropdown(leaguesData.data);
-                  populateTeamDropdown(teamsData.data);
-                  filterRankList();
-              } else {
-                  console.error("Error: Invalid data format");
-              }
-          } else {
-              console.error("Error fetching data");
-          }
-      } catch (error) {
-          console.error("Error fetching data", error);
-      }
-  }
-
-  $(document).ready(function () {
-      fetchData();
-
-      $('#tab_filter_text').on('input', function () {
-          filterRankList();
-      });
-
-      $('#datefilter').on('apply.daterangepicker', function (ev, picker) {
-          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-          $('#clearDateBtn').show();
-          filterRankList();
-      });
-
-      $('#clearDateBtn').click(function () {
-          $('#datefilter').val('');
-          $(this).hide();
-          filterRankList();
-      });
-  });
-
-  function preLoadCalculations(filteredArrayLength) {
-      array_length = filteredArrayLength || array.length;
-      max_index = Math.ceil(array_length / table_size);
-    }
-
-  function populateLeagueDropdown(leagues) {
-      var select = document.getElementById('leagueDropdown');
-      select.innerHTML = '<option value="">All Leagues</option>';
-
-      leagues.forEach(league => {
-          var option = document.createElement('option');
-          option.value = league.league_name;
-          option.textContent = league.league_name;
-          select.appendChild(option);
-      });
-  }
-
-  function populateTeamDropdown(teams) {
-      var select = document.getElementById('teamDropdown');
-      select.innerHTML = '<option value="">All Teams</option>';
-
-      teams.forEach(team => {
-          var option = document.createElement('option');
-          option.value = team.team_name;
-          option.textContent = team.team_name;
-          select.appendChild(option);
-      });
-  }
-
-  function filterRankList() {
-    var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-    var selectedLeague = $('#leagueDropdown').val();
-    var selectedTeam = $('#teamDropdown').val();
-
-    var filteredArray = rankList.filter(function (object) {
-        var matchesText = true;
-
-        if (tab_filter_text !== '') {
-            matchesText = (object.team_name && object.team_name.toLowerCase().includes(tab_filter_text)) ||
-                            (object.player_short_name && object.player_short_name.toLowerCase().includes(tab_filter_text)) ||
-                            (object.player_name && object.player_name.toLowerCase().includes(tab_filter_text)) ||
-                            (object.team_date && object.team_date.toLowerCase().includes(tab_filter_text))||
-                            (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text));
-        }
-
-        if (selectedLeague && selectedLeague !== '') {
-            matchesText = matchesText && object.league_name === selectedLeague;
-        }
-        if (selectedTeam && selectedTeam !== '') {
-            matchesText = matchesText && object.team_name === selectedTeam;
-        }
-
-        return matchesText;
-    });
-
-    array = filteredArray;
-        preLoadCalculations();
-        current_index = 1;
-        displayIndexButtons();
-        highlightIndexButton()
-        displayTableRows();
-}
-
-function displayIndexButtons() {
-    $(".index_buttons ul").empty();
-
-    if (array_length <= table_size) {
-        // If there are 10 or fewer items, do not show pagination
-        return;
-    }
-
-    if (current_index > 1) {
-        $(".index_buttons ul").append('<li><button class="paginate_button page-item previous" onclick="prev()">Previous</button></li>');
-    }
-
-    const show_page = getElidedPageRange(current_index, max_index);
-
-    show_page.forEach(i => {
-        if (i === current_index) {
-            $(".index_buttons ul").append('<li><button class="paginate_button page-item active">' + i + '</button></li>');
-        } else if (i === "...") {
-            $(".index_buttons ul").append('<li><button class="paginate_button page-item">...</button></li>');
-        } else {
-            $(".index_buttons ul").append('<li><button class="paginate_button page-item" onclick="indexPagination(' + i + ')">' + i + '</button></li>');
-        }
-    });
-
-    if (current_index < max_index) {
-        $(".index_buttons ul").append('<li><button class="paginate_button page-item next" onclick="next()">Next</button></li>');
-    }
-
-    highlightIndexButton();
-}
-
-
-    function getElidedPageRange(current, total) {
-        const delta = 1;
-        const range = [];
-        const left = current - delta;
-        const right = current + delta + 1;
-        let last = 0;
-
-        for (let i = 1; i <= total; i++) {
-            if (i === 1 || i === total || (i >= left && i < right)) {
-                if (last + 1 !== i) {
-                    range.push("...");
-                }
-                range.push(i);
-                last = i;
-            }
-        }
-
-        return range;
-    }
-
-    function highlightIndexButton() {
-        start_index = (current_index - 1) * table_size + 1;
-        end_index = Math.min(start_index + table_size - 1, array_length);
-        $("#datatable_info").text("Showing " + start_index + " to " + end_index + " of " + array_length + " items");
-        $(".index_buttons ul a").removeClass("active");
-        $('.index_buttons ul a').each(function () {
-            if ($(this).text() == current_index) {
-                $(this).addClass("active");
-            }
-        });
-        displayTableRows();
-    }
-    function prev() {
-        if (current_index > 1) {
-            current_index--;
-            displayIndexButtons();
-            highlightIndexButton();
-        }
-    }
-
-    function next() {
-        if (current_index < max_index) {
-            current_index++;
-            displayIndexButtons();
-            highlightIndexButton();
-        }
-    }
-
-    function indexPagination(index) {
-        current_index = index;
-        displayIndexButtons();
-        highlightIndexButton();
-    }
-
-  function displayTableRows() {
-      $("table tbody").empty();
-      var tab_start = (current_index - 1) * table_size;
-      var tab_end = Math.min(current_index * table_size, array.length);
-
-      if (array.length === 0) {
-        $("#noDataFound").show();
-        $("#pagination").hide();
-        $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
-        return;
-      } else {
-        $("#noDataFound").hide();
-        $("#pagination").show();
-        $("#table-scrolling").css("overflow-x", "auto"); // Add this line
-      }
-
-      for (var i = tab_start; i < tab_end; i++) {
-          var object = array[i];
-
-          var tr = $("<tr></tr>");
-
-          var noCell = $("<td></td>").text(i + 1);
-          var playerNameCell = $("<td colspan='2'></td>").text(object["player_name"] || "");
-          var teamNameCell = $("<td colspan='2'></td>").text(object["player_short_name"] || "");
-          var shortNameCell = $("<td colspan='2'></td>").text(object["team_name"] || "");
-          var leagueCell = $("<td colspan='2'></td>").text(object["league_name"] || "");
-          var runCell = $("<td></td>").text(object["total_run"] || "");
-          var logoCell = $("<td></td>").html(object["player_image"] ? `<img src="https://krinik.pythonanywhere.com${object["player_image"]}" alt="${object["player_image"]}" class="team-logo lazyload">` : '');
-          var viewCell = $("<td></td>").html('<span class="sortable" onclick="window.location.href=\'view-player-details.html\'"><i class="far fa-eye"></i></span>');
-          var editCell = $("<td></td>").html('<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>');
-          var deleteCell = $("<td></td>").html('<span class="sortable" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt"></i></span>');
-
-          tr.append(noCell)
-            .append(playerNameCell)
-            .append(teamNameCell)
-            .append(shortNameCell)
-            .append(leagueCell)
-            .append(runCell)
-            .append(logoCell)
-            .append(viewCell)
-            .append(editCell)
-            .append(deleteCell);
-
-          $("table tbody").append(tr);
-      }
-      // lazyLoadImages();
-  }
-
-  async function handleDelete(id) {
-    if (confirm('Are you sure you want to delete this player?')) {
-          const url = `https://krinik.pythonanywhere.com/player_get/${id}/`;
-          try {
-              const response = await fetch(url, {
-                  method: "DELETE"
-              });
-
-              if (response.ok) {
-                  await fetchData();
-              } else {
-                  console.error("Failed to delete the player");
-              }
-          } catch (error) {
-              console.error("Error deleting player:", error);
-          }
-      }
-  }
-
-  async function handleEdit(id) {
-      const url = `https://krinik.pythonanywhere.com/player_get/${id}/`;
-      try {
-          const response = await fetch(url);
-
-          if (response.ok) {
-              window.location.href = `editplayer.html?id=${id}`;
-          } else {
-              console.error("Failed to fetch player data");
-          }
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  }
-
-//   function prev() {
-//     if (current_index > 1) {
-//         current_index--;
-//         displayIndexButtons();
-//         // Add logic to display the previous page of items
-//         highlightIndexButton();
-//     }
-// }
-
-// function next() {
-//     if (current_index < max_index) {
-//         current_index++;
-//         displayIndexButtons();
-//         // Add logic to display the next page of items
-//         highlightIndexButton();
-//     }
-// }
-
-// function indexPagination(index) {
-//     current_index = index;
-//     displayIndexButtons();
-//     highlightIndexButton();
-// }
-
-  function lazyLoadImages() {
-      const images = document.querySelectorAll('.lazyload');
-      const options = {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                  const img = entry.target;
-                  img.src = img.dataset.src;
-                  img.classList.remove('lazyload');
-                  observer.unobserve(img);
-              }
-          });
-      }, options);
-
-      images.forEach(image => {
-          observer.observe(image);
-      });
-  }
-</script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script>
   </body>
 </html>

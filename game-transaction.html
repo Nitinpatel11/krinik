@@ -3,7 +3,9 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>User Transaction History</title>
+  <!-- <title>Dashboard | Xoric - Responsive Bootstrap 4 Admin Dashboard</title> -->
+  <title>User</title>
+   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesdesign" name="author" />
@@ -14,10 +16,10 @@
   <!-- <link rel="shortcut icon" href="./assets/images/favicon.ico" /> -->
   <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon" >
   <!-- DataTables -->
-  <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-  <link href="./assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <!-- <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /> -->
+  <!-- <link href="./asset  s/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" -->
+    <!-- type="text/css" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
 
 
   <!-- Responsive datatable examples -->
@@ -36,10 +38,25 @@
   <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
   <!-- App Css-->
   <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+
+<!-- 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
 
   <style>
+    .btn-view {
+      background: transparent;
+      border: none;
+      color: red;
+      font-size: 1.3em;
+    }
 
+    .btn-view :focus {
+      outline: none;
+    }
   </style>
 </head>
 
@@ -349,98 +366,98 @@
     </header>
 
 
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="vertical-menu">
-      <div data-simplebar class="h-100">
-        <!--- Sidemenu -->
-        <div id="sidebar-menu">
-          <!-- Left Menu Start -->
-          <ul class="metismenu list-unstyled" id="side-menu">
-            <li class="menu-title">Menu</li>
+  <!-- ========== Left Sidebar Start ========== -->
+  <div class="vertical-menu">
+    <div data-simplebar class="h-100">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
+          <li class="menu-title">Menu</li>
 
-            <li>
-              <a href="./dashboard.html" class="waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="uim uim-airplay"></i>
-                </div>
-                <!-- <span class="badge rounded-pill text-bg-success float-end">3</span> -->
-                <span>Dashboard</span>
-              </a>
-            </li>
+          <li>
+            <a href="./dashboard.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-airplay"></i>
+              </div>
+              <!-- <span class="badge rounded-pill text-bg-success float-end">3</span> -->
+              <span>Dashboard</span>
+            </a>
+          </li>
 
-            <li>
-              <a href="./user.html" class="waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="fas fa-user small-icons"></i>
-                </div>
-                <span>User</span>
-              </a>
-            </li>
+          <li>
+            <a href="./user.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-user small-icons"></i>
+              </div>
+              <span>User</span>
+            </a>
+          </li>
 
-            <li>
-              <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="uim uim-comment-message"></i>
-                </div>
-                <span>Sports Configuration</span>
-              </a>
-              <ul class="sub-menu" aria-expanded="false">
-                <li><a href="./manage-league.html">Manage Leagues</a></li>
-                <li><a href="./manage-team.html">Manage Teams</a></li>
-                <li><a href="./manage-player.html">Manage Players</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="uim uim-schedule"></i>
-                </div>
-                <span>Manage Fantacy</span>
-              </a>
-              <ul class="sub-menu" aria-expanded="false">
-                <li><a href="./manage-match.html">Manage Match</a></li>
-                <li><a href="./manage-pool.html">Manage Pools</a></li>
-              </ul>
-            </li>
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-comment-message"></i>
+              </div>
+              <span>Sports Configuration</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./manage-league.html">Manage Leagues</a></li>
+              <li><a href="./manage-team.html">Manage Teams</a></li>
+              <li><a href="./manage-player.html">Manage Players</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="uim uim-schedule"></i>
+              </div>
+              <span>Manage Fantacy</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./manage-match.html">Manage Match</a></li>
+              <li><a href="./manage-pool.html">Manage Pools</a></li>
+            </ul>
+          </li>
 
-            <li>
-              <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="ti-wallet small-icons"></i>
-                </div>
-                <span>All Transaction</span>
-              </a>
-              <ul class="sub-menu" aria-expanded="false">
-                <li><a href="./wallet-transaction.html">Manage Match</a></li>
-                <li><a href="./game-transaction.html">Manage Pools</a></li>
-              </ul>
-            </li>
+          <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="ti-wallet small-icons"></i>
+              </div>
+              <span>All Transaction</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+              <li><a href="./wallet-transaction.html">Manage Match</a></li>
+              <li><a href="./game-transaction.html">Manage Pools</a></li>
+            </ul>
+          </li>
 
-            <li>
-              <a href="./account-setting.html" class="waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="fas fa-cog small-icons"></i>
-                </div>
-                <span>Account Setting</span>
-              </a>
-            </li>
+          <li>
+            <a href="./account-setting.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-cog small-icons"></i>
+              </div>
+              <span>Account Setting</span>
+            </a>
+          </li>
 
-            <li>
-              <a href="calendar.html" class="waves-effect">
-                <div class="d-inline-block icons-sm me-1">
-                  <i class="fas fa-sign-out-alt small-icons"></i>
-                </div>
-                <span>Logout</span>
-              </a>
-            </li>
+          <li>
+            <a href="calendar.html" class="waves-effect">
+              <div class="d-inline-block icons-sm me-1">
+                <i class="fas fa-sign-out-alt small-icons"></i>
+              </div>
+              <span>Logout</span>
+            </a>
+          </li>
 
-          
-                    </ul>
-        </div>
-        <!-- Sidebar -->
+        
+                  </ul>
       </div>
+      <!-- Sidebar -->
     </div>
-    <!-- Left Sidebar End -->
+  </div>
+  <!-- Left Sidebar End -->
 
     <!-- ============================================================== -->
     <!-- Start right Content here -->
@@ -453,7 +470,7 @@
             <div class="row align-items-center">
 
               <div>
-                <h4 class="page-title mb-1">User Transaction History</h4>
+                <h4 class="page-title mb-1">Wallet Transaction</h4>
               </div>
             </div>
           </div>
@@ -462,126 +479,103 @@
 
         <div class="page-content-wrapper">
           <div class="container-fluid">
+            <div class="row">
+
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  d-flex justify-content-end">
+                <div class=" d-flex align-items-end  ">
+
+                  <form class="app-search  d-lg-block d-flex  ">
+                    <div class="d-flex gap-3 flex-wrap">
 
 
+                      <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd ">
+                        <div>
+                          <span class="mdi mdi-magnify dropbtn-color-2"></span>
+                        </div>
+                        <div>
+                          <input type="text" class=" dropbtn-color-2 dropbtn-color-3 p-2 " placeholder="Search..." id="tab_filter_text"
+                            onkeyup="filterRankList()">
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <br /><br />
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
 
             <div class="row">
               <div class="container-fluid">
-
                 <div class="row">
                   <div class="col-12">
                     <div class="card">
                       <div class="card-body">
-                        <h4 class="mt-2 fw-semi-bold">Full Name | Transaction History</h3>
-                          <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer mt-4">
-                            <div class="row">
-                              <div class="table-rep-plugin">
-                                <div class="table-responsive mb-0 table table-scroll" data-pattern="priority-columns"
-                                  id="table-scrolling">
-                                  <table id="tech-companies-1"
-                                    class="table table-striped text-center align-items-center fixed-table">
-                                    <thead class="align-items-center">
-                                      <tr>
-                                        <th data-priority="">No.</th>
-                                        <th data-priority="" class="sortable" data-column="league_name">Transaction Id
-
-                                        </th>
-                                        <th data-priority="">
-                                          Credit/Debit
-                                        </th>
-
-                                        <th data-priority="">
-                                          Amount
-                                        </th>
-                                        <th data-priority="">Status
-
-                                        </th>
-                                        <th data-priority="">Date & Time</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-
-
-                                      <tr>
-                                        <th>1</th>
-                                        <th>1234</th>
-                                        <th>dabit</th>
-                                        <th>2500</th>
-                                        <th>Done</th>
-                                        <th>04-08-2022</th>
-                                      </tr>
-
-                                      <tr>
-                                        <th>1</th>
-                                        <th>1234</th>
-                                        <th>dabit</th>
-                                        <th>2500</th>
-                                        <th>Done</th>
-                                        <th>04-08-2022</th>
-                                      </tr>
-                                      <tr>
-                                        <th>1</th>
-                                        <th>1234</th>
-                                        <th>dabit</th>
-                                        <th>2500</th>
-                                        <th>Done</th>
-                                        <th>04-08-2022</th>
-                                      </tr>
-
-                                      <tr>
-                                        <th>1</th>
-                                        <th>1234</th>
-                                        <th>dabit</th>
-                                        <th>2500</th>
-                                        <th>Done</th>
-                                        <th>04-08-2022</th>
-                                      </tr>
-                                      <tr>
-                                        <th>1</th>
-                                        <th>1234</th>
-                                        <th>dabit</th>
-                                        <th>2500</th>
-                                        <th>Done</th>
-                                        <th>04-08-2022</th>
-                                      </tr>
-                                      <tr>
-                                        <th>1</th>
-                                        <th>1234</th>
-                                        <th>dabit</th>
-                                        <th>2500</th>
-                                        <th>Done</th>
-                                        <th>04-08-2022</th>
-                                      </tr>
-
-
-
-
-
-
-                                    </tbody>
-                                  </table>
-
-                                </div>
-                                <div id="noDataFound" style="display:none;" class="no-data-div">
-                                  <img src="./assets/images/no-data.jpg" alt="No Data Found">
-                                </div>
+                        <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                          <div class="row">
+                            <div class="table-rep-plugin">
+                              <div class="table-responsive mb-0 table table-scroll" data-pattern="priority-columns"
+                                id="table-scrolling">
+                                <table id="tech-companies-1"
+                                  class="table table-striped text-center align-items-center fixed-table">
+                                  <thead class="align-items-center">
+                                    <tr>
+                                      <th data-priority="">No.</th>
+                                      
+                                    </th>
+                                    <th data-priority="" colspan="3">
+                                      Username  
+                                    </th>
+                                    <th data-priority="" class="sortable" data-column="league_name" colspan="3">Mobile No
+                                      <th data-priority="" colspan="3">Transaction Id</th>
+                                      <th data-priority="" colspan="2">
+                                     Mode  
+                                      </th>
+                                      <th data-priority="" colspan="3">Amount
+                                        <!-- <div class="dropdown">
+                                                  <span class="dropbtn">Status</span>
+                                                  <div class="dropdown-content">
+                                                      <a href="#" data-status="all">All</a>
+                                                      <a href="#" data-status="completed">Completed</a>
+                                                      <a href="#" data-status="upcoming">Upcoming</a>
+                                                      <a href="#" data-status="running">Running</a>
+                                                  </div>
+                                              </div> -->
+                                      </th>
+                                      <th data-priority="" colspan="2">Status</th>
+  
+                                      <th data-priority="" colspan="2">Date & Time</th>
+                                      <!-- <th data-priority="">Delete</th> -->
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  </tbody>
+                                </table>
+  
                               </div>
-                            </div>
-
-                            <div class="row" id="pagination" style="display:none">
-                              <div class="col-sm-12 col-md-5">
-                                <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
-                                  Showing 1 to 10 of 57 leagues
-                                </div>
-                              </div>
-                              <div class="col-sm-12 col-md-7">
-                                <div class="dataTables_paginate paging_simple_numbers pagination index_buttons"
-                                  id="datatable_paginate">
-                                  <ul class="pagination-list d-flex list-unstyled"></ul>
-                                </div>
+                              <div id="noDataFound" style="display:none;" class="no-data-div">
+                                <img src="./assets/images/no-data.jpg" alt="No Data Found">
                               </div>
                             </div>
                           </div>
+  
+                          <div class="row" id="pagination" style="display:none">
+                            <div class="col-sm-12 col-md-5">
+                              <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                                Showing 1 to 10 of 57 leagues
+                              </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                              <div class="dataTables_paginate paging_simple_numbers pagination index_buttons"
+                                id="datatable_paginate">
+                                <ul class="pagination-list d-flex list-unstyled"></ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -649,7 +643,7 @@
   <script src="./assets/libs/air-datepicker/air-datepicker.css"></script>
   <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
   <!-- apexcharts -->
   <script src="./assets/libs/apexcharts/apexcharts.min.js"></script>
 
@@ -662,15 +656,373 @@
   <script src="./assets/js/pages/dashboard.init.js"></script>
 
   <script src="./assets/js/app.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script>
+ -->
+
+
+  <script>
+    var rankList = [];
+    var array = [];
+    var array_length = 0;
+    var table_size = 10;
+    var start_index = 1;
+    var end_index = 0;
+    var current_index = 1;
+    var max_index = 0;
+    // let totaldataleague = document.querySelector("#total-league-data");
+
+    async function fetchData() {
+      try {
+        const data = await $.ajax({
+          url: "https://krinik.pythonanywhere.com/wallet_transaction/",
+          method: "GET"
+        });
+
+        if (data && data.status === "success") {
+          rankList = data.data;
+          array = rankList;
+          filterAndDisplay();
+          console.log(array)
+        //   totaldataleague.innerHTML = array.length;
+        } else {
+          console.error("Error: Invalid data format");
+        }
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    }
+
+    fetchData();
+
+    function filterAndDisplay() {
+      filterRankList();
+      preLoadCalculations();
+      displayIndexButtons();
+      displayTableRows();
+      highlightIndexButton();
+    }
+
+    function preLoadCalculations(filteredArrayLength) {
+      array_length = filteredArrayLength || array.length;
+      max_index = Math.ceil(array_length / table_size);
+    }
+
+    // $(document).ready(function () {
+    //   $('#tab_filter_text').on('input', filterRankList);
+    //   let picker = flatpickr('#rangePicker', {
+    //     mode: 'range',
+    //     dateFormat: 'd/m/Y',
+    //     onClose: function (selectedDates, dateStr, instance) {
+    //       if (!selectedDates || selectedDates.length === 0) {
+    //         instance.clear();
+    //         $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+    //         $('#clearDates').hide();
+    //         $('#calendarIcon').show();
+    //       } else {
+    //         $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd/m/Y')).join(' - ')).addClass('has-dates');
+    //         $('#clearDates').show();
+    //         $('#calendarIcon').hide();
+    //       }
+    //       filterRankList();
+    //     },
+    //     clickOpens: false,
+    //     allowInput: false
+    //   });
+
+    //   $('#rangePicker, #calendarIcon').click(function () {
+    //     if (!$('#rangePicker').hasClass('has-dates')) {
+    //       picker.open();
+    //     }
+    //   });
+
+    //   $('#clearDates').click(function () {
+    //     picker.clear();
+    //     $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+    //     $('#clearDates').hide();
+    //     $('#calendarIcon').show();
+    //     filterRankList();
+    //   });
+
+    //   $('#statusDropdown').change(filterRankList);
+    //   fetchData();
+    // });
+
+    function filterRankList() {
+        var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+        var datefilter = $('#rangePicker').text().trim();
+        var statusFilter = $('#statusDropdown').val() ? $('#statusDropdown').val() : '';
+        var startDate, endDate;
+
+        if (datefilter !== '' && datefilter !== 'Start & End Date') {
+            var dates = datefilter.split(' - ');
+            startDate = moment(dates[0], 'DD/MM/YYYY').toDate();
+            endDate = moment(dates[1], 'DD/MM/YYYY').toDate();
+        }
+
+        var filteredArray = rankList.filter(function (object) {
+            var matchesText = true, matchesStatus = true, matchesDate = true;
+
+            if (tab_filter_text !== '') {
+                matchesText = (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text)) ||
+                    (object.short_league_name && object.short_league_name.toLowerCase().includes(tab_filter_text)) ||
+                    (object.start_league_date && object.start_league_date.toLowerCase().includes(tab_filter_text)) ||
+                    (object.end_league_date && object.end_league_date.toLowerCase().includes(tab_filter_text));
+            }
+
+            if (statusFilter !== '') {
+                const status = getStatus(object.start_league_date, object.end_league_date);
+                matchesStatus = (status === statusFilter);
+            }
+
+            if (startDate && endDate) {
+                matchesDate = (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
+                    moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
+            }
+
+            return matchesText && matchesStatus && matchesDate;
+        });
+
+        array = filteredArray;
+        preLoadCalculations();
+        current_index = 1;
+        displayIndexButtons();
+        highlightIndexButton()
+        displayTableRows();
+    }
+    function getStatus(start_date, end_date) {
+      var currentDate = new Date();
+      var startDate = moment(start_date, "DD/MM/YYYY").toDate();
+      var endDate = moment(end_date, "DD/MM/YYYY").toDate();
+
+      if (startDate < currentDate && currentDate <= endDate) {
+        return "Running";
+      } else if (startDate < currentDate && endDate < currentDate) {
+        return "Completed";
+      } else if (startDate > currentDate && endDate > currentDate) {
+        return "Upcoming";
+      } else {
+        return "unknown";
+      }
+    }
+
+    function displayIndexButtons() {
+    $(".index_buttons ul").empty();
+
+    if (array_length <= table_size) {
+        // If there are 10 or fewer items, do not show pagination
+        return;
+    }
+
+    if (current_index > 1) {
+        $(".index_buttons ul").append('<li><button class="paginate_button page-item previous" onclick="prev()">Previous</button></li>');
+    }
+
+    const show_page = getElidedPageRange(current_index, max_index);
+
+    show_page.forEach(i => {
+        if (i === current_index) {
+            $(".index_buttons ul").append('<li><button class="paginate_button page-item active">' + i + '</button></li>');
+        } else if (i === "...") {
+            $(".index_buttons ul").append('<li><button class="paginate_button page-item">...</button></li>');
+        } else {
+            $(".index_buttons ul").append('<li><button class="paginate_button page-item" onclick="indexPagination(' + i + ')">' + i + '</button></li>');
+        }
+    });
+
+    if (current_index < max_index) {
+        $(".index_buttons ul").append('<li><button class="paginate_button page-item next" onclick="next()">Next</button></li>');
+    }
+
+    highlightIndexButton();
+}
+
+
+    function getElidedPageRange(current, total) {
+        const delta = 1;
+        const range = [];
+        const left = current - delta;
+        const right = current + delta + 1;
+        let last = 0;
+
+        for (let i = 1; i <= total; i++) {
+            if (i === 1 || i === total || (i >= left && i < right)) {
+                if (last + 1 !== i) {
+                    range.push("...");
+                }
+                range.push(i);
+                last = i;
+            }
+        }
+
+        return range;
+    }
+
+    function highlightIndexButton() {
+        start_index = (current_index - 1) * table_size + 1;
+        end_index = Math.min(start_index + table_size - 1, array_length);
+        $("#datatable_info").text("Showing " + start_index + " to " + end_index + " of " + array_length + " items");
+        $(".index_buttons ul a").removeClass("active");
+        $('.index_buttons ul a').each(function () {
+            if ($(this).text() == current_index) {
+                $(this).addClass("active");
+            }
+        });
+        displayTableRows();
+    }
+    function prev() {
+        if (current_index > 1) {
+            current_index--;
+            displayIndexButtons();
+            highlightIndexButton();
+        }
+    }
+
+    function next() {
+        if (current_index < max_index) {
+            current_index++;
+            displayIndexButtons();
+            highlightIndexButton();
+        }
+    }
+
+    function indexPagination(index) {
+        current_index = index;
+        displayIndexButtons();
+        highlightIndexButton();
+    }
 
 
 
+    function displayTableRows() {
+      $("table tbody").empty();
+      var tab_start = start_index - 1;
+      var tab_end = end_index;
 
+      if (array.length === 0) {
+        $("#noDataFound").show();
+        $("#pagination").hide();
+        $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+        return;
+      } else {
+        $("#noDataFound").hide();
+        $("#pagination").show();
+        $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+      }
+
+      for (var i = tab_start; i < tab_end; i++) {
+        var showdata = array[i];
+        // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+
+        var tr = $("<tr></tr>");
+
+        var noCell = $("<td></td>").text(i + 1);
+        var fullNameCell = $("<td colspan='3'></td>").text(showdata["username"] || "");
+        var shortNameCell = $("<td colspan='3'> </td>").text(showdata["mobile_no"] || "");
+        var emailCell = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
+        var walletCell = $("<td colspan='2'> </td>").text(showdata["mode"] || "");
+        var winningCell = $("<td colspan='3'> </td>").text(showdata["amount"] || "");
+
+
+
+        // var logoCell = $("<td></td>").html(
+        //   showdata["league_image"]
+        //     ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
+        //     : ""
+        // );
+
+
+        // var dateCell = $("<td colspan='2'></td>").text(
+        //   (showdata["start_league_date"] || "") +
+        //   " - " +
+        //   (showdata["end_league_date"] || "")
+        // );
+        var statusCell = $("<td colspan='2'></td>").text(showdata["status"]);
+        var dateCell = $("<td colspan='2'></td>").text(showdata["date_time"]);
+
+        // var viewCell = $("<td></td>").html(
+        //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
+        //     '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
+        // );
+        // var editCell = $("<td></td>").html(
+        //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
+        // );
+        // var deleteCell = $("<td></td>").html(
+        //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
+        // );
+
+        tr.append(noCell)
+          .append(fullNameCell)
+          .append(shortNameCell)
+          .append(emailCell)
+          .append(walletCell)
+          .append(winningCell)
+          .append(statusCell)
+          .append(dateCell)
+          // .append(deleteCell);
+
+        if (status === "Completed") {
+          noCell.addClass("disabled-row");
+          fullNameCell.addClass("disabled-row");
+          shortNameCell.addClass("disabled-row");
+          logoCell.addClass("disabled-row");
+          dateCell.addClass("disabled-row");
+          statusCell.addClass("disabled-row");
+          editCell.addClass("disabled-row");
+        }
+
+        $("table tbody").append(tr);
+      }
+      // lazyLoadImages(); // Call the lazy loading function after adding rows
+    }
+
+   
+
+  
+
+    // Lazy load images function
+ 
+
+    // function navigateTo() {
+    //         // Use pushState to add a new history entry
+    //         history.pushState(null, null, './addleague.html');
+    //         // Navigate to the addleague page
+    //         window.location.href = './addleague.html';
+    //     }
+    //     window.addEventListener('popstate', function(event) {
+    //         // Handle the back button event
+    //         // history.replaceState(null, null, './manage-league.html');
+    //         window.location.replace('./manage-league.html');
+    //     });
+//     let hasComeback = false;
+
+// // Add event listener to window's back button
+// window.addEventListener('popstate', function() {
+//   hasComeback = true;
+// });
+
+// // Add click event listener to next button
+// document.getElementById('add-new-btn').addEventListener('click', function() {
+//   // Check if user has come back from next page
+//   if (hasComeback) {
+//     hasComeback = false;
+//     return; // Do not navigate to next page
+//   }
+  
+//   // Navigate to next page
+//   window.location.href = './addleague.html';
+// });
+// window.onload = function(){
+//             history.pushState(null,null,location.href);
+//             window.onpopstate = function(){
+//                 history.go(-1);
+//             }
+//         }
+
+  </script>
 
 
 

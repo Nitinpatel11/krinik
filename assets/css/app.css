@@ -39,6 +39,8 @@ File: Main Css File
   background-color: var(--bs-header-bg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
+
+
   /* .form-group {
             margin-bottom: 1rem;
         } */
@@ -3917,4 +3919,12 @@ tbody td {
 .pagi{
   margin-top: 20px ;
   /* display: none; */
+}
+
+.login-mains {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+
 }
