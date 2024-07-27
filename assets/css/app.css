@@ -621,6 +621,13 @@ body[data-layout=horizontal] .footer {
   float: right;
   transition: transform 0.2s;
   font-size: 1rem;
+  margin-left: 9px;
+}
+#sidebar-menu .has-arrow1:after {
+    margin-left: 39px;
+}#sidebar-menu .has-arrow2:after {
+ 
+  margin-left: 64px;
 }
 #sidebar-menu ul li a {
   display: block;
@@ -3901,7 +3908,7 @@ tbody td {
 
 .price-item span {
   cursor: pointer;
-  color: #ff0000;
+  color: #E20101;
   font-weight: bold;
   margin-left: 10px;
 }
@@ -3922,9 +3929,85 @@ tbody td {
 }
 
 .login-mains {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100%;
+  width: 100%;
+  transform: translate(50%,50%);
+
+}
+
+.otp-section p {
+  margin: 0;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.otp-inputs {
   display: flex;
   justify-content: center;
-  align-items: center;
-  
+  gap: 10px;
+  margin: 20px 0;
+}
 
+.otp-inputs input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.resend-timer {
+  margin: 10px 0;
+}
+
+.icon-margin{
+  color: var( --bs-sidebar-menu-item-icon-color);
+  margin-left: 3px;
+}
+
+
+.icon-set{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+/* .span-otp-font{
+  font-size: 12px;
+} */
+
+.modal-content{
+  width: 90% !important;
+  margin: auto;
+}
+
+.close-margin{
+  margin-top: 7px !important;
+  align-items: center;
+}
+
+.para-bottom{
+  /* font-weight: 600; */
+  font-weight: 900;
+  margin-bottom: 0;
+}
+
+.span-user{
+  font-weight: 300;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none; /* Prevent interaction */
+}
+
+/* Optional: Adjust hover effects */
+.disabled:hover {
+  background-color: #ddd; /* Adjust as needed */
 }
