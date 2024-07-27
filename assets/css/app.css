@@ -4011,3 +4011,7 @@ tbody td {
 .disabled:hover {
   background-color: #ddd; /* Adjust as needed */
 }
+
+.user-name-title{
+  color: #ffffff;
+}

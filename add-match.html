@@ -663,67 +663,7 @@ s<!doctype html>
     <script>
 
         document.addEventListener('DOMContentLoaded', async function () {
-            async function myFetch(url, type, data) {
-                try {
-                    let responseData;
-
-                    if (type === "GET") {
-                        const res = await fetch(url, {
-                            method: type,
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        });
-
-                        if (res.ok) {
-                            console.log("HTTP request successful");
-                        } else {
-                            console.log("HTTP request unsuccessful");
-                        }
-
-                        responseData = await res.json();
-                        return responseData.data; // Assuming the API returns data array
-                    } else if (type === "DELETE") {
-                        const res = await fetch(url, {
-                            method: type,
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        });
-
-                        if (res.ok) {
-                            console.log("HTTP request successful");
-                        } else {
-                            console.log("HTTP request unsuccessful");
-                        }
-
-                        return res;
-                    } else if (type === "POST" || type === "PUT") {
-                        const res = await fetch(url, {
-                            method: type,
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        });
-
-                        if (res.ok) {
-                            console.log("HTTP request successful");
-                        } else {
-                            console.log("HTTP request unsuccessful");
-                        }
-
-                        responseData = await res.json();
-                        return responseData;
-                    }
-                } catch (error) {
-                    console.error("Fetch error:", error);
-                    throw error; // Re-throw the error to handle it where myFetch is called
-                }
-            }
-            let existingMatches = []
-            existingMatches = await myFetch("https://krinik.pythonanywhere.com/match_get/", "GET");
-            console.log(existingMatches, "ok")
+        
 
 
             $(function () {
@@ -831,10 +771,10 @@ s<!doctype html>
 
 
 
-            for (const obj of existingMatches) {
-                console.log(obj.match_start_date);
-            }
-            console.log(existingMatches[0].match_start_date, "okkk");
+            // for (const obj of existingMatches) {
+            //     console.log(obj.match_start_date);
+            // }
+            // console.log(existingMatches[0].match_start_date, "okkk");
 
             function checkOverlap(teamA, teamB, startDate1, existingMatches) {
                 const startDate = document.getElementById('match-start-date').value;
@@ -901,6 +841,7 @@ s<!doctype html>
                     const response = await fetch('https://krinik.pythonanywhere.com/league_get/');
                     if (!response.ok) throw new Error('Failed to fetch leagues');
                     const data = await response.json();
+                    console.log(data.data)
                     if (data.status === 'success' && Array.isArray(data.data)) {
                         populateSelect(document.getElementById('league-name'), data.data, 'league_name', 'Select League');
                         document.getElementById('league-name').addEventListener('change', function () {
@@ -1313,6 +1254,67 @@ s<!doctype html>
             }
             // Fetch initial data
 
+            async function myFetch(url, type, data) {
+                try {
+                    let responseData;
+
+                    if (type === "GET") {
+                        const res = await fetch(url, {
+                            method: type,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (res.ok) {
+                            console.log("HTTP request successful");
+                        } else {
+                            console.log("HTTP request unsuccessful");
+                        }
+
+                        responseData = await res.json();
+                        return responseData.data; // Assuming the API returns data array
+                    } else if (type === "DELETE") {
+                        const res = await fetch(url, {
+                            method: type,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (res.ok) {
+                            console.log("HTTP request successful");
+                        } else {
+                            console.log("HTTP request unsuccessful");
+                        }
+
+                        return res;
+                    } else if (type === "POST" || type === "PUT") {
+                        const res = await fetch(url, {
+                            method: type,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (res.ok) {
+                            console.log("HTTP request successful");
+                        } else {
+                            console.log("HTTP request unsuccessful");
+                        }
+
+                        responseData = await res.json();
+                        return responseData;
+                    }
+                } catch (error) {
+                    console.error("Fetch error:", error);
+                    throw error; // Re-throw the error to handle it where myFetch is called
+                }
+            }
+            let existingMatches = []
+            existingMatches = await myFetch("https://krinik.pythonanywhere.com/match_get/", "GET");
+            console.log(existingMatches, "ok")
 
 
             try {

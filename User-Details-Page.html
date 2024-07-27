@@ -126,7 +126,7 @@
     }
 
     .profile_wrapper .full-name {
-      text-wrap: nowrap;
+      text-wrap: wrap;
       text-align: center;
       display: flex;
       align-items: center;
@@ -660,7 +660,7 @@
 
                             <div class="info mb-2">Mobile No : <span id="user-mob" class="span-user"></span></div>
                             <div class="info mb-2">Email Id : <span id="user-email" class="span-user"></span></div>
-                            <div class="info mb-2">Registration Date & Time : <span id="reg-time" class="span-user"></span></div>
+                            <div class="info mb-2"><span>Registration Date & Time :</span> <span id="reg-time" class="span-user"></span></div>
                           </div>
                         </div>
                       </div>
@@ -835,6 +835,8 @@
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
+
+      console.log(id)
     
       async function fetchUserData() {
         try {

@@ -503,7 +503,7 @@
             <div class="row align-items-center">
 
               <div>
-                <h4 class="page-title mb-1">Game Transaction</h4>
+                <h4 class="page-title mb-1">All Transaction</h4>
               </div>
             </div>
           </div>
@@ -586,12 +586,12 @@
                                   <thead class="align-items-center">
                                     <tr>
                                       <th data-priority="">No.</th>
-                                      <th data-priority="" colspan="3">Pool Name</th>
-                                      <th data-priority="" colspan="3">Pool Type
-                                      <th data-priority="" colspan="3">Username</th>
-                                      <th data-priority="" colspan="3">Mobile No.</th>
-                                      <th data-priority="" colspan="3">Transaction Id</th>
-                                      <th data-priority="" colspan="2">Credit/Debit</th>
+                                      <th data-priority="" colspan="3">User Id</th>
+                                      <th data-priority="" colspan="3">Order Id</th>
+                                        <!-- <th data-priority="" colspan="3">Username</th> -->
+                                      <!-- <th data-priority="" colspan="3">Mobile No.</th> -->
+                                      <!-- <th data-priority="" colspan="3">Transaction Id</th> -->
+                                      <!-- <th data-priority="" colspan="2">Credit/Debit</th> -->
                                       <th data-priority="" colspan="3">Amount</th>
                                       <th data-priority="" colspan="2">status</th>
 
@@ -726,15 +726,15 @@
       async function fetchData() {
         try {
           const data = await $.ajax({
-            url: "https://krinik.pythonanywhere.com/game_amount_get/",
+            url: "https://krinik.pythonanywhere.com/all_transaction/",
             method: "GET"
           });
 
           if (data && data.status === "success") {
             rankList = data.data;
             array = rankList;
-            filterAndDisplay();
             console.log(array)
+            filterAndDisplay();
             //   totaldataleague.innerHTML = array.length;
           } else {
             console.error("Error: Invalid data format");
@@ -968,12 +968,12 @@
           var tr = $("<tr></tr>");
 
           var noCell = $("<td></td>").text(i + 1);
-          var poolNameCell = $("<td colspan='3'></td>").text(showdata.pool["pool_name"] || "");
-          var poolTypeCell = $("<td colspan='3'> </td>").text(showdata.pool["pool_type"] || "");
-          var userNameCell = $("<td colspan='3'> </td>").text(showdata.username["name"] || "");
-          var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
+          var poolNameCell = $("<td colspan='3'></td>").text(showdata["user_id"] || "");
+          var poolTypeCell = $("<td colspan='3'> </td>").text(showdata["order_id"] || "");
+          // var userNameCell = $("<td colspan='3'> </td>").text(showdata.username["name"] || "");
+          // var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
 
-          var transactionId = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
+          // var transactionId = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
           var credit_debitCell = $("<td colspan='2'> </td>").text(showdata["credit_debit"] || "");
           var amountCell = $("<td colspan='3'> </td>"); // Initialize amountCell
 
@@ -983,6 +983,13 @@
             amountCell.html(`<span style="color: red;font-weight:600">&#x2212;${showdata["amount"] || ""}</span>`);
           }
           var statusCell = $("<td colspan='2'></td>").text(showdata["status"]);
+          if (showdata["status"] === "success" || showdata["status"] === "Success") {
+            statusCell.html(`<span class="material-symbols-outlined" style="color:green">check_circle</span>`);
+          } else if (showdata["status"] === "fail" || showdata["status"]=== "Fail") {
+            statusCell.html(` <span class="material-symbols-outlined" style="color:red">error</span>`);
+          }else if (showdata["status"] === "pending" || showdata["status"]=== "Pending") {
+            statusCell.html(`<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`);
+          }
           var dateCell = $("<td colspan='2'></td>").text(showdata["date_time"]);
 
           // var viewCell = $("<td></td>").html(
@@ -999,18 +1006,18 @@
           tr.append(noCell)
             .append(poolNameCell)
             .append(poolTypeCell)
-            .append(userNameCell)
-            .append(mobileCell)
-            .append(transactionId)
-            .append(credit_debitCell)
+            // .append(userNameCell)
+            // .append(mobileCell)
+            // .append(transactionId)
+            // .append(credit_debitCell)
             .append(amountCell)
             .append(statusCell)
             .append(dateCell)
           // .append(deleteCell);
 
-          if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
+          // if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
 
-          }
+          // }
 
           $("table tbody").append(tr);
         }
