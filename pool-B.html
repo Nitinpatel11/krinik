@@ -503,7 +503,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -558,6 +558,8 @@
                         </div>
                     </div>
                     <div class="mt-5 text-center d-flex justify-content-center gap-3">
+                      <button class="btn btn-primary grey-btn" type="button" id="cancel-btn"
+                      onclick="window.location.replace('./manage-pool.html')">skip</button>
                         <button class="btn btn-primary" type="button" id="submitPairsButton">Submit Pairs</button>
                     </div>
                 </div>
@@ -755,6 +757,8 @@ submitPairsButton.addEventListener('click', function () {
 });
 
 </script> -->
+<script src="./assets/js/logout.js"></script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', async function () {

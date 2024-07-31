@@ -460,7 +460,7 @@
             </li>
 
             <li>
-              <a href="calendar.html" class="waves-effect">
+              <a href="" class="waves-effect" id="logoutButton">
                 <div class=" icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     logout
@@ -660,6 +660,10 @@
                             </div>
                           </div>
                         </div>
+                        <div class="d-flex justify-content-end pagi">
+                          
+                          <button  type="button" id="download-btn" class="btn dropbtn-color addnew">Download Excel</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -707,6 +711,7 @@
   <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
   <!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+  <script src="./assets/js/logout.js"></script>
 
   <!-- Required datatable js -->
   <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -802,7 +807,7 @@
       $('#tab_filter_text').on('input', filterRankList);
       let picker = flatpickr('#rangePicker', {
         mode: 'range',
-        dateFormat: 'd/m/Y',
+        dateFormat: 'd-m-Y',
         onClose: function (selectedDates, dateStr, instance) {
           if (!selectedDates || selectedDates.length === 0) {
             instance.clear();
@@ -810,7 +815,7 @@
             $('#clearDates').hide();
             $('#calendarIcon').show();
           } else {
-            $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd/m/Y')).join(' - ')).addClass('has-dates');
+            $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
             $('#clearDates').show();
             $('#calendarIcon').hide();
           }
@@ -846,8 +851,9 @@
 
         if (datefilter !== '' && datefilter !== 'Start & End Date') {
             var dates = datefilter.split(' - ');
-            startDate = moment(dates[0], 'DD/MM/YYYY').toDate();
-            endDate = moment(dates[1], 'DD/MM/YYYY').toDate();
+            startDate = moment(dates[0], 'DD-MM-YYYY').toDate();
+            console.log(startDate)
+            endDate = moment(dates[1], 'DD-MM-YYYY').toDate();
         }
 
         var filteredArray = rankList.filter(function (object) {
@@ -866,8 +872,8 @@
             }
 
             if (startDate && endDate) {
-                matchesDate = (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
-                    moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
+                matchesDate = (moment(object.start_league_date, 'DD-MM-YYYY').toDate() >= startDate &&
+                    moment(object.end_league_date, 'DD-MM-YYYY').toDate() <= endDate);
             }
 
             return matchesText && matchesStatus && matchesDate;
@@ -882,8 +888,8 @@
     }
     function getStatus(start_date, end_date) {
       var currentDate = new Date();
-      var startDate = moment(start_date, "DD/MM/YYYY").toDate();
-      var endDate = moment(end_date, "DD/MM/YYYY").toDate();
+      var startDate = moment(start_date, "DD-MM-YYYY").toDate();
+      var endDate = moment(end_date, "DD-MM-YYYY").toDate();
 
       if (startDate < currentDate && currentDate <= endDate) {
         return "Running";
@@ -1160,7 +1166,24 @@
 //             }
 //         }
 
+const table = document.getElementById('tech-companies-1');
+const downloadBtn = document.getElementById('download-btn');
+
+downloadBtn.addEventListener('click', () => {
+  const workbook = XLSX.utils.table_to_book(table, { sheet: 'League Data' });
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = URL.createObjectURL(data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'league_data.xlsx';
+  a.click();
+
+  URL.revokeObjectURL(url);
+  a.remove();
+});
   </script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
   
 
 </body>

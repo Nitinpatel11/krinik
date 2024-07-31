@@ -40,7 +40,9 @@ File: Main Css File
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-
+.contest-name{
+  color: white !important;
+}
   /* .form-group {
             margin-bottom: 1rem;
         } */
@@ -2766,6 +2768,41 @@ input::-webkit-input-placeholder { /* Chrome, Safari, Opera */
 input::-moz-placeholder { /* Firefox 19+ */
   color: grey;
 }
+.amountWidth{
+  outline: none;
+  width: 100px;
+  line-height: normal !important;
+  padding: 2px 0;
+  background-color: #fff;
+  color: grey;
+  border: none;
+  /* border:1px solid grey; */
+  border-radius: 5px;
+}
+.amountWidth1{
+  outline: none;
+  padding: 0px 8px;
+ 
+  line-height: normal !important;
+  
+  background-color: #fff !important;
+  color: grey;
+  /* border: none; */
+  border:1px solid grey;
+  border-radius: 5px;
+}
+.filter-item{
+   border:1px solid grey;
+  border-radius: 5px;
+  background-color: #fff;
+
+}
+
+.circle-clear{
+  color: #E20101;
+  display: none;
+  margin-right: 3px;
+}
 
 input:-moz-placeholder { /* Firefox 18- */
   color: grey;
@@ -3759,7 +3796,7 @@ body::-webkit-scrollbar{
   white-space: nowrap;
 }
 
-@media only screen and (max-width: 425px) {
+/* @media only screen and (max-width: 425px) {
   .fixed-table{
   table-layout: auto !important;
   width: 150% !important;
@@ -3769,7 +3806,7 @@ body::-webkit-scrollbar{
 .fixed-table{
   table-layout: fixed;
   width: 150%;
-}
+} */
 /* .form-group{
   border: 1px solid #CCCCCC
 } */
@@ -3934,7 +3971,7 @@ tbody td {
   align-items: center !important;
   height: 100%;
   width: 100%;
-  transform: translate(50%,50%);
+  /* transform: translate(50%,50%); */
 
 }
 
@@ -4014,4 +4051,155 @@ tbody td {
 
 .user-name-title{
   color: #ffffff;
+}
+
+
+#logoutButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Modal Container */
+.modal1 {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+/* Modal Content */
+.modal-content1 {
+  background-color: #fff;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+  max-width: 400px;
+  position: relative;
+  border-radius: 8px;
+}
+
+/* Close Button */
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Close Button Hover */
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal Buttons */
+.modal-buttons1 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal-buttons1 button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+#confirmLogout {
+  background-color: #E20101;
+  color: #fff;
+}
+
+#confirmLogout:hover {
+  background-color: #E20101;
+}
+
+#cancelLogout {
+  background-color: #e0e0e0;
+}
+
+#cancelLogout:hover {
+  background-color: #bdbdbd;
+}
+
+
+.dropdown-btn3 {
+  background-color: white;
+  border: 1px solid grey;
+  width: 125px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-content3 {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 125px;
+  border: 1px solid grey;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.dropdown-btn3 span {
+  font-size: 15px;
+  color: grey !important;
+}
+.dropdown-btn3 .arrow{
+  font-size: 23px;
+  color: grey !important;
+}
+
+.dropdown-content3.show {
+  display: block;
+  opacity: 1;
+}
+
+.dropdown-content3 a {
+  color: black;
+  padding: 10px;
+  font-size: 15px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content3 a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-btn3 .arrow {
+  margin-left: 10px;
+}
+
+.dropdown-btn3 .circle-clear1 {
+  display: none;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 20px;
+  color: #E20101 !important;
+}
+.btn-primary1{
+  color: white !important;
+  background-color: #E20101 !important;
 }

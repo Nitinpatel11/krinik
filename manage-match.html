@@ -468,7 +468,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -635,20 +635,20 @@
                                     <thead class="align-items-center">
                                       <tr>
                                         <th data-priority="">No.</th>
-                                        <th data-priority="" class="sortable" data-column="team_name" colspan="2">Match Name   
+                                        <th data-priority="" class="sortable" data-column="team_name" colspan="3">Match Name   
                                           
                                         </th>
                                         <th data-priority="" colspan="2">
                                          Total Pool
                                         </th>
-                                        <th data-priority="" colspan="2">
+                                        <!-- <th data-priority="" colspan="2">
                                           Fantacy Start
                                         </th>
                                         <th data-priority="" colspan="2">
                                           Fantacy End
-                                        </th>
-                                        <th data-priority="" colspan="2">Total Amount</th>
-                                        <th data-priority=""colspan="2">
+                                        </th> -->
+                                        <th data-priority="" colspan="3">Total Amount</th>
+                                        <th data-priority="">
                                          Total Players
                                         </th>
                                         <th data-priority="" colspan="2">Status</th>
@@ -680,6 +680,10 @@
                                   <ul class="pagination-list d-flex list-unstyled"></ul>
                                 </div>
                               </div>
+                            </div>
+                            <div class="d-flex justify-content-end pagi">
+                          
+                              <button  type="button" id="download-btn" class="btn dropbtn-color addnew">Download Excel</button>
                             </div>
                           </div>
                         </div>
@@ -726,6 +730,7 @@
     <script src="./assets/libs/node-waves/waves.min.js"></script>
 
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+    <script src="./assets/js/logout.js"></script>
 
     <!-- Required datatable js -->
     <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -985,16 +990,16 @@
 
         // Populate table cells with match data
         var noCell = $("<td></td>").text(i + 1);
-        var teamNameCell = $("<td colspan='2'></td>").text(object.match_display_name);
+        var teamNameCell = $("<td colspan='3'></td>").text(object.match_display_name);
         var totalPoolCell = $("<td colspan='2'></td>").text("Your Total Pool");
-        var fantacyStartCell = $("<td colspan='2'></td>").text(object.match_start_date);
-        var fantacyEndCell = $("<td colspan='2'></td>").text(object.match_end_date);
-        var totalAmountCell = $("<td colspan='2'></td>").text("Your Total Amount");
-        var totalPlayersCell = $("<td colspan='2'></td>").text(object.select_player_A.length + object.select_player_B.length);
+        // var fantacyStartCell = $("<td colspan='2'></td>").text(object.match_start_date);
+        // var fantacyEndCell = $("<td colspan='2'></td>").text(object.match_end_date);
+        var totalAmountCell = $("<td colspan='3'></td>").text("Your Total Amount");
+        var totalPlayersCell = $("<td></td>").text(object.select_player_A.length + object.select_player_B.length);
         var statusCell = $("<td colspan='2'></td>").text(getStatus(object.match_start_date, object.match_end_date));
         console.log(statusCell)
         var viewCell = $("<td></td>").html(
-            '<span class="sortable" onclick="window.location.href=\'view-match-details.html\'"><i class="far fa-eye"></i></span>'
+            '<span class="sortable" onclick="handleView(' + object["id"] +')"><i class="far fa-eye"></i></span>'
         );
         var editCell = $("<td></td>").html(
             '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'
@@ -1007,8 +1012,8 @@
         tr.append(noCell)
             .append(teamNameCell)
             .append(totalPoolCell)
-            .append(fantacyStartCell)
-            .append(fantacyEndCell)
+            // .append(fantacyStartCell)
+            // .append(fantacyEndCell)
             .append(totalAmountCell)
             .append(totalPlayersCell)
             .append(statusCell)
@@ -1042,6 +1047,21 @@
         }
 
       }
+
+      async function handleView(id) {
+      const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
+      try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+          window.location.href = `view-match-details.html?id=${id}`;
+        } else {
+          console.error("Failed to fetch the league data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
   
       async function handleEdit(id) {
       const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
@@ -1081,7 +1101,27 @@
       displayIndexButtons();
       highlightIndexButton();
     }
+
+    const table = document.getElementById('matchTable');
+const downloadBtn = document.getElementById('download-btn');
+
+downloadBtn.addEventListener('click', () => {
+  const workbook = XLSX.utils.table_to_book(table, { sheet: 'Match Data' });
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = URL.createObjectURL(data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'match_data.xlsx';
+  a.click();
+
+  URL.revokeObjectURL(url);
+  a.remove();
+});
+
+
   </script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
   
   
       

@@ -467,7 +467,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -666,107 +666,14 @@
                                   id="datatable_paginate"
                                 >
                                   <ul class="pagination-list d-flex list-unstyled">
-                                    <!-- <li
-                                      class="paginate_button page-item previous disabled"
-                                      id="prev-button"
-                                    >
-                                      <a
-                                        aria-controls="datatable"
-                                        aria-disabled="true"
-                                        role="link"
-                                        data-dt-idx="previous"
-                                        tabindex="-1"
-                                        class="page-link"
-                                         
-                                        >Previous</a
-                                      >
-                                    </li>
-                                    <li
-                                      class="paginate_button page-item active"
-                                    >
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        aria-current="page"
-                                        data-dt-idx="0"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >1</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="1"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >2</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="2"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >3</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="3"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >4</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="4"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >5</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="5"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >6</a
-                                      >
-                                    </li>
-                                    <li
-                                      class="paginate_button page-item next"
-                                      id="next-button"
-                                    >
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="next"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >Next</a
-                                      >
-                                    </li> -->
+                                  
                                   </ul>
                                 </div>
                               </div>
+                            </div>
+                            <div class="d-flex justify-content-end pagi">
+                          
+                              <button  type="button" id="download-btn" class="btn dropbtn-color addnew">Download Excel</button>
                             </div>
                           </div>
                         </div>
@@ -813,6 +720,7 @@
     <script src="./assets/libs/node-waves/waves.min.js"></script>
 
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+    <script src="./assets/js/logout.js"></script>
 
     <!-- Required datatable js -->
     <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -1207,8 +1115,25 @@ function displayIndexButtons() {
           observer.observe(image);
       });
   }
+
+  const table = document.getElementById('playerTable');
+const downloadBtn = document.getElementById('download-btn');
+
+downloadBtn.addEventListener('click', () => {
+  const workbook = XLSX.utils.table_to_book(table, { sheet: 'Player Data' });
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = URL.createObjectURL(data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'player_data.xlsx';
+  a.click();
+
+  URL.revokeObjectURL(url);
+  a.remove();
+});
 </script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
   </body>
 </html>

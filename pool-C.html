@@ -500,7 +500,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -546,6 +546,8 @@
                             </div>
                         </div>
                         <div class="mt-5 text-center d-flex justify-content-center gap-3">
+                          <button class="btn btn-primary grey-btn" type="button" id="cancel-btn"
+                          onclick="window.location.replace('./manage-pool.html')">Skip</button>
                             <button class="btn btn-primary" type="submit" id="submitTripletsButton">Submit
                                 Triplets</button>
                         </div>
@@ -570,6 +572,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<script src="./assets/js/logout.js"></script>
 
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {

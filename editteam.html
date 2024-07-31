@@ -447,7 +447,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -603,6 +603,7 @@
     <script src="./assets/libs/node-waves/waves.min.js"></script>
 
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+    <script src="./assets/js/logout.js"></script>
 
     <!-- datepicker -->
     <script src="./assets/libs/air-datepicker/js/datepicker.min.js"></script>
@@ -753,6 +754,28 @@
                     }
                 }
 
+                function isValidTeamName1(value) {
+    const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
+    const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+    
+    // Check for emoji
+    if (emojiRegex.test(value)) {
+        return false; // Invalid if emoji found
+    }
+    
+    // Check for alphanumeric and spaces
+    if (!alphanumericRegex.test(value)) {
+        return false; // Invalid if non-alphanumeric characters found
+    }
+    
+    // Check for purely numeric input
+    if (/^\d+$/.test(value)) {
+        return false; // Invalid if input is purely numeric
+    }
+    
+    return true; // Valid input
+}
+
                 document.getElementById('team-form').addEventListener('submit', async function (event) {
                     event.preventDefault();
 
@@ -770,7 +793,7 @@
                     const isValidTeamName = validateInput(
                         'team-name',
                         'error-team-name',
-                        noNumberOrWhitespaceRegex,
+                        isValidTeamName1,
                         'Please enter team name',
                         'Please enter valid team name'
                     );
@@ -778,7 +801,7 @@
                     const isValidShortTeamName = validateInput(
                         'short-team-name',
                         'error-short-team-name',
-                        noNumberOrWhitespaceRegex,
+                        isValidTeamName1,
                         'Please enter short team name',
                         'Please enter valid short team name'
                     );
@@ -930,29 +953,32 @@
                     }
                 });
 
-                function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
-                    const inputElement = document.getElementById(inputId);
-                    const errorElement = document.getElementById(errorId);
+                function validateInput(inputId, errorId, validationFunction, emptyMessage, invalidMessage) {
+    const inputElement = document.getElementById(inputId);
+    const errorElement = document.getElementById(errorId);
 
-                    if (!inputElement || !errorElement) {
-                        console.error('Input or error element not found');
-                        return false;
-                    }
+    function validate() {
+        const value = inputElement.value.trim();
+        if (value === '') {
+            errorElement.innerHTML = emptyMessage;
+            errorElement.style.display = 'inline';
+            return false;
+        } else if (!validationFunction(value)) {
+            errorElement.innerHTML = invalidMessage;
+            errorElement.style.display = 'inline';
+            return false;
+        } else {
+            errorElement.style.display = 'none';
+            return true;
+        }
+    }
 
-                    const value = inputElement.value.trim();
-                    if (value === '') {
-                        errorElement.innerHTML = emptyMessage;
-                        errorElement.style.display = 'inline';
-                        return false;
-                    } else if (!regex.test(value)) {
-                        errorElement.innerHTML = invalidMessage;
-                        errorElement.style.display = 'inline';
-                        return false;
-                    } else {
-                        errorElement.style.display = 'none';
-                        return true;
-                    }
-                }
+    inputElement.addEventListener('input', validate);
+    inputElement.addEventListener('change', validate);
+
+    return validate();
+}
+
 
                 function checkTeamOverlap(teamNameInput, shortTeamNameInput, leagueName, existingTeams) {
                     const teamName = teamNameInput.value.trim();

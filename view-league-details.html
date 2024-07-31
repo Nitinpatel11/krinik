@@ -511,7 +511,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -573,12 +573,12 @@
                                         
                                                 <div class="form-group form-group-custom mb-4">
                                                     <!-- <label for="startLeagueDate">Start League Date</label> -->
-                                                    <input type="text" class="form-control" id="startLeagueDate" readonly>
+                                                    <input type="text" class="form-control text-center" id="startLeagueDate" readonly>
                                                 </div>
                                         
                                                 <div class="form-group form-group-custom mb-4">
                                                     <!-- <label for="endLeagueDate">End League Date</label> -->
-                                                    <input type="text" class="form-control" id="endLeagueDate" readonly>
+                                                    <input type="text" class="form-control text-center" id="endLeagueDate" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -588,13 +588,13 @@
                                     <div class="page-content-wrapper mt-4">
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <table id="datatable" class="table table-bordered dt-responsive " >
                                                     <thead>
-                                                        <tr class="text-center fs-5">
-                                                            <th style="width: 15%; text-align: center;">No.</th>
+                                                        <tr class="">
+                                                            <th>No.</th>
                                                             <th>Team Logo</th>
                                                             <th>Team Short Name</th>
-                                                            <th>Team Name</th>
+                                                            <th colspan="2">Team Name</th>
                                                             <!-- Add more headers as needed -->
                                                         </tr>
                                                     </thead>
@@ -706,7 +706,7 @@
                                         <td>${index + 1}</td>
                                          <td class="view-image-div"><img src="  https://krinik.pythonanywhere.com${team.team_image}" height="30px" width="30px"></td>
                                           <td>${team.team_short_name}</td>
-                                        <td>${team.team_name}</td>
+                                        <td colspan="2">${team.team_name}</td>
                                        
                                     
                                         <!-- Add more cells as needed -->
@@ -767,6 +767,7 @@
 
 
 
+<script src="./assets/js/logout.js"></script>
 
                 <!-- JAVASCRIPT -->
                 <script src="./assets/libs/jquery/jquery.min.js"></script>

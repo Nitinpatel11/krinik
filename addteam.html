@@ -447,7 +447,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -663,6 +663,7 @@
         //     myFetch("https://jadavnilesh.pythonanywhere.com/get/", "GET");
         // </script>
 
+<script src="./assets/js/logout.js"></script>
 
     <!-- JAVASCRIPT -->
     <script src="./assets/libs/jquery/jquery.min.js"></script>
@@ -692,8 +693,9 @@
 
    
         <script>
-            const noNumberOrWhitespaceRegex = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
-            
+            const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
+        const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+
             const defaultImageSrc = 'assets/images/cricket.png';
             let existingTeams = [];
             let existingLeagues = [];
@@ -730,31 +732,54 @@
                 });
             }
         
-            function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
-                const input = document.getElementById(inputId);
-                const error = document.getElementById(errorId);
-        
-                function validate() {
-                    const value = input.value.trim();
-                    if (value === '') {
-                        error.innerHTML = emptyMessage;
-                        error.style.display = 'inline';
-                        return false;
-                    } else if (!regex.test(value)) {
-                        error.innerHTML = invalidMessage;
-                        error.style.display = 'inline';
-                        return false;
-                    } else {
-                        error.style.display = 'none';
-                        return true;
-                    }
-                }
-        
-                input.addEventListener('input', validate);
-                input.addEventListener('change', validate);
-        
-                return validate();
-            }
+            function validateInput(inputId, errorId, validationFunction, emptyMessage, invalidMessage) {
+    const inputElement = document.getElementById(inputId);
+    const errorElement = document.getElementById(errorId);
+
+    function validate() {
+        const value = inputElement.value.trim();
+        if (value === '') {
+            errorElement.innerHTML = emptyMessage;
+            errorElement.style.display = 'inline';
+            return false;
+        } else if (!validationFunction(value)) {
+            errorElement.innerHTML = invalidMessage;
+            errorElement.style.display = 'inline';
+            return false;
+        } else {
+            errorElement.style.display = 'none';
+            return true;
+        }
+    }
+
+    inputElement.addEventListener('input', validate);
+    inputElement.addEventListener('change', validate);
+
+    return validate();
+}
+
+
+function isValidTeamName1(value) {
+    const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
+    const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+    
+    // Check for emoji
+    if (emojiRegex.test(value)) {
+        return false; // Invalid if emoji found
+    }
+    
+    // Check for alphanumeric and spaces
+    if (!alphanumericRegex.test(value)) {
+        return false; // Invalid if non-alphanumeric characters found
+    }
+    
+    // Check for purely numeric input
+    if (/^\d+$/.test(value)) {
+        return false; // Invalid if input is purely numeric
+    }
+    
+    return true; // Valid input
+}
         
             function checkTeamOverlap(teamName, shortTeamName, leagueName, existingTeams) {
                 console.log("Checking overlap for:", teamName, shortTeamName, leagueName);
@@ -806,6 +831,8 @@
                 leagueSelect.addEventListener('change', validate);
                 return validate();
             }
+
+
         
             async function handleFormSubmission(event) {
                 event.preventDefault();
@@ -818,17 +845,18 @@
                 const isValidTeamName = validateInput(
                     'team-name',
                     'error-team-name',
-                    noNumberOrWhitespaceRegex,
+                    isValidTeamName1,
                     'Please enter a team name',
                     'Please enter a valid team name'
                 );
                 const isValidShortTeamName = validateInput(
                     'short-team-name',
                     'error-short-team-name',
-                    noNumberOrWhitespaceRegex,
+                    isValidTeamName1,
                     'Please enter a short team name',
                     'Please enter a valid short team name'
                 );
+
 
 
 

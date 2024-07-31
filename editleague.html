@@ -449,7 +449,7 @@
             </li>
 
             <li>
-              <a href="calendar.html" class="waves-effect">
+              <a href="" class="waves-effect" id="logoutButton">
                 <div class=" icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     logout
@@ -709,6 +709,7 @@
     <script src="./assets/libs/node-waves/waves.min.js"></script>
 
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+    <script src="./assets/js/logout.js"></script>
 
     <!-- datepicker -->
     <script src="./assets/libs/air-datepicker/js/datepicker.min.js"></script>
@@ -1049,7 +1050,8 @@
                                 await submitFormData(initialData, 'PATCH');
                             }
                         }
-                    }
+                    
+                      }
                 } else {
                     console.log('Form validation failed. Please check all fields.');
                 }

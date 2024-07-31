@@ -468,7 +468,7 @@
               </li>
   
               <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="" class="waves-effect" id="logoutButton">
                   <div class=" icons-sm icon-set">
                     <span class="material-symbols-outlined icon-margin">
                       logout
@@ -655,107 +655,14 @@
                                   id="datatable_paginate"
                                 >
                                   <ul class="pagination-list d-flex list-unstyled">
-                                    <!-- <li
-                                      class="paginate_button page-item previous disabled"
-                                      id="prev-button"
-                                    >
-                                      <a
-                                        aria-controls="datatable"
-                                        aria-disabled="true"
-                                        role="link"
-                                        data-dt-idx="previous"
-                                        tabindex="-1"
-                                        class="page-link"
-                                         
-                                        >Previous</a
-                                      >
-                                    </li>
-                                    <li
-                                      class="paginate_button page-item active"
-                                    >
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        aria-current="page"
-                                        data-dt-idx="0"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >1</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="1"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >2</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="2"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >3</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="3"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >4</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="4"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >5</a
-                                      >
-                                    </li>
-                                    <li class="paginate_button page-item">
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="5"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >6</a
-                                      >
-                                    </li>
-                                    <li
-                                      class="paginate_button page-item next"
-                                      id="next-button"
-                                    >
-                                      <a
-                                        href="#"
-                                        aria-controls="datatable"
-                                        role="link"
-                                        data-dt-idx="next"
-                                        tabindex="0"
-                                        class="page-link"
-                                        >Next</a
-                                      >
-                                    </li> -->
+                                 
                                   </ul>
                                 </div>
                               </div>
+                            </div>
+                            <div class="d-flex justify-content-end pagi">
+                          
+                              <button  type="button" id="download-btn" class="btn dropbtn-color addnew">Download Excel</button>
                             </div>
                           </div>
                         </div>
@@ -827,6 +734,7 @@
     <script src="./assets/libs/apexcharts/apexcharts.min.js"></script>
 
     <script src="./assets/libs/jquery-knob/jquery.knob.min.js"></script>
+    <script src="./assets/js/logout.js"></script>
 
     <!-- Jq vector map -->
     <script src="./assets/libs/jqvmap/jquery.vmap.min.js"></script>
@@ -839,283 +747,6 @@
   
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- <script>
-    var rankList = []; // Initialize rankList array
-    var array = []; // Initialize array for storing filtered data
-    var table_size = 10; // Number of rows per page
-    var current_index = 1; // Current page index
-    var max_index = 0; // Maximum page index
-
-    async function fetchData() {
-            try {
-                // Fetch teams data
-                const teamsResponse = await fetch("https://krinik.pythonanywhere.com/team_get/", {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                // Fetch leagues data
-                const leaguesResponse = await fetch("https://krinik.pythonanywhere.com/league_get/", {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (teamsResponse.ok && leaguesResponse.ok) {
-                    const teamsData = await teamsResponse.json();
-                    const leaguesData = await leaguesResponse.json();
-
-                    if (teamsData.status === "success" && leaguesData.status === "success") {
-                        rankList = teamsData.data; // Update rankList with fetched teams data
-                        array = rankList.slice(); // Initialize array with fetched teams data (make a copy)
-
-                        // Populate league dropdown options
-                        populateLeagueDropdown(leaguesData.data);
-
-                        // Perform initial filtering and display
-                        filterRankList();
-                    } else {
-                        console.error("Error: Invalid data format");
-                    }
-                } else {
-                    console.error("Error fetching data");
-                }
-            } catch (error) {
-                console.error("Error fetching data", error);
-            }
-        }
-        $(document).ready(function () {
-          fetchData()
-        })
-
-    $(document).ready(function () {
-        // Event handler for search input
-        $('#tab_filter_text').on('input', function () {
-            filterRankList(); // Trigger filtering when search text changes
-        });
-
-        // Event handler for date range picker
-        $('#datefilter').on('apply.daterangepicker', function (ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            $('#clearDateBtn').show();
-            filterRankList(); // Trigger filtering when date range is applied
-        });
-
-        // Event handler for clearing date range
-        $('#clearDateBtn').click(function () {
-            $('#datefilter').val('');
-            $(this).hide();
-            filterRankList(); // Trigger filtering when date range is cleared
-        });
-
-        // Initial call to fetch data
-        fetchData();
-    });
-
-    function preLoadCalculations() {
-        // Perform calculations needed before displaying data
-        max_index = Math.ceil(array.length / table_size);
-    }
-  
-
-     // Function to populate league dropdown
-function populateLeagueDropdown(leagues) {
-    var select = document.getElementById('leagueDropdown');
-    select.innerHTML = '<option value="">All Leagues</option>';
-
-    leagues.forEach(league => {
-        var option = document.createElement('option');
-        option.value = league.league_name; // Assuming league object has a 'league_name' property
-        option.textContent = league.league_name; // Display league name
-        select.appendChild(option);
-    });
-}
-
-
-     // Function to filter and display team list based on search and league selection
-function filterRankList() {
-    var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-    var selectedLeague = $('#leagueDropdown').val();
-
-    var filteredArray = rankList.filter(function (object) {
-        var matchesText = true;
-
-        if (tab_filter_text !== '') {
-            matchesText = (object.team_name && object.team_name.toLowerCase().includes(tab_filter_text)) ||
-                          (object.team_short_name && object.team_short_name.toLowerCase().includes(tab_filter_text)) ||
-                          (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text)) ||
-                          (object.team_date && object.team_date.toLowerCase().includes(tab_filter_text));
-        }
-
-        if (selectedLeague && selectedLeague !== '') {
-            matchesText = matchesText && object.league_name === selectedLeague; // Compare league_name with selectedLeague
-        }
-
-        return matchesText;
-    });
-
-    array = filteredArray.slice(); // Update filtered array (make a copy)
-    current_index = 1;
-    displayTableRows();
-}
-
-    
-        function displayIndexButtons() {
-        $(".index_buttons ul").empty();
-        $(".index_buttons ul").append(
-            '<button class="paginate_button page-item previous" onclick="prev()">Previous</button>'
-        );
-
-        for (let i = 1; i <= max_index; i++) {
-            $(".index_buttons ul").append(
-                '<button class="paginate_button page-item" onclick="indexPagination(' +
-                i +
-                ')">' +
-                i +
-                "</button>"
-            );
-        }
-        $(".index_buttons ul").append(
-            '<button class="paginate_button page-item next" onclick="next()">Next</button>'
-        );
-        highlightIndexButton();
-    }
-
-    function highlightIndexButton() {
-        var start_index = (current_index - 1) * table_size + 1;
-        var end_index = Math.min(start_index + table_size - 1, array.length);
-
-        $(".footer span").text(
-            "Showing " +
-            start_index +
-            " to " +
-            end_index +
-            " of " +
-            array.length +
-            " entries"
-        );
-        $(".index_buttons ul button").removeClass("active");
-        $('.index_buttons ul button:nth-child(' + (current_index + 1) + ')').addClass("active");
-
-        displayTableRows();
-    }
-
-    function displayTableRows() {
-        $("table tbody").empty();
-        var tab_start = (current_index - 1) * table_size;
-        var tab_end = Math.min(current_index * table_size, array.length);
-
-        for (var i = tab_start; i < tab_end; i++) {
-            var object = array[i];
-
-            var tr = $("<tr></tr>");
-
-            var noCell = $("<td></td>").text(i + 1);
-            var teamNameCell = $("<td></td>").text(object["team_name"] || "");
-            var shortNameCell = $("<td></td>").text(object["team_short_name"] || "");
-            var leagueCell = $("<td></td>").text(object["league_name"] || "");
-            var logoCell = $("<td></td>").html(
-                object["team_image"] ?
-                    '<img src="https://goldfish-app-esdkb.ondigitalocean.app' + object["team_image"] + '" alt="' + object["team_image"] + '" class="team-logo">' :
-                    ''
-            );
-            var dateCell = $("<td></td>").text(convertDateFormat(object["team_date"] || ""));
-            var viewCell = $("<td></td>").html(
-                '<span class="sortable" onclick="window.location.href=\'view-team-details.html\'"><i class="far fa-eye"></i></span>'
-            );
-            var editCell = $("<td></td>").html(
-                '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'
-            );
-            var deleteCell = $("<td></td>").html(
-                '<span class="sortable" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-            );
-
-            tr.append(noCell)
-                .append(teamNameCell)
-                .append(shortNameCell)
-                .append(leagueCell)
-                .append(logoCell)
-                .append(dateCell)
-                .append(viewCell)
-                .append(editCell)
-                .append(deleteCell);
-
-            $("table tbody").append(tr);
-        }
-    }
-
-    async function handleDelete(id) {
-        if (confirm('Are you sure you want to delete this team?')) {
-            const url = `https://krinik.pythonanywhere.com/team_get/${id}/`;
-            try {
-                const response = await fetch(url, {
-                    method: "DELETE"
-                });
-
-                if (response.ok) {
-                    // Fetch the updated list of teams after deletion
-                    await fetchData();
-                } else {
-                    console.error("Failed to delete the team");
-                }
-            } catch (error) {
-                console.error("Error deleting team:", error);
-            }
-        }
-    }
-
-    // Ensure the edit functionality is working properly with appropriate URL handling
-    async function handleEdit(id) {
-        const url = `https://krinik.pythonanywhere.com/team_get/${id}/`;
-        try {
-            const response = await fetch(url);
-
-            if (response.ok) {
-                // Redirect to edit page with the team ID
-                window.location.href = `editteam.html?id=${id}`;
-            } else {
-                console.error("Failed to fetch team data");
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-
-    function indexPagination(index) {
-        current_index = index;
-        highlightIndexButton();
-    }
-
-    function prev() {
-        if (current_index > 1) {
-            current_index--;
-            highlightIndexButton();
-        }
-    }
-
-    function next() {
-        if (current_index < max_index) {
-            current_index++;
-            highlightIndexButton();
-        }
-    }
-
-    // Function to convert date format from YYYY-MM-DD to DD-MM-YYYY
-    function convertDateFormat(dateString) {
-        // Assuming dateString is in the format YYYY-MM-DD
-        var parts = dateString.split('-');
-        if (parts.length === 3) {
-            var formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0]; // Change format to DD-MM-YYYY
-            return formattedDate;
-        }
-        return dateString; // Return original if format is unexpected
-    }
-
-   
-</script> -->
 
 <script>
    var rankList = [];
@@ -1420,29 +1051,6 @@ function displayIndexButtons() {
       }
   }
 
-//   function prev() {
-//     if (current_index > 1) {
-//         current_index--;
-//         displayIndexButtons();
-//         // Add logic to display the previous page of items
-//         highlightIndexButton();
-//     }
-// }
-
-// function next() {
-//     if (current_index < max_index) {
-//         current_index++;
-//         displayIndexButtons();
-//         // Add logic to display the next page of items
-//         highlightIndexButton();
-//     }
-// }
-
-// function indexPagination(index) {
-//     current_index = index;
-//     displayIndexButtons();
-//     highlightIndexButton();
-// }
 
   // Function to convert date format from YYYY-MM-DD to DD-MM-YYYY
   function convertDateFormat(dateString) {
@@ -1473,7 +1081,24 @@ function displayIndexButtons() {
           }
       });
   }
-</script>
 
+  const table = document.getElementById('teamTable');
+const downloadBtn = document.getElementById('download-btn');
+
+downloadBtn.addEventListener('click', () => {
+  const workbook = XLSX.utils.table_to_book(table, { sheet: 'Team Data' });
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = URL.createObjectURL(data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'team_data.xlsx';
+  a.click();
+
+  URL.revokeObjectURL(url);
+  a.remove();
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
   </body>
 </html>

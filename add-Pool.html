@@ -441,7 +441,7 @@
             </li>
 
             <li>
-              <a href="calendar.html" class="waves-effect">
+              <a href="" class="waves-effect" id="logoutButton">
                 <div class=" icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     logout
@@ -545,14 +545,14 @@
                           </div>
                           <span id="error-fantacy-start-date" class="error-message" style="display: none;"></span>
                         </div>
-                        <div class="form-group form-group-custom mb-4">
+                        <!-- <div class="form-group form-group-custom mb-4">
                           <div class="datepicker-wrapper">
                             <input class="form-control" type="text" name="match_end_date" id="fantasyEndDate"
                               placeholder="Fantacy End Date">
                             <i id="calendarIconStart" class="fas fa-calendar-alt date-icon"></i>
                           </div>
                           <span id="error-fantacy-end-date" class="error-message" style="display: none;"></span>
-                        </div>
+                        </div> -->
 
                         <div class="mt-4 text-center d-flex justify-content-center gap-5">
                           <button class="btn btn-primary" type="submit" id="submitButton">Submit</button>
@@ -732,6 +732,7 @@
         });
     </script> -->
 
+    <script src="./assets/js/logout.js"></script>
 
 
   <!-- JAVASCRIPT -->
@@ -870,35 +871,37 @@
           }
         });
 
-        let endPicker = flatpickr('#fantasyEndDate', {
-          dateFormat: 'd-m-Y H:i',
-          enableTime: true,
-          onOpen: function () {
-            const startDate = startPicker.selectedDates[0];
-            if (startDate) {
-              endPicker.set('minDate', startDate);
-            }
-          },
-          onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-              // Close the picker if both date and time are selected
-              // if (dateStr && dateStr.includes(' ')) {
-              //     instance.close(); // Close the picker after full date-time selection
-              // }
-            }
-          },
-          onReady: function (selectedDates, dateStr, instance) {
-            addCustomButtons(instance, '#fantasyEndDate');
-          }
-        });
+        // let endPicker = flatpickr('#fantasyEndDate', {
+        //   dateFormat: 'd-m-Y H:i',
+        //   enableTime: true,
+        //   onOpen: function () {
+        //     const startDate = startPicker.selectedDates[0];
+        //     if (startDate) {
+        //       endPicker.set('minDate', startDate);
+        //     }
+        //   },
+        //   onChange: function (selectedDates, dateStr, instance) {
+        //     if (selectedDates.length > 0) {
+        //       // Close the picker if both date and time are selected
+        //       // if (dateStr && dateStr.includes(' ')) {
+        //       //     instance.close(); // Close the picker after full date-time selection
+        //       // }
+        //     }
+        //   },
+        //   onReady: function (selectedDates, dateStr, instance) {
+        //     addCustomButtons(instance, '#fantasyEndDate');
+        //   }
+
+
+        // });
 
         // Open Flatpickr on calendar icon click
         $('#calendarIconStart').click(function () {
           startPicker.open();
         });
-        $('#calendarIconEnd').click(function () {
-          endPicker.open();
-        });
+        // $('#calendarIconEnd').click(function () {
+        //   endPicker.open();
+        // });
         let okButtonClicked = false;
 
 
@@ -1023,8 +1026,10 @@ document.getElementById('winningPrizeInput').addEventListener('keydown', functio
         event.preventDefault();
     }
 });
-function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
-  const startDate = document.getElementById('fantasyStartDate').value;
+// function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
+  function checkPoolOverlap(selectMatch, poolName, existingPool) {
+
+  // const startDate = document.getElementById('fantasyStartDate').value;
                 if (!existingPool || existingPool.length === 0) {
                     return { matchNameOverlap: false, poolNameOverlap: false,dateOverlap : false };
                 }
@@ -1042,21 +1047,23 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
                     return normalizedExistingShortName === normalizedShortName;
                 });
 
-                const dateOverlap = existingPool.some(match => {
-                    const matchStartDateStr1 = match.fantacy_start_date;
-;
-                    const [day, month, year] = matchStartDateStr1.split(/[- ]+/);
-                    const matchStartDateStr = `${day}-${month}-${year}`;
+//                 const dateOverlap = existingPool.some(match => {
+//                     const matchStartDateStr1 = match.fantacy_start_date;
+// ;
+//                     const [day, month, year] = matchStartDateStr1.split(/[- ]+/);
+//                     const matchStartDateStr = `${day}-${month}-${year}`;
 
-                    const startDateStr = startDate;
-                    const [startDay, startMonth, startYear] = startDateStr.split(/[- ]+/);
-                    const startDateObj = `${startDay}-${startMonth}-${startYear}`;
+//                     const startDateStr = startDate;
+//                     const [startDay, startMonth, startYear] = startDateStr.split(/[- ]+/);
+//                     const startDateObj = `${startDay}-${startMonth}-${startYear}`;
 
-                    return startDateObj === matchStartDateStr;
-                });
-                console.log('Date Overlap:', dateOverlap);
+//                     return startDateObj === matchStartDateStr;
+//                 });
+//                 console.log('Date Overlap:', dateOverlap);
 
-                return { matchNameOverlap, poolNameOverlap,dateOverlap };
+                // return { matchNameOverlap, poolNameOverlap,dateOverlap };
+                return { matchNameOverlap, poolNameOverlap};
+
             }
 
       function validateMatchSelection() {
@@ -1143,9 +1150,9 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
 
       function validateMatchDates() {
         const startDate = document.getElementById('fantasyStartDate');
-        const endDate = document.getElementById('fantasyEndDate');
+        // const endDate = document.getElementById('fantasyEndDate');
         const errorSpanStart = document.getElementById('error-fantacy-start-date');
-        const errorSpanEnd = document.getElementById('error-fantacy-end-date');
+        // const errorSpanEnd = document.getElementById('error-fantacy-end-date');
 
         function validateDate(dateInput, errorSpan) {
           if (!dateInput || !errorSpan) {
@@ -1169,9 +1176,11 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
         }
 
         const validStartDate = validateDate(startDate, errorSpanStart);
-        const validEndDate = validateDate(endDate, errorSpanEnd);
+        // const validEndDate = validateDate(endDate, errorSpanEnd);
 
-        return validStartDate && validEndDate;
+        // return validStartDate && validEndDate;
+        return validStartDate ;
+
       }
 
 
@@ -1201,6 +1210,8 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
         const datesValid = validateMatchDates();
 
         return MatchValid && datesValid && PoolValid && isValidPoolName && isPriceAdd && isValidWinningPrice;
+        // return MatchValid  && PoolValid && isValidPoolName && isPriceAdd && isValidWinningPrice;
+
       }
 
       document.getElementById('submitButton').addEventListener('click', async function () {
@@ -1209,7 +1220,7 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
         const poolName = document.getElementById('poolNameInput').value;
         const winningPrize = parseFloat(document.getElementById('winningPrizeInput').value);
         const fantasyStartDate = document.getElementById('fantasyStartDate').value;
-        const fantasyEndDate = document.getElementById('fantasyEndDate').value;
+        // const fantasyEndDate = document.getElementById('fantasyEndDate').value;
         const startDate1 = fantasyStartDate; 
 
         const payload = {
@@ -1219,7 +1230,7 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
           price: prices,
           winning_price: winningPrize,
           fantacy_start_date: fantasyStartDate,
-          fantacy_end_date: fantasyEndDate
+          // fantacy_end_date: fantasyEndDate
         };
         // if (!validateForm()) {
 
@@ -1252,14 +1263,17 @@ function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
 
         //   }
         // }
-        const overlapResult = checkPoolOverlap(selectMatch, poolName,startDate1, existingPool);
+        // const overlapResult = checkPoolOverlap(selectMatch, poolName,startDate1, existingPool);
+        const overlapResult = checkPoolOverlap(selectMatch, poolName, existingPool);
 
 
         if (validateForm()) {
 
 
 // Handle overlap errors
-if (overlapResult.matchNameOverlap && overlapResult.poolNameOverlap && overlapResult.dateOverlap) {
+// if (overlapResult.matchNameOverlap && overlapResult.poolNameOverlap && overlapResult.dateOverlap) {
+  if (overlapResult.matchNameOverlap && overlapResult.poolNameOverlap ) {
+
     document.getElementById('error-match').innerHTML = 'Match already exists';
     document.getElementById('error-match').style.display = 'inline';
     document.getElementById('error-pool-name').innerHTML = 'Pool name already exists';
@@ -1284,9 +1298,28 @@ if (overlapResult.matchNameOverlap && overlapResult.poolNameOverlap && overlapRe
 
             const data = await response.json();
             console.log('Success:', data);
-window.location.href = "./manage-pool.html"
+// window.location.href = "./manage-pool.html"
             // Redirect based on pool_type and pass select_match and pool_name in the URL
-            // 
+              // Redirect based on pool_type and pass select_match and pool_name in the URL
+              const urlParams = new URLSearchParams({
+                        match: selectMatch,
+                        pool_name: poolName
+                    });
+                    switch (payload.pool_type) {
+                        case 'Silver':
+                            window.location.href = 'pool-A.html?' + urlParams.toString();
+                            break;
+                        case 'Platinium':
+                            window.location.href = 'pool-B.html?' + urlParams.toString();
+                            break;
+                        case 'Gold':
+                            window.location.href = 'pool-C.html?' + urlParams.toString();
+                            break;
+                        default:
+                            // Redirect to a default page or handle unexpected cases
+                            console.log('Unknown pool type:', payload.pool_type);
+                            break;
+                    }
 
 
 

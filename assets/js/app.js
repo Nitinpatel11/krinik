@@ -102,3 +102,34 @@ lightDarkBtn &&
       : (bodyElem.setAttribute("data-bs-theme", "dark"),
         sessionStorage.setItem("data-layout-mode", "dark"));
   });
+
+  // Function to create and show the modal
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// Function to check and handle the cookie
+function checkCookie() {
+    const userEmail = getCookie('userEmail');
+    
+    // Check if the redirection flag is not set
+    if (!userEmail && !localStorage.getItem('redirected')) {
+        // Set a flag to indicate that redirection is in progress
+        localStorage.setItem('redirected', 'true');
+
+        // Use replace to avoid adding the redirect to history
+        window.location.replace('./index.html');
+    } else {
+        // Clear the redirection flag if cookie exists
+        localStorage.removeItem('redirected');
+    }
+}
+
+// Call the checkCookie function on page load
+checkCookie();
+
+
+
+
