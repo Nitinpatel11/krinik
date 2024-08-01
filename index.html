@@ -2,238 +2,252 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesdesign" name="author" />
-    <!-- App favicon -->
-    <!-- <link rel="shortcut icon" href="assets/images/favicon.ico" /> -->
-    <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+  <meta content="Themesdesign" name="author" />
+  <!-- App favicon -->
+  <!-- <link rel="shortcut icon" href="assets/images/favicon.ico" /> -->
+  <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon">
 
-    <!-- Bootstrap Css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
+  <!-- Bootstrap Css -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <!-- Icons Css -->
+  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <!-- App Css-->
+  <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
 
-    <style>
-
-
-
-
-
-
-
-
-
-
-    </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-
+<style>
+  .mains {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(0%, 30%)
+  }
+</style>
 
 <body>
 
-    <!-- <div class="login-mains account-pages my-5 pt-sm-5 d-flex justify-content-center align-items-center">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-5 col-sm-8">
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="text-center justify-content-center align-items-center">
-                                    <h2 class="text-dark mb-1 mt-4">LOGIN</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="p-2">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <form id="login-form">
-                                        <div class="form-group form-group-custom mb-4">
-                                            <input type="text" class="form-control" id="username" placeholder="Email" required/>
-                                            <span id="error-email" class="span-error"></span>
-                                        </div>
-                                        <div class="form-group form-group-custom mb-4">
-                                            <input type="password" class="form-control" id="userpassword" placeholder="Password" required/>
-                                            <span id="error-password" class="span-error"></span>
-                                        </div>
-                                        <div class="mt-4 text-center">
-                                            <button class="btn btn-primary w-50" >
-                                                Log In
-                                            </button>
-                                        </div>
-                                    </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+  <!-- <form id="login-form">
+    <label for="email">Email:</label>
+    <input id="email" type="email" placeholder="Email" required>
+    <div id="error-email"></div>
+    <label for="password">Password:</label>
+    <input id="password" type="password" placeholder="Password" required>
+    <div id="error-password"></div>
+
+    <label for="admin-type">Admin Type:</label>
+    <select id="admin-type" required>
+      <option  value="" disabled selected>Select Admin Type</option>
+      <option value="admin">Admin</option>
+      <option value="super admin">Super Admin</option>
+    </select>
+    <div id="error-admin-type"></div>
+
+    <div id="error-message"></div>
+    <button type="submit">Login</button>
+  </form> -->
+
+
+  <form id="login-form">
+    <div class="mains account-pages my-5 pt-sm-5 d-flex justify-content-center align-items-center">
+      <div class="container">
+        <!-- end row -->
+        <div class="row justify-content-center ">
+          <div class="col-xl-5 col-sm-8">
+            <div class="card">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="text-center justify-content-center align-items-center">
+                    <h2 class="text-dark mb-1 mt-4">Login-Form</h2>
+                  </div>
                 </div>
+              </div>
+              <div class="card-body p-4">
+                <div class="p-2">
+                  <form class="form-horizontal">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group form-group-custom mb-4">
+                          <input type="email" class="form-control" id="email" placeholder="Email" />
+                          <div id="error-email"></div>
+
+                        </div>
+
+                        <div class="form-group form-group-custom mb-4">
+                          <input type="password" class="form-control" id="password" required placeholder="Password" />
+                          <div id="error-password"></div>
+
+                        </div>
+
+                        <div class="form-group form-group-custom mb-4">
+                          <select class="form-control form-select" id="admin-type" required>
+                            <!-- <option value="" disabled selected>Select</option> -->
+                            <option value="">Select Admin Type</option>
+                            <option value="admin">Admin</option>
+                            <option value="super admin">Super Admin</option>
+                          </select>
+                          <div id="error-admin-type"></div>
+                        </div>
+
+                        <div id="error-message"></div>
+                        <div class="mt-4 text-center">
+                          <button class="btn btn-primary w-25 fs-5" type="submit">
+                            Login
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div> -->
-    <form id="login-form">
-      <label for="email">Email:</label>
-      <input id="email" type="email" placeholder="Email" required>
-      <div id="error-email"></div>
-      <label for="password">Password:</label>
-      <input id="password" type="password" placeholder="Password" required>
-      <div id="error-password"></div>
-      
-      <label for="admin-type">Admin Type:</label>
-      <select id="admin-type" required>
-        <option value="" disabled selected>Select Admin Type</option>
-        <option value="admin">Admin</option>
-        <option value="super admin">Super Admin</option>
-      </select>
-      <div id="error-admin-type"></div>
-      
-      <div id="error-message"></div>
-      <button type="submit">Login</button>
-    </form>
-    
+        <!-- end row -->
+      </div>
+    </div>
+  </form>
+
+
+
 
   <script>
     const loginForm = document.getElementById('login-form');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const adminTypeInput = document.getElementById('admin-type');
-const errorEmail = document.getElementById('error-email');
-const errorPassword = document.getElementById('error-password');
-const errorAdminType = document.getElementById('error-admin-type');
-const errorMessage = document.getElementById('error-message');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const adminTypeInput = document.getElementById('admin-type');
+    const errorEmail = document.getElementById('error-email');
+    const errorPassword = document.getElementById('error-password');
+    const errorAdminType = document.getElementById('error-admin-type');
+    const errorMessage = document.getElementById('error-message');
 
-const COOKIE_NAME = 'userEmail';
-const ADMIN_TYPE_COOKIE_NAME = 'adminType'; // Separate cookie for admin type
-const COOKIE_EXPIRATION_SECONDS = 30; // Cookie expiration time in seconds
+    const COOKIE_NAME = 'userEmail';
+    const ADMIN_TYPE_COOKIE_NAME = 'adminType';
+    const COOKIE_EXPIRATION_SECONDS = 30;
 
-function setCookie(name, value, seconds) {
-  const expires = new Date();
-  expires.setTime(expires.getTime() + (seconds * 1000));
-  
-  // Convert expiration date to IST
-  const offsetIST = 5.5 *  60 * 60 * 1000; // IST is UTC+5:30
-  const expiresIST = new Date(expires.getTime() + offsetIST);
-  
-  document.cookie = `${name}=${encodeURIComponent(value)};expires=${expiresIST.toUTCString()};path=/`;
-}
+    function setCookie(name, value, seconds) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + (seconds * 1000));
 
-function getCookie(name) {
-  const nameEQ = `${name}=`;
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-    let c = cookies[i];
-    while (c.charAt(0) === ' ') c = c.substring(1);
-    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
-  }
-  return null;
-}
+      const offsetIST = 5.5 * 60 * 60 * 1000;
+      const expiresIST = new Date(expires.getTime() + offsetIST);
 
-function eraseCookie(name) {
-  document.cookie = `${name}=; Max-Age=-99999999; path=/`;
-}
+      document.cookie = `${name}=${encodeURIComponent(value)};expires=${expiresIST.toUTCString()};path=/`;
+    }
 
-function checkCookieExpiration() {
-  const email = getCookie(COOKIE_NAME);
-  const reloaded = sessionStorage.getItem('reloaded');
+    function getCookie(name) {
+      const nameEQ = `${name}=`;
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i];
+        while (c.charAt(0) === ' ') c = c.substring(1);
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
+      }
+      return null;
+    }
 
-  if (!email && !reloaded) {
-    // Set the reloaded flag to prevent infinite reload loop
-    sessionStorage.setItem('reloaded', 'true');
-    // Reload the page
-    window.location.reload();
-  } else if (email) {
-    // Clear the reloaded flag if the cookie is present
-    sessionStorage.removeItem('reloaded');
-  }
-}
+    function eraseCookie(name) {
+      document.cookie = `${name}=; Max-Age=-99999999; path=/`;
+    }
 
-loginForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
+    function checkCookieExpiration() {
+      const email = getCookie(COOKIE_NAME);
+      const reloaded = sessionStorage.getItem('reloaded');
 
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  const adminType = adminTypeInput.value;
+      if (!email && !reloaded) {
+        sessionStorage.setItem('reloaded', 'true');
+        window.location.reload();
+      } else if (email) {
+        sessionStorage.removeItem('reloaded');
+      }
+    }
 
-  // Reset error messages
-  errorEmail.textContent = '';
-  errorPassword.textContent = '';
-  errorAdminType.textContent = '';
-  errorMessage.textContent = '';
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-  if (!email || !password || !adminType) {
-    if (!email) errorEmail.textContent = 'Email is required';
-    if (!password) errorPassword.textContent = 'Password is required';
-    if (!adminType) errorAdminType.textContent = 'Admin type is required';
-    return;
-  }
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      const adminType = adminTypeInput.value;
 
-  try {
-    const response = await fetch('https://krinik.pythonanywhere.com/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password, admin_type: adminType })
+      errorEmail.textContent = '';
+      errorPassword.textContent = '';
+      errorAdminType.textContent = '';
+      errorMessage.textContent = '';
+
+      if (!email || !password || !adminType) {
+        if (!email) errorEmail.textContent = 'Email is required';
+        if (!password) errorPassword.textContent = 'Password is required';
+        if (!adminType) errorAdminType.textContent = 'Admin type is required';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://krinik.pythonanywhere.com/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password, admin_type: adminType })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Login failed with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Response data:', data);
+
+        if (data.status === 'success') {
+          setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
+          setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
+
+          if (adminType === 'super admin') {
+            window.location.href = './dashboard.html';
+          } else {
+            window.location.href = './dashboard.html';
+          }
+        } else {
+          errorMessage.textContent = data.message || 'Invalid email or password';
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+        errorMessage.textContent = 'Login failed. Please try again.';
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Login failed with status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('Response data:', data);
-
-    if (data.status === 'success') {
-      // Store email in cookie with a 30-second expiration
-      setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
-      // Store admin type in a separate cookie
-      setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
-      
-      // Redirect to protected page
-      if (adminType === 'super admin') {
-        window.location.href = './dashboard.html';
-      } else {
-        window.location.href = './dashboard.html';
-      }
-    } else {
-      errorMessage.textContent = data.message || 'Invalid email or password';
-    }
-  } catch (error) {
-    console.error('Error during login:', error);
-    errorMessage.textContent = 'Login failed. Please try again.';
-  }
-});
-
-// Check cookie validity on page load
-checkCookieExpiration();
-
+    checkCookieExpiration();
   </script>
-    
-    
-    
 
 
 
 
 
 
-    <!-- JAVASCRIPT -->
-<!-- <script src="./assets/js/logout.js"></script> -->
 
-    <script src="assets/libs/jquery/jquery.min.js"></script>
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/metismenu/metisMenu.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/node-waves/waves.min.js"></script>
 
-    <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 
-    <script src="./assets/js/app.js"></script>
+  <!-- JAVASCRIPT -->
+  <!-- <script src="./assets/js/logout.js"></script> -->
+
+  <script src="assets/libs/jquery/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/libs/metismenu/metisMenu.min.js"></script>
+  <script src="assets/libs/simplebar/simplebar.min.js"></script>
+  <script src="assets/libs/node-waves/waves.min.js"></script>
+
+  <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+
+  <script src="./assets/js/app.js"></script>
 </body>
 
 </html>

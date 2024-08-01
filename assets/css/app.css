@@ -1870,6 +1870,7 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
 .table,.table td ,.table th{
   border: 1px solid black;
   border-collapse: collapse;
+  vertical-align: middle !important;
 }
 .simplebar-placeholder {
   max-height: 100%;
@@ -4203,3 +4204,88 @@ tbody td {
   color: white !important;
   background-color: #E20101 !important;
 }
+
+
+
+
+    /* Logout Button */
+    #logoutButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+  }
+  
+  /* Modal Container */
+  .modal {
+    z-index: 999;
+      display: none; 
+      position: fixed; 
+      z-index: 1; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgba(0, 0, 0, 0.5); 
+  }
+  
+  /* Modal Content */
+  .modal-content {
+      background-color: #fff;
+      margin: 15% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; 
+      max-width: 400px;
+      position: relative;
+      border-radius: 8px;
+  }
+  
+  /* Close Button */
+  .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+  
+  /* Close Button Hover */
+  .close-button:hover,
+  .close-button:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  
+  /* Modal Buttons */
+  .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+  
+  .modal-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+  }
+  
+  #confirmLogout {
+      background-color: #f44336;
+      color: #fff;
+  }
+  
+  #confirmLogout:hover {
+      background-color: #d32f2f;
+  }
+  
+  #cancelLogout {
+      background-color: #e0e0e0;
+  }
+  
+  #cancelLogout:hover {
+      background-color: #bdbdbd;
+  }
