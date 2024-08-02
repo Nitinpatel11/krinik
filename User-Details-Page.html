@@ -663,7 +663,9 @@
                     <!-- Buttons Section -->
                     <div class="buttons">
                       <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
-                        <button class="btn btn-outline-dark m-1" id="user-unlock"><span id="user-unlock-text"></span></button>
+                        <button class="btn btn-outline-dark m-1" id="user-unlock">
+                          <span id="user-unlock-text" ></span>
+                        </button>
                         <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
                         <button class="btn btn-outline-dark m-1" id="user-transaction-history" >Transaction History</button>
                       </div>
@@ -682,8 +684,8 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined close-margin">
+                              <button type="button" class="close btn-primary4" data-dismiss="modal" aria-label="Close">
+                                <span class="material-symbols-outlined close-margin btn-primary5">
                                   close
                                   </span>
                               </button>
@@ -692,19 +694,19 @@
                               <form>
                                 <div class="form-group">
                                   <label for="id">Player ID</label>
-                                  <input type="number" class="form-control" id="playerid" required disabled>
+                                  <input type="number" class="form-control user-select-btn" id="playerid" required readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="name">Player Name</label>
-                                  <input type="text" class="form-control" id="player-name" required disabled>
+                                  <input type="text" class="form-control user-select-btn" id="player-name" required readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="num">Total Play Amount</label>
-                                  <input type="number" class="form-control" id="player-total-amount" required disabled>
+                                  <input type="number" class="form-control user-select-btn" id="player-total-amount" required readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="num1">Total Winning Amount</label>
-                                  <input type="number" class="form-control" id="player-total-winning" required disabled>
+                                  <input type="number" class="form-control user-select-btn" id="player-total-winning" required readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="num3">Add Amount In Play</label>
@@ -730,8 +732,8 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="deductAmountModalLabel">Deduct Amount</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined close-margin">
+                              <button type="button" class="close btn-primary4" data-dismiss="modal" aria-label="Close">
+                                <span class="material-symbols-outlined close-margin btn-primary5">
                                   close
                                   </span>
                               </button>
@@ -740,21 +742,21 @@
                               <form>
                                 <div class="form-group">
                                   <label for="deductPlayerId">Player ID</label>
-                                  <input type="number" class="form-control" id="deductPlayerId" required disabled>
+                                  <input type="number" class="form-control" id="playerid" required readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="deductPlayerName">Player Name</label>
-                                  <input type="text" class="form-control" id="deductPlayerName" required disabled>
+                                  <input type="text" class="form-control" id="player-name" required readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="deductTotalPlayAmount">Total Play Amount</label>
-                                  <input type="number" class="form-control" id="deductTotalPlayAmount" required
-                                    disabled>
+                                  <input type="number" class="form-control" id="player-total-amount" required
+                                    readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="deductTotalWinningAmount">Total Winning Amount</label>
-                                  <input type="number" class="form-control" id="deductTotalWinningAmount" required
-                                    disabled>
+                                  <input type="number" class="form-control" id="player-total-winning" required
+                                    readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                   <label for="deductAmountInPlay">Deduct In Play Amount</label>
@@ -827,8 +829,10 @@
   <!-- END layout-wrapper -->
 
     <script>
+       document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
+      const userUnlockText = document.getElementById("user-unlock-text");
 
       console.log(id)
     
@@ -851,10 +855,50 @@
           const userData = userData1.data;
           console.log(userData);
           editPlayerData(userData);
+          addAmount(userData)
         } catch (error) {
           console.error('Error fetching player data:', error);
         }
       }
+      async function lock() {
+        
+        const userUnlockText = document.getElementById("user-unlock-text");
+  
+        if (!userUnlockText) {
+          console.error('Element with ID user-unlock-text not found');
+          return;
+        }
+  
+        const currentState = userUnlockText.textContent.toLowerCase();
+        const newState = currentState === 'block' ? 'unblock' : 'block';
+  
+        // Update the text content
+        userUnlockText.textContent = toCapitalizeCase(newState);
+  
+        // Send PATCH request to update the state on the server
+        try {
+          const url = `https://krinik.pythonanywhere.com/user_get/${id}/`; // Updated URL
+          const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newState }),
+          });
+  
+          if (!response.ok) {
+            throw new Error('Failed to update user status');
+          }
+          if(response.ok){
+             fetchUserData() 
+  
+          }
+          console.log(`User status updated to: ${newState}`);
+        } catch (error) {
+          console.error('Error updating user status:', error);
+        }
+      }
+  
     
       function editPlayerData(response) {
         const userFullName = document.getElementById("user-fullname");
@@ -865,13 +909,14 @@
         const walletAmount = document.getElementById("wallet-amount");
         const winningAmount = document.getElementById("winning-amount");
         const referAmount = document.getElementById("refer-amount");
-        const userUnlock = document.getElementById("user-unlock");
+        const userUnlock = document.getElementById("user-unlock-text");
         const userDelete = document.getElementById("user-delete");
         const userTransactionHistory = document.getElementById("user-transaction-history");
         const userDeduction = document.getElementById("user-deduction");
         const userAddAmount = document.getElementById("user-add-amount");
         const userGameHistory = document.getElementById("user-game-history");
         const userWithdraw = document.getElementById("user-withdraw");
+      
         // const addAmountModal = document.getElementById("addAmountModal");
         // const deductAmountModal = document.getElementById("deductAmountModal");
 
@@ -921,9 +966,22 @@
         }
       }
 
-
+     
       function addAmount(response){
-        
+        const playerId = document.getElementById("playerid")
+        const playerName = document.getElementById("player-name")
+        const playerTotalAmount = document.getElementById("player-total-amount")
+        const playerTotalWinning = document.getElementById("player-total-winning")
+        const playerAddAmount = document.getElementById("player-add-amount")
+        const playerWinningAmount = document.getElementById("player-winning-amount")
+
+        playerId.textContent = response.player
+        playerName.textContent = response.player
+        playerTotalAmount.textContent = response.player
+        playerTotalWinning.textContent = response.player
+        playerAddAmount.textContent = response.playerAddAmount
+        playerWinningAmount.textContent = response.player
+
 
       }
       function disableButton(button) {
@@ -953,7 +1011,7 @@
     console.error('No player ID found in URL.');
   }
 }
-
+document.getElementById("user-unlock").addEventListener("click", () => lock());
 // Event handlers for buttons
 document.getElementById("user-transaction-history").addEventListener("click", () => redirectToHistoryPage('user-transaction-history'));
 document.getElementById("user-game-history").addEventListener("click", () => redirectToHistoryPage('user-pool-history'));
@@ -963,6 +1021,8 @@ document.getElementById("user-withdraw").addEventListener("click", () => redirec
 
 fetchUserData();
 
+   
+       })
     </script>
 
   <!-- JAVASCRIPT -->

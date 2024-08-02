@@ -25,12 +25,15 @@
 
 <style>
   .mains {
-    display: flex;
+    position: fixed;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    width: 90%;
+    margin: auto;
     left: 50%;
     top: 50%;
-    transform: translate(0%, 30%)
+    transform: translate(-50%, -75%)
   }
 </style>
 
@@ -101,7 +104,7 @@
 
                         <div id="error-message"></div>
                         <div class="mt-4 text-center">
-                          <button class="btn btn-primary w-25 fs-5" type="submit">
+                          <button class="btn btn-primary1 fs-5 login-btn "  type="submit">
                             Login
                           </button>
                         </div>
@@ -134,15 +137,17 @@
     const COOKIE_NAME = 'userEmail';
     const ADMIN_TYPE_COOKIE_NAME = 'adminType';
     const COOKIE_EXPIRATION_SECONDS = 30;
+    const COOKIE_EXPIRATION_SECONDS1 = 60;
+
 
     function setCookie(name, value, seconds) {
       const expires = new Date();
       expires.setTime(expires.getTime() + (seconds * 1000));
 
-      const offsetIST = 5.5 * 60 * 60 * 1000;
+      const offsetIST =  seconds * 60 * 1000;
       const expiresIST = new Date(expires.getTime() + offsetIST);
 
-      document.cookie = `${name}=${encodeURIComponent(value)};expires=${expiresIST.toUTCString()};path=/`;
+      document.cookie = `${name}=${encodeURIComponent(value)};expires=${expiresIST};path=/`;
     }
 
     function getCookie(name) {
@@ -208,12 +213,18 @@
         console.log('Response data:', data);
 
         if (data.status === 'success') {
-          setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
-          setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
+          // setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
+          // setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
 
           if (adminType === 'super admin') {
+          setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS1);
+
+            setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS1);
             window.location.href = './dashboard.html';
           } else {
+          setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
+
+            setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
             window.location.href = './dashboard.html';
           }
         } else {

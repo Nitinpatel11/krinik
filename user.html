@@ -515,40 +515,62 @@
             <div class="row">
               <div class="col-xl-3">
                 <div class="card">
-                 
-                  </div>
+
                 </div>
-              
-              
+              </div>
+
+
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  d-flex justify-content-end">
                 <div class=" d-flex align-items-end  ">
-  
+
                   <form class="app-search  d-lg-block d-flex  ">
-                    <div class="d-flex gap-3 flex-wrap">
+                    <div class="d-flex gap-3 flex-wrap ">
                       <!-- <div class="dropdown"> -->
-  
+
                         <!-- <div class="datepicker-container"> -->
-                        <!-- <div id="rangePicker" class="date-button">Start & End Date
-                        </div>
-                        <i id="calendarIcon" class="fas fa-calendar-alt date-icon"></i>
-                        <i id="clearDates" class="fas fa-times-circle"></i>
-                        </div> -->
-  
+                        <!-- <div id="rangePicker" class="date-button">Start & End Date -->
+                        <!-- </div> -->
+                        <!-- <i id="calendarIcon" class="fas fa-calendar-alt date-icon"></i> -->
+                        <!-- <i id="clearDates" class="fas fa-times-circle"></i> -->
+                        <!-- </div> -->
+
                         <!-- <i class="mdi mdi-chevron-down"></i> -->
-  
-                      <!-- </div> -->
-  
-                      <div class="dropdown">
-                        <select id="statusDropdown" class="form-select dropbtn-color dropbtn"
-                          onchange="filterRankList(this.value)">
-                          <option value="">All Status</option>
-                          <option value="Running">Running</option>
-                          <option value="Completed">Completed</option>
-                          <option value="Upcoming">Upcoming</option>
-                        </select>
-  
+
+                      <!-- </div>               -->
+                      <div class="dropdown d-flex gap-2 justify-content-evenly align-items-center amountWidth1">
+                        <div class="filter-item ">
+
+                          <input type="text" class="text-center amountWidth" id="startAmountRange"
+                            placeholder="Start Amount">
+                          <i id="clearAmountStart" class="fas fa-times-circle circle-clear"></i>
+                        </div>
+                        <h5 class="mt-2">To</h5>
+                        <div class="filter-item ">
+
+                          <input type="text" class="text-center amountWidth" id="endAmountRange"
+                            placeholder="End Amount">
+                          <i id="clearAmountEnd" class="fas fa-times-circle circle-clear"></i>
+                        </div>
                       </div>
-  
+
+
+
+                      <div class="dropdown">
+                        <div id="dropdownBtn3" class="dropdown-btn3">
+                          <span id="selectedStatus" data-value="All Status">All Status</span>
+                          <span class="material-symbols-outlined arrow" id="arrow">stat_minus_1</span>
+                          <span class="material-symbols-outlined circle-clear1" id="clearStatus">
+                            cancel
+                          </span>
+
+                        </div>
+                        <div id="dropdownContent3" class="dropdown-content3">
+                          <a data-value="block">Block</a>
+                          <a data-value="unblock">Unblock</a>
+                          <!-- <a data-value="pending">Pending</a> -->
+                        </div>
+                      </div>
+
                       <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
                         <div>
                           <span class="mdi mdi-magnify dropbtn-color-2"></span>
@@ -558,14 +580,14 @@
                             onkeyup="filterRankList()">
                         </div>
                       </div>
-                      
+
                     </div>
-  
+
                   </form>
                 </div>
-            
+
+              </div>
             </div>
-          </div>
             <!-- end row -->
 
             <div class="row">
@@ -772,103 +794,238 @@
       max_index = Math.ceil(array_length / table_size);
     }
 
-    // $(document).ready(function () {
-    //   $('#tab_filter_text').on('input', filterRankList);
-    //   let picker = flatpickr('#rangePicker', {
-    //     mode: 'range',
-    //     dateFormat: 'd/m/Y',
-    //     onClose: function (selectedDates, dateStr, instance) {
-    //       if (!selectedDates || selectedDates.length === 0) {
-    //         instance.clear();
-    //         $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-    //         $('#clearDates').hide();
-    //         $('#calendarIcon').show();
-    //       } else {
-    //         $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd/m/Y')).join(' - ')).addClass('has-dates');
-    //         $('#clearDates').show();
-    //         $('#calendarIcon').hide();
-    //       }
-    //       filterRankList();
-    //     },
-    //     clickOpens: false,
-    //     allowInput: false
-    //   });
+    $(document).ready(function () {
+      const $dropdownBtn3 = $('#dropdownBtn3');
+  const $dropdownContent3 = $('#dropdownContent3');
+  const $selectedStatus = $('#selectedStatus');
+  const $arrow = $('#arrow');
+  const $clearStatus = $('#clearStatus');
 
-    //   $('#rangePicker, #calendarIcon').click(function () {
-    //     if (!$('#rangePicker').hasClass('has-dates')) {
-    //       picker.open();
-    //     }
-    //   });
+  function toggleDropdown() {
+    const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
+    $dropdownBtn3.attr('aria-expanded', isExpanded);
+  }
 
-    //   $('#clearDates').click(function () {
-    //     picker.clear();
-    //     $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-    //     $('#clearDates').hide();
-    //     $('#calendarIcon').show();
-    //     filterRankList();
-    //   });
+  // Click event for the dropdown button
+  $dropdownBtn3.on('click', function() {
+    toggleDropdown();
+  });
 
-    //   $('#statusDropdown').change(filterRankList);
-    //   fetchData();
-    // });
+  // Click event for selecting an item from the dropdown
+  $dropdownContent3.on('click', 'a', function() {
+    const selectedValue = $(this).data('value');
+    $selectedStatus.text(selectedValue).data('value', selectedValue);
+    $dropdownContent3.removeClass('show');
+
+    if (selectedValue === 'All Status') {
+      $arrow.show();
+      $clearStatus.hide();
+    } else {
+      $arrow.hide();
+      $clearStatus.show();
+    }
+    filterRankList(); // Filter based on the selected status
+  });
+
+  // Click event for clearing the selected status
+  $clearStatus.on('click', function() {
+    $selectedStatus.text('All Status').data('value', 'All Status');
+    $arrow.show();
+    $clearStatus.hide();
+    $dropdownContent3.removeClass('show'); // Hide the dropdown content
+    filterRankList(); // Filter with the reset status
+  });
+
+  // Click event for closing the dropdown if clicked outside
+  $(document).on('click', function(event) {
+    if (!$dropdownBtn3.is(event.target) && !$dropdownBtn3.has(event.target).length && !$dropdownContent3.has(event.target).length) {
+      $dropdownContent3.removeClass('show');
+      $dropdownBtn3.attr('aria-expanded', 'false');
+    }
+  });
+
+
+      // Initialize Flatpickr
+      // let picker = flatpickr('#rangePicker', {
+      //   mode: 'range',
+      //   dateFormat: 'd-m-Y',
+      //   onClose: function (selectedDates, dateStr, instance) {
+      //     if (!selectedDates || selectedDates.length === 0) {
+      //       instance.clear();
+      //       $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+      //       $('#clearDates').hide();
+      //       $('#calendarIcon').show();
+      //     } else {
+      //       $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
+      //       $('#clearDates').show();
+      //       $('#calendarIcon').hide();
+      //     }
+      //     filterRankList();
+      //   },
+      //   clickOpens: false,
+      //   allowInput: false
+      // });
+
+      // $('#rangePicker, #calendarIcon').click(function () {
+      //   if (!$('#rangePicker').hasClass('has-dates')) {
+      //     picker.open();
+      //   }
+      // });
+
+      // $('#clearDates').click(function () {
+      //   picker.clear();
+      //   $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+      //   $('#clearDates').hide();
+      //   $('#calendarIcon').show();
+      //   filterRankList();
+      // });
+
+      function updateAmountFilters() {
+    const startAmount = $('#startAmountRange').val().trim();
+    const endAmount = $('#endAmountRange').val().trim();
+
+    // Show or hide clear buttons based on input values
+    if (startAmount !== '' && endAmount === '') {
+      $('#clearAmountStart').show();
+      $('#clearAmountEnd').hide();
+    } else if (startAmount !== '' && endAmount !== '') {
+      $('#clearAmountStart').show();
+      $('#clearAmountEnd').show();
+    } else if (startAmount === '' && endAmount === '') {
+      $('#clearAmountStart').hide();
+      $('#clearAmountEnd').hide();
+    } else if (startAmount === '' && endAmount !== '') {
+      $('#clearAmountStart').hide();
+      $('#clearAmountEnd').show();
+    }
+
+    // Always call filterRankList to apply the filter
+    filterRankList();
+  }
+  
+
+  $('#startAmountRange').on('input', function () {
+    updateAmountFilters();
+  });
+
+  // Event listeners for the end amount range input
+  $('#endAmountRange').on('input', function () {
+    updateAmountFilters();
+  });
+
+  // Event listener for clearing the start amount range
+  $('#clearAmountStart').click(function () {
+    $('#startAmountRange').val('');
+    updateAmountFilters(); // Call the update function to handle the UI changes
+  });
+
+  // Event listener for clearing the end amount range
+  $('#clearAmountEnd').click(function () {
+    $('#endAmountRange').val('');
+    updateAmountFilters(); // Call the update function to handle the UI changes
+  });
+
+  // Initial call to update filters and hide/show clear buttons on page load
+  updateAmountFilters();
+  $('#tab_filter_text').on('input', function () {
+    filterRankList();
+  });
+
+
+    });
+
 
     function filterRankList() {
-        var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-        var datefilter = $('#rangePicker').text().trim();
-        var statusFilter = $('#statusDropdown').val() ? $('#statusDropdown').val() : '';
-        var startDate, endDate;
+      var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+      console.log('Search Text:', tab_filter_text);
+      // var datefilter = $('#rangePicker').text().trim();
+      const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
+      console.log('Selected Status:', statusFilter);
+      var startDate, endDate;
 
-        if (datefilter !== '' && datefilter !== 'Start & End Date') {
-            var dates = datefilter.split(' - ');
-            startDate = moment(dates[0], 'DD/MM/YYYY').toDate();
-            endDate = moment(dates[1], 'DD/MM/YYYY').toDate();
+      // Parse amount range
+      var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
+      var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
+
+      // console.log('Start Amount:', startAmount);
+      // console.log('End Amount:', endAmount);
+
+      // Parse the date range from the range picker
+      // if (datefilter !== '' && datefilter !== 'Start & End Date') {
+        // var dates = datefilter.split(' - ');
+        // startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
+        // endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
+        // console.log('Parsed Start Date:', startDate);
+        // console.log('Parsed End Date:', endDate);
+      // }
+
+      // Filter the rankList based on text, status, date range, and amount range
+      var filteredArray = rankList.filter(function (object) {
+        var matchesText = true, matchesStatus = true,  matchesAmount = true; matchesAmount1 = true;
+
+        // Filter based on text input
+        if (tab_filter_text !== '') {
+          matchesText = (object.name && object.name.toLowerCase().includes(tab_filter_text)) ||
+            (object.mobile_no && object.mobile_no.toString().includes(tab_filter_text)) ||
+            (object.email && object.email.toLowerCase().includes(tab_filter_text))   ;
         }
 
-        var filteredArray = rankList.filter(function (object) {
-            var matchesText = true, matchesStatus = true, matchesDate = true;
-
-            if (tab_filter_text !== '') {
-                matchesText = (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text)) ||
-                    (object.short_league_name && object.short_league_name.toLowerCase().includes(tab_filter_text)) ||
-                    (object.start_league_date && object.start_league_date.toLowerCase().includes(tab_filter_text)) ||
-                    (object.end_league_date && object.end_league_date.toLowerCase().includes(tab_filter_text));
-            }
-
-            if (statusFilter !== '') {
-                const status = getStatus(object.start_league_date, object.end_league_date);
-                matchesStatus = (status === statusFilter);
-            }
-
-            if (startDate && endDate) {
-                matchesDate = (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
-                    moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
-            }
-
-            return matchesText && matchesStatus && matchesDate;
-        });
-
-        array = filteredArray;
-        preLoadCalculations();
-        current_index = 1;
-        displayIndexButtons();
-        highlightIndexButton()
-        displayTableRows();
-    }
-    function getStatus(start_date, end_date) {
-      var currentDate = new Date();
-      var startDate = moment(start_date, "DD/MM/YYYY").toDate();
-      var endDate = moment(end_date, "DD/MM/YYYY").toDate();
-
-      if (startDate < currentDate && currentDate <= endDate) {
-        return "Running";
-      } else if (startDate < currentDate && endDate < currentDate) {
-        return "Completed";
-      } else if (startDate > currentDate && endDate > currentDate) {
-        return "Upcoming";
-      } else {
-        return "unknown";
+        // Filter based on status dropdown
+        if (statusFilter !== 'All Status') {
+        const status = object.status.toLowerCase()
+        console.log(status)
+        matchesStatus = (status === statusFilter);
+        // console.log(matchesStatus ,"okli")
       }
+
+        // Filter based on date range
+        // if (startDate && endDate) {
+          // const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+          // matchesDate = (objectDate >= startDate && objectDate <= endDate);
+          // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
+        // }
+
+        // Filter based on amount range
+        if (!isNaN(object.wallet_amount)) {
+          const amount = parseFloat(object.wallet_amount);
+          matchesAmount = (amount >= startAmount && amount <= endAmount);
+          // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+        }
+        if (!isNaN(object.winning_amount )) {
+          const amount = parseFloat(object.winning_amount);
+          matchesAmount1 = (amount >= startAmount && amount <= endAmount);
+          // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+        }
+
+        return matchesText && matchesStatus  && matchesAmount && matchesAmount1;
+      });
+
+      // Update the table with filtered data
+      array = filteredArray;
+      preLoadCalculations(array.length);
+      current_index = 1;
+      displayIndexButtons();
+      highlightIndexButton();
+      displayTableRows();
     }
+
+   
+   
+    // function getStatus(start_date, end_date) {
+    //   var currentDate = new Date();
+    //   var startDate = moment(start_date, "DD/MM/YYYY").toDate();
+    //   var endDate = moment(end_date, "DD/MM/YYYY").toDate();
+
+    //   if (startDate < currentDate && currentDate <= endDate) {
+    //     return "Running";
+    //   } else if (startDate < currentDate && endDate < currentDate) {
+    //     return "Completed";
+    //   } else if (startDate > currentDate && endDate > currentDate) {
+    //     return "Upcoming";
+    //   } else {
+    //     return "unknown";
+    //   }
+    // }
 
     function displayIndexButtons() {
     $(".index_buttons ul").empty();

@@ -154,8 +154,12 @@ File: Main Css File
 
 
 
-body{
+/* body{ */
   /* user-select: none; */
+/* } */
+.user-select-btn{
+  user-select: none !important;
+
 }
 .navbar-header {
   display: flex;
@@ -169,7 +173,12 @@ body{
 .navbar-header .dropdown.show .header-item {
   background-color: #f8f9fa;
 }
-
+/* .modal-backdrop.show{
+  opacity: 1 !important;
+}
+.modal-backdrop.fade{
+  opacity: 0 !important;
+} */
 .navbar-brand-box {
   padding: 0 1.5rem;
   text-align: center;
@@ -4205,7 +4214,17 @@ tbody td {
   background-color: #E20101 !important;
 }
 
-
+.btn-primary5{
+  background-color: white !important;
+  color: #E20101 !important;
+  border: 1px solid grey !important;
+  padding: 5px;
+}
+.btn-primary4{
+  background-color: white !important;
+  /* color: #E20101 !important; */
+  border: none !important;
+}
 
 
     /* Logout Button */
@@ -4228,7 +4247,9 @@ tbody td {
       overflow: auto; 
       background-color: rgba(0, 0, 0, 0.5); 
   }
-  
+  .modal-backdrop{
+    z-index: 0;
+  }
   /* Modal Content */
   .modal-content {
       background-color: #fff;
@@ -4289,3 +4310,26 @@ tbody td {
   #cancelLogout:hover {
       background-color: #bdbdbd;
   }
+
+  #logoutModal{
+    z-index: 9999 !important;
+   
+  }
+
+  /* body #logoutModal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
+
+  /* .login-btn{
+    width: 25%;
+    font-size: 26px;
+  } */
+  @media only screen and (max-width: 425px) {
+    .login-btn {
+      width: 40% !important;
+      font-size: 20px !important;
+    }
+  }
+  

@@ -120,6 +120,7 @@ function checkCookie() {
         localStorage.setItem('redirected', 'true');
 
         // Use replace to avoid adding the redirect to history
+        window.location.reload()
         window.location.replace('./index.html');
     } else {
         // Clear the redirection flag if cookie exists
