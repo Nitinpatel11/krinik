@@ -24,6 +24,8 @@
       type="text/css"
     />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Responsive datatable examples -->
     <link
       href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"
@@ -564,32 +566,40 @@
 
                         <form class="app-search  d-lg-block d-flex  ">
                           <div class="d-flex gap-3 flex-wrap">
-                            <!-- <div class="dropdown">
-                              <a class="btn dropbtn-color dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                start & end date <i class="mdi mdi-chevron-down"></i>
-                              </a>
-                              <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#">Action</a></li>
-                                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                              </ul>
-                          </div> -->
+                             <div class="dropdown">
+
+                      <!-- <div class="datepicker-container"> -->
+                      <div id="rangePicker" class="date-button">Start & End Date
+                      </div>
+                      <i id="calendarIcon" class="fas fa-calendar-alt date-icon"></i>
+                      <i id="clearDates" class="fas fa-times-circle"></i>
+                      <!-- </div> -->
+
+                      <!-- <i class="mdi mdi-chevron-down"></i> -->
+
+                    </div>
                           <!-- <div class="dropdown">
                             <select id="leagueDropdown" class="form-select dropbtn-color dropbtn" onchange="filterRankList()">
                                 <option value="">All Leagues</option>
                             </select>
                         </div> -->
                         <div class="dropdown">
-                          <select id="statusDropdown" class="form-select dropbtn-color dropbtn"
-                            onchange="filterRankList(this.value)">
-                            <option value="">All Status</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Running">Running</option>
-
-                            <option value="Upcoming">Upcoming</option>
-                           
-                          </select>
+                          <div id="dropdownBtn3" class="dropdown-btn3">
+                            <span id="selectedStatus" data-value="All Status">All Status</span>
+                            <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
+                            <span class="material-symbols-outlined circle-clear1" id="clearStatus">
+                              cancel
+                            </span>
     
+                          </div>
+                          <div id="dropdownContent3" class="dropdown-content3 ">
+                            <!-- <a data-value="success">Success</a>
+                            <a data-value="fail">Fail</a>
+                            <a data-value="pending">Pending</a> -->
+                            <a data-value="Running">Running</a>
+                            <a data-value="Completed">Completed</a>
+                            <a data-value="Upcoming">Upcoming</a>
+                          </div>
                         </div>
                         
                         <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
@@ -641,12 +651,12 @@
                                         <th data-priority="" colspan="2">
                                          Total Pool
                                         </th>
-                                        <!-- <th data-priority="" colspan="2">
+                                        <th data-priority="" colspan="2">
                                           Fantacy Start
                                         </th>
                                         <th data-priority="" colspan="2">
                                           Fantacy End
-                                        </th> -->
+                                        </th>
                                         <th data-priority="" colspan="3">Total Amount</th>
                                         <th data-priority="">
                                          Total Players
@@ -749,9 +759,9 @@
     <script src="./assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
     <!-- datepicker -->
+    <script src="./assets/libs/air-datepicker/air-datepicker.css"></script>
     <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
-    <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- apexcharts -->
     <script src="./assets/libs/apexcharts/apexcharts.min.js"></script>
 
@@ -764,6 +774,14 @@
     <script src="./assets/js/pages/dashboard.init.js"></script>
 
     <script src="./assets/js/app.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  
+    <!-- <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script> -->
+   
+  
+    <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 
     
     <script>
@@ -812,27 +830,118 @@
       }
   
       $(document).ready(function () {
-    $('#tab_filter_text').on('input', function () {
-        filterRankList();
-    });
+        const $dropdownBtn3 = $('#dropdownBtn3');
+  const $dropdownContent3 = $('#dropdownContent3');
+  const $selectedStatus = $('#selectedStatus');
+  const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
+  const $clearStatus = $('#clearStatus');
 
-    $('#datefilter').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-        $('#clearDateBtn').show();
-        filterRankList();
-    });
+  function toggleDropdown() {
+    const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
+    $dropdownBtn3.attr('aria-expanded', isExpanded);
+  }
 
-    $('#datefilter').on('cancel.daterangepicker', function (ev, picker) {
-        $(this).val('');
-        $('#clearDateBtn').hide();
-        filterRankList();
-    });
+  // Click event for the selected status element to toggle the dropdown
+  $selectedStatus.on('click', function() {
+    toggleDropdown();
+  });
 
-    $('#clearDateBtn').click(function () {
-        $('#datefilter').val('start & end date');
-        $(this).hide();
+  // Click event for the arrow to toggle the dropdown
+  $arrow.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for selecting an item from the dropdown
+  $dropdownContent3.on('click', 'a', function() {
+    const selectedValue = $(this).data('value');
+    $selectedStatus.text(selectedValue).data('value', selectedValue);
+    $dropdownContent3.removeClass('show');
+
+    if (selectedValue === 'All Status') {
+      $arrow.show();
+      $clearStatus.hide();
+    } else {
+      $arrow.hide();
+      $clearStatus.show();
+    }
+    filterRankList(); // Filter based on the selected status
+  });
+
+  // Click event for clearing the selected status
+  $clearStatus.on('click', function() {
+    $selectedStatus.text('All Status').data('value', 'All Status');
+    $arrow.show();
+    $clearStatus.hide();
+    $dropdownContent3.removeClass('show'); // Hide the dropdown content
+    $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
+    filterRankList(); // Filter with the reset status
+  });
+
+  // Click event for closing the dropdown if clicked outside
+  $(document).on('click', function(event) {
+    if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
+      $dropdownContent3.removeClass('show');
+      $dropdownBtn3.attr('aria-expanded', 'false');
+    }
+  });
+
+
+    // $('#tab_filter_text').on('input', function () {
+    //     filterRankList();
+    // });
+
+    // $('#datefilter').on('apply.daterangepicker', function (ev, picker) {
+    //     $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    //     $('#clearDateBtn').show();
+    //     filterRankList();
+    // });
+
+    // $('#datefilter').on('cancel.daterangepicker', function (ev, picker) {
+    //     $(this).val('');
+    //     $('#clearDateBtn').hide();
+    //     filterRankList();
+    // });
+
+    // $('#clearDateBtn').click(function () {
+    //     $('#datefilter').val('start & end date');
+    //     $(this).hide();
+    //     filterRankList();
+    // });
+    $('#tab_filter_text').on('input', filterRankList);
+      let picker = flatpickr('#rangePicker', {
+        mode: 'range',
+        dateFormat: 'd-m-Y',
+        onClose: function (selectedDates, dateStr, instance) {
+          if (!selectedDates || selectedDates.length === 0) {
+            instance.clear();
+            $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+            $('#clearDates').hide();
+            $('#calendarIcon').show();
+          } else {
+            $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
+            $('#clearDates').show();
+            $('#calendarIcon').hide();
+          }
+          filterRankList();
+        },
+        clickOpens: false,
+        allowInput: false
+      });
+
+      $('#rangePicker, #calendarIcon').click(function () {
+        if (!$('#rangePicker').hasClass('has-dates')) {
+          picker.open();
+        }
+      });
+
+      $('#clearDates').click(function () {
+        picker.clear();
+        $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+        $('#clearDates').hide();
+        $('#calendarIcon').show();
         filterRankList();
-    });
+      });
+
 
     $('#statusDropdown').change(function () {
         filterRankList();
@@ -844,7 +953,8 @@
     function filterRankList() {
     var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
     // var datefilter = $('#datefilter').val();
-    var statusFilter = $('#statusDropdown').val() ? $('#statusDropdown').val().toLowerCase() : '';
+    var datefilter = $('#rangePicker').text().trim();
+    const statusFilter = $("#selectedStatus").data('value') || '';
     var startDate, endDate;
 
     // if (datefilter !== '' && datefilter !== 'start & end date') {
@@ -852,28 +962,40 @@
     //     startDate = parseDate(dates[0] + ' 00:00');
     //     endDate = parseDate(dates[1] + ' 23:59');
     // }
+    if (datefilter !== '' && datefilter !== 'Start & End Date') {
+            var dates = datefilter.split(' - ');
+            startDate = moment(dates[0], 'DD-MM-YYYY').toDate();
+            console.log(startDate)
+            endDate = moment(dates[1], 'DD-MM-YYYY').toDate();
+        }
 
     var filteredArray = rankList.filter(function (object) {
         var matchesText = true, matchesStatus = true, matchesDate = true;
 
         if (tab_filter_text !== '') {
-            matchesText = (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text)) ||
-                          (object.short_league_name && object.short_league_name.toLowerCase().includes(tab_filter_text)) ||
-                          (object.start_league_date && object.start_league_date.toLowerCase().includes(tab_filter_text)) ||
-                          (object.end_league_date && object.end_league_date.toLowerCase().includes(tab_filter_text));
+            matchesText = (object.match_display_name && object.match_display_name.toLowerCase().includes(tab_filter_text)) ;
         }
 
-        if (statusFilter !== '') {
-            const status = getStatus(object.match_start_date, object.match_end_date);
-            matchesStatus = (status.toLowerCase() === statusFilter);
-        }
-
+        // if (statusFilter !== '') {
+        //     const status = getStatus(object.match_start_date, object.match_end_date);
+        //     matchesStatus = (status.toLowerCase() === statusFilter);
+        // }
+        if (statusFilter !== 'All Status') {
+          const status = getStatus(object.match_start_date, object.match_end_date);
+        console.log(status)
+        matchesStatus = (status === statusFilter);
+        // console.log(matchesStatus ,"okli")
+      }
         // if (datefilter !== '' && datefilter !== 'start & end date') {
         //     matchesDate = (parseDate(object.start_league_date) >= startDate && parseDate(object.end_league_date) <= endDate);
         // }
 
-        return matchesText && matchesStatus
-        //  && matchesDate;
+        if (startDate && endDate) {
+                matchesDate = (moment(object.match_start_date, 'DD-MM-YYYY').toDate() >= startDate &&
+                    moment(object.match_start_date, 'DD-MM-YYYY').toDate() <= endDate);
+            }
+
+            return matchesText && matchesStatus && matchesDate;
     });
 
     array = filteredArray;
@@ -883,21 +1005,36 @@
 }
   
       // Function to get status based on start and end dates
-      function getStatus(start_date, end_date) {
-    var currentDate = new Date();
-    var startDate = parseDate(start_date);
-    var endDate = parseDate(end_date);
+//       function getStatus(start_date, end_date) {
+//     var currentDate = new Date();
+//     var startDate = parseDate(start_date);
+//     var endDate = parseDate(end_date);
 
-    if (startDate < currentDate && currentDate <= endDate) {
+//     if (startDate < currentDate && currentDate <= endDate) {
+//         return "Running";
+//     } else if (startDate < currentDate && endDate < currentDate) {
+//         return "Completed";
+//     } else if (startDate > currentDate && endDate > currentDate) {
+//         return "Upcoming";
+//     } else {
+//         return "Unknown";
+//     }
+// }
+function getStatus(start_date, end_date) {
+      var currentDate = new Date();
+      var startDate = moment(start_date, "DD-MM-YYYY").toDate();
+      var endDate = moment(end_date, "DD-MM-YYYY").toDate();
+
+      if (startDate < currentDate && currentDate <= endDate) {
         return "Running";
-    } else if (startDate < currentDate && endDate < currentDate) {
+      } else if (startDate < currentDate && endDate < currentDate) {
         return "Completed";
-    } else if (startDate > currentDate && endDate > currentDate) {
+      } else if (startDate > currentDate && endDate > currentDate) {
         return "Upcoming";
-    } else {
-        return "Unknown";
+      } else {
+        return "unknown";
+      }
     }
-}
       function parseDate(dateStr) {
     var parts = dateStr.split(/[- :]/);
     return new Date(parts[2], parts[1] - 1, parts[0], parts[3] || 0, parts[4] || 0);
@@ -992,8 +1129,8 @@
         var noCell = $("<td></td>").text(i + 1);
         var teamNameCell = $("<td colspan='3'></td>").text(object.match_display_name);
         var totalPoolCell = $("<td colspan='2'></td>").text("Your Total Pool");
-        // var fantacyStartCell = $("<td colspan='2'></td>").text(object.match_start_date);
-        // var fantacyEndCell = $("<td colspan='2'></td>").text(object.match_end_date);
+        var fantacyStartCell = $("<td colspan='2'></td>").text(object.match_start_date);
+        var fantacyEndCell = $("<td colspan='2'></td>").text(object.match_end_date);
         var totalAmountCell = $("<td colspan='3'></td>").text("Your Total Amount");
         var totalPlayersCell = $("<td></td>").text(object.select_player_A.length + object.select_player_B.length);
         var statusCell = $("<td colspan='2'></td>").text(getStatus(object.match_start_date, object.match_end_date));
@@ -1012,8 +1149,8 @@
         tr.append(noCell)
             .append(teamNameCell)
             .append(totalPoolCell)
-            // .append(fantacyStartCell)
-            // .append(fantacyEndCell)
+            .append(fantacyStartCell)
+            .append(fantacyEndCell)
             .append(totalAmountCell)
             .append(totalPlayersCell)
             .append(statusCell)

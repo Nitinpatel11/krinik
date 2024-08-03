@@ -20,6 +20,7 @@
 
 
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -734,7 +735,7 @@
 
     <script src="./assets/js/logout.js"></script>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <!-- JAVASCRIPT -->
   <script src="assets/libs/jquery/jquery.min.js"></script>
   <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -744,7 +745,14 @@
 
   <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
+  <!-- <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script> -->
+ 
+
+  <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
   <script src="assets/js/app.js"></script>
 
 
@@ -783,12 +791,14 @@
             option.textContent = match.match_display_name;
             matchSelect.appendChild(option);
           });
+
+          initializeDatePickers();
         } catch (error) {
           console.error('Error fetching match data:', error);
         }
       }
 
-      await fetchMatchData();
+
 
 
       async function myFetch(url, type, data) {
@@ -850,113 +860,85 @@
                 }
             }
            
-           
-      
-      $(function () {
-        let startPicker = flatpickr('#fantasyStartDate', {
-          dateFormat: 'd-m-Y H:i',
-          enableTime: true,
-          minDate: 'today', // Disable past dates
-          onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-              endPicker.set('minDate', selectedDates[0]);
-              // Close the picker if both date and time are selected
-              // if (dateStr.includes(' ')) {
-              //     instance.close(); // Close the picker after full date-time selection
-              // }
-            }
-          },
-          onReady: function (selectedDates, dateStr, instance) {
+            
+    function initializeDatePickers() {
+    const matchDisplayName = matchSelect.value; // Get the selected match display name
+    const matchDate = getMatchEndDate(matchDisplayName); // Assuming this function extracts end date
+
+    // Initialize the start date picker
+    const startPicker = flatpickr('#fantasyStartDate', {
+        dateFormat: 'd-m-Y H:i',
+        enableTime: true,
+        minDate: 'today', // Disable past dates
+        maxDate: matchDate, // Set the max date to the match date
+        onReady: function (selectedDates, dateStr, instance) {
             addCustomButtons(instance, '#fantasyStartDate');
-          }
-        });
+        }
+    });
 
-        // let endPicker = flatpickr('#fantasyEndDate', {
-        //   dateFormat: 'd-m-Y H:i',
-        //   enableTime: true,
-        //   onOpen: function () {
-        //     const startDate = startPicker.selectedDates[0];
-        //     if (startDate) {
-        //       endPicker.set('minDate', startDate);
-        //     }
-        //   },
-        //   onChange: function (selectedDates, dateStr, instance) {
-        //     if (selectedDates.length > 0) {
-        //       // Close the picker if both date and time are selected
-        //       // if (dateStr && dateStr.includes(' ')) {
-        //       //     instance.close(); // Close the picker after full date-time selection
-        //       // }
-        //     }
-        //   },
-        //   onReady: function (selectedDates, dateStr, instance) {
-        //     addCustomButtons(instance, '#fantasyEndDate');
-        //   }
-
-
-        // });
-
-        // Open Flatpickr on calendar icon click
-        $('#calendarIconStart').click(function () {
-          startPicker.open();
-        });
-        // $('#calendarIconEnd').click(function () {
-        //   endPicker.open();
-        // });
-        let okButtonClicked = false;
-
-
-
-        function addCustomButtons(instance, inputSelector) {
-          // Ensure the calendarContainer is available
-          if (!instance || !instance.calendarContainer) {
+    // Add custom buttons to the picker
+    function addCustomButtons(instance, inputSelector) {
+        if (!instance || !instance.calendarContainer) {
             console.error('Flatpickr instance or calendar container not found.');
             return;
-          }
-
-          // Check if the footer already exists and remove it
-          let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
-          if (existingFooter) {
-            existingFooter.remove();
-          }
-
-          // Create footer and buttons
-          const footer = document.createElement('div');
-          footer.className = 'flatpickr-footer';
-
-          const okButton = document.createElement('button');
-          okButton.type = 'button';
-          okButton.className = 'flatpickr-ok-button';
-          okButton.textContent = 'OK';
-          okButton.addEventListener('click', function () {
-            okButtonClicked = true;
-            instance.close();
-          });
-
-          const clearButton = document.createElement('button');
-          clearButton.type = 'button';
-          clearButton.className = 'flatpickr-clear-button';
-          clearButton.textContent = 'Clear';
-          clearButton.addEventListener('click', function () {
-            document.querySelector(inputSelector).value = '';
-            instance.clear();
-          });
-
-          footer.appendChild(okButton);
-          footer.appendChild(clearButton);
-
-          // Append the footer to the calendar container
-          instance.calendarContainer.appendChild(footer);
         }
 
-        // Modify the onChange event handler to only update the input value when the OK button is clicked
-        instance.config.onChange = function (selectedDates, dateStr, instance) {
-          if (okButtonClicked) {
-            document.querySelector(inputSelector).value = dateStr;
-            okButtonClicked = false; // Reset the flag
-          }
-        };
-      });
+        let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
+        if (existingFooter) {
+            existingFooter.remove();
+        }
 
+        const footer = document.createElement('div');
+        footer.className = 'flatpickr-footer';
+
+        const okButton = document.createElement('button');
+        okButton.type = 'button';
+        okButton.className = 'flatpickr-ok-button';
+        okButton.textContent = 'OK';
+        okButton.addEventListener('click', function () {
+            instance.close();
+        });
+
+        const clearButton = document.createElement('button');
+        clearButton.type = 'button';
+        clearButton.className = 'flatpickr-clear-button';
+        clearButton.textContent = 'Clear';
+        clearButton.addEventListener('click', function () {
+            document.querySelector(inputSelector).value = '';
+            instance.clear();
+        });
+
+        footer.appendChild(okButton);
+        footer.appendChild(clearButton);
+
+        instance.calendarContainer.appendChild(footer);
+    }
+}
+    function getMatchEndDate(matchDisplayName) {
+    // Assuming the end date is part of the matchDisplayName and needs to be extracted
+    const parts = matchDisplayName.split(" ");
+    const matchDateStr = parts.slice(-2).join(" ");
+    return flatpickr.parseDate(matchDateStr, "d-m-Y H:i");
+}
+
+// Handle match selection change
+matchSelect.addEventListener('change', function () {
+    const matchDisplayName = this.value;
+    const matchDate = getMatchEndDate(matchDisplayName);
+    
+    // Update Flatpickr configurations
+    const startPicker = flatpickr('#fantasyStartDate', {
+        dateFormat: 'd-m-Y H:i',
+        enableTime: true,
+        minDate: 'today',
+        maxDate: matchDate,
+    });
+});
+
+// Call fetchMatchData to initialize dropdown and date picker
+
+    // Add other event listeners and validation functions
+    // ...
 
 
       addPriceButton.addEventListener('click', function () {
@@ -1010,7 +992,7 @@
         this.value = ''; // Ensure the input is empty when value is empty
     }
 });
-
+await fetchMatchData();
 document.getElementById('winningPrizeInput').addEventListener('keydown', function (event) {
     if (event.key === 'Backspace' || event.key === 'Delete') {
         let value = this.value.replace('x', ''); // Remove 'X' if present
@@ -1336,7 +1318,7 @@ console.log('Form validation failed. Please check all fields.');
 
       });
     });
-
+     
   </script>
 
 

@@ -564,7 +564,7 @@
                         <form class="app-search d-lg-block d-md-block d-sm-block d-flex">
                           <div class="d-flex gap-3 flex-wrap">
                             
-                        <div class="dropdown">
+                        <!-- <div class="dropdown">
                           <select id="leagueDropdown" class="form-select dropbtn-color dropbtn" onchange="filterRankList()">
                               <option value="">All Leagues</option>
                           </select>
@@ -573,7 +573,33 @@
                         <select id="teamDropdown" class="form-select dropbtn-color dropbtn" onchange="filterRankList()">
                             <option value="">All Teams</option>
                         </select>
+                    </div> -->
+
+                    <div class="dropdown">
+                      <div id="dropdownBtn3" class="dropdown-btn3 dropdownWidth">
+                        <span id="selectedStatus" data-value="All Leagues">All Leagues</span>
+                        <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
+                        <span class="material-symbols-outlined circle-clear1" id="clearStatus">cancel</span>
+                      </div>
+                      <div id="leagueDropdown" class="dropdown-content3 dropdownwidth">
+                        <!-- Dropdown items will be populated here -->
+                      </div>
                     </div>
+                    
+                    <div class="dropdown">
+                      <div id="dropdownBtn4" class="dropdown-btn3 dropdownWidth">
+                        <span id="selectedStatus1" data-value="All Teams">All Teams</span>
+                        <span class="material-symbols-outlined arrow" id="arrowBar1">stat_minus_1</span>
+                        <span class="material-symbols-outlined circle-clear1" id="clearStatus1">cancel</span>
+                      </div>
+                      <div id="teamDropdown" class="dropdown-content3 dropdownwidth">
+                        <!-- Dropdown items will be populated here -->
+                      </div>
+                    </div>
+                    
+                    
+
+
                         <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
                            <div> 
                           <span class="mdi mdi-magnify dropbtn-color-2"></span>
@@ -816,89 +842,190 @@
           console.error("Error fetching data", error);
       }
   }
-
-  $(document).ready(function () {
-      fetchData();
-
-      $('#tab_filter_text').on('input', function () {
-          filterRankList();
-      });
-
-      $('#datefilter').on('apply.daterangepicker', function (ev, picker) {
-          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-          $('#clearDateBtn').show();
-          filterRankList();
-      });
-
-      $('#clearDateBtn').click(function () {
-          $('#datefilter').val('');
-          $(this).hide();
-          filterRankList();
-      });
-  });
-
   function preLoadCalculations(filteredArrayLength) {
       array_length = filteredArrayLength || array.length;
       max_index = Math.ceil(array_length / table_size);
     }
 
-  function populateLeagueDropdown(leagues) {
-      var select = document.getElementById('leagueDropdown');
-      select.innerHTML = '<option value="">All Leagues</option>';
+    $(document).ready(function () {
+  const $dropdownBtn3 = $('#dropdownBtn3');
+  const $dropdownContent3 = $('#leagueDropdown');
+  const $selectedStatus = $('#selectedStatus');
+  const $arrow = $('#arrowBar');
+  const $clearStatus = $('#clearStatus');
 
-      leagues.forEach(league => {
-          var option = document.createElement('option');
-          option.value = league.league_name;
-          option.textContent = league.league_name;
-          select.appendChild(option);
-      });
+  const $dropdownBtn4 = $('#dropdownBtn4');
+  const $dropdownContent4 = $('#teamDropdown');
+  const $selectedStatus1 = $('#selectedStatus1');
+  const $arrow1 = $('#arrowBar1');
+  const $clearStatus1 = $('#clearStatus1');
+
+  function toggleDropdown($dropdownContent, $dropdownBtn,) {
+    const isExpanded = $dropdownContent.toggleClass('show').hasClass('show');
+    $dropdownBtn.attr('aria-expanded', isExpanded);
+    
   }
 
-  function populateTeamDropdown(teams) {
-      var select = document.getElementById('teamDropdown');
-      select.innerHTML = '<option value="">All Teams</option>';
+  $selectedStatus.on('click', function() {
+    toggleDropdown($dropdownContent3, $dropdownBtn3);
+  });
 
-      teams.forEach(team => {
-          var option = document.createElement('option');
-          option.value = team.team_name;
-          option.textContent = team.team_name;
-          select.appendChild(option);
-      });
-  }
+  $arrow.on('click', function() {
+    toggleDropdown($dropdownContent3, $dropdownBtn3);
+  });
 
-  function filterRankList() {
-    var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-    var selectedLeague = $('#leagueDropdown').val();
-    var selectedTeam = $('#teamDropdown').val();
+  $dropdownContent3.on('click', 'a', function() {
+    const selectedValue = $(this).data('value');
+    $selectedStatus.text(selectedValue).data('value', selectedValue);
+    $dropdownContent3.removeClass('show');
 
-    var filteredArray = rankList.filter(function (object) {
-        var matchesText = true;
+    if (selectedValue === 'All Leagues') {
+      $arrow.show();
+      $clearStatus.hide();
+    } else {
+      $arrow.hide();
+      $clearStatus.show();
+    }
+    filterRankList();
+  });
 
-        if (tab_filter_text !== '') {
-            matchesText = (object.team_name && object.team_name.toLowerCase().includes(tab_filter_text)) ||
-                            (object.player_short_name && object.player_short_name.toLowerCase().includes(tab_filter_text)) ||
-                            (object.player_name && object.player_name.toLowerCase().includes(tab_filter_text)) ||
-                            (object.team_date && object.team_date.toLowerCase().includes(tab_filter_text))||
-                            (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text));
-        }
+  $dropdownContent4.on('click', 'a', function() {
+    const selectedValue1 = $(this).data('value');
+    $selectedStatus1.text(selectedValue1).data('value', selectedValue1);
+    $dropdownContent4.removeClass('show');
 
-        if (selectedLeague && selectedLeague !== '') {
-            matchesText = matchesText && object.league_name === selectedLeague;
-        }
-        if (selectedTeam && selectedTeam !== '') {
-            matchesText = matchesText && object.team_name === selectedTeam;
-        }
+    if (selectedValue1 === 'All Teams') {
+      $arrow1.show();
+      $clearStatus1.hide();
+    } else {
+      $arrow1.hide();
+      $clearStatus1.show();
+    }
+    filterRankList();
+  });
 
-        return matchesText;
-    });
+  $clearStatus.on('click', function() {
+    $selectedStatus.text('All Leagues').data('value', 'All Leagues');
+    $dropdownContent3.removeClass('show');
+    $arrow.show();
+    $clearStatus.hide();
+    $dropdownBtn3.attr('aria-expanded', 'false');
+    filterRankList();
+  });
+ 
 
-    array = filteredArray;
-        preLoadCalculations();
-        current_index = 1;
-        displayIndexButtons();
-        highlightIndexButton()
-        displayTableRows();
+  $selectedStatus1.on('click', function() {
+    toggleDropdown($dropdownContent4, $dropdownBtn4);
+  });
+
+  $arrow1.on('click', function() {
+    toggleDropdown($dropdownContent4, $dropdownBtn4);
+  });
+
+  $clearStatus1.on('click', function() {
+    $arrow1.show();
+    $clearStatus1.hide();
+    $selectedStatus1.text('All Teams').data('value', 'All Teams');
+    $dropdownContent4.removeClass('show');
+    $dropdownBtn4.attr('aria-expanded', 'false');
+    filterRankList();
+  });
+
+  $(document).on('click', function(event) {
+    if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length &&
+        !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) &&
+        !$clearStatus.is(event.target)) {
+      $dropdownContent3.removeClass('show');
+      $dropdownBtn3.attr('aria-expanded', 'false');
+    }
+  });
+  $(document).on('click', function(event) {
+    if (!$selectedStatus1.is(event.target) && !$selectedStatus1.has(event.target).length &&
+        !$dropdownContent4.has(event.target).length && !$arrow1.is(event.target) &&
+        !$clearStatus1.is(event.target)) {
+      $dropdownContent4.removeClass('show');
+      $dropdownBtn4.attr('aria-expanded', 'false');
+    }
+  });
+
+  fetchData();
+
+  $('#tab_filter_text').on('input', function () {
+    filterRankList();
+  });
+
+  $('#datefilter').on('apply.daterangepicker', function (ev, picker) {
+    $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    $('#clearDateBtn').show();
+    filterRankList();
+  });
+
+  $('#clearDateBtn').click(function () {
+    $('#datefilter').val('');
+    $(this).hide();
+    filterRankList();
+  });
+});
+
+function populateLeagueDropdown(leagues) {
+  const dropdown = document.getElementById('leagueDropdown');
+  dropdown.innerHTML = ''; // Clear existing options
+
+  leagues.forEach(league => {
+    const item = document.createElement('a');
+    item.textContent = league.league_name;
+    item.setAttribute('data-value', league.league_name);
+    dropdown.appendChild(item);
+  });
 }
+
+function populateTeamDropdown(teams) {
+  const dropdown = document.getElementById('teamDropdown');
+  dropdown.innerHTML = ''; // Clear existing options
+
+  teams.forEach(team => {
+    const item = document.createElement('a');
+    item.textContent = team.team_name;
+    item.setAttribute('data-value', team.team_name);
+    dropdown.appendChild(item);
+  });
+}
+
+function filterRankList() {
+  const tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+  const selectedLeague = $("#selectedStatus").data('value') || '';
+  const selectedTeam = $("#selectedStatus1").data('value') || '';
+
+  const filteredArray = rankList.filter(object => {
+    let matchesText = true;
+
+    if (tab_filter_text !== '') {
+      matchesText = (object.team_name && object.team_name.toLowerCase().includes(tab_filter_text)) ||
+                    (object.player_short_name && object.player_short_name.toLowerCase().includes(tab_filter_text)) ||
+                    (object.player_name && object.player_name.toLowerCase().includes(tab_filter_text)) ||
+                    (object.team_date && object.team_date.toLowerCase().includes(tab_filter_text)) ||
+                    (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text));
+    }
+
+    if (selectedLeague && selectedLeague !== 'All Leagues') {
+      matchesText = matchesText && object.league_name === selectedLeague;
+    }
+
+    if (selectedTeam && selectedTeam !== 'All Teams') {
+      matchesText = matchesText && object.team_name === selectedTeam;
+    }
+
+    return matchesText;
+  });
+
+  array = filteredArray;
+  preLoadCalculations();
+  current_index = 1;
+  displayIndexButtons();
+  highlightIndexButton();
+  displayTableRows();
+}
+
 
 function displayIndexButtons() {
     $(".index_buttons ul").empty();

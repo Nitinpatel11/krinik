@@ -558,7 +558,7 @@
                       <div class="dropdown">
                         <div id="dropdownBtn3" class="dropdown-btn3">
                           <span id="selectedStatus" data-value="All Status">All Status</span>
-                          <span class="material-symbols-outlined arrow" id="arrow">stat_minus_1</span>
+                          <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
                           <span class="material-symbols-outlined circle-clear1" id="clearStatus">
                             cancel
                           </span>
@@ -791,7 +791,7 @@
       const $dropdownBtn3 = $('#dropdownBtn3');
   const $dropdownContent3 = $('#dropdownContent3');
   const $selectedStatus = $('#selectedStatus');
-  const $arrow = $('#arrow');
+  const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
   const $clearStatus = $('#clearStatus');
 
   function toggleDropdown() {
@@ -799,8 +799,13 @@
     $dropdownBtn3.attr('aria-expanded', isExpanded);
   }
 
-  // Click event for the dropdown button
-  $dropdownBtn3.on('click', function() {
+  // Click event for the selected status element to toggle the dropdown
+  $selectedStatus.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for the arrow to toggle the dropdown
+  $arrow.on('click', function() {
     toggleDropdown();
   });
 
@@ -826,16 +831,18 @@
     $arrow.show();
     $clearStatus.hide();
     $dropdownContent3.removeClass('show'); // Hide the dropdown content
+    $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
     filterRankList(); // Filter with the reset status
   });
 
   // Click event for closing the dropdown if clicked outside
   $(document).on('click', function(event) {
-    if (!$dropdownBtn3.is(event.target) && !$dropdownBtn3.has(event.target).length && !$dropdownContent3.has(event.target).length) {
+    if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
       $dropdownContent3.removeClass('show');
       $dropdownBtn3.attr('aria-expanded', 'false');
     }
   });
+
 
 
       // Initialize Flatpickr

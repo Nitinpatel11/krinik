@@ -563,11 +563,24 @@
                   <div class="d-flex align-items-end">
                     <form class="app-search d-lg-block d-md-block d-sm-block d-flex">
                       <div class="d-flex gap-3 flex-wrap">
-                        <div class="dropdown">
-                          <select id="leagueDropdown" class="form-select dropbtn-color dropbtn" onchange="filterRankList()">
+                        <!-- <div class="dropdown">
+                          <select id="leagueDropdown" class="form-select dropbtn-color " onchange="filterRankList()">
                             <option value="">All Leagues</option>
                           </select>
+                        </div> -->
+
+                        <div class="dropdown">
+                          <div id="dropdownBtn3" class="dropdown-btn3 dropdownWidth">
+                            <span id="selectedStatus" data-value="All Leagues">All Leagues</span>
+                            <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
+                            <span class="material-symbols-outlined circle-clear1" id="clearStatus">cancel</span>
+                          </div>
+                          <div id="leagueDropdown" class="dropdown-content3 dropdownwidth">
+                            <!-- Dropdown items will be populated here -->
+                          </div>
                         </div>
+
+
                         <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
                           <div>
                             <span class="mdi mdi-magnify dropbtn-color-2"></span>
@@ -801,6 +814,64 @@
   }
 
   $(document).ready(function () {
+
+    const $dropdownBtn3 = $('#dropdownBtn3');
+  const $dropdownContent3 = $('#leagueDropdown'); // Fixed ID selector
+  const $selectedStatus = $('#selectedStatus');
+  const $arrow = $('#arrowBar');
+  const $clearStatus = $('#clearStatus');
+
+  function toggleDropdown() {
+    const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
+    $dropdownBtn3.attr('aria-expanded', isExpanded);
+  }
+
+  // Click event for the selected status element to toggle the dropdown
+  $selectedStatus.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for the arrow to toggle the dropdown
+  $arrow.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for selecting an item from the dropdown
+  $dropdownContent3.on('click', 'a', function() {
+    const selectedValue = $(this).data('value');
+    $selectedStatus.text(selectedValue).data('value', selectedValue);
+    $dropdownContent3.removeClass('show');
+
+    if (selectedValue === 'All Leagues') {
+      $arrow.show();
+      $clearStatus.hide();
+    } else {
+      $arrow.hide();
+      $clearStatus.show();
+    }
+    filterRankList(); // Filter based on the selected status
+  });
+
+  // Click event for clearing the selected status
+  $clearStatus.on('click', function() {
+    $selectedStatus.text('All Leagues').data('value', 'All Leagues');
+    $arrow.show();
+    $clearStatus.hide();
+    $dropdownContent3.removeClass('show'); // Hide the dropdown content
+    $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
+    filterRankList(); // Filter with the reset status
+  });
+
+  // Click event for closing the dropdown if clicked outside
+  $(document).on('click', function(event) {
+    if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length &&
+        !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) &&
+        !$clearStatus.is(event.target)) {
+      $dropdownContent3.removeClass('show');
+      $dropdownBtn3.attr('aria-expanded', 'false');
+    }
+  });
+
       // Event handler for search input
       $('#tab_filter_text').on('input', function () {
           filterRankList(); // Trigger filtering when search text changes
@@ -830,21 +901,30 @@
     }
   // Function to populate league dropdown
   function populateLeagueDropdown(leagues) {
-      var select = document.getElementById('leagueDropdown');
-      select.innerHTML = '<option value="">All Leagues</option>';
+  var dropdown = document.getElementById('leagueDropdown');
+  dropdown.innerHTML = ''; // Clear existing options
 
-      leagues.forEach(league => {
-          var option = document.createElement('option');
-          option.value = league.league_name; // Assuming league object has a 'league_name' property
-          option.textContent = league.league_name; // Display league name
-          select.appendChild(option);
-      });
-  }
+  // Create a default "All Leagues" item
+  // var defaultItem = document.createElement('a');
+  // defaultItem.textContent = 'All Leagues';
+  // defaultItem.setAttribute('data-value', 'All Leagues');
+  // dropdown.appendChild(defaultItem);
+
+  // Create items for each league
+  leagues.forEach(league => {
+    var item = document.createElement('a');
+    item.textContent = league.league_name; // Display league name
+    item.setAttribute('data-value', league.league_name); // Set data-value attribute
+    dropdown.appendChild(item);
+  });
+}
+
 
   // Function to filter and display team list based on search and league selection
   function filterRankList() {
     var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-    var selectedLeague = $('#leagueDropdown').val();
+    // var selectedLeague = $('#leagueDropdown').val();
+    const selectedLeague = $("#selectedStatus").data('value') || '';
 
     var filteredArray = rankList.filter(function (object) {
         var matchesText = true;
@@ -856,9 +936,9 @@
                             (object.team_date && object.team_date.toLowerCase().includes(tab_filter_text));
         }
 
-        if (selectedLeague && selectedLeague !== '') {
-            matchesText = matchesText && object.league_name === selectedLeague; // Compare league_name with selectedLeague
-        }
+        if (selectedLeague && selectedLeague !== 'All Leagues') {
+      matchesText = matchesText && object.league_name === selectedLeague; // Compare league_name with selectedLeague
+    }
 
         return matchesText;
     });
@@ -870,6 +950,9 @@
         highlightIndexButton()
         displayTableRows();
 }
+
+
+
 function displayIndexButtons() {
     $(".index_buttons ul").empty();
 

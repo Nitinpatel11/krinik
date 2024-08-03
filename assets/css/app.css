@@ -4333,3 +4333,11 @@ tbody td {
     }
   }
   
+
+  .dropdownWidth{
+    width: 100%;
+    padding: 0px 15px;
+  }
+  .dropdownwidth{
+width: auto !important;
+  }

@@ -561,7 +561,7 @@
 
                     </div>
 
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                       <select id="statusDropdown" class="form-select dropbtn-color dropbtn"
                         onchange="filterRankList(this.value)">
                         <option value="">All Status</option>
@@ -570,7 +570,27 @@
                         <option value="Upcoming">Upcoming</option>
                       </select>
 
+                    </div> -->
+
+                    <div class="dropdown">
+                      <div id="dropdownBtn3" class="dropdown-btn3">
+                        <span id="selectedStatus" data-value="All Status">All Status</span>
+                        <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
+                        <span class="material-symbols-outlined circle-clear1" id="clearStatus">
+                          cancel
+                        </span>
+
+                      </div>
+                      <div id="dropdownContent3" class="dropdown-content3 ">
+                        <!-- <a data-value="success">Success</a>
+                        <a data-value="fail">Fail</a>
+                        <a data-value="pending">Pending</a> -->
+                        <a data-value="Running">Running</a>
+                        <a data-value="Completed">Completed</a>
+                        <a data-value="Upcoming">Upcoming</a>
+                      </div>
                     </div>
+
 
                     <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
                       <div>
@@ -804,6 +824,64 @@
     }
 
     $(document).ready(function () {
+      const $dropdownBtn3 = $('#dropdownBtn3');
+  const $dropdownContent3 = $('#dropdownContent3');
+  const $selectedStatus = $('#selectedStatus');
+  const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
+  const $clearStatus = $('#clearStatus');
+
+  function toggleDropdown() {
+    const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
+    $dropdownBtn3.attr('aria-expanded', isExpanded);
+  }
+
+  // Click event for the selected status element to toggle the dropdown
+  $selectedStatus.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for the arrow to toggle the dropdown
+  $arrow.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for selecting an item from the dropdown
+  $dropdownContent3.on('click', 'a', function() {
+    const selectedValue = $(this).data('value');
+    $selectedStatus.text(selectedValue).data('value', selectedValue);
+    $dropdownContent3.removeClass('show');
+
+    if (selectedValue === 'All Status') {
+      $arrow.show();
+      $clearStatus.hide();
+    } else {
+      $arrow.hide();
+      $clearStatus.show();
+    }
+    filterRankList(); // Filter based on the selected status
+  });
+
+  // Click event for clearing the selected status
+  $clearStatus.on('click', function() {
+    $selectedStatus.text('All Status').data('value', 'All Status');
+    $arrow.show();
+    $clearStatus.hide();
+    $dropdownContent3.removeClass('show'); // Hide the dropdown content
+    $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
+    filterRankList(); // Filter with the reset status
+  });
+
+  // Click event for closing the dropdown if clicked outside
+  $(document).on('click', function(event) {
+    if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
+      $dropdownContent3.removeClass('show');
+      $dropdownBtn3.attr('aria-expanded', 'false');
+    }
+  });
+
+
+
+
       $('#tab_filter_text').on('input', filterRankList);
       let picker = flatpickr('#rangePicker', {
         mode: 'range',
@@ -846,7 +924,7 @@
     function filterRankList() {
         var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
         var datefilter = $('#rangePicker').text().trim();
-        var statusFilter = $('#statusDropdown').val() ? $('#statusDropdown').val() : '';
+        const statusFilter = $("#selectedStatus").data('value') || '';
         var startDate, endDate;
 
         if (datefilter !== '' && datefilter !== 'Start & End Date') {
@@ -866,10 +944,16 @@
                     (object.end_league_date && object.end_league_date.toLowerCase().includes(tab_filter_text));
             }
 
-            if (statusFilter !== '') {
-                const status = getStatus(object.start_league_date, object.end_league_date);
-                matchesStatus = (status === statusFilter);
-            }
+            // if (statusFilter !== '') {
+            //     const status = getStatus(object.start_league_date, object.end_league_date);
+            //     matchesStatus = (status === statusFilter);
+            // }
+            if (statusFilter !== 'All Status') {
+              const status = getStatus(object.start_league_date, object.end_league_date)
+        console.log(status)
+        matchesStatus = (status === statusFilter);
+        // console.log(matchesStatus ,"okli")
+      }
 
             if (startDate && endDate) {
                 matchesDate = (moment(object.start_league_date, 'DD-MM-YYYY').toDate() >= startDate &&
