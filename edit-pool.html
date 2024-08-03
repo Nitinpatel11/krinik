@@ -1954,7 +1954,26 @@
 
           const responseData = await response.json();
           console.log('Success:', responseData.data);
-          window.location.href = './manage-pool.html';
+          // window.location.href = './manage-pool.html';/
+          const urlParams = new URLSearchParams({
+            select_match: data.select_match,
+            pool_name: data.pool_name
+                    });
+                    switch (data.pool_type) {
+                        case 'Silver':
+                            window.location.href = 'pool-A.html?' + urlParams.toString();
+                            break;
+                        case 'Platinium':
+                            window.location.href = 'pool-B.html?' + urlParams.toString();
+                            break;
+                        case 'Gold':
+                            window.location.href = 'pool-C.html?' + urlParams.toString();
+                            break;
+                        default:
+                            // Redirect to a default page or handle unexpected cases
+                            console.log('Unknown pool type:', payload.pool_type);
+                            break;
+                    }
         } catch (error) {
           console.error('Error:', error);
           alert('An error occurred while adding the pool. Please try again later.');

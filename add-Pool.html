@@ -768,7 +768,7 @@
 
       const noNumberOrWhitespaceRegex = /^(?!.*[\uD83C-\uDBFF\uDC00-\uDFFF])^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+(?: [a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+)*$/;
       const noNumberOrWhitespaceRegex1 = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
-
+      const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
        existingPool = await myFetch("https://krinik.pythonanywhere.com/add_pool_get/", "GET")
       // existingPool = existingPool1
 
@@ -939,7 +939,27 @@ matchSelect.addEventListener('change', function () {
 
     // Add other event listeners and validation functions
     // ...
-
+    function isValidTeamName1(value) {
+    const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
+    const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+    
+    // Check for emoji
+    if (emojiRegex.test(value)) {
+        return false; // Invalid if emoji found
+    }
+    
+    // Check for alphanumeric and spaces
+    if (!alphanumericRegex.test(value)) {
+        return false; // Invalid if non-alphanumeric characters found
+    }
+    
+    // Check for purely numeric input
+    if (/^\d+$/.test(value)) {
+        return false; // Invalid if input is purely numeric
+    }
+    
+    return true; // Valid input
+}
 
       addPriceButton.addEventListener('click', function () {
         const price = parseFloat(priceInput.value);
@@ -992,6 +1012,10 @@ matchSelect.addEventListener('change', function () {
         this.value = ''; // Ensure the input is empty when value is empty
     }
 });
+document.getElementById('priceInput').addEventListener('input', function (event) {
+    let value = this.value.replace(/\D/g, ''); // Remove any non-digit characters
+   
+});
 await fetchMatchData();
 document.getElementById('winningPrizeInput').addEventListener('keydown', function (event) {
     if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -1008,6 +1032,7 @@ document.getElementById('winningPrizeInput').addEventListener('keydown', functio
         event.preventDefault();
     }
 });
+
 // function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
   function checkPoolOverlap(selectMatch, poolName, existingPool) {
 
@@ -1104,31 +1129,33 @@ document.getElementById('winningPrizeInput').addEventListener('keydown', functio
         return validate()
       }
 
-      function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
-        const input = document.getElementById(inputId);
-        const error = document.getElementById(errorId);
+      function validateInput(inputId, errorId, validationFunction, emptyMessage, invalidMessage) {
+    const inputElement = document.getElementById(inputId);
+    const errorElement = document.getElementById(errorId);
 
-        function validate() {
-          const value = input.value.trim();
-          if (value === '') {
-            error.innerHTML = emptyMessage;
-            error.style.display = 'inline';
+    function validate() {
+        const value = inputElement.value.trim();
+        if (value === '') {
+            errorElement.innerHTML = emptyMessage;
+            errorElement.style.display = 'inline';
             return false;
-          } else if (!regex.test(value)) {
-            error.innerHTML = invalidMessage;
-            error.style.display = 'inline';
+        } else if (!validationFunction(value)) {
+            errorElement.innerHTML = invalidMessage;
+            errorElement.style.display = 'inline';
             return false;
-          } else {
-            error.style.display = 'none';
+        } else {
+            errorElement.style.display = 'none';
             return true;
-          }
         }
+    }
 
-        input.addEventListener('input', validate);
-        input.addEventListener('change', validate);
+    inputElement.addEventListener('input', validate);
+    inputElement.addEventListener('change', validate);
 
-        return validate();
-      }
+    return validate();
+}
+
+
 
       function validateMatchDates() {
         const startDate = document.getElementById('fantasyStartDate');
@@ -1173,7 +1200,7 @@ document.getElementById('winningPrizeInput').addEventListener('keydown', functio
         const isValidPoolName = validateInput(
           'poolNameInput',
           'error-pool-name',
-          noNumberOrWhitespaceRegex,
+          isValidTeamName1,
           'Please enter a pool name',
           'Please enter a valid pool name'
         );
@@ -1181,7 +1208,7 @@ document.getElementById('winningPrizeInput').addEventListener('keydown', functio
         const isValidWinningPrice = validateInput(
           'winningPrizeInput',
           'error-win-price',
-          noNumberOrWhitespaceRegex1,
+          isValidTeamName1,
           'Please enter a winning price',
           'Please enter a valid winning price'
         );

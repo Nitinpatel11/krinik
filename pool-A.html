@@ -593,6 +593,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const matchName = urlParams.get('match');
     const poolName = urlParams.get('pool_name');
+   
 
     let allPlayers = [];
     let createdPairs = [];
@@ -602,7 +603,7 @@
       .then(data => {
         const matchData = data.data;
         const selectedMatch = matchData.find(match => match.match_display_name.includes(matchName));
-
+console.log(data.data)
         if (selectedMatch) {
           const teamAName = selectedMatch.select_team_A.team_name;
           const teamBName = selectedMatch.select_team_B.team_name;

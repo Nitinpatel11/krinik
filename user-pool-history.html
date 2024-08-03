@@ -525,6 +525,17 @@
 
                   <form class="app-search  d-lg-block d-flex  ">
                     <div class="d-flex gap-3 flex-wrap">
+                 
+                      <!-- <div class="dropdown">
+                        <div id="dropdownBtn3" class="dropdown-btn3 dropdownWidth">
+                          <span id="selectedStatus" data-value="All Leagues">All Leagues</span>
+                          <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
+                          <span class="material-symbols-outlined circle-clear1" id="clearStatus">cancel</span>
+                        </div>
+                        <div id="leagueDropdown" class="dropdown-content3 dropdownwidth"> -->
+                          <!-- Dropdown items will be populated here -->
+                        <!-- </div> -->
+                      <!-- </div> -->
                       <div class="dropdown">
 
                         <!-- <div class="datepicker-container"> -->
@@ -537,17 +548,38 @@
                         <!-- <i class="mdi mdi-chevron-down"></i> -->
 
                       </div>
+                      <div class="dropdown d-flex gap-2 justify-content-evenly align-items-center amountWidth1 ">
+                        <div class="filter-item ">
+
+                          <input type="text" class="text-center amountWidth" id="startAmountRange"
+                            placeholder="Start Amount">
+                          <i id="clearAmountStart" class="fas fa-times-circle circle-clear"></i>
+                        </div>
+                        <h5 class="mt-2">To</h5>
+                        <div class="filter-item ">
+
+                          <input type="text" class="text-center amountWidth" id="endAmountRange"
+                            placeholder="End Amount">
+                          <i id="clearAmountEnd" class="fas fa-times-circle circle-clear"></i>
+                        </div>
+                      </div>
 
                       <div class="dropdown">
-                        <select id="statusDropdown" class="form-select dropbtn-color dropbtn"
-                          onchange="filterRankList(this.value)">
-                          <option value="">All Status</option>
-                          <option value="Running">Running</option>
-                          <option value="Completed">Completed</option>
-                          <option value="Upcoming">Upcoming</option>
-                        </select>
+                        <div id="dropdownBtn3" class="dropdown-btn3">
+                          <span id="selectedStatus" data-value="All Status">All Status</span>
+                          <span class="material-symbols-outlined arrow" id="arrowBar">stat_minus_1</span>
+                          <span class="material-symbols-outlined circle-clear1" id="clearStatus">
+                            cancel
+                          </span>
 
+                        </div>
+                        <div id="dropdownContent3" class="dropdown-content3">
+                          <a data-value="Win">Win</a>
+                          <a data-value="Lose">Lose</a>
+                     
+                        </div>
                       </div>
+             
 
                       <div class="align-items-center d-flex dropbtn-color justify-content-between drop-padd">
                         <div>
@@ -586,16 +618,16 @@
                                   <thead class="align-items-center">
                                     <tr>
                                       <th data-priority="">No.</th>
-                                      <th data-priority="" colspan="2">Pool Name</th>
-                                      <th data-priority="" >Pool Type
-                                      <!-- <th data-priority="" colspan="3">League Name</th> -->
-                                      <!-- <th data-priority="" colspan="3">Bid Amount</th> -->
-                                      <!-- <th data-priority="" colspan="3">Transaction Id</th>
-                                      <th data-priority="" colspan="2">Credit/Debit</th> -->
-                                      <!-- <th data-priority="" colspan="3">Amount</th>
+                                      <th data-priority="" colspan="3">Pool Name</th>
+                                      <th data-priority=""  colspan="2">Pool Type</th>
+                                      <th data-priority="" colspan="3">League Name</th>
+                                      <th data-priority="" colspan="3">Bid Amount</th>
+                                      <!-- <th data-priority="" colspan="3">Transaction Id</th> -->
+                                      <!-- <th data-priority="" colspan="2">Credit/Debit</th> -->
                                       <th data-priority="" colspan="2">status</th>
+                                      <th data-priority="" colspan="3">Amount</th>
 
-                                      <th data-priority="" colspan="2">Date & Time</th> -->
+                                      <th data-priority="" colspan="2">Date & Time</th>
                                       <!-- <th data-priority="">Delete</th> -->
                                     </tr>
                                   </thead>
@@ -687,7 +719,7 @@
     <script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="./assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
     <script src="./assets/js/logout.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- datepicker -->
     <script src="./assets/libs/air-datepicker/air-datepicker.css"></script>
     <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
@@ -799,34 +831,198 @@
     array_length = rankList.length;
     max_index = Math.ceil(array_length / table_size);
   }
+  $(document).ready(function () {
+      const $dropdownBtn3 = $('#dropdownBtn3');
+  const $dropdownContent3 = $('#dropdownContent3');
+  const $selectedStatus = $('#selectedStatus');
+  const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
+  const $clearStatus = $('#clearStatus');
+
+  function toggleDropdown() {
+    const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
+    $dropdownBtn3.attr('aria-expanded', isExpanded);
+  }
+
+  // Click event for the selected status element to toggle the dropdown
+  $selectedStatus.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for the arrow to toggle the dropdown
+  $arrow.on('click', function() {
+    toggleDropdown();
+  });
+
+  // Click event for selecting an item from the dropdown
+  $dropdownContent3.on('click', 'a', function() {
+    const selectedValue = $(this).data('value');
+    $selectedStatus.text(selectedValue).data('value', selectedValue);
+    $dropdownContent3.removeClass('show');
+
+    if (selectedValue === 'All Status') {
+      $arrow.show();
+      $clearStatus.hide();
+    } else {
+      $arrow.hide();
+      $clearStatus.show();
+    }
+    filterRankList(); // Filter based on the selected status
+  });
+
+  // Click event for clearing the selected status
+  $clearStatus.on('click', function() {
+    $selectedStatus.text('All Status').data('value', 'All Status');
+    $arrow.show();
+    $clearStatus.hide();
+    $dropdownContent3.removeClass('show'); // Hide the dropdown content
+    $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
+    filterRankList(); // Filter with the reset status
+  });
+
+  // Click event for closing the dropdown if clicked outside
+  $(document).on('click', function(event) {
+    if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
+      $dropdownContent3.removeClass('show');
+      $dropdownBtn3.attr('aria-expanded', 'false');
+    }
+  });
+
+
+
+      // Initialize Flatpickr
+      let picker = flatpickr('#rangePicker', {
+        mode: 'range',
+        dateFormat: 'd-m-Y',
+        onClose: function (selectedDates, dateStr, instance) {
+          if (!selectedDates || selectedDates.length === 0) {
+            instance.clear();
+            $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+            $('#clearDates').hide();
+            $('#calendarIcon').show();
+          } else {
+            $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
+            $('#clearDates').show();
+            $('#calendarIcon').hide();
+          }
+          filterRankList();
+        },
+        clickOpens: false,
+        allowInput: false
+      });
+
+      $('#rangePicker, #calendarIcon').click(function () {
+        if (!$('#rangePicker').hasClass('has-dates')) {
+          picker.open();
+        }
+      });
+
+      $('#clearDates').click(function () {
+        picker.clear();
+        $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+        $('#clearDates').hide();
+        $('#calendarIcon').show();
+        filterRankList();
+      });
+
+      function updateAmountFilters() {
+    const startAmount = $('#startAmountRange').val().trim();
+    const endAmount = $('#endAmountRange').val().trim();
+
+    // Show or hide clear buttons based on input values
+    if (startAmount !== '' && endAmount === '') {
+      $('#clearAmountStart').show();
+      $('#clearAmountEnd').hide();
+    } else if (startAmount !== '' && endAmount !== '') {
+      $('#clearAmountStart').show();
+      $('#clearAmountEnd').show();
+    } else if (startAmount === '' && endAmount === '') {
+      $('#clearAmountStart').hide();
+      $('#clearAmountEnd').hide();
+    } else if (startAmount === '' && endAmount !== '') {
+      $('#clearAmountStart').hide();
+      $('#clearAmountEnd').show();
+    }
+
+    // Always call filterRankList to apply the filter
+    filterRankList();
+  }
+
+  $('#startAmountRange').on('input', function () {
+    updateAmountFilters();
+  });
+
+  // Event listeners for the end amount range input
+  $('#endAmountRange').on('input', function () {
+    updateAmountFilters();
+  });
+
+  // Event listener for clearing the start amount range
+  $('#clearAmountStart').click(function () {
+    $('#startAmountRange').val('');
+    updateAmountFilters(); // Call the update function to handle the UI changes
+  });
+
+  // Event listener for clearing the end amount range
+  $('#clearAmountEnd').click(function () {
+    $('#endAmountRange').val('');
+    updateAmountFilters(); // Call the update function to handle the UI changes
+  });
+
+  // Initial call to update filters and hide/show clear buttons on page load
+  updateAmountFilters();
+  $('#tab_filter_text').on('input', function () {
+    filterRankList();
+  });
+    });
 
   function filterRankList() {
     const tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-    const datefilter = $('#rangePicker').text().trim();
-    const statusFilter = $('#statusDropdown').val() || '';
+    var datefilter = $('#rangePicker').text().trim();
+    const statusFilter = $("#selectedStatus").data('value') || '';
     let startDate, endDate;
 
-    if (datefilter && datefilter !== 'Start & End Date') {
-      const dates = datefilter.split(' - ');
-      startDate = moment(dates[0], 'DD/MM/YYYY').toDate();
-      endDate = moment(dates[1], 'DD/MM/YYYY').toDate();
-    }
+    var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
+    var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
+    if (datefilter !== '' && datefilter !== 'Start & End Date') {
+        var dates = datefilter.split(' - ');
+        startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
+        endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
+   
+      }
     const filteredArray = rankList.filter(object => {
-      const matchesText = (tab_filter_text === '' ||
+      var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
+      matchesText = (tab_filter_text === '' ||
         (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text)) ||
         (object.short_league_name && object.short_league_name.toLowerCase().includes(tab_filter_text)) ||
         (object.start_league_date && object.start_league_date.toLowerCase().includes(tab_filter_text)) ||
         (object.end_league_date && object.end_league_date.toLowerCase().includes(tab_filter_text)));
 
-      const status = getStatus(object.start_league_date, object.end_league_date);
-      const matchesStatus = (statusFilter === '' || status === statusFilter);
+        if (statusFilter !== 'All Status') {
+        const status = getStatus((object.status).toLowerCase())
+        console.log(object.status)
+        matchesStatus = (status === statusFilter.toLowerCase( ));
+        // console.log(matchesStatus ,"okli")
+      }
 
-      const matchesDate = !startDate || !endDate || 
-        (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
-         moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
+      if (startDate && endDate) {
+          const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+          matchesDate = (objectDate >= startDate && objectDate <= endDate);
+          // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
+        }
 
-      return matchesText && matchesStatus && matchesDate;
+         if (!isNaN(object.entry_fee)) {
+          const amount = parseFloat(object.entry_fee);
+          matchesAmount = (amount >= startAmount && amount <= endAmount);
+          // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+        }
+        if (!isNaN(object.winning_amount)) {
+          const amount = parseFloat(object.winning_amount);
+          matchesAmount = (amount >= startAmount && amount <= endAmount);
+          // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+        }
+
+      return matchesText && matchesStatus && matchesDate && matchesAmount ;
     });
 
     array = filteredArray;
@@ -837,21 +1033,30 @@
     displayTableRows();
   }
 
-  function getStatus(start_date, end_date) {
-    const currentDate = new Date();
-    const startDate = moment(start_date, "DD/MM/YYYY").toDate();
-    const endDate = moment(end_date, "DD/MM/YYYY").toDate();
+  // function getStatus(start_date, end_date) {
+  //   const currentDate = new Date();
+  //   const startDate = moment(start_date, "DD/MM/YYYY").toDate();
+  //   const endDate = moment(end_date, "DD/MM/YYYY").toDate();
 
-    if (startDate < currentDate && currentDate <= endDate) {
-      return "Running";
-    } else if (startDate < currentDate && endDate < currentDate) {
-      return "Completed";
-    } else if (startDate > currentDate && endDate > currentDate) {
-      return "Upcoming";
-    } else {
-      return "unknown";
+  //   if (startDate < currentDate && currentDate <= endDate) {
+  //     return "Running";
+  //   } else if (startDate < currentDate && endDate < currentDate) {
+  //     return "Completed";
+  //   } else if (startDate > currentDate && endDate > currentDate) {
+  //     return "Upcoming";
+  //   } else {
+  //     return "unknown";
+  //   }
+  // }
+  function getStatus(status) {
+      if (status === "success" || status === "Success") {
+        return `<span  style="color:green;font-weight:900">Win</span>`;
+      } else if (status === "fail" || status === "Fail") {
+        return `<span "style="color:red;font-weight:900">Lose</span>`;
+      } else {
+        return "unknown";
+      }
     }
-  }
 
   function displayIndexButtons() {
     const $indexButtons = $(".index_buttons ul");
@@ -955,16 +1160,17 @@
 
     for (let i = tab_start; i < tab_end; i++) {
       const showdata = array[i];
+      var status = getStatus(showdata["status"]);
    
       var tr = $("<tr></tr>");
 
         var noCell = $("<td></td>").text(i + 1);
-        var poolNameCell = $("<td colspan='2'></td>").text(showdata.pool_name["pool_name"] || "");
-        var poolTypeCell = $("<td></td>").text(showdata["pool_type"] || "");
-        var leagueNameCell = $("<td></td>").text(showdata.match.select_league["league_name"] || "");
-        var bidAmountCell = $("<td></td>").text(showdata["winning_amount"] || "");
+        var poolNameCell = $("<td colspan='3'></td>").text(showdata.pool_name["pool_name"] || "");
+        var poolTypeCell = $("<td colspan='2'></td>").text(showdata["pool_type"] || "");
+        var leagueNameCell = $("<td colspan='3'></td>").text(showdata.match.select_league["league_name"] || "");
+        var bidAmountCell = $("<td colspan='3'></td>").text(showdata["winning_amount"] || "");
         var statusCell = $("<td colspan='2'></td>").html(status);
-        var entryFeeCell = $("<td></td>").text(showdata["entry_fee"] || "");
+        var entryFeeCell = $("<td colspan='3'></td>").text(showdata["entry_fee"] || "");
         var dateCell = $("<td colspan='2'></td>").text(moment(showdata["date"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
         tr.append(noCell)
           .append(poolNameCell)
