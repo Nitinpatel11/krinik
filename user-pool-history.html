@@ -976,9 +976,10 @@
     });
 
   function filterRankList() {
-    const tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+    var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
     var datefilter = $('#rangePicker').text().trim();
     const statusFilter = $("#selectedStatus").data('value') || '';
+    console.log(statusFilter,"oklp1")
     let startDate, endDate;
 
     var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
@@ -992,18 +993,30 @@
       }
     const filteredArray = rankList.filter(object => {
       var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
-      matchesText = (tab_filter_text === '' ||
-        (object.league_name && object.league_name.toLowerCase().includes(tab_filter_text)) ||
-        (object.short_league_name && object.short_league_name.toLowerCase().includes(tab_filter_text)) ||
-        (object.start_league_date && object.start_league_date.toLowerCase().includes(tab_filter_text)) ||
-        (object.end_league_date && object.end_league_date.toLowerCase().includes(tab_filter_text)));
+      if (tab_filter_text !== '') {
+     return matchesText = (object.match.select_league.league_name && object.match.select_league.league_name.toLowerCase().includes(tab_filter_text)) ||
+        (object.pool_name.pool_name && object.pool_name.pool_name.toLowerCase().includes(tab_filter_text)) ||
+        (object.pool_type && object.pool_type.toLowerCase().includes(tab_filter_text));
 
-        if (statusFilter !== 'All Status') {
-        const status = getStatus((object.status).toLowerCase())
-        console.log(object.status)
-        matchesStatus = (status === statusFilter.toLowerCase( ));
-        // console.log(matchesStatus ,"okli")
       }
+      //   if (statusFilter !== 'All Status') {
+      //   const status = getStatus((object.status).toLowerCase())
+      //   console.log(status,"okli")
+      //   matchesStatus = (status === statusFilter.toLowerCase( ));
+      //   // console.log(matchesStatus ,"okli")
+      // }
+      let status = object.status.toLowerCase();
+    let statusup = "";
+    if (status === "success") {
+      statusup = "win";
+    } else if (status === "fail") {
+      statusup = "lose";
+    }
+
+    // Filter based on status dropdown
+    if (statusFilter !== 'All Status') {
+      matchesStatus = (statusup === statusFilter.toLowerCase());
+    }
 
       if (startDate && endDate) {
           const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
