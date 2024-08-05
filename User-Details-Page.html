@@ -934,14 +934,14 @@
     userUnlock.textContent = toCapitalizeCase(response.status);
 
     // Update button states based on userUnlock text
-    if (userUnlock.textContent === 'Block') {
+    if (userUnlock.textContent === 'Unblock') {
       disableButton(userDelete);
       disableButton(userTransactionHistory);
       disableButton(userDeduction);
       disableButton(userAddAmount);
       disableButton(userGameHistory);
       disableButton(userWithdraw);
-    } else if (userUnlock.textContent === 'Unblock') {
+    } else if (userUnlock.textContent === 'Block') {
       enableButton(userDelete);
       enableButton(userTransactionHistory);
       enableButton(userDeduction);
