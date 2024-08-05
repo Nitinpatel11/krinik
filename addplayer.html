@@ -609,7 +609,7 @@
                 let responseData;
 
                 if (type === "GET") {
-                    const res = await fetch(`${url}?page=${currentPage}&limit=${rowsPerPage}`, {
+                    const res = await fetch(url, {
                         method: type,
                         headers: {
                             'Content-Type': 'application/json'
@@ -982,7 +982,7 @@ function isValidTeamName1(value) {
                                     formData.append('player_image', defaultImageBlob, 'cricket.png');
                                 }
                                 formData.append('total_run', 25); // Append null for total_run
-
+                                formData.append('status', "enable");
                                 console.log('Form data before sending:');
                                 formData.forEach((value, key) => {
                                     console.log(key, value);

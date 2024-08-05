@@ -57,6 +57,12 @@
     .btn-view :focus {
       outline: none;
     }
+    .disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
   </style>
 </head>
 
@@ -565,8 +571,8 @@
 
                         </div>
                         <div id="dropdownContent3" class="dropdown-content3">
-                          <a data-value="block">Block</a>
-                          <a data-value="unblock">Unblock</a>
+                          <a data-value="Block">Block</a>
+                          <a data-value="Unblock">Unblock</a>
                           <!-- <a data-value="pending">Pending</a> -->
                         </div>
                       </div>
@@ -977,13 +983,18 @@
             (object.email && object.email.toLowerCase().includes(tab_filter_text))   ;
         }
 
-        // Filter based on status dropdown
-        if (statusFilter !== 'All Status') {
-        const status = object.status.toLowerCase()
-        console.log(status)
-        matchesStatus = (status === statusFilter);
-        // console.log(matchesStatus ,"okli")
-      }
+        let status = object.status.toLowerCase();
+    let statusup = "";
+    if (status === "block") {
+      statusup = "unblock";
+    } else if (status === "unblock") {
+      statusup = "block";
+    }
+
+    // Filter based on status dropdown
+    if (statusFilter !== 'All Status') {
+      matchesStatus = (statusup === statusFilter.toLowerCase());
+    }
 
         // Filter based on date range
         // if (startDate && endDate) {
@@ -1120,7 +1131,17 @@
         highlightIndexButton();
     }
 
-
+    function disableButton(element) {
+  if (element instanceof HTMLElement) {
+    console.log("Disabling element:", element); // Debug line
+    element.classList.add("disabled");
+    element.setAttribute("disabled", true);
+    element.style.pointerEvents = "none";
+    element.style.opacity = "0.5";
+  } else {
+    console.error("Invalid element:", element); // Debug line
+  }
+}
 
     function displayTableRows() {
       $("table tbody").empty();
@@ -1181,6 +1202,22 @@
         // var deleteCell = $("<td></td>").html(
         //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
         // );
+        if (statushow === "block") {
+          // noCell.addClass("disabled-row");
+          // fullNameCell.addClass("disabled-row");
+          // shortNameCell.addClass("disabled-row");
+          // emailCell.addClass("disabled-row");
+          // walletCell.addClass("disabled-row");
+          // winningCell.addClass("disabled-row");
+          // statusCell.addClass("disabled-row");
+          disableButton(noCell);
+          disableButton(fullNameCell);
+          disableButton(shortNameCell);
+          disableButton(emailCell);
+          disableButton(walletCell);
+          disableButton(winningCell);
+          disableButton(statusCell)
+        }
 
         tr.append(noCell)
           .append(fullNameCell)
@@ -1191,16 +1228,9 @@
           .append(statusCell)
           .append(viewCell)
           // .append(deleteCell);
-
-        if (status === "block") {
-          noCell.addClass("disabled-row");
-          fullNameCell.addClass("disabled-row");
-          shortNameCell.addClass("disabled-row");
-          emailCell.addClass("disabled-row");
-          walletCell.addClass("disabled-row");
-          winningCell.addClass("disabled-row");
-          statusCell.addClass("disabled-row");
-        }
+          
+      
+        
 
         $("table tbody").append(tr);
       }
@@ -1212,6 +1242,7 @@
           return char.toUpperCase();
       });
   }
+  
     async function handleView(id) {
       const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
       try {

@@ -2741,8 +2741,8 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
   cursor: pointer;
 }
 .disabled-row {
-  pointer-events: none;
-  opacity: 0.5;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
 }
 .delete-btn {
   pointer-events: visible;
@@ -4341,3 +4341,10 @@ tbody td {
   .dropdownwidth{
 width: auto !important;
   }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  

@@ -819,7 +819,8 @@
       formData.append('player_name', data.player_name);
       formData.append('player_short_name', data.player_short_name);
       formData.append('team_name', data.team_name);
-      formData.append('total_run', 25); // Append total_run
+      formData.append('total_run', 25);
+      formData.append('status', "enable"); // Append total_run
 
       console.log('Form data before sending:');
       formData.forEach((value, key) => {
