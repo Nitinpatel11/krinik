@@ -960,7 +960,13 @@ matchSelect.addEventListener('change', function () {
     
     return true; // Valid input
 }
-
+function sanitizePriceInput(inputElement) {
+    inputElement.addEventListener('input', function () {
+        let value = this.value.replace(/\D/g, ''); // Remove any non-digit characters
+        this.value = value; // Optionally, you can update the input value
+    });
+}
+sanitizePriceInput(priceInput);
       addPriceButton.addEventListener('click', function () {
         const price = parseFloat(priceInput.value);
         if (!isNaN(price) && !prices.includes(price)) {
@@ -1012,10 +1018,7 @@ matchSelect.addEventListener('change', function () {
         this.value = ''; // Ensure the input is empty when value is empty
     }
 });
-document.getElementById('priceInput').addEventListener('input', function (event) {
-    let value = this.value.replace(/\D/g, ''); // Remove any non-digit characters
-   
-});
+
 await fetchMatchData();
 document.getElementById('winningPrizeInput').addEventListener('keydown', function (event) {
     if (event.key === 'Backspace' || event.key === 'Delete') {

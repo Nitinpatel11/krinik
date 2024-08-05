@@ -1150,8 +1150,8 @@
         var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
         var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
         var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
-
-
+        var statushow = toCapitalizeCase(showdata["status"])
+        var updateStatus = ""
 
         // var logoCell = $("<td></td>").html(
         //   showdata["league_image"]
@@ -1165,7 +1165,12 @@
         //   " - " +
         //   (showdata["end_league_date"] || "")
         // );
-        var statusCell = $("<td colspan='2'></td>").text(showdata["status"] || "");
+        var statusCell = $("<td colspan='2'></td>");
+        if(statushow === "Block"){
+          statusCell.text("Unblock")
+        }else if (statushow === "Unblock"){
+          statusCell.text("Block")
+        }
         var viewCell = $("<td></td>").html(
           // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
             '<span class="sortable" onclick="handleView(' + showdata["id"] + ')"><i class="far fa-eye"></i></span>'
@@ -1202,6 +1207,11 @@
       // lazyLoadImages(); // Call the lazy loading function after adding rows
     }
 
+    function toCapitalizeCase(str) {
+      return str.replace(/\b\w/g, function(char) {
+          return char.toUpperCase();
+      });
+  }
     async function handleView(id) {
       const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
       try {

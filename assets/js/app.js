@@ -103,12 +103,16 @@ lightDarkBtn &&
         sessionStorage.setItem("data-layout-mode", "dark"));
   });
 
+
+
   // Function to create and show the modal
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
 }
+
 
 // Function to check and handle the cookie
 function checkCookie() {
@@ -128,8 +132,43 @@ function checkCookie() {
     }
 }
 
-// Call the checkCookie function on page load
-checkCookie();
+
+
+
+
+let logoutTimer;
+
+function startLogoutTimer() {
+    // Clear existing timer, if any
+    clearTimeout(logoutTimer);
+
+    const logoutTime = getCookie('logoutTime');
+    const currentTime = new Date().getTime();
+    const currentTimeDiff = logoutTime ? logoutTime - currentTime : 60 * 60 * 1000;
+
+    // Set new timeout for 60 minutes or remaining time
+    logoutTimer = setTimeout(logoutUser, currentTimeDiff);
+}
+
+function logoutUser() {
+    // Perform logout actions here, e.g., clear session, redirect to login page
+    console.log('User logged out due to inactivity.');
+    eraseCookie('userEmail');
+    eraseCookie('adminType');
+    window.location.href = './index.html';
+}
+
+function eraseCookie(name) {
+    document.cookie = `${name}=; Max-Age=-99999999; path=/`;
+}
+
+// Call startLogoutTimer on page load
+window.onload = () => {
+  checkCookie();
+  startLogoutTimer();
+
+ 
+};
 
 
 
