@@ -105,71 +105,180 @@ lightDarkBtn &&
 
 
 
-  // Function to create and show the modal
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
-}
+//   // Function to create and show the modal
+//   function getCookie(name) {
+//     const value = `; ${document.cookie}`;
+//     const parts = value.split(`; ${name}=`);
+//     if (parts.length === 2) return parts.pop().split(';').shift();
+//     return null;
+// }
 
 
-// Function to check and handle the cookie
-function checkCookie() {
-    const userEmail = getCookie('userEmail');
+// // Function to check and handle the cookie
+// function checkCookie() {
+//     const userEmail = getCookie('userEmail');
     
-    // Check if the redirection flag is not set
-    if (!userEmail && !localStorage.getItem('redirected')) {
-        // Set a flag to indicate that redirection is in progress
-        localStorage.setItem('redirected', 'true');
+//     // Check if the redirection flag is not set
+//     if (!userEmail && !localStorage.getItem('redirected')) {
+//         // Set a flag to indicate that redirection is in progress
+//         localStorage.setItem('redirected', 'true');
 
-        // Use replace to avoid adding the redirect to history
-        window.location.reload()
-        window.location.replace('./index.html');
+//         // Use replace to avoid adding the redirect to history
+//         window.location.reload()
+//         window.location.replace('./index.html');
+//     } else {
+//         // Clear the redirection flag if cookie exists
+//         localStorage.removeItem('redirected');
+//     }
+// }
+
+
+
+
+
+// let logoutTimer;
+
+// function startLogoutTimer() {
+//     // Clear existing timer, if any
+//     clearTimeout(logoutTimer);
+
+//     const logoutTime = getCookie('logoutTime');
+//     const currentTime = new Date().getTime();
+//     const currentTimeDiff = logoutTime ? logoutTime - currentTime : 60 * 60 * 1000;
+
+//     // Set new timeout for 60 minutes or remaining time
+//     logoutTimer = setTimeout(logoutUser, currentTimeDiff);
+// }
+
+// function logoutUser() {
+//     // Perform logout actions here, e.g., clear session, redirect to login page
+//     console.log('User logged out due to inactivity.');
+//     eraseCookie('userEmail');
+//     eraseCookie('adminType');
+//     window.location.href = './index.html';
+// }
+
+// function eraseCookie(name) {
+//     document.cookie = `${name}=; Max-Age=-99999999; path=/`;
+// }
+
+// // Call startLogoutTimer on page load
+// window.onload = () => {
+//   checkCookie();
+//   startLogoutTimer();
+
+ 
+// };
+
+
+// const LOCAL_STORAGE_EXPIRATION_KEY = 'expiration';
+const REGULAR_USER_EXPIRATION_SECONDS = 30 * 60; // 30 minutes
+const SUPER_ADMIN_EXPIRATION_SECONDS = 60 * 60; // 60 minutes
+ LOCAL_STORAGE_KEY = 'userEmail';
+LOCAL_STORAGE_KEY1 = 'adminType';
+ LOCAL_STORAGE_KEY2 = 'logoutTime';
+
+
+function getLocalStorage(key) {
+  const item = localStorage.getItem(key);
+  if (item) {
+    const parsedItem = JSON.parse(item);
+    const currentTime = new Date().getTime();
+    if (currentTime < parsedItem.expirationTime) {
+      return parsedItem.expirationTime;
     } else {
-        // Clear the redirection flag if cookie exists
-        localStorage.removeItem('redirected');
+      localStorage.removeItem(key);
     }
+  }
+  return null;
 }
 
 
 
+function eraseLocalStorage(key) {
+  localStorage.removeItem(key);
+}
 
+function checkLocalStorageExpiration() {
+  const email = getLocalStorage('userEmail');
+  if (!email && !localStorage.getItem('redirected')) {
+    localStorage.setItem('redirected', 'true');
+    // window.location.replace('./index.html');
+  } else {
+    localStorage.removeItem('redirected');
+  }
+}
 
 let logoutTimer;
 
 function startLogoutTimer() {
-    // Clear existing timer, if any
-    clearTimeout(logoutTimer);
+  clearTimeout(logoutTimer);
 
-    const logoutTime = getCookie('logoutTime');
-    const currentTime = new Date().getTime();
-    const currentTimeDiff = logoutTime ? logoutTime - currentTime : 60 * 60 * 1000;
+  const adminType = getLocalStorage('adminType');
+  const expirationSeconds = adminType === 'super admin' ? SUPER_ADMIN_EXPIRATION_SECONDS : REGULAR_USER_EXPIRATION_SECONDS;
+  const currentTime = new Date().getTime();
+  let logoutTime = getLocalStorage('userEmail');
+console.log(logoutTime,"qwer")
 
-    // Set new timeout for 60 minutes or remaining time
-    logoutTimer = setTimeout(logoutUser, currentTimeDiff);
+    // logoutTime = currentTime + (expirationSeconds * 1000);
+   console.log(logoutTime,"oklp")
+
+  // Calculate the remaining time until logout
+  const timeUntilLogout = logoutTime - currentTime;
+  console.log(timeUntilLogout,"oklp")
+  if (timeUntilLogout <= 0) {
+
+    logoutUser();
+    return;
+  }
+
+  // Set new timeout for the appropriate expiration time
+  logoutTimer = setTimeout(logoutUser, timeUntilLogout);
+console.log(logoutTimer)
+  // Stclgart updating the remaining time
+  updateRemainingTime(logoutTime);
 }
+
+
 
 function logoutUser() {
-    // Perform logout actions here, e.g., clear session, redirect to login page
-    console.log('User logged out due to inactivity.');
-    eraseCookie('userEmail');
-    eraseCookie('adminType');
-    window.location.href = './index.html';
+  console.log('User logged out due to inactivity.');
+  eraseLocalStorage(LOCAL_STORAGE_KEY);
+  eraseLocalStorage(LOCAL_STORAGE_KEY1);
+  eraseLocalStorage(LOCAL_STORAGE_KEY2);
+  window.location.href = './index.html';
+  checkLocalStorageExpiration();
 }
 
-function eraseCookie(name) {
-    document.cookie = `${name}=; Max-Age=-99999999; path=/`;
+function formatTime(ms) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}m ${seconds}s`;
 }
 
-// Call startLogoutTimer on page load
+
+function updateRemainingTime(logoutTime) {
+  const timeDisplay = document.getElementById('time_show');
+
+  function update() {
+    const currentTime = new Date().getTime();
+    const timeRemaining = Math.max(logoutTime - currentTime, 0);
+    console.log(timeRemaining,"abc")
+    timeDisplay.textContent = formatTime(timeRemaining);
+
+    if (timeRemaining <= 0) {
+      clearInterval(timeUpdateInterval);
+    }
+  }
+
+  update(); // Update immediately
+  const timeUpdateInterval = setInterval(update, 1000); // Update every second
+}
+
+
+// Call checkLocalStorageExpiration and startLogoutTimer on page load
 window.onload = () => {
-  checkCookie();
+  checkLocalStorageExpiration();
   startLogoutTimer();
-
- 
 };
-
-
-
-
