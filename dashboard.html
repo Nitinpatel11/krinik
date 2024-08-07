@@ -137,10 +137,10 @@
 
 <body data-topbar="colored">
   <!-- Begin page -->
-  <div id="layout-wrapper">
-    <header id="page-topbar">
-      <div class="navbar-header">
-        <div class="d-flex">
+  <div id="layout-wrapper"  class="otp-exempt">
+    <header id="page-topbar" class="otp-exempt">
+      <div class="navbar-header otp-exempt">
+        <div class="d-flex otp-exempt">
           <!-- LOGO -->
           <div class="navbar-brand-box">
             <a href="./dashboard.html" class="logo logo-dark">
@@ -242,7 +242,7 @@
               </span>
             </a>
 
-            <a href="index.html" class="logo logo-light">
+            <a href="./dashboard.html" class="logo logo-light ">
               <span class="logo-sm">
                 <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_15_554)">
@@ -342,8 +342,8 @@
             </a>
           </div>
 
-          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-            <i class="mdi mdi-backburger"></i>
+          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect otp-exempt" id="vertical-menu-btn">
+            <i class="mdi mdi-backburger otp-exempt"></i>
           </button>
 
           <!-- App Search-->
@@ -355,16 +355,16 @@
                         </form> -->
         </div>
 
-        <div class="">
-          <div class="dropdown d-flex justify-content-end ms-2 ">
-            <button type="button" class="btn btn-primary2 waves-effect" 
+        <div class=" otp-exempt">
+          <div class="dropdown d-flex justify-content-end ms-2 otp-exempt ">
+            <button type="button" class="btn btn-primary2 waves-effect otp-exempt" id="otppage"
              >OTP
             </button>
             
           </div>
         
-          <div class="dropdown  dblock">
-            <div id="time_show" class="btn-primary2 px-3">
+          <div class="dropdown  dblock otp-exempt">
+            <div id="time_show" class="btn-primary2 px-3 otp-exempt">
             </div>
           </div>
 
@@ -464,14 +464,14 @@
             </li>
 
 
-            <li>
+            <!-- <li>
               <a href="./edit-support.html" class="waves-effect">
                 <div class=" icons-sm icon-set">
                   <i class="fas fa-cog small-icons"></i>
                   <span>Get OTP To Edit All Details</span>
                 </div>
               </a>
-            </li>
+            </li> -->
             <li>
               <a href="./account-setting.html" class="waves-effect">
                 <div class="icons-sm icon-set ">
@@ -484,9 +484,9 @@
             </li>
 
             <li>
-              <a href="" class="waves-effect" id="logoutButton">
-                <div class=" icons-sm icon-set">
-                  <span class="material-symbols-outlined icon-margin">
+              <a href="" class="waves-effect  otp-exempt" id="logoutButton">
+                <div class=" icons-sm icon-set otp-exempt">
+                  <span class="material-symbols-outlined icon-margin otp-exempt">
                     logout
                     </span>
                     <span>Logout</span>
@@ -699,7 +699,7 @@
   <script src="./assets/libs/jquery/jquery.min.js"></script>
   <script src="./assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/libs/metismenu/metisMenu.min.js"></script>
-  <script src="./assets/libs/simplebar/simplebar.min.js"></script>
+  <!-- <script src="./assets/libs/simplebar/simplebar.min.js"></script> -->
   <script src="./assets/libs/node-waves/waves.min.js"></script>
 
   <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
@@ -746,7 +746,7 @@
 
       fetchData();
 
-      window.history.forward("./index.html")
+      // window.history.forward("./index.html")
       // window.history.back("./index.html")
 
   </script>

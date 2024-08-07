@@ -282,3 +282,38 @@ window.onload = () => {
   checkLocalStorageExpiration();
   startLogoutTimer();
 };
+
+
+
+//  document.addEventListener("DOMContentLoaded", function() {
+//     // Select all elements with the 'otp-exempt' class
+//     const otpButtons = document.querySelectorAll(".otp-exempt");
+//     console.log(otpButtons); // Check the console to ensure elements are being selected
+
+//     // Attach a click event listener to each 'otp-exempt' element
+//     // otpButtons.forEach(button => {
+//     //     button.addEventListener("click", function() {
+//     //       alert('OTP button clicked!');
+//     //         console.log("OTP button clicked"); // Log to verify the event is being triggered
+//     //         window.location.href = "./edit-support.html";
+//     //     });
+//     // });
+//     document.querySelector('#otppage').onclick = function() {
+//             alert('Button clicked!');
+//         };
+//     // Select all interactive elements and disable them if they don't have the 'otp-exempt' class
+//     const elements = document.querySelectorAll("button, input, select, textarea, a, div");
+//     elements.forEach(element => {
+//         if (element.classList.contains("otp-exempt")) {
+//             element.setAttribute("disabled", "false");
+//             element.style.pointerEvents = "cursor"; // For non-input elements like div, a
+//             element.style.opacity = "1"; // Optional: to give a visual cue that the element is disabled
+//         }else{
+//           element.setAttribute("disabled", "true");
+//           element.style.pointerEvents = "none"; // For non-input elements like div, a
+//           element.style.opacity = "0.95"; 
+//         }
+//     });
+// });
+
+

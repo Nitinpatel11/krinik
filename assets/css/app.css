@@ -4352,3 +4352,30 @@ width: auto !important;
     cursor: not-allowed;
   }
   
+  .widthInput{
+    width: 110px;
+  
+    /* margin-left: 15px; */
+  }
+  .leagueDateWidth{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+   
+  }
+
+  @media (max-width: 375px) {
+    /* .widthInput{
+      width: 110px;
+    } */
+    .leagueDateWidth{
+      display: block;
+     align-items: center;
+  
+     
+    }
+    .widthInput{
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+  }
