@@ -172,7 +172,7 @@ lightDarkBtn &&
 
 
 // const LOCAL_STORAGE_EXPIRATION_KEY = 'expiration';
-const REGULAR_USER_EXPIRATION_SECONDS = 30 * 60; // 30 minutes
+// const REGULAR_USER_EXPIRATION_SECONDS = 30 * 60; // 30 minutes
 const SUPER_ADMIN_EXPIRATION_SECONDS = 60 * 60; // 60 minutes
  LOCAL_STORAGE_KEY = 'userEmail';
 LOCAL_STORAGE_KEY1 = 'adminType';
@@ -289,11 +289,16 @@ function formatTime(ms) {
 
 function updateRemainingTime(logoutTime) {
   const timeDisplay = document.getElementById('time_show');
+  const timeDisplay1 = document.getElementById('time_show1');
+
 
   function update() {
     const currentTime = new Date().getTime();
     const timeRemaining = Math.max(logoutTime - currentTime, 0);
     console.log(timeRemaining,"abc")
+    if(adminType == "admin"){
+      timeDisplay1.style.display = "none"
+    }
     timeDisplay.textContent = formatTime(timeRemaining);
 
     if (timeRemaining <= 0) {
@@ -318,35 +323,8 @@ window.onload = () => {
 
 
 function initializePage() {
-
-  const showOtpPageButton = document.createElement("button");
-  showOtpPageButton.id = "showotppage";
-  showOtpPageButton.type = "button";
-  showOtpPageButton.className = "btn btn-primary2 otp-exempt waves-effect";
-  showOtpPageButton.innerText = "Enter OTP";
-  
-  showOtpPageButton.onclick = function() {
-    window.location.href = "./edit-support.html";
-  };
-
-  const enterOtpDiv = document.getElementById("enterotpdiv");
-  if (enterOtpDiv) {
-    enterOtpDiv.appendChild(showOtpPageButton);
-  } else {
-    console.log("Element with ID 'enterotpdiv' not found");
-  }
-  // Test button click to show alert
-  // const showOtpPageButton = document.querySelector("#showotppage");
-  if (showOtpPageButton) {
-      showOtpPageButton.onclick = function() {
-          window.location.href = "./edit-support.html";
-      };
-  } else {
-      console.log("Element with ID 'showotppage' not found");
-  }
-
-  // Select all interactive elements and disable them if they don't have the 'otp-exempt' class and are not the 'showotppage' element
-  const elements = document.querySelectorAll("button, input, select, textarea, a, div");
+  // Select all interactive elements
+  const elements = document.querySelectorAll("button, input, select, textarea, a,li,div,th,td,span,i");
   console.log("All elements:", elements); // Log all elements for debugging
 
   elements.forEach(element => {
@@ -356,15 +334,8 @@ function initializePage() {
       console.log("ID is showotppage:", element.id === "showotppage");
 
       if (element.classList.contains("otp-exempt")) {
-          console.log("Enabling element:", element); // Log the element being enabled
-          element.removeAttribute("disabled");
-          element.style.pointerEvents = "auto"; // For non-input elements like div, a
-          element.style.opacity = "1"; // Optional: to give a visual cue that the element is enabled
-      } else {
-          console.log("Disabling element:", element);
-          element.setAttribute("disabled", "true");
-          element.style.pointerEvents = "none"; // For non-input elements like div, a
-          element.style.opacity = "0.95"; 
-      }
+          console.log("Hiding element:", element);
+          element.style.display = "none"; // Hide elements that don't have 'otp-exempt' class and are not the 'showotppage' element
+      } 
   });
 }

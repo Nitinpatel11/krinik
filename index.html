@@ -124,120 +124,8 @@
 
 
 
-  <!-- <script>
-    const loginForm = document.getElementById('login-form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const adminTypeInput = document.getElementById('admin-type');
-    const errorEmail = document.getElementById('error-email');
-    const errorPassword = document.getElementById('error-password');
-    const errorAdminType = document.getElementById('error-admin-type');
-    const errorMessage = document.getElementById('error-message');
-
-    const COOKIE_NAME = 'userEmail';
-    const ADMIN_TYPE_COOKIE_NAME = 'adminType';
-    const COOKIE_EXPIRATION_SECONDS = 30;
-    const COOKIE_EXPIRATION_SECONDS1 = 60;
-
-
-    function setCookie(name, value, seconds) {
-      const expires = new Date();
-      expires.setTime(expires.getTime() + (seconds * 1000));
-
-      const offsetIST =  seconds * 60 * 1000;
-      const expiresIST = new Date(expires.getTime() + offsetIST);
-
-      document.cookie = `${name}=${encodeURIComponent(value)};expires=${expiresIST};path=/`;
-    }
-
-    function getCookie(name) {
-      const nameEQ = `${name}=`;
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        let c = cookies[i];
-        while (c.charAt(0) === ' ') c = c.substring(1);
-        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
-      }
-      return null;
-    }
-
-    function eraseCookie(name) {
-      document.cookie = `${name}=; Max-Age=-99999999; path=/`;
-    }
-
-    function checkCookieExpiration() {
-      const email = getCookie(COOKIE_NAME);
-      const reloaded = sessionStorage.getItem('reloaded');
-
-      if (!email && !reloaded) {
-        sessionStorage.setItem('reloaded', 'true');
-        window.location.reload();
-      } else if (email) {
-        sessionStorage.removeItem('reloaded');
-      }
-    }
-
-    loginForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const email = emailInput.value;
-      const password = passwordInput.value;
-      const adminType = adminTypeInput.value;
-
-      errorEmail.textContent = '';
-      errorPassword.textContent = '';
-      errorAdminType.textContent = '';
-      errorMessage.textContent = '';
-
-      if (!email || !password || !adminType) {
-        if (!email) errorEmail.textContent = 'Email is required';
-        if (!password) errorPassword.textContent = 'Password is required';
-        if (!adminType) errorAdminType.textContent = 'Admin type is required';
-        return;
-      }
-
-      try {
-        const response = await fetch('https://krinik.pythonanywhere.com/login/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email, password, admin_type: adminType })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Login failed with status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Response data:', data);
-
-        if (data.status === 'success') {
-          // setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
-          // setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
-
-          if (adminType === 'super admin') {
-          setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS1);
-
-            setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS1);
-            window.location.href = './dashboard.html';
-          } else {
-          setCookie(COOKIE_NAME, email, COOKIE_EXPIRATION_SECONDS);
-
-            setCookie(ADMIN_TYPE_COOKIE_NAME, adminType, COOKIE_EXPIRATION_SECONDS);
-            window.location.href = './dashboard.html';
-          }
-        } else {
-          errorMessage.textContent = data.message || 'Invalid email or password';
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
-        errorMessage.textContent = 'Login failed. Please try again.';
-      }
-    });
-
-    checkCookieExpiration();
-  </script> -->
+  
+  
   <script>
   const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email');
@@ -348,6 +236,7 @@ checkLocalStorageExpiration();
   </script>
   
 
+    
 
 
 

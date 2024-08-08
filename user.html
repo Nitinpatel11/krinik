@@ -69,9 +69,9 @@
 <body data-topbar="colored">
   <!-- Begin page -->
   <div id="layout-wrapper">
-    <header id="page-topbar" class="otp-exempt">
-      <div class="navbar-header otp-exempt">
-        <div class="d-flex otp-exempt">
+    <header id="page-topbar" class="">
+      <div class="navbar-header ">
+        <div class="d-flex ">
           <!-- LOGO -->
           <div class="navbar-brand-box">
             <a href="./dashboard.html" class="logo logo-dark">
@@ -173,7 +173,7 @@
               </span>
             </a>
 
-            <a href="index.html" class="logo logo-light otp-exempt">
+            <a href="index.html" class="logo logo-light ">
               <span class="logo-sm">
                 <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_15_554)">
@@ -273,8 +273,8 @@
             </a>
           </div>
 
-          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect otp-exempt" id="vertical-menu-btn">
-            <i class="mdi mdi-backburger otp-exempt"></i>
+          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect " id="vertical-menu-btn">
+            <i class="mdi mdi-backburger "></i>
           </button>
 
           <!-- App Search-->
@@ -286,16 +286,16 @@
                         </form> -->
         </div>
 
-        <div class=" otp-exempt d-flex justify-content-center gap-4">
-          <div class="dropdown d-flex justify-content-end ms-2  otp-exempt" id="enterotpdiv">
-            <!-- <button id="showotppage" type="button" class="btn btn-primary2 otp-exempt waves-effect" 
+        <div class="  d-flex justify-content-center gap-4">
+          <div class="dropdown d-flex justify-content-end ms-2  " id="enterotpdiv">
+            <!-- <button id="showotppage" type="button" class="btn btn-primary2  waves-effect" 
              >Enter OTP
             </button> -->
             
           </div>
         
-          <div class="dropdown  otp-exempt dblock">
-            <div id="time_show" class="btn-primary2 otp-exempt px-3">
+          <div class="dropdown   dblock">
+            <div id="time_show" class="btn-primary2  px-3">
             </div>
           </div>
 
@@ -305,11 +305,11 @@
       </div>
     </header>
 
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="vertical-menu otp-exempt">
-      <div data-simplebar class="h-100 otp-exempt">
+     <!-- ========== Left Sidebar Start ========== -->
+     <div class="vertical-menu ">
+      <div data-simplebar class="h-100 ">
         <!--- Sidemenu -->
-        <div id="sidebar-menu" class="otp-exempt">
+        <div id="sidebar-menu" class="">
           <!-- Left Menu Start -->
           <ul class="metismenu list-unstyled " id="side-menu">
             <li class="menu-title">Menu</li>
@@ -375,19 +375,19 @@
               </ul>
             </li>
 
-            <li>
-              <a href="javascript: void(0);" class=" ">
-                <div class="icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin">
+            <li class="otp-exempt">
+              <a href="javascript: void(0);" class="  ">
+                <div class="icons-sm icon-set  ">
+                  <span class="material-symbols-outlined icon-margin ">
                     receipt_long
                     </span>                 
-                    <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
+                    <span class="has-arrow has-arrow2 waves-effect  ">Transactions</span>
                                     
                   </div> 
                   
                 </a>
 
-              <ul class="sub-menu" aria-expanded="false">
+              <ul class="sub-menu " aria-expanded="false">
                 <li><a href="./all-transaction.html">All Transaction</a></li>
                 <li><a href="./wallet-transaction.html">Wallet Transaction</a></li>
                 <li><a href="./game-transaction.html">Game Transaction</a></li>
@@ -403,7 +403,7 @@
                 </div>
               </a>
             </li> -->
-            <li>
+            <li class="otp-exempt">
               <a href="./account-setting.html" class="waves-effect">
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
@@ -415,12 +415,12 @@
             </li>
 
             <li>
-              <a href="" class="waves-effect otp-exempt" id="logoutButton">
-                <div class=" icons-sm icon-set otp-exempt">
-                  <span class="material-symbols-outlined icon-margin otp-exempt">
+              <a href="" class="waves-effect " id="logoutButton">
+                <div class=" icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin ">
                     logout
                     </span>
-                    <span class="otp-exempt">Logout</span>
+                    <span class="">Logout</span>
                 </div>
               </a>
             </li>
@@ -570,7 +570,7 @@
                                       </th>
                                       <th data-priority="" colspan="2">Status</th>
   
-                                      <th data-priority="">View</th>
+                                      <th data-priority="" class="otp-exempt">View</th>
                                       <!-- <th data-priority="">Delete</th> -->
                                     </tr>
                                   </thead>
@@ -1077,100 +1077,131 @@
     console.error("Invalid element:", element); // Debug line
   }
 }
+function getLocalStorage1(key) {
+  const item = localStorage.getItem(key);
+  console.log("Retrieved item from localStorage:", item); // Log the raw item
 
-    function displayTableRows() {
-      $("table tbody").empty();
-      var tab_start = start_index - 1;
-      var tab_end = end_index;
+  if (item) {
+    try {
+      const parsedItem = JSON.parse(item);
+      console.log("Parsed item:", parsedItem); // Log the parsed item
 
-      if (array.length === 0) {
-        $("#noDataFound").show();
-        $("#pagination").hide();
-        $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
-        return;
-      } else {
-        $("#noDataFound").hide();
-        $("#pagination").show();
-        $("#table-scrolling").css("overflow-x", "auto"); // Add this line
-      }
-
-      for (var i = tab_start; i < tab_end; i++) {
-        var showdata = array[i];
-        // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
-
-        var tr = $("<tr></tr>");
-
-        var noCell = $("<td></td>").text(i + 1);
-        var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
-        var shortNameCell = $("<td colspan='2'> </td>").text(showdata["mobile_no"] || "");
-        var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
-        var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
-        var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
-        var statushow = toCapitalizeCase(showdata["status"])
-        var updateStatus = ""
-
-        // var logoCell = $("<td></td>").html(
-        //   showdata["league_image"]
-        //     ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
-        //     : ""
-        // );
-
-
-        // var dateCell = $("<td colspan='2'></td>").text(
-        //   (showdata["start_league_date"] || "") +
-        //   " - " +
-        //   (showdata["end_league_date"] || "")
-        // );
-        var statusCell = $("<td colspan='2'></td>");
-        if(statushow === "Block"){
-          statusCell.text("Unblock")
-        }else if (statushow === "Unblock"){
-          statusCell.text("Block")
-        }
-        var viewCell = $("<td></td>").html(
-          // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-            '<span class="sortable" onclick="handleView(' + showdata["id"] + ')"><i class="far fa-eye"></i></span>'
-        );
-        // var editCell = $("<td></td>").html(
-        //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
-        // );
-        // var deleteCell = $("<td></td>").html(
-        //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-        // );
-        if (statushow === "block") {
-          // noCell.addClass("disabled-row");
-          // fullNameCell.addClass("disabled-row");
-          // shortNameCell.addClass("disabled-row");
-          // emailCell.addClass("disabled-row");
-          // walletCell.addClass("disabled-row");
-          // winningCell.addClass("disabled-row");
-          // statusCell.addClass("disabled-row");
-          disableButton(noCell);
-          disableButton(fullNameCell);
-          disableButton(shortNameCell);
-          disableButton(emailCell);
-          disableButton(walletCell);
-          disableButton(winningCell);
-          disableButton(statusCell)
-        }
-
-        tr.append(noCell)
-          .append(fullNameCell)
-          .append(shortNameCell)
-          .append(emailCell)
-          .append(walletCell)
-          .append(winningCell)
-          .append(statusCell)
-          .append(viewCell)
-          // .append(deleteCell);
-          
+      // const currentTime = Date.now();
+      // if (parsedItem.expirationTime && currentTime > parsedItem.expirationTime) {
+      //   console.log("Item has expired. Removing from localStorage.");
+      //   localStorage.removeItem(key);
+      //   return null;
+      // }
       
-        
-
-        $("table tbody").append(tr);
-      }
-      // lazyLoadImages(); // Call the lazy loading function after adding rows
+      return parsedItem.value;
+    } catch (e) {
+      console.error("Error parsing item from localStorage:", e);
+      return null;
     }
+  }
+
+  return null;
+}
+
+      function displayTableRows() {
+        $("table tbody").empty();
+        var tab_start = start_index - 1;
+        var tab_end = end_index;
+
+        if (array.length === 0) {
+          $("#noDataFound").show();
+          $("#pagination").hide();
+          $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+          return;
+        } else {
+          $("#noDataFound").hide();
+          $("#pagination").show();
+          $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+        }
+        const admintype = getLocalStorage1("adminType");
+
+        for (var i = tab_start; i < tab_end; i++) {
+          var showdata = array[i];
+          // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+
+          var tr = $("<tr></tr>");
+
+          var noCell = $("<td></td>").text(i + 1);
+          var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
+          var shortNameCell = $("<td colspan='2'> </td>").text(showdata["mobile_no"] || "");
+          var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
+          var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
+          var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
+          var statushow = toCapitalizeCase(showdata["status"])
+          var updateStatus = ""
+
+          // var logoCell = $("<td></td>").html(
+          //   showdata["league_image"]
+          //     ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
+          //     : ""
+          // );
+
+
+          // var dateCell = $("<td colspan='2'></td>").text(
+          //   (showdata["start_league_date"] || "") +
+          //   " - " +
+          //   (showdata["end_league_date"] || "")
+          // );
+          var statusCell = $("<td colspan='2'></td>");
+          if(statushow === "Block"){
+            statusCell.text("Unblock")
+          }else if (statushow === "Unblock"){
+            statusCell.text("Block")
+          }
+          var viewCell = $("<td ></td>").html(
+            // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
+              '<span class="sortable " onclick="handleView(' + showdata["id"] + ')"><i class="far fa-eye"></i></span>'
+          );
+          if (admintype  == "admin") {
+      viewCell.show();
+    }else{
+      viewCell.hide()
+    }
+          // var editCell = $("<td></td>").html(
+          //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
+          // );
+          // var deleteCell = $("<td></td>").html(
+          //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
+          // );
+          if (statushow === "block") {
+            // noCell.addClass("disabled-row");
+            // fullNameCell.addClass("disabled-row");
+            // shortNameCell.addClass("disabled-row");
+            // emailCell.addClass("disabled-row");
+            // walletCell.addClass("disabled-row");
+            // winningCell.addClass("disabled-row");
+            // statusCell.addClass("disabled-row");
+            disableButton(noCell);
+            disableButton(fullNameCell);
+            disableButton(shortNameCell);
+            disableButton(emailCell);
+            disableButton(walletCell);
+            disableButton(winningCell);
+            disableButton(statusCell)
+          }
+
+          tr.append(noCell)
+            .append(fullNameCell)
+            .append(shortNameCell)
+            .append(emailCell)
+            .append(walletCell)
+            .append(winningCell)
+            .append(statusCell)
+            .append(viewCell)
+            // .append(deleteCell);
+            
+        
+          
+
+          $("table tbody").append(tr);
+        }
+        // lazyLoadImages(); // Call the lazy loading function after adding rows
+      }
 
     function toCapitalizeCase(str) {
       return str.replace(/\b\w/g, function(char) {
