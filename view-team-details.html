@@ -101,9 +101,9 @@
 <body data-topbar="colored">
   <!-- Begin page -->
   <div id="layout-wrapper">
-    <header id="page-topbar">
-      <div class="navbar-header">
-        <div class="d-flex">
+    <header id="page-topbar" class="otp-exempt">
+      <div class="navbar-header otp-exempt">
+        <div class="d-flex otp-exempt">
           <!-- LOGO -->
           <div class="navbar-brand-box">
             <a href="./dashboard.html" class="logo logo-dark">
@@ -205,7 +205,7 @@
               </span>
             </a>
 
-            <a href="index.html" class="logo logo-light">
+            <a href="index.html" class="logo logo-light otp-exempt">
               <span class="logo-sm">
                 <svg width="87" height="30" viewBox="0 0 87 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_15_554)">
@@ -305,110 +305,45 @@
             </a>
           </div>
 
-          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-            <i class="mdi mdi-backburger"></i>
+          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect otp-exempt" id="vertical-menu-btn">
+            <i class="mdi mdi-backburger otp-exempt"></i>
           </button>
 
           <!-- App Search-->
           <!-- <form class="app-search d-none d-lg-block">
-                              <div class="position-relative mt-3">
-                                  <input type="text" class="form-control" placeholder="Search...">
-                                  <span class="mdi mdi-magnify"></span>
-                              </div>
-                          </form> -->
+                            <div class="position-relative mt-3">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="mdi mdi-magnify"></span>
+                            </div>
+                        </form> -->
         </div>
 
-        <div class="d-flex">
-          <div class="dropdown d-inline-block d-lg-none ms-2">
-            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="mdi mdi-magnify"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
-              aria-labelledby="page-header-search-dropdown">
-              <form class="p-3">
-                <div class="form-group mt-3">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search ..."
-                      aria-label="Recipient's username" />
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="submit">
-                        <i class="mdi mdi-magnify"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
+        <div class=" otp-exempt d-flex justify-content-center gap-4">
+          <div class="dropdown d-flex justify-content-end ms-2  otp-exempt" id="enterotpdiv">
+            <!-- <button id="showotppage" type="button" class="btn btn-primary2 otp-exempt waves-effect" 
+             >Enter OTP
+            </button> -->
+            
+          </div>
+        
+          <div class="dropdown  otp-exempt dblock">
+            <div id="time_show" class="btn-primary2 otp-exempt px-3">
             </div>
           </div>
 
-          <!-- <div class="dropdown d-inline-block language-switch">
-                              <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <img id="header-lang-img" src="./assets/images/flags/us.jpg" alt="Header Language" height="14">
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end"> -->
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
-                                      <img src="./assets/images/flags/spain.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Spanish</span>
-                                  </a> -->
-
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
-                                      <img src="./assets/images/flags/germany.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">German</span>
-                                  </a> -->
-
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
-                                      <img src="./assets/images/flags/italy.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Italian</span>
-                                  </a> -->
-
-          <!-- item-->
-          <!-- <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
-                                      <img src="./assets/images/flags/russia.jpg" alt="user-image" class="me-2" height="12"> <span class="align-middle">Russian</span>
-                                  </a>
-                              </div>
-                          </div> -->
-
-          <!-- <div class="dropdown d-inline-block">
-                              <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                                  <i class="mdi mdi-tune"></i>
-                              </button>
-                          </div> -->
-
-          <!-- light dark btn -->
-          <div class="dropdown d-none d-sm-inline-block">
-            <!-- <button type="button" class="btn header-item" id="light-dark-mode">
-                <i class="mdi mdi-moon-waning-crescent align-middle fs-4"></i>
-              </button> -->
-          </div>
-
-          <!-- 
-                          <div class="dropdown d-inline-block">
-                              <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <img class="rounded-circle header-profile-user" src="./assets/images/users/avatar-1.jpg" alt="Header Avatar">
-                                  <span class="d-none d-sm-inline-block ms-1">Smith</span>
-                                  <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end ">
-                                  <a class="dropdown-item" href="#"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profile</a>
-                                  <a class="dropdown-item" href="#"><i class="mdi mdi-credit-card-outline font-size-16 align-middle me-1"></i> Billing</a>
-                                  <a class="dropdown-item" href="#"><i class="mdi mdi-account-settings font-size-16 align-middle me-1"></i> Settings</a>
-                                  <a class="dropdown-item" href="#"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock screen</a>
-                                  <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
-                              </div>
-                          </div> -->
+          
         </div>
+        
       </div>
     </header>
 
     <!-- ========== Left Sidebar Start ========== -->
-    <div class="vertical-menu">
-      <div data-simplebar class="h-100">
+    <div class="vertical-menu otp-exempt">
+      <div data-simplebar class="h-100 otp-exempt">
         <!--- Sidemenu -->
-        <div id="sidebar-menu">
+        <div id="sidebar-menu" class="otp-exempt">
           <!-- Left Menu Start -->
-          <ul class="metismenu list-unstyled" id="side-menu">
+          <ul class="metismenu list-unstyled " id="side-menu">
             <li class="menu-title">Menu</li>
 
             <li>
@@ -416,9 +351,9 @@
                 <div class=" icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     dashboard
-                  </span>
-
-                  <span>Dashboard</span>
+                    </span>
+               
+                <span>Dashboard</span>
                 </div>
               </a>
             </li>
@@ -428,10 +363,10 @@
                 <div class="icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     person
-                  </span>
-
-                  <span>User</span>
-                </div>
+                    </span>
+               
+                <span>User</span>
+              </div>
               </a>
             </li>
 
@@ -440,12 +375,12 @@
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     sports_cricket
-                  </span>
-                  <span class="has-arrow waves-effect ">Sports Configuration</span>
-
-                </div>
-
-              </a>
+                    </span>                    
+                    <span class="has-arrow waves-effect ">Sports Configuration</span>
+                                    
+                  </div> 
+                  
+                </a>
 
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="./manage-league.html">Manage Leagues</a></li>
@@ -453,18 +388,18 @@
                 <li><a href="./manage-player.html">Manage Players</a></li>
               </ul>
             </li>
-
+            
             <li>
               <a href="javascript: void(0);" class=" ">
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     crossword
-                  </span>
-                  <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
-
-                </div>
-
-              </a>
+                    </span>                   
+                    <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
+                                    
+                  </div> 
+                  
+                </a>
 
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="./manage-match.html">Manage Match</a></li>
@@ -477,12 +412,12 @@
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     receipt_long
-                  </span>
-                  <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
-
-                </div>
-
-              </a>
+                    </span>                 
+                    <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
+                                    
+                  </div> 
+                  
+                </a>
 
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="./all-transaction.html">All Transaction</a></li>
@@ -492,38 +427,38 @@
             </li>
 
 
-            <li>
+            <!-- <li>
               <a href="./edit-support.html" class="waves-effect">
                 <div class=" icons-sm icon-set">
                   <i class="fas fa-cog small-icons"></i>
                   <span>Get OTP To Edit All Details</span>
                 </div>
               </a>
-            </li>
+            </li> -->
             <li>
               <a href="./account-setting.html" class="waves-effect">
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     settings
-                  </span>
-                  <span>Account Setting</span>
+                    </span>
+                    <span>Account Setting</span>
                 </div>
               </a>
             </li>
 
             <li>
-              <a href="" class="waves-effect" id="logoutButton">
-                <div class=" icons-sm icon-set">
-                  <span class="material-symbols-outlined icon-margin">
+              <a href="" class="waves-effect otp-exempt" id="logoutButton">
+                <div class=" icons-sm icon-set otp-exempt">
+                  <span class="material-symbols-outlined icon-margin otp-exempt">
                     logout
-                  </span>
-                  <span>Logout</span>
+                    </span>
+                    <span class="otp-exempt">Logout</span>
                 </div>
               </a>
             </li>
 
-
-          </ul>
+          
+                    </ul>
         </div>
         <!-- Sidebar -->
       </div>
@@ -603,8 +538,8 @@
                                   <thead>
                                     <tr class="text-center fs-5">
                                       <th >No.</th>
-                                      <th >Player Image</th>
-                                      <th >Player Short Name</th>
+                                      <!-- <th >Player Image</th> -->
+                                      <!-- <th >Player Short Name</th> -->
                                       <th colspan="3" >Player Name</th>
                                       <!-- Add more headers as needed -->
                                     </tr>
@@ -667,28 +602,37 @@
               // Fetch team data
               const teamResponse = await fetch(`https://krinik.pythonanywhere.com/team_get/`);
               const teamResponse1 = await fetch(`https://krinik.pythonanywhere.com/league_get/`);
+              const teamResponse2 = await fetch(`https://krinik.pythonanywhere.com/player_get/`);
+
 
               const teamData = (await teamResponse.json()).data;
               const leagueData = (await teamResponse1.json()).data;
-console.log(teamData)
-              // Find the team data with matching team name
-              const filteredTeam = teamData.find(team => team.team_name === teamName && leagueData.some(league => league.league_name === team.league_name));
+              const playerData = (await teamResponse2.json()).data;
 
+              // Find the team data with matching team name
+              const specificTeam = teamData.find(team => team.team_name === teamName);
+
+// Filter players based on the team and league
+const filteredPlayers = playerData.filter(player => {
+  return player.team_name === specificTeam.team_name && 
+         leagueData.some(league => league.league_name === specificTeam.league_name);
+});
+console.log(filteredPlayers)
               // Find the league data with the matching team name
            
-              if (filteredTeam ) {
-                const leagueName = filteredTeam.league_name;
+              if (filteredPlayers ) {
+                const leagueName = specificTeam.team_name;
 
                 const teamImagePreview = document.getElementById('leagueImagePreview');
                 const teamNameHeading = document.getElementById('leagueNameHeading');
                 const startTeamDateInput = document.getElementById('startLeagueDate');
                 const endTeamDateInput = document.getElementById('endLeagueDate');
 
-                teamNameHeading.textContent = filteredTeam.team_name;
+                teamNameHeading.textContent = specificTeam.team_name;
 
                 // Display team image
-                if (filteredTeam.team_image) {
-                  teamImagePreview.src = 'https://krinik.pythonanywhere.com' + filteredTeam.team_image;
+                if (specificTeam.team_image) {
+                  teamImagePreview.src = 'https://krinik.pythonanywhere.com' + specificTeam.team_image;
                 } else {
                   teamImagePreview.src = ''; // Clear image source if no image available
                 }
@@ -697,16 +641,16 @@ console.log(teamData)
               
 
                 // if (filteredLeague) {
-                  startTeamDateInput.value = moment(filteredTeam.team_date,'YYYY-MM-DD').format('DD-MM-YYYY');
+                  startTeamDateInput.value = moment(specificTeam.team_date,'YYYY-MM-DD').format('DD-MM-YYYY');
                   // endTeamDateInput.value = filteredLeague.end_league_date;
                
 
                 // Fetch player data
-                const playerResponse = await fetch(`https://krinik.pythonanywhere.com/player_get/`);
-                const playerData = (await playerResponse.json()).data;
+                // const playerResponse = await fetch(`https://krinik.pythonanywhere.com/player_get/`);
+                // const playerData = (await playerResponse.json()).data;
 
                 // Filter player data based on the league name and team name
-                const filteredPlayers = playerData.filter(player => player.league_name === leagueName && player.team_name === teamName);
+                // const filteredPlayers = playerData.filter(player => player.league_name === leagueName && player.team_name === teamName);
 
                 // Get reference to the tbody where players will be appended
                 const playerListBody = document.getElementById('playerList');
@@ -719,9 +663,7 @@ console.log(teamData)
                   const row = document.createElement('tr');
                   row.innerHTML = `
                                         <td>${index + 1}</td>
-                                        <td class="view-image-div"><img src="https://krinik.pythonanywhere.com${player.player_image}" ></td>
-                                        <td>${player.player_short_name}</td>
-                                        <td>${player.player_name}</td>
+                                        <td colspan"3"">${player.player_name}</td>
                                     `;
                   playerListBody.appendChild(row);
                 });

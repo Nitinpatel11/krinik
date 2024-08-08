@@ -4213,11 +4213,20 @@ tbody td {
   color: white !important;
   background-color: #E20101 !important;
 }
+.btn-primary1:hover{
+  color: white !important;
+  background-color: #E20101 !important;
+}
 .btn-primary2{
   background-color: white !important;
   color: #E20101 !important;
+  padding: 5px 10px !important;
+  padding-bottom: 15px;
 }
-
+.btn-primary2:hover{
+  background-color: white !important;
+  color: #E20101 !important;
+}
 .btn-primary5{
   background-color: white !important;
   color: #E20101 !important;

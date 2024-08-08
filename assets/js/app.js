@@ -192,6 +192,31 @@ function getLocalStorage(key) {
   }
   return null;
 }
+function getLocalStorage1(key) {
+  const item = localStorage.getItem(key);
+  console.log("Retrieved item from localStorage:", item); // Log the raw item
+
+  if (item) {
+    try {
+      const parsedItem = JSON.parse(item);
+      console.log("Parsed item:", parsedItem); // Log the parsed item
+
+      const currentTime = Date.now();
+      if (parsedItem.expirationTime && currentTime > parsedItem.expirationTime) {
+        console.log("Item has expired. Removing from localStorage.");
+        localStorage.removeItem(key);
+        return null;
+      }
+      
+      return parsedItem.value;
+    } catch (e) {
+      console.error("Error parsing item from localStorage:", e);
+      return null;
+    }
+  }
+
+  return null;
+}
 
 
 
@@ -214,7 +239,8 @@ let logoutTimer;
 function startLogoutTimer() {
   clearTimeout(logoutTimer);
 
-  const adminType = getLocalStorage('adminType');
+  const adminType = getLocalStorage1('adminType');
+console.log("Admin Type:", adminType ? adminType : "No admin type");
   const expirationSeconds = adminType === 'super admin' ? SUPER_ADMIN_EXPIRATION_SECONDS : REGULAR_USER_EXPIRATION_SECONDS;
   const currentTime = new Date().getTime();
   let logoutTime = getLocalStorage('userEmail');
@@ -237,6 +263,9 @@ console.log(logoutTime,"qwer")
 console.log(logoutTimer)
   // Stclgart updating the remaining time
   updateRemainingTime(logoutTime);
+  if (adminType === 'super admin') {
+    initializePage();
+  }
 }
 
 
@@ -285,35 +314,57 @@ window.onload = () => {
 
 
 
-//  document.addEventListener("DOMContentLoaded", function() {
-//     // Select all elements with the 'otp-exempt' class
-//     const otpButtons = document.querySelectorAll(".otp-exempt");
-//     console.log(otpButtons); // Check the console to ensure elements are being selected
-
-//     // Attach a click event listener to each 'otp-exempt' element
-//     // otpButtons.forEach(button => {
-//     //     button.addEventListener("click", function() {
-//     //       alert('OTP button clicked!');
-//     //         console.log("OTP button clicked"); // Log to verify the event is being triggered
-//     //         window.location.href = "./edit-support.html";
-//     //     });
-//     // });
-//     document.querySelector('#otppage').onclick = function() {
-//             alert('Button clicked!');
-//         };
-//     // Select all interactive elements and disable them if they don't have the 'otp-exempt' class
-//     const elements = document.querySelectorAll("button, input, select, textarea, a, div");
-//     elements.forEach(element => {
-//         if (element.classList.contains("otp-exempt")) {
-//             element.setAttribute("disabled", "false");
-//             element.style.pointerEvents = "cursor"; // For non-input elements like div, a
-//             element.style.opacity = "1"; // Optional: to give a visual cue that the element is disabled
-//         }else{
-//           element.setAttribute("disabled", "true");
-//           element.style.pointerEvents = "none"; // For non-input elements like div, a
-//           element.style.opacity = "0.95"; 
-//         }
-//     });
-// });
 
 
+
+function initializePage() {
+
+  const showOtpPageButton = document.createElement("button");
+  showOtpPageButton.id = "showotppage";
+  showOtpPageButton.type = "button";
+  showOtpPageButton.className = "btn btn-primary2 otp-exempt waves-effect";
+  showOtpPageButton.innerText = "Enter OTP";
+  
+  showOtpPageButton.onclick = function() {
+    window.location.href = "./edit-support.html";
+  };
+
+  const enterOtpDiv = document.getElementById("enterotpdiv");
+  if (enterOtpDiv) {
+    enterOtpDiv.appendChild(showOtpPageButton);
+  } else {
+    console.log("Element with ID 'enterotpdiv' not found");
+  }
+  // Test button click to show alert
+  // const showOtpPageButton = document.querySelector("#showotppage");
+  if (showOtpPageButton) {
+      showOtpPageButton.onclick = function() {
+          window.location.href = "./edit-support.html";
+      };
+  } else {
+      console.log("Element with ID 'showotppage' not found");
+  }
+
+  // Select all interactive elements and disable them if they don't have the 'otp-exempt' class and are not the 'showotppage' element
+  const elements = document.querySelectorAll("button, input, select, textarea, a, div");
+  console.log("All elements:", elements); // Log all elements for debugging
+
+  elements.forEach(element => {
+      // Log element details to debug the condition
+      console.log("Checking element:", element);
+      console.log("Has otp-exempt class:", element.classList.contains("otp-exempt"));
+      console.log("ID is showotppage:", element.id === "showotppage");
+
+      if (element.classList.contains("otp-exempt")) {
+          console.log("Enabling element:", element); // Log the element being enabled
+          element.removeAttribute("disabled");
+          element.style.pointerEvents = "auto"; // For non-input elements like div, a
+          element.style.opacity = "1"; // Optional: to give a visual cue that the element is enabled
+      } else {
+          console.log("Disabling element:", element);
+          element.setAttribute("disabled", "true");
+          element.style.pointerEvents = "none"; // For non-input elements like div, a
+          element.style.opacity = "0.95"; 
+      }
+  });
+}
