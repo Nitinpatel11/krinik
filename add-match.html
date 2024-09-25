@@ -283,6 +283,7 @@
                                                                 </div>
                                                                 <span id="error-players-A" class="error-message"
                                                                     style="display: none;"></span>
+                                                                    <span id="error-dropdown-players-A" style="color: red; display: none;"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -322,6 +323,7 @@
                                                                 </div>
                                                                 <span id="error-players-B" class="error-message"
                                                                     style="display: none;"></span>
+                                                                    <span id="error-dropdown-players-B" style="color: red; display: none;"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -397,6 +399,7 @@
 
 
     <script src="./assets/js/logout.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
     <!-- JAVASCRIPT -->
     <script src="assets/libs/jquery/jquery.min.js"></script>
@@ -527,65 +530,68 @@
             // }
             // console.log(existingMatches[0].match_start_date, "okkk");
 
-            function checkOverlap(teamA, teamB, startDate1, existingMatches) {
-                const startDate = document.getElementById('match-start-date').value;
-
-                if (!existingMatches || existingMatches.length === 0) {
-                    return { teamAOverlap: false, teamBOverlap: false, dateOverlap: false };
-                }
-
-                // Log team names for debugging
-
-
-                const teamAOverlap = existingMatches.some(match => {
-                    return match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA;
-                });
-                console.log('Team A Overlap:', teamAOverlap);
-
-                const teamBOverlap = existingMatches.some(match => {
-                    return match.select_team_A.team_name === teamB || match.select_team_B.team_name === teamB;
-                });
-                console.log('Team B Overlap:', teamBOverlap);
-
-                const dateOverlap = existingMatches.some(match => {
-                    const matchStartDateStr1 = match.match_start_date;
-                    const [day, month, year] = matchStartDateStr1.split(/[- ]+/);
-                    const matchStartDateStr = `${day}-${month}-${year}`;
-
-                    const startDateStr = startDate;
-                    const [startDay, startMonth, startYear] = startDateStr.split(/[- ]+/);
-                    const startDateObj = `${startDay}-${startMonth}-${startYear}`;
-
-                    return startDateObj === matchStartDateStr;
-                });
-                console.log('Date Overlap:', dateOverlap);
-
-                return { teamAOverlap, teamBOverlap, dateOverlap };
-            }
-
-
+          
             let teams = [];
             let allPlayers = {
                 'dropdown-players-A': [],
                 'dropdown-players-B': []
             };
 
-            function populateSelect(selectElement, data, key, defaultOptionText, exclude = "") {
-                selectElement.innerHTML = '';
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = defaultOptionText;
-                selectElement.appendChild(defaultOption);
+            // function populateSelect(selectElement, data, key, defaultOptionText, exclude = "") {
+            //     selectElement.innerHTML = '';
+            //     const defaultOption = document.createElement('option');
+            //     defaultOption.value = '';
+            //     defaultOption.textContent = defaultOptionText;
+            //     selectElement.appendChild(defaultOption);
 
-                data.forEach(item => {
-                    if (item[key] !== exclude) {
-                        const option = document.createElement('option');
-                        option.value = item[key];
-                        option.textContent = item[key];
-                        selectElement.appendChild(option);
-                    }
-                });
-            }
+            //     data.forEach(item => {
+            //         if (item[key] !== exclude) {
+            //             const option = document.createElement('option');
+            //             option.value = item[key];
+            //             option.textContent = item[key];
+            //             selectElement.appendChild(option);
+            //         }
+            //     });
+            // }
+            function populateSelect(selectElement, data, key, defaultOptionText, exclude = "") {
+    selectElement.innerHTML = '';
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = defaultOptionText;
+    selectElement.appendChild(defaultOption);
+
+    data.forEach(item => {
+        if (item[key] !== exclude) {
+            const option = document.createElement('option');
+            option.value = item[key];
+            option.textContent = item[key];
+            selectElement.appendChild(option);
+        }
+    });
+
+    // Re-enable the select if it was disabled
+    selectElement.disabled = false;
+}
+            function populateSelect1(data) {
+            const selectElement = document.getElementById('league-name');
+            selectElement.innerHTML = '<option value="">Select League</option>';
+            const currentDate1 = new Date(); 
+           const currentDate = (moment(currentDate1, 'YYYY-MM-DD').format('DD-MM-YYYY')) // Get the current date and time
+            console.log(currentDate)
+        // console.log(data[2].end_league_date)
+        data.forEach(league => {
+                const leagueEndDate = league.end_league_date;  // Convert start_league_date to a Date object
+        
+                // Only add the league to the dropdown if it hasn't expired (currentDate is before leagueStartDate)
+                if (currentDate < leagueEndDate) {
+                    const option = document.createElement('option');
+                    option.value = league.league_name;
+                    option.textContent = league.league_name;
+                    selectElement.appendChild(option);
+                }
+            });
+        }
+
 
             async function fetchLeagues() {
                 try {
@@ -594,7 +600,7 @@
                     const data = await response.json();
                     console.log(data.data)
                     if (data.status === 'success' && Array.isArray(data.data)) {
-                        populateSelect(document.getElementById('league-name'), data.data, 'league_name', 'Select League');
+                        populateSelect1(data.data);
                         document.getElementById('league-name').addEventListener('change', function () {
                             const leagueName = this.value;
                             fetchTeams(leagueName);
@@ -629,120 +635,288 @@
             }
             updatePlayerSelectionEnabled();
 
+            // function updateTeamSelects() {
+            //     const teamASelected = document.getElementById('team-A').value;
+            //     const teamBSelected = document.getElementById('team-B').value;
+            //     const leagueSelected = document.getElementById('league-name').value;
+            //     if(teams.length > 0){
+                    
+            //                         populateSelect(document.getElementById('team-A'), teams, 'team_name', 'Select Team A', teamBSelected);
+            //                         populateSelect(document.getElementById('team-B'), teams, 'team_name', 'Select Team B', teamASelected);
+
+            //     }else{
+            //         document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
+            //                 document.getElementById('error-team-A').style.display = 'inline';
+            //                 document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
+            //                 document.getElementById('error-team-B').style.display = 'inline'; 
+            //     }
+
+            //     document.getElementById('team-A').value = teamASelected;
+            //     document.getElementById('team-B').value = teamBSelected;
+            //     updatePlayerSelectionEnabled();
+
+
+            // }
+
+
             function updateTeamSelects() {
-                const teamASelected = document.getElementById('team-A').value;
-                const teamBSelected = document.getElementById('team-B').value;
-                const leagueSelected = document.getElementById('league-name').value;
+    const teamASelected = document.getElementById('team-A').value;
+    const teamBSelected = document.getElementById('team-B').value;
 
-                populateSelect(document.getElementById('team-A'), teams, 'team_name', 'Select Team A', teamBSelected);
-                populateSelect(document.getElementById('team-B'), teams, 'team_name', 'Select Team B', teamASelected);
+    if (teams.length === 0) {
+        // No teams available
+        document.getElementById('error-team-A').innerHTML = 'Create team first';
+        document.getElementById('error-team-A').style.display = 'inline';
+        document.getElementById('error-team-B').innerHTML = 'Create team first';
+        document.getElementById('error-team-B').style.display = 'inline';
 
-                document.getElementById('team-A').value = teamASelected;
-                document.getElementById('team-B').value = teamBSelected;
-                updatePlayerSelectionEnabled();
+        // Disable both dropdowns
+        document.getElementById('team-A').disabled = true;
+        document.getElementById('team-B').disabled = true;
+    } else if (teams.length === 1) {
+        // Only one team available
+        // Populate team-A dropdown and show error for team-B
+        populateSelect(document.getElementById('team-A'), teams, 'team_name', 'Select Team A', teamBSelected);
+        document.getElementById('error-team-A').style.display = 'none'; // Hide error for team-A
+        document.getElementById('error-team-B').innerHTML = 'Only one team available. Please create another team.';
+        document.getElementById('error-team-B').style.display = 'inline';
 
+        // Disable team-B dropdown
+        document.getElementById('team-B').disabled = true;
+    } else {
+        // At least two teams available
+        // Populate both dropdowns
+        populateSelect(document.getElementById('team-A'), teams, 'team_name', 'Select Team A', teamBSelected);
+        populateSelect(document.getElementById('team-B'), teams, 'team_name', 'Select Team B', teamASelected);
 
-            }
+        // Hide errors and enable both dropdowns
+        document.getElementById('error-team-A').style.display = 'none';
+        document.getElementById('error-team-B').style.display = 'none';
+        document.getElementById('team-A').disabled = false;
+        document.getElementById('team-B').disabled = false;
+    }
 
+    // Re-assign previous selections if available
+    document.getElementById('team-A').value = teamASelected;
+    document.getElementById('team-B').value = teamBSelected;
 
+    // Re-enable player selection logic
+    updatePlayerSelectionEnabled();
+}
 
-
-
-            async function fetchPlayers(teamName, dropdownId,leagueSelected) {
-                try {
-                    const response = await fetch('https://krinik.pythonanywhere.com/player_get/');
-                    if (!response.ok) throw new Error('Failed to fetch players');
-                    const data = await response.json();
-                    console.log(leagueSelected,"leagueSelected")
-                    if (data.status === 'success' && Array.isArray(data.data)) {
-                        const players = data.data.filter(player => player.team_name === teamName && player.league_name === leagueSelected );
-                        allPlayers[dropdownId] = players;
+        //     async function fetchPlayers(teamName, dropdownId,leagueSelected) {
+        //         try {
+        //             const response = await fetch('https://krinik.pythonanywhere.com/player_get/');
+        //             if (!response.ok) throw new Error('Failed to fetch players');
+        //             const data = await response.json();
+        //             console.log(leagueSelected,"leagueSelected")
+        //             if (data.status === 'success' && Array.isArray(data.data)) {
+        //                 const players = data.data.filter(player => player.team_name === teamName && player.league_name === leagueSelected );
+        //                 allPlayers[dropdownId] = players;
                       
-                        populatePlayerDropdown(players, dropdownId);
-                    } else {
-                        console.error('Invalid data format for players:', data);
-                    }
-                } catch (error) {
-                    console.error('Error fetching players:', error);
+        //                 populatePlayerDropdown(players, dropdownId);
+        //             } else {
+        //                 console.error('Invalid data format for players:', data);
+        //             }
+        //         } catch (error) {
+        //             console.error('Error fetching players:', error);
+        //         }
+        //     }
+
+        //     function populatePlayerDropdown(players, dropdownId) {
+        //         const dropdown = document.getElementById(dropdownId);
+        //         dropdown.innerHTML = '';
+
+        //         const searchInput = document.createElement('input');
+        //         searchInput.type = 'text';
+        //         searchInput.placeholder = 'Search players...';
+        //         searchInput.className = 'search-input';
+        //         searchInput.addEventListener('input', function (event) {
+        //             filterPlayers(event.target.value, dropdownId);
+        //         });
+        //         dropdown.appendChild(searchInput);
+
+        //         const playerContainer = document.createElement('div');
+        //         playerContainer.className = 'player-container';
+
+        //         players.forEach((player, index) => {
+        //             if (index < 6) {
+        //                 const playerOption = document.createElement('a');
+        //                 playerOption.href = '#';
+        //                 playerOption.className = 'player-option';
+        //                 playerOption.dataset.id = player.id;
+        //                 playerOption.textContent = player.player_name;
+        //                 playerOption.addEventListener('click', function (event) {
+        //                     event.preventDefault();
+        //                     const playerId = player.id;
+        //                     // console.log(playerId)
+        //                     const playerName = player.player_name;
+        //                     const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
+        //                     filterPlayers(playerId, dropdownId);
+        //                     if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
+        //                         document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
+        //     <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
+        //       <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
+        //         ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
+        //       </p>
+        //     </div>
+        //   `);
+        //                     }
+        //                     // Remove the selected player from the dropdown list
+        //                     playerOption.remove();
+        //                     dropdown.style.display = 'none';
+        //                 });
+        //                 playerContainer.appendChild(playerOption);
+        //             }
+        //         });
+
+        //         if (players.length > 6) {
+        //             playerContainer.style.maxHeight = '200px';
+        //             playerContainer.style.overflowY = 'auto';
+        //         }
+
+
+        //         dropdown.appendChild(playerContainer);
+
+        //         dropdown.addEventListener('click', function (event) {
+        //             if (event.target.classList.contains('player-option')) {
+        //                 event.preventDefault();
+        //                 const playerId = event.target.dataset.id;
+        //                 const playerName = event.target.textContent;
+        //                 const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
+
+        //                 if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
+        //                     document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
+        //                     <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
+        //                         <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
+        //                             ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
+        //                         </p>
+        //                     </div>
+        //                 `);
+        //                 }
+
+        //                 dropdown.style.display = 'none';
+        //             }
+        //         });
+        //     }
+
+        async function fetchPlayers(teamName, dropdownId, leagueSelected) {
+    try {
+        const response = await fetch('https://krinik.pythonanywhere.com/player_get/');
+        if (!response.ok) throw new Error('Failed to fetch players');
+        const data = await response.json();
+        console.log(leagueSelected, "leagueSelected");
+        if (data.status === 'success' && Array.isArray(data.data)) {
+            const players = data.data.filter(player => player.team_name === teamName && player.league_name === leagueSelected);
+            allPlayers[dropdownId] = players;
+
+            if (players.length === 0) {
+                // No players for this team, show an error and disable the dropdown
+                showPlayerError(dropdownId, 'No players available for this team.');
+            } else if (players.length === 1) {
+                // Only one player, populate the dropdown and show an error for the other dropdown if necessary
+                populatePlayerDropdown(players, dropdownId);
+                showPlayerError(dropdownId, 'Only one player available. Please add more players.');
+            } else {
+                // Populate normally if there are multiple players
+                populatePlayerDropdown(players, dropdownId);
+                hidePlayerError(dropdownId);
+            }
+        } else {
+            console.error('Invalid data format for players:', data);
+        }
+    } catch (error) {
+        console.error('Error fetching players:', error);
+    }
+}
+
+function populatePlayerDropdown(players, dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.innerHTML = '';
+
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search players...';
+    searchInput.className = 'search-input';
+    searchInput.addEventListener('input', function (event) {
+        filterPlayers(event.target.value, dropdownId);
+    });
+    dropdown.appendChild(searchInput);
+
+    const playerContainer = document.createElement('div');
+    playerContainer.className = 'player-container';
+
+    players.forEach((player, index) => {
+        if (index < 6) {
+            const playerOption = document.createElement('a');
+            playerOption.href = '#';
+            playerOption.className = 'player-option';
+            playerOption.dataset.id = player.id;
+            playerOption.textContent = player.player_name;
+            playerOption.addEventListener('click', function (event) {
+                event.preventDefault();
+                const playerId = player.id;
+                const playerName = player.player_name;
+                const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
+
+                if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
+                    document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
+                        <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
+                          <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
+                            ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
+                          </p>
+                        </div>
+                    `);
                 }
+
+                playerOption.remove(); // Remove the selected player from the dropdown list
+                dropdown.style.display = 'none';
+            });
+            playerContainer.appendChild(playerOption);
+        }
+    });
+
+    if (players.length > 6) {
+        playerContainer.style.maxHeight = '200px';
+        playerContainer.style.overflowY = 'auto';
+    }
+
+    dropdown.appendChild(playerContainer);
+
+    dropdown.addEventListener('click', function (event) {
+        if (event.target.classList.contains('player-option')) {
+            event.preventDefault();
+            const playerId = event.target.dataset.id;
+            const playerName = event.target.textContent;
+            const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
+
+            if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
+                document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
+                    <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
+                        <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
+                            ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
+                        </p>
+                    </div>
+                `);
             }
 
-            function populatePlayerDropdown(players, dropdownId) {
-                const dropdown = document.getElementById(dropdownId);
-                dropdown.innerHTML = '';
+            dropdown.style.display = 'none';
+        }
+    });
+}
 
-                const searchInput = document.createElement('input');
-                searchInput.type = 'text';
-                searchInput.placeholder = 'Search players...';
-                searchInput.className = 'search-input';
-                searchInput.addEventListener('input', function (event) {
-                    filterPlayers(event.target.value, dropdownId);
-                });
-                dropdown.appendChild(searchInput);
+function showPlayerError(dropdownId, message) {
+    const errorElement = document.getElementById(`error-${dropdownId}`);
+    errorElement.innerHTML = message;
+    errorElement.style.display = 'inline';
+    document.getElementById(dropdownId).disabled = true;
+}
 
-                const playerContainer = document.createElement('div');
-                playerContainer.className = 'player-container';
-
-                players.forEach((player, index) => {
-                    if (index < 6) {
-                        const playerOption = document.createElement('a');
-                        playerOption.href = '#';
-                        playerOption.className = 'player-option';
-                        playerOption.dataset.id = player.id;
-                        playerOption.textContent = player.player_name;
-                        playerOption.addEventListener('click', function (event) {
-                            event.preventDefault();
-                            const playerId = player.id;
-                            // console.log(playerId)
-                            const playerName = player.player_name;
-                            const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
-                            filterPlayers(playerId, dropdownId);
-                            if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
-                                document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
-            <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
-              <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
-                ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
-              </p>
-            </div>
-          `);
-                            }
-                            // Remove the selected player from the dropdown list
-                            playerOption.remove();
-                            dropdown.style.display = 'none';
-                        });
-                        playerContainer.appendChild(playerOption);
-                    }
-                });
-
-                if (players.length > 6) {
-                    playerContainer.style.maxHeight = '200px';
-                    playerContainer.style.overflowY = 'auto';
-                }
-
-
-                dropdown.appendChild(playerContainer);
-
-                dropdown.addEventListener('click', function (event) {
-                    if (event.target.classList.contains('player-option')) {
-                        event.preventDefault();
-                        const playerId = event.target.dataset.id;
-                        const playerName = event.target.textContent;
-                        const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
-
-                        if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
-                            document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
-                            <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
-                                <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
-                                    ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
-                                </p>
-                            </div>
-                        `);
-                        }
-
-                        dropdown.style.display = 'none';
-                    }
-                });
-            }
+function hidePlayerError(dropdownId) {
+    const errorElement = document.getElementById(`error-${dropdownId}`);
+    errorElement.style.display = 'none';
+    document.getElementById(dropdownId).disabled = false;
+}
 
 
             function filterPlayers(searchText, dropdownId) {
@@ -837,6 +1011,45 @@
                 clearSelectedPlayers('team-B');
                 updateTeamSelects();
             });
+
+
+            function checkOverlap(leagueExist, teamA, teamB, startDate1, existingMatches) {
+    console.log(leagueExist, "leagueche");
+    const startDate = document.getElementById('match-start-date').value;
+
+    if (!existingMatches || existingMatches.length === 0) {
+        return { leagueOverlap: false, teamAOverlap: false, teamBOverlap: false, dateOverlap: false };
+    }
+
+    // Log team names for debugging
+    const leagueOverlap = existingMatches.some(match => match.select_league.league_name === leagueExist);
+    console.log('league Overlap:', leagueOverlap);
+
+    const teamAOverlap = existingMatches.some(match => match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA);
+    console.log('Team A Overlap:', teamAOverlap);
+
+    const teamBOverlap = existingMatches.some(match => match.select_team_A.team_name === teamB || match.select_team_B.team_name === teamB);
+    console.log('Team B Overlap:', teamBOverlap);
+
+    const dateOverlap = existingMatches.some(match => {
+        const matchStartDateStr = match.match_start_date;
+        const [year, month, day] = matchStartDateStr.split(/[- ]+/); // Assuming date is in "YYYY-MM-DD"
+        const matchStartDate = `${year}-${month}-${day}`;
+
+        const [startYear, startMonth, startDay] = startDate.split(/[- ]+/);
+        const startDateObj = `${startYear}-${startMonth}-${startDay}`;
+
+        // Check if dates and teams overlap
+        const teamsOverlap = (match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA) &&
+                             (match.select_team_A.team_name === teamB || match.select_team_B.team_name === teamB);
+
+        return startDateObj === matchStartDate && teamsOverlap;
+    });
+    console.log('Date and Teams Overlap:', dateOverlap);
+
+    return { leagueOverlap, teamAOverlap, teamBOverlap, dateOverlap };
+}
+
 
             document.getElementById('select-player-A').addEventListener('click', function () {
                 const dropdown = document.getElementById('dropdown-players-A');
@@ -1080,6 +1293,7 @@
 
                     // Collect all necessary form data
                     const leagueName = document.getElementById('league-name').value;
+                    
                     const teamA = document.getElementById('team-A').value;
                     const teamB = document.getElementById('team-B').value;
                     const startDate = document.getElementById('match-start-date').value;
@@ -1123,7 +1337,7 @@ console.log("playernamewithid",selectedPlayersA)
 
                     // Now you can use formData to send this data via fetch or any other method.
                     // Perform overlap check
-                    const overlapResult = checkOverlap(teamA, teamB, startDate, existingMatches);
+                    const overlapResult = checkOverlap(leagueName,teamA, teamB, startDate, existingMatches);
 
                     // Log form data for verification
                     console.log('Form data before sending:');
@@ -1134,21 +1348,18 @@ console.log("playernamewithid",selectedPlayersA)
                     // Check if the form is valid
                     if (validateForm()) {
 
-
                         // Handle overlap errors
-                        if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+                        if (overlapResult.leagueOverlap && overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
                             document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
                             document.getElementById('error-team-A').style.display = 'inline';
                             document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-                            document.getElementById('error-team-B').style.display = 'inline';
+                            document.getElementById('error-team-B').style.display = 'inline'; 
 
-                           
-
-                        } else if (overlapResult.teamAOverlap && overlapResult.dateOverlap) {
+                        } else if (overlapResult.leagueOverlap && overlapResult.teamAOverlap && overlapResult.dateOverlap) {
                             document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
                             document.getElementById('error-team-A').style.display = 'inline';
 
-                        } else if (overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+                        } else if (overlapResult.leagueOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
 
                             document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
                             document.getElementById('error-team-B').style.display = 'inline';

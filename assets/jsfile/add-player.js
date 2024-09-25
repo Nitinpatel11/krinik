@@ -1,6 +1,6 @@
 
         const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
-        const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+        const alphanumericRegex = /^[a-zA-Z0-9._]+(?: [a-zA-Z0-9._]+)*$/u;
 
         // Default image source
         const defaultImageSrc = '/assets/images/default_player.png';
@@ -16,8 +16,9 @@
                     throw new Error('Failed to fetch leagues');
                 }
                 const data = await response.json();
+                console.log(data,"data is there")
                 if (data.status === 'success' && Array.isArray(data.data)) {
-                    populateSelect(document.getElementById('league-name'), data.data, 'league_name', 'Select League');
+                    populateSelect1(data.data);
                     document.getElementById('league-name').addEventListener('change', function () {
                         const leagueName = this.value;
                         fetchTeams(leagueName);
@@ -58,6 +59,7 @@
                 if (data.status === 'success' && Array.isArray(data.data)) {
                    
                     const teams = data.data.filter(team => team.league_name === leagueName);
+                    console.log(teams)
                     populateSelect(document.getElementById('team-name'), teams, 'team_name', 'Select Team');
                 } else {
                     console.error('Invalid data format for teams:', data);
@@ -75,6 +77,26 @@
                 option.value = item[key];
                 option.textContent = item[key];
                 selectElement.appendChild(option);
+            });
+        }
+
+        function populateSelect1(data) {
+            const selectElement = document.getElementById('league-name');
+            selectElement.innerHTML = '<option value="">Select League</option>';
+            const currentDate1 = new Date(); 
+           const currentDate = (moment(currentDate1, 'YYYY-MM-DD').format('DD-MM-YYYY')) // Get the current date and time
+            console.log(currentDate)
+        // console.log(data[2].end_league_date)
+        data.forEach(league => {
+                const leagueEndDate = league.end_league_date;  // Convert start_league_date to a Date object
+        
+                // Only add the league to the dropdown if it hasn't expired (currentDate is before leagueStartDate)
+                if (currentDate < leagueEndDate) {
+                    const option = document.createElement('option');
+                    option.value = league.league_name;
+                    option.textContent = league.league_name;
+                    selectElement.appendChild(option);
+                }
             });
         }
 
@@ -172,14 +194,14 @@
 
 function isValidTeamName1(value) {
     const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
-    const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+    const alphanumericRegex = /^[a-zA-Z0-9._]+(?: [a-zA-Z0-9._]+)*$/u;
     
     // Check for emoji
     if (emojiRegex.test(value)) {
         return false; // Invalid if emoji found
     }
     
-    // Check for alphanumeric and spaces
+    // Check for alphanumeric, ., _ and spaces
     if (!alphanumericRegex.test(value)) {
         return false; // Invalid if non-alphanumeric characters found
     }
@@ -272,7 +294,7 @@ function isValidTeamName1(value) {
                                     const defaultImageBlob = await fetch(defaultImageSrc).then(res => res.blob());
                                     formData.append('player_image', defaultImageBlob, 'default_player.png');
                                 }
-                                formData.append('total_run', 25); // Append null for total_run
+                                formData.append('total_run', 0); // Append null for total_run
                                 formData.append('status', "enable");
                                 console.log('Form data before sending:');
                                 formData.forEach((value, key) => {

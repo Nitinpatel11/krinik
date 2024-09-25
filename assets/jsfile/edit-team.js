@@ -44,14 +44,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Select element not found');
             return;
         }
-        selectElement.innerHTML = '<option value="">Select League</option>'; // Clear existing options
+        selectElement.innerHTML = '<option value="">Select League</option>';
+         // Clear existing options
+         const currentDate1 = new Date(); 
+         const currentDate = (moment(currentDate1, 'YYYY-MM-DD').format('DD-MM-YYYY')) 
         data.forEach(league => {
-            const option = document.createElement('option');
-            option.value = league.league_name;
-            option.textContent = league.league_name;
-            selectElement.appendChild(option);
+            const leagueEndDate = league.end_league_date;  // Convert start_league_date to a Date object
+    
+            // Only add the league to the dropdown if it hasn't expired (currentDate is before leagueStartDate)
+            if (currentDate < leagueEndDate) {
+                const option = document.createElement('option');
+                option.value = league.league_name;
+                option.textContent = league.league_name;
+                selectElement.appendChild(option);
+            }
         });
     }
+
+
 
     function editTeamData(response, allLeagues) {
         const teamName = document.getElementById('team-name');

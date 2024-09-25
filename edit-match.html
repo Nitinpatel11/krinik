@@ -400,7 +400,7 @@
 
 
 
-  <script>
+  <!-- <script>
     document.addEventListener('DOMContentLoaded', async function () {
       let initialData = {};
 
@@ -630,12 +630,7 @@ select_team_B:matchData.select_team_B
         });
       }
 
-
-
-
-
       // Event listener for league selection change
-
 
       document.getElementById('league-name').addEventListener('change', async function () {
         const leagueName = this.value;
@@ -925,11 +920,6 @@ select_team_B:matchData.select_team_B
 
 
 
-
-
-
-
-
       async function populateFormFields(matchData) {
         console.log('Match data:', matchData);
 
@@ -987,13 +977,7 @@ select_team_B:matchData.select_team_B
         console.log('Form fields populated');
       }
 
-
-
       updatePlayerSelectionEnabled();
-
-
-
-
 
       function populatePlayersSelect(players, selectId) {
         const selectElement = document.getElementById(selectId);
@@ -1007,8 +991,6 @@ select_team_B:matchData.select_team_B
         });
       }
 
-
-
       function filterPlayers(searchTerm, dropdownId) {
         const playerContainer = document.getElementById(dropdownId).querySelector('.player-container');
         const playerOptions = playerContainer.querySelectorAll('.player-option');
@@ -1021,6 +1003,7 @@ select_team_B:matchData.select_team_B
           }
         });
       }
+
       function checkOverlap(teamA, teamB, startDate1, existingMatches) {
                 const startDate = document.getElementById('match-start-date').value;
 
@@ -1056,7 +1039,6 @@ select_team_B:matchData.select_team_B
 
                 return { teamAOverlap, teamBOverlap, dateOverlap };
             }
-
 
       async function myFetch(url, type, data) {
                 try {
@@ -1386,11 +1368,11 @@ console.log(currentData,"current")
 
     })
 
-  </script>
+  </script> -->
 
 
 
-
+<script src="./assets/jsfile/edit-match1.js"></script>
 
 </body>
 

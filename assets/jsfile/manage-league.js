@@ -34,6 +34,7 @@ async function fetchData() {
 
     if (data && data.status === "success") {
       rankList = data.data;
+      console.log(rankList)
       array = rankList;
       filterAndDisplay();
       totaldataleague.innerHTML = array.length;

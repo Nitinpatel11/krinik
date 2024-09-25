@@ -3,46 +3,38 @@ document.addEventListener('DOMContentLoaded', async function () {
   try {
     // Get the team name from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const playerName = urlParams.get('playerName');
+    const id = urlParams.get('id');
 
     // Fetch data
-    const teamResponse = await fetch('https://krinik.pythonanywhere.com/team_get/');
-    const playerResponse = await fetch('https://krinik.pythonanywhere.com/player_get/');
-    const leagueResponse = await fetch('https://krinik.pythonanywhere.com/league_get/');
-    const matchResponse = await fetch('https://krinik.pythonanywhere.com/match_get/');
+    const viewPlayer = await fetch(`https://krinik.pythonanywhere.com/view_player/${id}/`);
+    console.log(viewPlayer)
+
+
+    const playerResponse = await fetch(`https://krinik.pythonanywhere.com/player_get/${id}/`);
+ 
+console.log(playerResponse)
+    const viewPlayerDetails1 = await viewPlayer.json();
+    const viewPlayerDetails = viewPlayerDetails1[0]
+    const playerTotalRun = viewPlayerDetails1[1]
+
+    console.log(viewPlayerDetails)
 
     const playerData = (await playerResponse.json()).data;
-    const matchData = (await matchResponse.json()).data;
-    const leagueData = (await leagueResponse.json()).data;
-    const teamData = (await teamResponse.json()).data;
-    console.log(matchData,"match")
-    let filteredMatches
-    // Find the specific player data
-    const specificPlayer = playerData.find(player => player.player_name === playerName);
-
-    if (specificPlayer) { 
-
-         filteredMatches = matchData.filter(match => {
-          return match.player_name === specificPlayer.player_name && teamData.some(team => team.team_name === match.team_name) &&
-            leagueData.some(league => league.league_name === match.league_name);
-        });
-
-        console.log(filteredMatches,"opl");
-      } else {
-        console.log('Team not found for the player.');
-      }
+    console.log(playerData)
 
 
     const teamImagePreview = document.getElementById('leagueImagePreview');
     const teamNameHeading = document.getElementById('leagueNameHeading');
-    // const startTeamDateInput = document.getElementById('startLeagueDate');
-    // const endTeamDateInput = document.getElementById('endLeagueDate');
+    const startLeagueDate = document.getElementById('startLeagueDate');
 
-    teamNameHeading.textContent = specificPlayer.player_name;
+ 
+    teamNameHeading.textContent = playerData.player_name;
+    startLeagueDate.value = playerTotalRun.total_runs;
+
 
     // Display team image
-    if (specificPlayer.player_image) {
-      teamImagePreview.src = 'https://krinik.pythonanywhere.com' + specificPlayer.player_image;
+    if (playerData.player_image) {
+      teamImagePreview.src = 'https://krinik.pythonanywhere.com' + playerData.player_image;
     } else {
       teamImagePreview.src = ''; // Clear image source if no image available
     }
@@ -54,12 +46,17 @@ document.addEventListener('DOMContentLoaded', async function () {
     playerListBody.innerHTML = '';
 
     // Iterate over filtered players and create rows in the table
-    filteredMatches.forEach((player, index) => {
+    viewPlayerDetails.forEach((player, index) => {
       const row = document.createElement('tr');
       row.innerHTML = `
                                       <td>${index + 1}</td>
-                                      <td colspan"3"">${player.select_league.league_name}</td>
-                                  `;
+                                      <td colspan="3">${player.player_league}</td>
+                                      <td colspan="3">${player.player_team}</td>
+                                       <td colspan="3">${player.opponent_team}</td>
+                                      <td colspan="3">${player.runs}</td>
+                                      <td colspan="3">${player.match_date}</td>`;
+                                      
+                                      
       playerListBody.appendChild(row);
     });
     // } else {
@@ -68,5 +65,23 @@ document.addEventListener('DOMContentLoaded', async function () {
   } catch (error) {
     console.error('Error fetching data:', error);
   }
+
+
+  const table = document.getElementById('playerTable');
+  const downloadBtn = document.getElementById('download-btn');
+  
+  downloadBtn.addEventListener('click', () => {
+    const workbook = XLSX.utils.table_to_book(table, { sheet: 'Player Data' });
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(data);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'player_data.xlsx';
+    a.click();
+  
+    URL.revokeObjectURL(url);
+    a.remove();
+  });
 });
 

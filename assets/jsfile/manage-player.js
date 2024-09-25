@@ -587,7 +587,7 @@ otpAdd.classList.remove('otp-exempt3')
           var deleteCell = $("<td class='otp-exempt3'></td>").html('<span class="sortable otp-exempt3" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt otp-exempt3"></i></span>');
           }
           else{         
-          var viewCell = $("<td></td>").html(`<span class="sortable" onclick="viewPlayerDetails('${object["player_name"]}')"><i class="far fa-eye"></i></span>`);
+          var viewCell = $("<td></td>").html(`<span class="sortable" onclick="viewPlayerDetails('${object["id"]}')"><i class="far fa-eye"></i></span>`);
           var editCell = $("<td></td>").html('<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>');
           var deleteCell = $("<td></td>").html('<span class="sortable" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt"></i></span>');
           }
@@ -606,13 +606,13 @@ otpAdd.classList.remove('otp-exempt3')
       }
       // lazyLoadImages();
   }
-  function viewPlayerDetails(playerName) {
+  function viewPlayerDetails(id) {
     if( statusType == "true"){      
 
 initializePage1()
 
 }else{
-    window.location.href = `view-player-details.html?playerName=${encodeURIComponent(playerName)}`;
+    window.location.href = `view-player-details.html?id=${id}`;
 }
   }
   async function handleDelete(id) {
