@@ -536,6 +536,9 @@
                 'dropdown-players-A': [],
                 'dropdown-players-B': []
             };
+            let   leaguestarteddate 
+            let   leagueendeddate
+            let leaguedata
 
             // function populateSelect(selectElement, data, key, defaultOptionText, exclude = "") {
             //     selectElement.innerHTML = '';
@@ -597,15 +600,24 @@
                 try {
                     const response = await fetch('https://krinik.pythonanywhere.com/league_get/');
                     if (!response.ok) throw new Error('Failed to fetch leagues');
-                    const data = await response.json();
-                    console.log(data.data)
-                    if (data.status === 'success' && Array.isArray(data.data)) {
-                        populateSelect1(data.data);
+                    leaguedata = await response.json();
+                    if (leaguedata.status === 'success' && Array.isArray(leaguedata.data)) {
+                        console.log(leaguedata.data,"leafuedata1")
+                        populateSelect1(leaguedata.data);
+                        if (leaguedata.data.length > 0) {
+                let firstLeague = leaguedata.data[0];
+                let leagueStartedDate = firstLeague.start_league_date;
+                let leagueEndedDate = firstLeague.end_league_date;
+
+                console.log(leagueStartedDate, "leagueStartedDate");
+                console.log(leagueEndedDate, "leagueEndedDate");
+            }
+
                         document.getElementById('league-name').addEventListener('change', function () {
                             const leagueName = this.value;
                             fetchTeams(leagueName);
                             clearAllSelectedPlayers();
-
+                            
 
                             document.getElementById('team-A').value = '';
                             document.getElementById('team-B').value = '';
@@ -626,6 +638,7 @@
                     if (data.status === 'success' && Array.isArray(data.data)) {
                         teams = data.data.filter(team => team.league_name === leagueName);
                         updateTeamSelects();
+                        
                     } else {
                         console.error('Invalid data format for teams:', data);
                     }
@@ -669,7 +682,8 @@
         document.getElementById('error-team-A').style.display = 'inline';
         document.getElementById('error-team-B').innerHTML = 'Create team first';
         document.getElementById('error-team-B').style.display = 'inline';
-
+        document.getElementById('error-dropdown-players-A').style.display = 'none';
+        document.getElementById('error-dropdown-players-B').style.display = 'none';
         // Disable both dropdowns
         document.getElementById('team-A').disabled = true;
         document.getElementById('team-B').disabled = true;
@@ -680,18 +694,23 @@
         document.getElementById('error-team-A').style.display = 'none'; // Hide error for team-A
         document.getElementById('error-team-B').innerHTML = 'Only one team available. Please create another team.';
         document.getElementById('error-team-B').style.display = 'inline';
-
         // Disable team-B dropdown
         document.getElementById('team-B').disabled = true;
+       
     } else {
+        // showPlayerError(dropdownId, 'No players available for this team.');
+
+
         // At least two teams available
         // Populate both dropdowns
         populateSelect(document.getElementById('team-A'), teams, 'team_name', 'Select Team A', teamBSelected);
         populateSelect(document.getElementById('team-B'), teams, 'team_name', 'Select Team B', teamASelected);
-
+      
         // Hide errors and enable both dropdowns
         document.getElementById('error-team-A').style.display = 'none';
         document.getElementById('error-team-B').style.display = 'none';
+        document.getElementById('error-dropdown-players-A').style.display = 'none';
+        document.getElementById('error-dropdown-players-B').style.display = 'none';
         document.getElementById('team-A').disabled = false;
         document.getElementById('team-B').disabled = false;
     }
@@ -813,13 +832,10 @@
             if (players.length === 0) {
                 // No players for this team, show an error and disable the dropdown
                 showPlayerError(dropdownId, 'No players available for this team.');
-            } else if (players.length === 1) {
-                // Only one player, populate the dropdown and show an error for the other dropdown if necessary
-                populatePlayerDropdown(players, dropdownId);
-                showPlayerError(dropdownId, 'Only one player available. Please add more players.');
-            } else {
+            }  else {
                 // Populate normally if there are multiple players
                 populatePlayerDropdown(players, dropdownId);
+                
                 hidePlayerError(dropdownId);
             }
         } else {
@@ -1013,17 +1029,17 @@ function hidePlayerError(dropdownId) {
             });
 
 
-            function checkOverlap(leagueExist, teamA, teamB, startDate1, existingMatches) {
-    console.log(leagueExist, "leagueche");
+            function checkOverlap( teamA, teamB, startDate1, existingMatches) {
+    // console.log(leagueExist, "leagueche");
     const startDate = document.getElementById('match-start-date').value;
 
     if (!existingMatches || existingMatches.length === 0) {
-        return { leagueOverlap: false, teamAOverlap: false, teamBOverlap: false, dateOverlap: false };
+        return {  teamAOverlap: false, teamBOverlap: false, dateOverlap: false };
     }
 
     // Log team names for debugging
-    const leagueOverlap = existingMatches.some(match => match.select_league.league_name === leagueExist);
-    console.log('league Overlap:', leagueOverlap);
+    // const leagueOverlap = existingMatches.some(match => match.select_league.league_name === leagueExist);
+    // console.log('league Overlap:', leagueOverlap);
 
     const teamAOverlap = existingMatches.some(match => match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA);
     console.log('Team A Overlap:', teamAOverlap);
@@ -1040,14 +1056,14 @@ function hidePlayerError(dropdownId) {
         const startDateObj = `${startYear}-${startMonth}-${startDay}`;
 
         // Check if dates and teams overlap
-        const teamsOverlap = (match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA) &&
+        const teamsOverlap = (match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA) ||
                              (match.select_team_A.team_name === teamB || match.select_team_B.team_name === teamB);
 
         return startDateObj === matchStartDate && teamsOverlap;
     });
     console.log('Date and Teams Overlap:', dateOverlap);
 
-    return { leagueOverlap, teamAOverlap, teamBOverlap, dateOverlap };
+    return { teamAOverlap, teamBOverlap, dateOverlap };
 }
 
 
@@ -1337,7 +1353,7 @@ console.log("playernamewithid",selectedPlayersA)
 
                     // Now you can use formData to send this data via fetch or any other method.
                     // Perform overlap check
-                    const overlapResult = checkOverlap(leagueName,teamA, teamB, startDate, existingMatches);
+                    const overlapResult = checkOverlap(teamA, teamB, startDate, existingMatches);
 
                     // Log form data for verification
                     console.log('Form data before sending:');
@@ -1349,17 +1365,17 @@ console.log("playernamewithid",selectedPlayersA)
                     if (validateForm()) {
 
                         // Handle overlap errors
-                        if (overlapResult.leagueOverlap && overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+                        if ( overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
                             document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
                             document.getElementById('error-team-A').style.display = 'inline';
                             document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
                             document.getElementById('error-team-B').style.display = 'inline'; 
 
-                        } else if (overlapResult.leagueOverlap && overlapResult.teamAOverlap && overlapResult.dateOverlap) {
+                        } else if ( overlapResult.teamAOverlap && overlapResult.dateOverlap) {
                             document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
                             document.getElementById('error-team-A').style.display = 'inline';
 
-                        } else if (overlapResult.leagueOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+                        } else if ( overlapResult.teamBOverlap && overlapResult.dateOverlap) {
 
                             document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
                             document.getElementById('error-team-B').style.display = 'inline';
