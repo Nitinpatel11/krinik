@@ -418,13 +418,139 @@
 
         document.addEventListener('DOMContentLoaded', async function () {
         
+            // let leagueName1 = document.getElementById('league-name').value
+
+            // $(function () {
+            //     let startPicker = flatpickr('#match-start-date', {
+            //         dateFormat: 'd-m-Y H:i',
+            //         enableTime: true,
+            //         minDate: 'today', // Disable past dates
+            //         onChange: function (selectedDates, dateStr, instance) {
+            //             if (selectedDates.length > 0) {
+            //                 endPicker.set('minDate', selectedDates[0]);
+            //                 // Close the picker if both date and time are selected
+            //                 // if (dateStr.includes(' ')) {
+            //                 //     instance.close(); // Close the picker after full date-time selection
+            //                 // }
+            //             }
+            //         },
+            //         onReady: function (selectedDates, dateStr, instance) {
+            //             addCustomButtons(instance, '#match-start-date');
+            //         }
+            //     });
+
+            //     let endPicker = flatpickr('#match-end-date', {
+            //         dateFormat: 'd-m-Y H:i',
+            //         enableTime: true,
+            //         onOpen: function () {
+            //             const startDate = startPicker.selectedDates[0];
+            //             if (startDate) {
+            //                 endPicker.set('minDate', startDate);
+            //             }
+            //         },
+            //         onChange: function (selectedDates, dateStr, instance) {
+            //             if (selectedDates.length > 0) {
+            //                 // Close the picker if both date and time are selected
+            //                 // if (dateStr && dateStr.includes(' ')) {
+            //                 //     instance.close(); // Close the picker after full date-time selection
+            //                 // }
+            //             }
+            //         },
+            //         onReady: function (selectedDates, dateStr, instance) {
+            //             addCustomButtons(instance, '#match-end-date');
+            //         }
+            //     });
+
+            //     // Open Flatpickr on calendar icon click
+            //     $('#calendarIconStart').click(function () {
+            //         startPicker.open();
+            //     });
+            //     $('#calendarIconEnd').click(function () {
+            //         endPicker.open();
+            //     });
+            //     let okButtonClicked = false;
 
 
-            $(function () {
-                let startPicker = flatpickr('#match-start-date', {
+
+            //     function addCustomButtons(instance, inputSelector) {
+            //         // Ensure the calendarContainer is available
+            //         if (!instance || !instance.calendarContainer) {
+            //             console.error('Flatpickr instance or calendar container not found.');
+            //             return;
+            //         }
+
+            //         // Check if the footer already exists and remove it
+            //         let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
+            //         if (existingFooter) {
+            //             existingFooter.remove();
+            //         }
+
+            //         // Create footer and buttons
+            //         const footer = document.createElement('div');
+            //         footer.className = 'flatpickr-footer';
+
+            //         const okButton = document.createElement('button');
+            //         okButton.type = 'button';
+            //         okButton.className = 'flatpickr-ok-button';
+            //         okButton.textContent = 'OK';
+            //         okButton.addEventListener('click', function () {
+            //             okButtonClicked = true;
+            //             instance.close();
+            //         });
+
+            //         const clearButton = document.createElement('button');
+            //         clearButton.type = 'button';
+            //         clearButton.className = 'flatpickr-clear-button';
+            //         clearButton.textContent = 'Clear';
+            //         clearButton.addEventListener('click', function () {
+            //             document.querySelector(inputSelector).value = '';
+            //             instance.clear();
+            //         });
+
+            //         footer.appendChild(okButton);
+            //         footer.appendChild(clearButton);
+
+            //         // Append the footer to the calendar container
+            //         instance.calendarContainer.appendChild(footer);
+            //     }
+
+            //     // Modify the onChange event handler to only update the input value when the OK button is clicked
+            //     instance.config.onChange = function (selectedDates, dateStr, instance) {
+            //         if (okButtonClicked) {
+            //             document.querySelector(inputSelector).value = dateStr;
+            //             okButtonClicked = false; // Reset the flag
+            //         }
+            //     };
+            // });
+
+            function initializeDatePickers(leaguedata) {
+    const leagueName1 = document.getElementById('league-name');
+    const matchDisplayName = leagueName1.value; // Get the selected match display name
+console.log(matchDisplayName,"oki")
+    // Find the league data based on the selected league
+    let findmatch = leaguedata.find((p) => p.league_name === matchDisplayName);
+    if (!findmatch) {
+        console.error('No matching league found.');
+        return;
+    }
+
+    let startleagueDate = findmatch.start_league_date;
+    let endleagueDate = findmatch.end_league_date;
+
+    // Initialize the start date picker
+    // const startPicker = flatpickr('#fantasyStartDate', {
+    //     dateFormat: 'd-m-Y H:i',
+    //     enableTime: true,
+    //     minDate: startleagueDate, // Set the minimum date from the league data
+    //     maxDate: endleagueDate, // Set the maximum date to the end league date
+    //     onReady: function (selectedDates, dateStr, instance) {
+    //         addCustomButtons(instance, '#fantasyStartDate');
+    //     }
+    // });
+    let startPicker = flatpickr('#match-start-date', {
                     dateFormat: 'd-m-Y H:i',
                     enableTime: true,
-                    minDate: 'today', // Disable past dates
+                    minDate: 'startleagueDate', // Disable past dates
                     onChange: function (selectedDates, dateStr, instance) {
                         if (selectedDates.length > 0) {
                             endPicker.set('minDate', selectedDates[0]);
@@ -439,6 +565,7 @@
                     }
                 });
 
+                
                 let endPicker = flatpickr('#match-end-date', {
                     dateFormat: 'd-m-Y H:i',
                     enableTime: true,
@@ -470,60 +597,68 @@
                 });
                 let okButtonClicked = false;
 
+    // Add custom buttons to the picker
+    function addCustomButtons(instance, inputSelector) {
+        if (!instance || !instance.calendarContainer) {
+            console.error('Flatpickr instance or calendar container not found.');
+            return;
+        }
 
+        let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
+        if (existingFooter) {
+            existingFooter.remove();
+        }
 
-                function addCustomButtons(instance, inputSelector) {
-                    // Ensure the calendarContainer is available
-                    if (!instance || !instance.calendarContainer) {
-                        console.error('Flatpickr instance or calendar container not found.');
-                        return;
-                    }
+        const footer = document.createElement('div');
+        footer.className = 'flatpickr-footer';
 
-                    // Check if the footer already exists and remove it
-                    let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
-                    if (existingFooter) {
-                        existingFooter.remove();
-                    }
+        const okButton = document.createElement('button');
+        okButton.type = 'button';
+        okButton.className = 'flatpickr-ok-button';
+        okButton.textContent = 'OK';
+        okButton.addEventListener('click', function () {
+            instance.close();
+        });
 
-                    // Create footer and buttons
-                    const footer = document.createElement('div');
-                    footer.className = 'flatpickr-footer';
+        const clearButton = document.createElement('button');
+        clearButton.type = 'button';
+        clearButton.className = 'flatpickr-clear-button';
+        clearButton.textContent = 'Clear';
+        clearButton.addEventListener('click', function () {
+            document.querySelector(inputSelector).value = '';
+            instance.clear();
+        });
 
-                    const okButton = document.createElement('button');
-                    okButton.type = 'button';
-                    okButton.className = 'flatpickr-ok-button';
-                    okButton.textContent = 'OK';
-                    okButton.addEventListener('click', function () {
-                        okButtonClicked = true;
-                        instance.close();
-                    });
+        footer.appendChild(okButton);
+        footer.appendChild(clearButton);
 
-                    const clearButton = document.createElement('button');
-                    clearButton.type = 'button';
-                    clearButton.className = 'flatpickr-clear-button';
-                    clearButton.textContent = 'Clear';
-                    clearButton.addEventListener('click', function () {
-                        document.querySelector(inputSelector).value = '';
-                        instance.clear();
-                    });
+        instance.calendarContainer.appendChild(footer);
+    }
+}
+           
 
-                    footer.appendChild(okButton);
-                    footer.appendChild(clearButton);
+document.getElementById('league-name').addEventListener('change', function () {
+    const matchDisplayName = this.value;
+    // console.log(leaguedata,"datata")
+    const findmatch = leaguedata.data.find((p) => p.league_name === matchDisplayName);
+    console.log(findmatch,"find")
+    if (!findmatch) {
+        console.error('No matching league found.');
+        return;
+    }
+    const matchStartDate = findmatch.end_league_date;
+    const matchEndDate = findmatch.end_league_date; // Get the match end date from the data
 
-                    // Append the footer to the calendar container
-                    instance.calendarContainer.appendChild(footer);
-                }
+    // Update Flatpickr configurations
+    flatpickr('#fantasyStartDate', {
+        dateFormat: 'd-m-Y H:i',
+        enableTime: true,
+        minDate: 'today',
+        maxDate: matchEndDate,
+    });
 
-                // Modify the onChange event handler to only update the input value when the OK button is clicked
-                instance.config.onChange = function (selectedDates, dateStr, instance) {
-                    if (okButtonClicked) {
-                        document.querySelector(inputSelector).value = dateStr;
-                        okButtonClicked = false; // Reset the flag
-                    }
-                };
-            });
-
-
+    document.getElementById('fantasyStartDate').value = '';
+});
 
             // for (const obj of existingMatches) {
             //     console.log(obj.match_start_date);
@@ -536,8 +671,7 @@
                 'dropdown-players-A': [],
                 'dropdown-players-B': []
             };
-            let   leaguestarteddate 
-            let   leagueendeddate
+          
             let leaguedata
 
             // function populateSelect(selectElement, data, key, defaultOptionText, exclude = "") {
@@ -604,15 +738,8 @@
                     if (leaguedata.status === 'success' && Array.isArray(leaguedata.data)) {
                         console.log(leaguedata.data,"leafuedata1")
                         populateSelect1(leaguedata.data);
-                        if (leaguedata.data.length > 0) {
-                let firstLeague = leaguedata.data[0];
-                let leagueStartedDate = firstLeague.start_league_date;
-                let leagueEndedDate = firstLeague.end_league_date;
-
-                console.log(leagueStartedDate, "leagueStartedDate");
-                console.log(leagueEndedDate, "leagueEndedDate");
-            }
-
+             
+initializeDatePickers(leaguedata.data);
                         document.getElementById('league-name').addEventListener('change', function () {
                             const leagueName = this.value;
                             fetchTeams(leagueName);
