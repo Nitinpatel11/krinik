@@ -1110,8 +1110,7 @@ otpAdd.classList.remove('otp-exempt3')
         console.log(statusCell)
 
         if(statusType == "true"){
-          var viewCell = $("<td class='otp-exempt3'></td>").html(
-            '<span class="sortable otp-exempt3" onclick="handleView(' + object["id"] +')"><i class="far fa-eye otp-exempt3"></i></span>'
+          var viewCell = $("<td class='otp-exempt3'></td>").html('<span class="sortable otp-exempt3" onclick="handleView(' + object["id"] +')"><i class="far fa-eye otp-exempt3"></i></span>'
         );
         var editCell = $("<td class='otp-exempt3'></td>").html(
             '<span class="sortable otp-exempt3" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit otp-exempt3"></i></span>'

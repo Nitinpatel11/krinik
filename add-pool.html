@@ -733,6 +733,27 @@ matchData.forEach(match => {
 
         return true; // Valid input
       }
+      function isValidTeamName2(value) {
+        const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
+        const alphanumericRegex = /^[a-zA-Z0-9.]+(?: [a-zA-Z0-9.]+)*$/u;
+
+        // Check for emoji
+        if (emojiRegex.test(value)) {
+          return false; // Invalid if emoji found
+        }
+
+        // Check for alphanumeric and spaces
+        if (!alphanumericRegex.test(value)) {
+          return false; // Invalid if non-alphanumeric characters found
+        }
+
+        // Check for purely numeric input
+        if (/^\d+$/.test(value)) {
+          return false; // Invalid if input is purely numeric
+        }
+
+        return true; // Valid input
+      }
       function sanitizePriceInput(inputElement) {
         inputElement.addEventListener('input', function () {
           let value = this.value.replace(/\D/g, ''); // Remove any non-digit characters
@@ -995,7 +1016,7 @@ matchData.forEach(match => {
         const isValidWinningPrice = validateInput(
           'winningPrizeInput',
           'error-win-price',
-          isValidTeamName1,
+          isValidTeamName2,
           'Please enter a winning price',
           'Please enter a valid winning price'
         );
