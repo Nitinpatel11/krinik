@@ -241,6 +241,19 @@
       float: left;
       margin-left: 0em !important;
     }
+
+    .btn-ponter{
+    cursor: auto !important;
+    border: none !important;
+    outline: none !important;
+    transition: none !important;
+  }
+
+  .btn-ponter:focus{
+    outline: none !important;
+    border: none !important;
+    box-shadow: none;
+  }
   </style>
 </head>
 
@@ -669,7 +682,7 @@
 
                       <div class="container">
                         <div class="status-buttons">
-                          <button class="btn btn-primary1">Status (Live/Completed)</button>
+                          <button class="btn btn-primary1 btn-ponter" id="statusShow">Status</button>
                           <button class="btn btn-primary1 mt-2" id="declareResult">Declare Result</button>
                         </div>
                         <div class="table-wrapper mt-3">
@@ -738,7 +751,7 @@
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
 let remainTiming = document.querySelector('#remainTiming')
-
+let statusShow = document.getElementById('statusShow')
 
 
   async function fetchUserData() {
@@ -783,32 +796,90 @@ let remainTiming = document.querySelector('#remainTiming')
 
       teamLogoName1.textContent = response.select_team_A.team_name;
       teamLogoName2.textContent = response.select_team_B.team_name;
-      let defaultTime = new Date();  // Current date and time
-console.log(defaultTime.getTime(), "defaultTime");
+//       let defaultTime = new Date();  // Current date and time
+// console.log(defaultTime.getTime(), "defaultTime");
 
-const matchStartDate = response.match_start_date;  // "11-09-2024 17:15"
-const matchDateTimeStr = matchStartDate.replace("-", "/").replace("-", "/"); // Ensures compatibility with Date parsing
-console.log(matchDateTimeStr,"matchDateTimeStr")
+// const matchStartDate = response.match_start_date;  // "11-09-2024 17:15"
+// const matchDateTimeStr = matchStartDate.replace("/","-"); // Ensures compatibility with Date parsing
+// console.log(matchDateTimeStr,"matchDateTimeStr")
 
 // Parse the match date and time to a Date object
-const matchDateTime = new Date(matchDateTimeStr);
-console.log(matchDateTime,"match_date")
-console.log(defaultTime,"dmatch_date")
-// Calculate the remaining time in milliseconds
-let remainingTime = matchDateTime - defaultTime; 
+// const matchDateTime = new Date(matchDateTimeStr);
+// console.log(matchDateTime,"match_date")
+// console.log(defaultTime,"dmatch_date")
+// // Calculate the remaining time in milliseconds
+// let remainingTime = matchDateTime - defaultTime; 
 
-// Calculate the number of days, hours, and minutes
-let remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-let remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-let remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+// // Calculate the number of days, hours, and minutes
+// let remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+// let remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+// let remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
 
-console.log(`Remaining Time: ${remainingDays} days, ${remainingHours} hours, ${remainingMinutes} minutes`);
+// console.log(`Remaining Time: ${remainingDays} days, ${remainingHours} hours, ${remainingMinutes} minutes`);
 
-// Format the result as DD:HH:MM
-let formattedRemainingTime = `${remainingDays.toString().padStart(2, '0')}d:${remainingHours.toString().padStart(2, '0')}h:${remainingMinutes.toString().padStart(2, '0')}m`;
+// // Format the result as DD:HH:MM
+// let formattedRemainingTime = `${remainingDays.toString().padStart(2, '0')}d:${remainingHours.toString().padStart(2, '0')}h:${remainingMinutes.toString().padStart(2, '0')}m`;
 
-console.log(`Formatted Remaining Time: ${formattedRemainingTime}`);
-remainTiming.textContent = formattedRemainingTime
+let defaultTime = new Date();  // Current date and time
+console.log(defaultTime.getTime(), "defaultTime");
+
+// Example match start and end dates from response
+const matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
+const matchEndDate = response.match_end_date;  // Example: "11-09-2024 20:15"
+
+const matchDateTimeStr = matchStartDate.replace("/", "-"); // Ensures compatibility with Date parsing
+const matchDateTimeStrEnd = matchEndDate.replace("/", "-"); // Ensures compatibility with Date parsing
+console.log(matchDateTimeStr, "matchDateTimeStr");
+console.log(matchDateTimeStrEnd, "matchDateTimeStrEnd");
+
+// Use moment.js to parse the match start and end dates
+const formattedMatchDate = moment(matchDateTimeStr, 'DD-MM-YYYY HH:mm');  // Match start as a moment object
+const formattedMatchEndDate = moment(matchDateTimeStrEnd, 'DD-MM-YYYY HH:mm');  // Match end as a moment object
+console.log(formattedMatchDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchDate");
+console.log(formattedMatchEndDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchEndDate");
+
+// Function to update the live countdown and status
+function updateCountdown() {
+    // Get the current time
+    let currentTime = moment();  // Current time as a moment object
+    console.log(currentTime.format('DD-MM-YYYY HH:mm:ss'), "Current Time");
+
+    // Calculate the remaining time until match start and end
+    let remainingTimeStart = formattedMatchDate.diff(currentTime);
+    let remainingTimeEnd = formattedMatchEndDate.diff(currentTime);
+
+    // Check the current status
+    if (remainingTimeStart > 0) {
+        // Match hasn't started yet
+        statusShow.textContent = "Upcoming";
+
+        // Convert the remaining time to a human-readable format for the countdown
+        let duration = moment.duration(remainingTimeStart);
+        let formattedRemainingTime = `${duration.days()} days, ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds`;
+        remainTiming.textContent = formattedRemainingTime;
+
+    } else if (remainingTimeStart <= 0 && remainingTimeEnd > 0) {
+        // Match is live
+        statusShow.textContent = "Live";
+        remainTiming.textContent = "Live";
+        
+    } else if (remainingTimeEnd <= 0) {
+        // Match has ended
+        statusShow.textContent = "Completed";
+        remainTiming.textContent = "Completed";
+        
+        // Stop the countdown as the match is completed
+        clearInterval(countdownInterval);
+    }
+}
+
+// Start the countdown and update every second (1000 ms)
+let countdownInterval = setInterval(updateCountdown, 1000);
+
+// Initial call to display countdown immediately
+updateCountdown();
+
+
 
       selectingPlayerA = response.select_player_A
       selectingPlayerB = response.select_player_B
@@ -1489,7 +1560,7 @@ remainTiming.textContent = formattedRemainingTime
 <script src="assets/libs/node-waves/waves.min.js"></script>
 
 <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="./assets/js/logout.js"></script>
 
 <script src="assets/js/app.js"></script>

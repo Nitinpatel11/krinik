@@ -4402,3 +4402,16 @@ width: auto !important;
   .otp-exempt5{
     display: none ;
   }
+
+  .btn-ponter{
+    cursor: auto !important;
+    border: none !important;
+    outline: none !important;
+    transition: none !important;
+  }
+
+  .btn-ponter:focus{
+    outline: none !important;
+    border: none !important;
+    box-shadow: none;
+  }

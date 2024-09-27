@@ -1262,6 +1262,13 @@ downloadBtn.addEventListener('click', () => {
   a.remove();
 });
 
+window.addEventListener('pageshow', function (event) {
+  if (event.persisted || (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD)) {
+      // Reload the page only once
+      window.location.reload();
+  }
+});
+
 
   </script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
