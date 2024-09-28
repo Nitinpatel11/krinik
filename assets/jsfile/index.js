@@ -126,13 +126,13 @@ loginForm.addEventListener("submit", async (event) => {
   event.preventDefault(); // Prevent form from submitting by default
 
   // Get form inputs
-  const email = document.getElementById("email").value.trim(); // Trim to avoid extra spaces
-  const password = document.getElementById("password").value.trim();
-  const adminType = document.getElementById("admin-type").value.trim();
+  let email = document.getElementById("email").value.trim(); // Trim to avoid extra spaces
+  let password = document.getElementById("password").value.trim();
+  let adminType = document.getElementById("admin-type").value.trim();
 
-  console.log("Input Email:", email);
-  console.log("Input Password:", password);
-  console.log("Input Admin Type:", adminType);
+  // console.log("Input Email:", email);
+  // console.log("Input Password:", password);
+  // console.log("Input Admin Type:", adminType);
 
   // Form validation
   const validateEmail = validateInput(
@@ -175,12 +175,12 @@ loginForm.addEventListener("submit", async (event) => {
   }
 
   // Check if the email, password, and admin type match with API data
-  const matchingUser = loginData.find(
-    (user) =>
-      user.email == email &&
-      user.password == password &&
-      user.admin_type == adminType
-  );
+  // const matchingUser = loginData.find(
+  //   (user) =>
+  //     user.email == email &&
+  //     user.password == password &&
+  //     user.admin_type == adminType
+  // );
   // console.log(loginData[0].admin_type,"match data")
 
   const matchingEmail = loginData.find(user => user.email == email);
@@ -236,7 +236,7 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
   } else if (matchingEmail && matchingPassword && matchingAdminType) {
     console.log("Login successful!");
     try {
-      if (loginData[0].admin_type === "super admin") {
+      if (adminType === "super admin") {
         setLocalStorage(
           COOKIE_NAME,
           email,
