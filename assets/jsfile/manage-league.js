@@ -741,7 +741,7 @@ function displayTableRows() {
     );
     }
     
-    console.log(statusType ,"dfg")
+    // console.log(statusType ,"dfg")
     tr.append(noCell)
       .append(fullNameCell)
       .append(shortNameCell)
