@@ -25,7 +25,7 @@ async function fetchUserData() {
    const userData = userData1.data;
    console.log(userData);
    editPlayerData(userData);
-   const newAmounts = await addAmount(userData.id);
+   const newAmounts = await addAmount(userData.user_id);
 if (newAmounts) {
 document.getElementById("wallet-amount").textContent = newAmounts.totalPlayCoin;
 document.getElementById("winning-amount").textContent = newAmounts.totalWinningCoin;
@@ -95,7 +95,7 @@ userImageView.src = `https://krinik.pythonanywhere.com${response.image}`;
 
 // Set form field values
 userFullName.textContent = response.name;
-userMob.textContent = response.mobile;
+userMob.textContent = response.mobile_no;
 userEmail.textContent = response.email;
 regTime.textContent = response.date_time;
 walletAmount.textContent = response.wallet_amount;

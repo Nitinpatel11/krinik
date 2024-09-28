@@ -465,7 +465,7 @@ return null;
       }
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-          '<span class="sortable " onclick="handleView(' + showdata["id"] + ')"><i class="far fa-eye"></i></span>'
+          '<span class="sortable " onclick="handleView(' + showdata["user_id"] + ')"><i class="far fa-eye"></i></span>'
       );
       if (admintype  == "super admin") {
         viewCell.hide()
