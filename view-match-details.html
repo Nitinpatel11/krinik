@@ -883,7 +883,7 @@ updateCountdown();
 
       selectingPlayerA = response.select_player_A
       selectingPlayerB = response.select_player_B
-      // console.log(selectingPlayerA,"olp")
+      console.log(selectingPlayerA,"olp")
       // disablePlayersA = response.disable_player_A
       // disablePlayersB = response.disable_player_B
       disablePlayersA = (response.disable_player_A || []).map(player => ({
@@ -1078,6 +1078,8 @@ updateCountdown();
       const userData = userData1.data;
       userId = userData.id;
 
+        const leagueNameData = userData.select_league.league_name
+        
       const teamA = userData.select_team_A.team_name;
       const teamB = userData.select_team_B.team_name;
       const playersA = userData.select_player_A;
@@ -1087,8 +1089,8 @@ updateCountdown();
 
       console.log(disableplayersA, disableplayersB, "data3");
 
-      await fetchPlayer(teamA, playersA, disableplayersA, 'playerCheckboxesA'); // Fetch players for Team A
-      await fetchPlayer(teamB, playersB, disableplayersB, 'playerCheckboxesB');
+      await fetchPlayer(teamA, playersA, disableplayersA, 'playerCheckboxesA', leagueNameData); // Fetch players for Team A
+      await fetchPlayer(teamB, playersB, disableplayersB, 'playerCheckboxesB', leagueNameData);
       fetchData(userId);
 
 
@@ -1330,7 +1332,7 @@ updateCountdown();
 
 
   // Function to open the modal and populate it with checkboxes
-  async function fetchPlayer(teamName, playersName, disablePlayers, checkboxContainerId) {
+  async function fetchPlayer(teamName, playersName, disablePlayers, checkboxContainerId, leagueNameData) {
     try {
       const response = await fetch('https://krinik.pythonanywhere.com/player_get/');
       if (!response.ok) {
@@ -1341,9 +1343,10 @@ updateCountdown();
 
       if (userData1 && userData1.status === "success" && userData1.data) {
         const rankList = userData1.data;
-
+        console.log(rankList,"league che")
         // Filter players by team name
-        const matchingData = rankList.filter(item => item.team_name === teamName);
+        const matchingData = rankList.filter(item => item.team_name === teamName && item.league_name === leagueNameData);
+        console.log(matchingData,'matchdata che')
         if (matchingData.length > 0) {
           // Filter out players already in playersName and those in disablePlayers
           const playerFilters = matchingData.filter(play =>
