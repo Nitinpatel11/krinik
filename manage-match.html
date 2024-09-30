@@ -916,157 +916,157 @@ function getStatus(start_date, end_date) {
 
 
 
-   function initializePage1() {
-    // HTML for mobile number section and OTP modal
-    const otpModalHTML = `
-    <div id="otpModal" class="modal" style="display:none;z-index:2000">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>OTP Verification</h2>
-            <div class="col-md-12 d-flex justify-content-between align-items-center">
-                <div class="form-group form-group-custom">
-                    <input type="text" class="form-control" id="mobilenum" value="Mobile No. 7801804996" readonly style="text-align: center;" />
-                </div>
-                <div class="text-center">
-                    <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
-                </div>
-            </div>
-            <div id="showotptimer" style="display:none;">
-                <div class="otp-inputs text-center">
-                    <input type="text" maxlength="1" class="otp-input" />
-                    <input type="text" maxlength="1" class="otp-input" />
-                    <input type="text" maxlength="1" class="otp-input" />
-                    <input type="text" maxlength="1" class="otp-input" />
-                    <input type="text" maxlength="1" class="otp-input" />
-                    <input type="text" maxlength="1" class="otp-input" />
-                </div>
-                <p class="resend-timer text-end">
-                    Resend in <span id="timer">30</span> sec
-                    <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
-                </p>
-                <button id="submitOTP" class="btn btn-primary">Submit</button>
-                <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
-            </div>
-        </div>
-        <div id="otpOverlay" class="overlay" style="display:none;"></div>
-    </div>`;
+//    function initializePage1() {
+//     // HTML for mobile number section and OTP modal
+//     const otpModalHTML = `
+//     <div id="otpModal" class="modal" style="display:none;z-index:2000">
+//         <div class="modal-content">
+//             <span class="close">&times;</span>
+//             <h2>OTP Verification</h2>
+//             <div class="col-md-12 d-flex justify-content-between align-items-center">
+//                 <div class="form-group form-group-custom">
+//                     <input type="text" class="form-control" id="mobilenum" value="Mobile No. 7801804996" readonly style="text-align: center;" />
+//                 </div>
+//                 <div class="text-center">
+//                     <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
+//                 </div>
+//             </div>
+//             <div id="showotptimer" style="display:none;">
+//                 <div class="otp-inputs text-center">
+//                     <input type="text" maxlength="1" class="otp-input" />
+//                     <input type="text" maxlength="1" class="otp-input" />
+//                     <input type="text" maxlength="1" class="otp-input" />
+//                     <input type="text" maxlength="1" class="otp-input" />
+//                     <input type="text" maxlength="1" class="otp-input" />
+//                     <input type="text" maxlength="1" class="otp-input" />
+//                 </div>
+//                 <p class="resend-timer text-end">
+//                     Resend in <span id="timer">30</span> sec
+//                     <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
+//                 </p>
+//                 <button id="submitOTP" class="btn btn-primary">Submit</button>
+//                 <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
+//             </div>
+//         </div>
+//         <div id="otpOverlay" class="overlay" style="display:none;"></div>
+//     </div>`;
 
-    document.body.insertAdjacentHTML('beforeend', otpModalHTML);
+//     document.body.insertAdjacentHTML('beforeend', otpModalHTML);
 
-    // Get elements for OTP modal
-    const otpModal = document.getElementById("otpModal");
-    const otpOverlay = document.getElementById("otpOverlay");
-    const closeModal = otpModal.querySelector(".close");
-    const submitOTP = document.getElementById("submitOTP");
-    const otpError = document.getElementById("otpError");
-    const timerElement = document.getElementById('timer');
-    const timerElement1 = document.getElementById('showotptimer');
-    const resendOtpButton = document.getElementById('resend-otp-btn');
+//     // Get elements for OTP modal
+//     const otpModal = document.getElementById("otpModal");
+//     const otpOverlay = document.getElementById("otpOverlay");
+//     const closeModal = otpModal.querySelector(".close");
+//     const submitOTP = document.getElementById("submitOTP");
+//     const otpError = document.getElementById("otpError");
+//     const timerElement = document.getElementById('timer');
+//     const timerElement1 = document.getElementById('showotptimer');
+//     const resendOtpButton = document.getElementById('resend-otp-btn');
 
-    function showOTPModal() {
-      otpModal.style.display = "block";
-      otpOverlay.style.display = "block";
-      startTimer();
+//     function showOTPModal() {
+//       otpModal.style.display = "block";
+//       otpOverlay.style.display = "block";
+//       startTimer();
     
-  }
-  function showOTPModal1() {
-    timerElement1.style.display = "block";
-    otpOverlay.style.display = "block";
+//   }
+//   function showOTPModal1() {
+//     timerElement1.style.display = "block";
+//     otpOverlay.style.display = "block";
     
-}
+// }
 
-    function hideOTPModal() {
-        otpModal.style.display = "none";
-        otpOverlay.style.display = "none";
-        resetTimer(); // Reset the timer when hiding the modal
-    }
+//     function hideOTPModal() {
+//         otpModal.style.display = "none";
+//         otpOverlay.style.display = "none";
+//         resetTimer(); // Reset the timer when hiding the modal
+//     }
 
-    function validateOTP(otp) {
-        let otpsend = String(otpApi2); // Ensure otpApi2 is a string
+//     function validateOTP(otp) {
+//         let otpsend = String(otpApi2); // Ensure otpApi2 is a string
 
-        if (otp === otpsend) {
-            otpError.style.display = "none"; // Hide error if OTP is valid
-            return true;
-        } else {
-            otpError.style.display = "block"; // Show error if OTP is invalid
-            return false;
-        }
-    }
+//         if (otp === otpsend) {
+//             otpError.style.display = "none"; // Hide error if OTP is valid
+//             return true;
+//         } else {
+//             otpError.style.display = "block"; // Show error if OTP is invalid
+//             return false;
+//         }
+//     }
 
-    let timerIntervalId = null;
+//     let timerIntervalId = null;
 
-    function startTimer() {
-        let time = 30; // Timer duration in seconds
+//     function startTimer() {
+//         let time = 30; // Timer duration in seconds
 
-        if (timerIntervalId !== null) {
-            clearInterval(timerIntervalId);
-        }
+//         if (timerIntervalId !== null) {
+//             clearInterval(timerIntervalId);
+//         }
 
-        timerIntervalId = setInterval(() => {
-            time--;
-            timerElement.textContent = time;
-            if (time <= 0) {
-                clearInterval(timerIntervalId);
-                timerElement.textContent = '0';
-                resendOtpButton.style.display = 'inline-block'; // Show the resend button
-            }
-        }, 1000);
-    }
+//         timerIntervalId = setInterval(() => {
+//             time--;
+//             timerElement.textContent = time;
+//             if (time <= 0) {
+//                 clearInterval(timerIntervalId);
+//                 timerElement.textContent = '0';
+//                 resendOtpButton.style.display = 'inline-block'; // Show the resend button
+//             }
+//         }, 1000);
+//     }
 
-    function resetTimer() {
-        if (timerIntervalId !== null) {
-            clearInterval(timerIntervalId);
-            timerIntervalId = null;
-        }
-        timerElement.textContent = '30'; // Reset the timer display
-        resendOtpButton.style.display = 'none'; // Hide the resend button
-    }
+//     function resetTimer() {
+//         if (timerIntervalId !== null) {
+//             clearInterval(timerIntervalId);
+//             timerIntervalId = null;
+//         }
+//         timerElement.textContent = '30'; // Reset the timer display
+//         resendOtpButton.style.display = 'none'; // Hide the resend button
+//     }
 
-    submitOTP.addEventListener("click", () => {
-        const otpInputs = document.querySelectorAll('.otp-input');
-        const otp = Array.from(otpInputs).map(input => input.value).join('');
-        if (validateOTP(otp)) {
-            const adminType = JSON.parse(localStorage.getItem('adminType'));
-            const userType = JSON.parse(localStorage.getItem('userEmail'));
+//     submitOTP.addEventListener("click", () => {
+//         const otpInputs = document.querySelectorAll('.otp-input');
+//         const otp = Array.from(otpInputs).map(input => input.value).join('');
+//         if (validateOTP(otp)) {
+//             const adminType = JSON.parse(localStorage.getItem('adminType'));
+//             const userType = JSON.parse(localStorage.getItem('userEmail'));
 
-            const currentTime = new Date().getTime();
-            const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
-            const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
+//             const currentTime = new Date().getTime();
+//             const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
+//             const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
 
-            localStorage.setItem('loginTime', expirationTime.toISOString());
-            hideOTPModal(); // Hide the OTP modal upon successful validation
-        }
-    });
+//             localStorage.setItem('loginTime', expirationTime.toISOString());
+//             hideOTPModal(); // Hide the OTP modal upon successful validation
+//         }
+//     });
 
-    closeModal.addEventListener("click", hideOTPModal);
-    otpOverlay.addEventListener("click", hideOTPModal);
-    // resendOtpButton.addEventListener("click",)
-    // Close modal if clicking outside the modal content
-    resendOtpButton.addEventListener("click", (event) => {
-      postPhoneNumber()
-      phoneNumber()
-        if (event.target === resendOtpButton) {
-          resendOtpButton.style.display = "none"
-        }
-    });
-    const getOtpButton = document.getElementById('get-otp-btn');
-  getOtpButton.addEventListener('click', function () {
-      showOTPModal1();
-      postPhoneNumber()
-      phoneNumber()
-  });
-    const elements = document.querySelectorAll("button, input, select, textarea, a, li, div, th, td, span, i");
-    elements.forEach(element => {
-        element.addEventListener("click", (event) => {
-            if (element.classList.contains("otp-exempt3")) {
-                event.preventDefault();
+//     closeModal.addEventListener("click", hideOTPModal);
+//     otpOverlay.addEventListener("click", hideOTPModal);
+//     // resendOtpButton.addEventListener("click",)
+//     // Close modal if clicking outside the modal content
+//     resendOtpButton.addEventListener("click", (event) => {
+//       postPhoneNumber()
+//       phoneNumber()
+//         if (event.target === resendOtpButton) {
+//           resendOtpButton.style.display = "none"
+//         }
+//     });
+//     const getOtpButton = document.getElementById('get-otp-btn');
+//   getOtpButton.addEventListener('click', function () {
+//       showOTPModal1();
+//       postPhoneNumber()
+//       phoneNumber()
+//   });
+//     const elements = document.querySelectorAll("button, input, select, textarea, a, li, div, th, td, span, i");
+//     elements.forEach(element => {
+//         element.addEventListener("click", (event) => {
+//             if (element.classList.contains("otp-exempt3")) {
+//                 event.preventDefault();
              
-                    showOTPModal();
+//                     showOTPModal();
   
-            }
-        });
-      })
-}
+//             }
+//         });
+//       })
+// }
 
 
 if( statusType == "true"){

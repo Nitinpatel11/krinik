@@ -523,7 +523,7 @@ const otpModalHTML = `
         <h2>OTP Verification</h2>
         <div class="col-md-12 d-flex justify-content-between align-items-center">
             <div class="form-group form-group-custom">
-                <input type="text" class="form-control" id="mobilenum" value="Mobile No. 7801804996" readonly style="text-align: center;" />
+                <input type="text" class="form-control" id="mobilenum" value="" readonly style="text-align: center;" />
             </div>
             <div class="text-center">
                 <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
@@ -621,20 +621,32 @@ function resetTimer() {
 }
 
 submitOTP.addEventListener("click", () => {
+    // const otpInputs = document.querySelectorAll('.otp-input');
+    // const otp = Array.from(otpInputs).map(input => input.value).join('');
     const otpInputs = document.querySelectorAll('.otp-input');
-    const otp = Array.from(otpInputs).map(input => input.value).join('');
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+            
+            window.confirmationResult.confirm(otp).then((result) => {
+                const user = result.user;
+                alert('OTP verified successfully');
+                if (validateOTP(otp)) {
+                  const adminType = JSON.parse(localStorage.getItem('adminType'));
+                  const userType = JSON.parse(localStorage.getItem('userEmail'));
+          
+                  const currentTime = new Date().getTime();
+                  const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
+                  const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
+          
+                  localStorage.setItem('loginTime', expirationTime.toISOString());
+                  hideOTPModal(); // Hide the OTP modal upon successful validation
+              }
+                hideOTPModal(); // Hide modal after successful verification
+            }).catch((error) => {
+                console.error('Error during OTP verification:', error);
+                document.getElementById('otpError').style.display = 'block';
+            });
     console.log( otp)
-    if (validateOTP(otp)) {
-        const adminType = JSON.parse(localStorage.getItem('adminType'));
-        const userType = JSON.parse(localStorage.getItem('userEmail'));
-
-        const currentTime = new Date().getTime();
-        const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
-        const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
-
-        localStorage.setItem('loginTime', expirationTime.toISOString());
-        hideOTPModal(); // Hide the OTP modal upon successful validation
-    }
+   
 });
 
 closeModal.addEventListener("click", hideOTPModal);
@@ -647,13 +659,52 @@ resendOtpButton.addEventListener("click", (event) => {
     if (event.target === resendOtpButton) {
       resendOtpButton.style.display = "none"
     }
+
+    
 });
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBMIXxBISZnryQeOgKRs73TqVRXkshd0KM",
+  authDomain: "krinkin-309ee.firebaseapp.com",
+  projectId: "krinkin-309ee",
+  storageBucket: "krinkin-309ee.appspot.com",
+  messagingSenderId: "397386970252",
+  appId: "1:397386970252:web:9655f412b4280a036d77a9"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Function to set up reCAPTCHA
+function setupRecaptcha() {
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'size': 'invisible',
+      'callback': function(response) {
+          // reCAPTCHA solved
+      }
+  });
+}
+
 const getOtpButton = document.getElementById('get-otp-btn');
 getOtpButton.addEventListener('click', function () {
-  showOTPModal1();
+  // showOTPModal1();
   postPhoneNumber()
+  setupRecaptcha();
+  const phoneNumber = document.getElementById('mobilenum').value;
+  const appVerifier = window.recaptchaVerifier;
+
+  firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          alert('OTP sent');
+          showOTPModal1(); // Show OTP input fields after sending OTP
+      }).catch((error) => {
+          console.error('Error during OTP send:', error);
+          alert('Failed to send OTP');
+      });
   // phoneNumber()
 });
+
+
 const elements = document.querySelectorAll("button, input, select, textarea, a, li, div, th, td, span, i");
 elements.forEach(element => {
     element.addEventListener("click", (event) => {
@@ -665,6 +716,37 @@ elements.forEach(element => {
         }
     });
   })
+  function showOTPModal1() {
+    document.getElementById('showotptimer').style.display = "block";
+    startTimer(); // Start the OTP resend timer
+  }
+  
+  function hideOTPModal() {
+    document.getElementById("otpModal").style.display = "none";
+    document.getElementById("otpOverlay").style.display = "none";
+  }
+
+  function startTimer() {
+    let time = 30; // Timer duration in seconds
+  
+    if (timerIntervalId !== null) {
+        clearInterval(timerIntervalId);
+    }
+  
+    timerIntervalId = setInterval(() => {
+        time--;
+        document.getElementById('timer').textContent = time;
+        if (time <= 0) {
+            clearInterval(timerIntervalId);
+            document.getElementById('timer').textContent = '0';
+            document.getElementById('resend-otp-btn').style.display = 'inline-block'; // Show resend button
+        }
+    }, 1000);
+  }
+  
+  document.getElementById('get-otp-btn').addEventListener('click', sendOTP);
+  
+  document.getElementById('submitOTP').addEventListener('click', verifyOTP);
 }
 
 
@@ -674,6 +756,12 @@ otpAdd.classList.add('otp-exempt3')
 otpAdd.classList.remove('otp-exempt3')
 
 }
+
+
+// Timer functionality
+let timerIntervalId = null;
+
+
 
 function displayTableRows() {
   $("table tbody").empty();

@@ -295,7 +295,7 @@ function initializePage() {
             <h2>OTP Verification</h2>
             <div class="col-md-12 d-flex justify-content-between align-items-center">
                 <div class="form-group form-group-custom">
-                    <input type="text" class="form-control" id="mobilenum" value="Mobile No. 7801804996" readonly style="text-align: center;" />
+                    <input type="text" class="form-control" id="mobilenum" value=""  style="text-align: center;" />
                 </div>
                 <div class="text-center">
                     <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
@@ -351,17 +351,32 @@ function initializePage() {
         resetTimer(); // Reset the timer when hiding the modal
     }
 
-    function validateOTP(otp) {
-        let otpsend = String(otpApi2); // Ensure otpApi2 is a string
+    function sendOTP() {
+      setupRecaptcha();
+      const phoneNumber = document.getElementById('mobilenum').value;
+      const appVerifier = window.recaptchaVerifier;
 
-        if (otp === otpsend) {
-            otpError.style.display = "none"; // Hide error if OTP is valid
-            return true;
-        } else {
-            otpError.style.display = "block"; // Show error if OTP is invalid
-            return false;
-        }
-    }
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then((confirmationResult) => {
+              window.confirmationResult = confirmationResult;
+              alert('OTP sent');
+              showOTPModal1(); // Show OTP input fields after sending OTP
+          }).catch((error) => {
+              console.error('Error during OTP send:', error);
+              alert('Failed to send OTP');
+          });
+  }
+    // function validateOTP(otp) {
+    //     let otpsend = String(otpApi2); // Ensure otpApi2 is a string
+
+    //     if (otp === otpsend) {
+    //         otpError.style.display = "none"; // Hide error if OTP is valid
+    //         return true;
+    //     } else {
+    //         otpError.style.display = "block"; // Show error if OTP is invalid
+    //         return false;
+    //     }
+    // }
 
     let timerIntervalId = null;
 
@@ -395,15 +410,25 @@ function initializePage() {
     submitOTP.addEventListener("click", () => {
         const otpInputs = document.querySelectorAll('.otp-input');
         const otp = Array.from(otpInputs).map(input => input.value).join('');
-        if (validateOTP(otp)) {
-            const adminType = JSON.parse(localStorage.getItem('adminType'));
-            const userType = JSON.parse(localStorage.getItem('userEmail'));
 
-            const currentTime = new Date().getTime();
-            const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
-            const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
+        if (sendOTP()) {
+        window.confirmationResult.confirm(otp).then((result) => {
+          const adminType = JSON.parse(localStorage.getItem('adminType'));
+          const userType = JSON.parse(localStorage.getItem('userEmail'));
 
-            localStorage.setItem('loginTime', expirationTime.toISOString());
+          const currentTime = new Date().getTime();
+          const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
+          const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
+
+          localStorage.setItem('loginTime', expirationTime.toISOString());
+          const user = result.user;
+          alert('OTP verified successfully');
+          hideOTPModal(); // Hide modal after successful verification
+      }).catch((error) => {
+          console.error('Error during OTP verification:', error);
+          document.getElementById('otpError').style.display = 'block';
+      });
+      
             hideOTPModal(); // Hide the OTP modal upon successful validation
         }
     });
