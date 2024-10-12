@@ -13,7 +13,8 @@
             try {
                 const response = await fetch('https://krinik.pythonanywhere.com/league_get/');
                 if (!response.ok) {
-                    throw new Error('Failed to fetch leagues');
+                    throw new Error('Failed to fetch leagues'); 
+
                 }
                 const data = await response.json();
                 console.log(data,"data is there")
@@ -170,7 +171,7 @@
     const playerNameOverlap = existingPlayers.some(player => {
         const normalizedExistingPlayerName = (player.player_name || '').trim().toLowerCase();
         const normalizedExistingLeagueName = (player.league_name || '').trim().toLowerCase();
-        const normalizedExistingTeamName = (player.team_name || '').trim().toLowerCase();
+        const normalizedExistingTeamName = (player.team_name.team_name || '').trim().toLowerCase();
         console.log(normalizedExistingPlayerName)
         return normalizedExistingPlayerName === normalizedPlayerName &&
             normalizedExistingLeagueName === leagueName.trim().toLowerCase() &&
@@ -180,7 +181,7 @@
     const shortPlayerNameOverlap = existingPlayers.some(player => {
         const normalizedExistingShortName = (player.player_short_name || '').trim().toLowerCase();
         const normalizedExistingLeagueName = (player.league_name || '').trim().toLowerCase();
-        const normalizedExistingTeamName = (player.team_name || '').trim().toLowerCase();
+        const normalizedExistingTeamName = (player.team_name.team_name || '').trim().toLowerCase();
         return normalizedExistingShortName === normalizedShortName &&
             normalizedExistingLeagueName === leagueName.trim().toLowerCase() &&
             normalizedExistingTeamName === teamName.trim().toLowerCase();

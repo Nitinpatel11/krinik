@@ -1,3 +1,10 @@
+// index.js
+import { redirectToPage } from './loader.js';
+import { refreshpage } from './pagerefresh.js';
+
+
+
+
 const loginForm = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
@@ -13,6 +20,8 @@ const COOKIE_EXPIRATION_HOURS_ADMIN = 24; // 30 minutes for regular admin
 const COOKIE_EXPIRATION_HOURS_SUPER_ADMIN = 1; // 60 minutes for super admin
 const STATUS_ADMIN = "true";
 const STATUS_ADMIN1 = "false";
+
+
 
 function setLocalStorage(key, value, hours, status) {
   const currentTime = new Date().getTime();
@@ -263,7 +272,7 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
           STATUS_ADMIN1
         );
       }
-      window.location.href = "./dashboard.html"; // Redirect to the dashboard
+      redirectToPage("dashboard.html"); // Redirect to the dashboard
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -280,5 +289,5 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
  
 });
 
-
+refreshpage()
 checkLocalStorageExpiration();

@@ -51,26 +51,26 @@
     height: 60px;
   }
 
-  .btnss {
+  /* .btnss {
     padding: 5px 30px;
     border: 2px solid #E20101;
     color: white;
     font-size: 15px;
     background-color: #E20101;
 
-  }
+  } */
 
-  .btnss:hover {
+  /* .btnss:hover {
     background-color: #E20101;
     color: white;
-  }
-
+  } */
+/* 
   .btnss:focus {
     outline: none;
     background-color: #E20101;
     color: white;
-  }
-
+  } */
+/* 
   .btnss {
     padding: 5px 30px;
     border: 2px solid #E20101;
@@ -78,18 +78,18 @@
     font-size: 15px;
     background-color: #E20101;
 
-  }
+  } */
 
-  .btn:focus {
+  /* .btn:focus {
     outline: none;
     background-color: #E20101;
     color: white;
-  }
+  } */
 
-  .btnss:hover {
+  /* .btnss:hover {
     background-color: #E20101;
     color: white;
-  }
+  } */
 
   .buttons {
     margin-top: -30px;
@@ -401,7 +401,7 @@
           <div class="container-fluid">
             <div class="row align-items-center">
               <div>
-                <h4 class="page-title mb-1">User Details Page</h4>
+                <h4 class="page-title mb-1">User KYC View</h4>
               </div>
             </div>
           </div>
@@ -431,31 +431,31 @@
 
                             <div class="info mb-2">Mobile No : <span id="user-mob" class="span-user"></span></div>
                             <div class="info mb-2">Email Id : <span id="user-email" class="span-user"></span></div>
-                            <div class="info mb-2"><span>Registration Date & Time :</span> <span id="reg-time" class="span-user"></span></div>
+                            <!-- <div class="info mb-2"><span>Registration Date & Time :</span> <span id="reg-time" class="span-user"></span></div> -->
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <!-- Buttons Section -->
-                    <div class="buttons">
-                      <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
+                    <!-- <div class="buttons"> -->
+                      <!-- <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
                         <button class="btn btn-outline-dark m-1" id="user-unlock">
                           <span id="user-unlock-text" ></span>
                         </button>
                         <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
                         <button class="btn btn-outline-dark m-1" id="user-transaction-history" >Transaction History</button>
-                      </div>
+                      </div> -->
                     
-                      <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
+                      <!-- <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
                         <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
                         <button class="btn btn-outline-dark m-1" id="user-add-amount" data-toggle="modal" data-target="#addAmountModal">Add Amount</button>
                         <button class="btn btn-outline-dark m-1" id="user-game-history">Game History</button>
                         <button class="btn btn-outline-dark m-1" id="user-withdraw" >Withdraw History</button>
-                      </div>
+                      </div> -->
 
                       <!-- Add Amount Modal -->
-                      <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel"
+                      <!-- <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
@@ -500,10 +500,10 @@
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                       <!-- Deduct Amount Modal -->
-                      <div class="modal fade" id="deductAmountModal" tabindex="-1"
+                      <!-- <div class="modal fade" id="deductAmountModal" tabindex="-1"
                         aria-labelledby="deductAmountModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
@@ -550,21 +550,70 @@
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      </div> -->
+                    <!-- </div> -->
 
                     <!-- Details Section -->
                     <div class="button_wrapper">
-                      <div class="details d-flex justify-content-between w-100 text-center mt-5">
-                        <div class="item border rounded p-2 flex-fill m-1 border-black h-100"><p id="wallet-amount" class="para-bottom"></p> <span>Wallet Amount</span>
+                      <div class="details d-flex justify-content-between w-75 m-auto text-center ">
+                        <div class="item border rounded p-4 flex-fill m-1 border-black h-100 ">
+                          <div class=" d-flex justify-content-between align-items-center mb-2">
+                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>aadhar front</span>
+                          </div>
+                          <div class="w-25">
+
+                            <button> pdf download</button>
+                          </div>
                         </div>
-                        <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="winning-amount" class="para-bottom"></p> <span>Winning Amount</span>
+                        <div class=" d-flex justify-content-between align-items-center mb-2">
+                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>aadhar back</span>
+                          </div>
+                          <div class="w-25">
+
+                            <button> pdf download</button>
+                          </div>
                         </div>
-                        <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span>
+                        <div class=" d-flex justify-content-between align-items-center mb-2">
+                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>pan card </span>
+                          </div>
+                          <div class="w-25">
+
+                            <button> pdf download</button>
+                          </div>
                         </div>
+                        
+                        <div class=" d-flex justify-content-between align-items-center mb-2">
+                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>Pass Book </span>
+                          </div>
+                          <div class="w-25">
+
+                            <button> pdf download</button>
+                          </div>
+                        </div>
+                        <div class=" d-flex justify-content-between align-items-center mb-2">
+                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>Cheque </span>
+                          </div>
+                          <div class="w-25">
+
+                            <button> pdf download</button>
+                          </div>
+                        </div>
+                      </div>
                         <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount"></p> <span>Refer Amount</span> -->
                         </div>
                       </div>
+
+                      <div class="button_wrapper">
+                        <div class="details d-flex justify-content-between w-50 m-auto text-center mt-5">
+                          <div class="item border rounded p-4 flex-fill m-1 border-black h-100"> <span>Approve</span>
+                          </div>
+                          <button class="item border rounded p-4 flex-fill m-1 h-100 border-black"><span>Reject</span>
+                          </button>
+                          <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span>
+                          </div> -->
+                          <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount"></p> <span>Refer Amount</span> -->
+                          </div>
+                        </div>
                     </div>
                   </div>
 
@@ -614,7 +663,7 @@
   <script src="./assets/libs/simplebar/simplebar.min.js"></script>
   <script src="./assets/libs/node-waves/waves.min.js"></script>
   
-  <script src="./assets/jsfile/user-details-page.js"></script>
+  <script src="./assets/jsfile/user-kyc-view.js"></script>
   <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
   <!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->

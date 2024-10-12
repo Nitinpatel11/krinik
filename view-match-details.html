@@ -419,6 +419,27 @@
                   </div>
                 </a>
               </li>
+              <li class="otp-exempt" style="display:none">
+                <a href="./advertise.html" class="waves-effect">
+                  <div class="icons-sm icon-set ">
+                    <span class="material-symbols-outlined icon-margin">
+                      ad
+                      </span>
+                      <span>Advertise</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="./kyc.html" class="waves-effect">
+                  <div class="icons-sm icon-set">
+                    <span class="material-symbols-outlined icon-margin">
+                      person
+                      </span>
+                 
+                  <span>KYC</span>
+                </div>
+                </a>
+              </li>
   
               <li>
                 <a href="" class="waves-effect " id="logoutButton">
@@ -752,7 +773,7 @@
   const id = urlParams.get('id');
 let remainTiming = document.querySelector('#remainTiming')
 let statusShow = document.getElementById('statusShow')
-
+let urlpooltime
 
   async function fetchUserData() {
     try {
@@ -764,11 +785,28 @@ let statusShow = document.getElementById('statusShow')
       const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
       console.log('Fetching player data from:', url);
 
+     
+        const url1 = `https://krinik.pythonanywhere.com/pool_declare/`;
+        console.log('Fetching player data from:', url1);
+
+        const responseurl = await fetch(url1);
+        const urlpool =await responseurl.json()
+        const urlpooldata = urlpool.data
+
+        const urlpool1 = urlpooldata.find((p)=>p.select_match.match_id == id)
+        if(urlpool1){
+
+          urlpooltime = urlpool1.date_time
+        }
+
+       
+    console.log(urlpooltime,"poll")
       const response = await fetch(url);
+      
       if (!response.ok) {
         throw new Error('Failed to fetch player data');
       }
-
+      
       const userData1 = await response.json();
       const userData = userData1.data;
       
@@ -825,18 +863,26 @@ console.log(defaultTime.getTime(), "defaultTime");
 
 // Example match start and end dates from response
 const matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
-const matchEndDate = response.match_end_date;  // Example: "11-09-2024 20:15"
+const matchEndDate = urlpooltime ? urlpooltime : null;  // If urlpooltime is available, use it; otherwise, it's null.
 
 const matchDateTimeStr = matchStartDate.replace("/", "-"); // Ensures compatibility with Date parsing
-const matchDateTimeStrEnd = matchEndDate.replace("/", "-"); // Ensures compatibility with Date parsing
 console.log(matchDateTimeStr, "matchDateTimeStr");
-console.log(matchDateTimeStrEnd, "matchDateTimeStrEnd");
+
+let matchDateTimeStrEnd = null;
+if (matchEndDate) {
+    matchDateTimeStrEnd = matchEndDate.replace("/", "-"); // Ensures compatibility with Date parsing
+    console.log(matchDateTimeStrEnd, "matchDateTimeStrEnd");
+}
 
 // Use moment.js to parse the match start and end dates
 const formattedMatchDate = moment(matchDateTimeStr, 'DD-MM-YYYY HH:mm');  // Match start as a moment object
-const formattedMatchEndDate = moment(matchDateTimeStrEnd, 'DD-MM-YYYY HH:mm');  // Match end as a moment object
+let formattedMatchEndDate = null;
+if (matchDateTimeStrEnd) {
+    formattedMatchEndDate = moment(matchDateTimeStrEnd, 'YYYY-MM-DD HH:mm:ss');  // Match end as a moment object
+    console.log(formattedMatchEndDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchEndDate");
+}
+
 console.log(formattedMatchDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchDate");
-console.log(formattedMatchEndDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchEndDate");
 
 // Function to update the live countdown and status
 function updateCountdown() {
@@ -844,9 +890,9 @@ function updateCountdown() {
     let currentTime = moment();  // Current time as a moment object
     console.log(currentTime.format('DD-MM-YYYY HH:mm:ss'), "Current Time");
 
-    // Calculate the remaining time until match start and end
+    // Calculate the remaining time until match start
     let remainingTimeStart = formattedMatchDate.diff(currentTime);
-    let remainingTimeEnd = formattedMatchEndDate.diff(currentTime);
+    let remainingTimeEnd = formattedMatchEndDate ? formattedMatchEndDate.diff(currentTime) : null;
 
     // Check the current status
     if (remainingTimeStart > 0) {
@@ -855,19 +901,21 @@ function updateCountdown() {
 
         // Convert the remaining time to a human-readable format for the countdown
         let duration = moment.duration(remainingTimeStart);
-        let formattedRemainingTime = `${duration.days()} days, ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds`;
+        let formattedRemainingTime = `${duration.months()} months, ${duration.days()} days, ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds`;
         remainTiming.textContent = formattedRemainingTime;
 
-    } else if (remainingTimeStart <= 0 && remainingTimeEnd > 0) {
-        // Match is live
+    } else if (remainingTimeStart <= 0 && (!remainingTimeEnd || remainingTimeEnd > 0)) {
+        // Match is live if either:
+        // - It has started and the end time is not provided, OR
+        // - It has started and the current time is between the start and end time
         statusShow.textContent = "Live";
         remainTiming.textContent = "Live";
         
-    } else if (remainingTimeEnd <= 0) {
-        // Match has ended
+    } else if (remainingTimeEnd && remainingTimeEnd <= 0) {
+        // Match has ended if we have the end date and the current time is past the end date
         statusShow.textContent = "Completed";
         remainTiming.textContent = "Completed";
-        
+
         // Stop the countdown as the match is completed
         clearInterval(countdownInterval);
     }
@@ -878,6 +926,7 @@ let countdownInterval = setInterval(updateCountdown, 1000);
 
 // Initial call to display countdown immediately
 updateCountdown();
+
 
       selectingPlayerA = response.select_player_A
       selectingPlayerB = response.select_player_B

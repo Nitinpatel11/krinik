@@ -40,8 +40,9 @@
   }
 
   .responsive-td input {
-    margin-top: 10px;
-    width: 45%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 46%;
   }
 
   @media (max-width: 600px) {
@@ -219,6 +220,27 @@
                 </div>
               </a>
             </li>
+            <li class="otp-exempt" style="display:none">
+              <a href="./advertise.html" class="waves-effect">
+                <div class="icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin">
+                    ad
+                    </span>
+                    <span>Advertise</span>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="./kyc.html" class="waves-effect">
+                <div class="icons-sm icon-set">
+                  <span class="material-symbols-outlined icon-margin">
+                    person
+                    </span>
+               
+                <span>KYC</span>
+              </div>
+              </a>
+            </li>
 
             <li>
               <a href="" class="waves-effect " id="logoutButton">
@@ -347,7 +369,7 @@
                     <div class="row  ">
                       <div class="col-lg-12 d-flex justify-content-center">
                         <div class="mt-4">
-                          <button class="btn btn-primary px-4 py-2" type="submit">Submit</button>
+                          <button class="btn btn-primary px-4 py-2" type="submit" id="submitButton">Submit</button>
                         </div>
                       </div>
                     </div>
@@ -450,6 +472,7 @@ let id = urlParams.get('id');
 let NumberId = Number(id);
 console.log(typeof NumberId, NumberId, "NumberId");
 let teamData
+let matchName
 
 async function fetchData(NumberId) {
   try {
@@ -458,11 +481,13 @@ async function fetchData(NumberId) {
       method: "GET"
     });
     const data1 = await $.ajax({
-      url: `https://krinik.pythonanywhere.com/team_get/`,
+      url: `https://krinik.pythonanywhere.com/player_get/`,
       method: "GET"
     });
+   
 
  teamData = data1.data
+ console.log(teamData,"uio")
 
     if (data && data.status === "success") {
       console.log(data.data);
@@ -472,16 +497,26 @@ async function fetchData(NumberId) {
     
       // Compare the values directly
       let filtermatchview = data.data.find((p) => p.id === NumberId);
-      let Players1 = filtermatchview.select_player_A
-      let Players2 = filtermatchview.select_player_B
+      matchName = filtermatchview.match_display_name
+      console.log(filtermatchview,"matchName")
+      let Players1 = filtermatchview.select_player_A.map((p)=>p)
+      let Players2 = filtermatchview.select_player_B.map((p)=>p)
 
-      let allPlayers = [...Players1,...Players2]
-      console.log(allPlayers)
+      let AllPlayers = [...Players1,...Players2]
+      console.log(AllPlayers,"Allplayers")
 
-
+      let Players12 = filtermatchview.player_list
+      
       if (filtermatchview) {
-        rankList = allPlayers;
-        console.log(rankList, "data");
+        let filteredPlayers = Players12
+          .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId is in AllPlayers
+          .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
+
+        console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
+
+        // Now, you can use this filtered data
+        rankList = filteredPlayers;
+
         array = rankList;
         filterAndDisplay();
       } else {
@@ -495,54 +530,6 @@ async function fetchData(NumberId) {
   }
 }
 
-// fetchData(NumberId);
-
-// async function postPhoneNumber() {
-// try {
-// const response = await $.ajax({
-//   url: "https://krinik.pythonanywhere.com/send_otp_get/", // Change this to your POST endpoint
-//   method: "POST",
-//   contentType: "application/json",
-//   data: JSON.stringify({ phone_number: "7801804996"})
-// });
-
-// if (response ) {
-//   console.log("Phone number posted successfully");
-// } else {
-//   console.error("Failed to post phone number", response);
-// }
-// } catch (error) {
-// console.error("Error posting phone number:", error);
-// }
-// }
-
-// async function phoneNumber() {
-// try {
-// const otpapi = await $.ajax({
-//       url: "https://krinik.pythonanywhere.com//",
-//       method: "GET"
-//     });
-
- 
-//     if (otpapi && otpapi.status === "success") {
-// // Access the first item in the data array
-// let otpApi1 = otpapi.data[0];
-
-// // Get the phone_number from the first item
-//  otpApi = otpApi1.phone_number;
-//  otpApi2 = otpApi1.otp
-// console.log(otpApi);
-
-//   console.log("Phone number posted successfully");
-// } else {
-//   console.error("Failed to post phone number", response);
-// }
-// } catch (error) {
-// console.error("Error posting phone number:", error);
-// }
-// }
-
-// console.log(otpApi)
 
 function filterAndDisplay() {
   // filterRankList();
@@ -557,104 +544,6 @@ function preLoadCalculations(filteredArrayLength) {
   array_length = filteredArrayLength || array.length;
   max_index = Math.ceil(array_length / table_size);
 }
-
-// $(document).ready(function () {
-//   const $dropdownBtn3 = $('#dropdownBtn3');
-// const $dropdownContent3 = $('#dropdownContent3');
-// const $selectedStatus = $('#selectedStatus');
-// const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
-// const $clearStatus = $('#clearStatus');
-
-// function toggleDropdown() {
-// const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
-// $dropdownBtn3.attr('aria-expanded', isExpanded);
-// }
-
-// // Click event for the selected status element to toggle the dropdown
-// $selectedStatus.on('click', function() {
-// toggleDropdown();
-// });
-
-// Click event for the arrow to toggle the dropdown
-// $arrow.on('click', function() {
-// toggleDropdown();
-// });
-
-// // Click event for selecting an item from the dropdown
-// $dropdownContent3.on('click', 'a', function() {
-// const selectedValue = $(this).data('value');
-// $selectedStatus.text(selectedValue).data('value', selectedValue);
-// $dropdownContent3.removeClass('show');
-
-// if (selectedValue === 'All Status') {
-//   $arrow.show();
-//   $clearStatus.hide();
-// } else {
-//   $arrow.hide();
-//   $clearStatus.show();
-// }
-// filterRankList(); // Filter based on the selected status
-// });
-
-// // Click event for clearing the selected status
-// $clearStatus.on('click', function() {
-// $selectedStatus.text('All Status').data('value', 'All Status');
-// $arrow.show();
-// $clearStatus.hide();
-// $dropdownContent3.removeClass('show'); // Hide the dropdown content
-// $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
-// filterRankList(); // Filter with the reset status
-// });
-
-// // Click event for closing the dropdown if clicked outside
-// $(document).on('click', function(event) {
-// if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
-//   $dropdownContent3.removeClass('show');
-//   $dropdownBtn3.attr('aria-expanded', 'false');
-// }
-// });
-
-
-
-
-  // $('#tab_filter_text').on('input', filterRankList);
-  // let picker = flatpickr('#rangePicker', {
-  //   mode: 'range',
-  //   dateFormat: 'd-m-Y',
-  //   onClose: function (selectedDates, dateStr, instance) {
-  //     if (!selectedDates || selectedDates.length === 0) {
-  //       instance.clear();
-  //       $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-  //       $('#clearDates').hide();
-  //       $('#calendarIcon').show();
-  //     } else {
-  //       $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
-  //       $('#clearDates').show();
-  //       $('#calendarIcon').hide();
-  //     }
-  //     filterRankList();
-  //   },
-  //   clickOpens: false,
-  //   allowInput: false
-  // });
-
-  // $('#rangePicker, #calendarIcon').click(function () {
-  //   if (!$('#rangePicker').hasClass('has-dates')) {
-  //     picker.open();
-  //   }
-  // });
-
-  // $('#clearDates').click(function () {
-  //   picker.clear();
-  //   $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-  //   $('#clearDates').hide();
-  //   $('#calendarIcon').show();
-  //   filterRankList();
-  // });
-
-  // $('#statusDropdown').change(filterRankList);
-//   fetchData();
-// });
 
 function filterRankList() {
     // var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
@@ -705,21 +594,7 @@ function filterRankList() {
     highlightIndexButton()
     displayTableRows();
 }
-// function getStatus(start_date, end_date) {
-//   var currentDate = new Date();
-//   var startDate = moment(start_date, "DD-MM-YYYY HH:mm:ss").toDate();
-//   var endDate = moment(end_date, "DD-MM-YYYY HH:mm:ss").toDate();
 
-//   if (startDate < currentDate && currentDate <= endDate) {
-//     return "Running";
-//   } else if (startDate < currentDate && endDate < currentDate) {
-//     return "Completed";
-//   } else if (startDate > currentDate && endDate > currentDate) {
-//     return "Upcoming";
-//   } else {
-//     return "unknown";
-//   }
-// }
 
 
 function displayIndexButtons() {
@@ -809,323 +684,6 @@ function indexPagination(index) {
 }
 
 
-// const adminType =  JSON.parse(localStorage.getItem('adminType'))
-// const adminVal = adminType.value
-// const statusType =  adminType.status
-
-
-
-// function initializePage1() {
-//   // HTML for mobile number section and OTP modal
-
-//   const otpModalHTML = `
-
-//   <div id="otpModal" class="modal" style="display:none;z-index:2000">
- 
-//       <div class="modal-content">
- 
-//           <span class="close">&times;</span>
-//           <h2>OTP Verification</h2>
-//            <div class="col-md-12 d-flex justify-content-between align-items-center">
-//             <div class="form-group form-group-custom ">
-//                 <input type="text" class="form-control" id="mobilenum" value="Mobile No. ${otpApi}" readonly style="text-align: center;" />
-//             </div>
-
-//             <div class=" text-center">
-//                 <button class="btn btn-primary " id="get-otp-btn">
-//                     Get OTP
-//                 </button>
-//             </div>
-//         </div>
-//          <div id="showotptimer" style="display:none;">
-//           <div class="otp-inputs text-center">
-//               <input type="text" maxlength="1" class="otp-input"/>
-//               <input type="text" maxlength="1" class="otp-input"/>
-//               <input type="text" maxlength="1" class="otp-input"/>
-//               <input type="text" maxlength="1" class="otp-input"/>
-//               <input type="text" maxlength="1" class="otp-input"/>
-//               <input type="text" maxlength="1" class="otp-input"/>
-//           </div>
-//           <p class="resend-timer text-end">Resend in <span id="timer">30</span> sec</p>
-//           <button id="submitOTP" class="btn btn-primary">Submit</button>
-//           <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
-//       </div>
-//   </div>
-//   <div id="otpOverlay" class="overlay" style="display:none;"></div>
-// `;
-
-// document.body.insertAdjacentHTML('beforeend', otpModalHTML);
-
-//   // Get elements for OTP modal
-//   const otpModal = document.getElementById("otpModal");
-//   const otpOverlay = document.getElementById("otpOverlay");
-//   const closeModal = otpModal.querySelector(".close");
-//   const submitOTP = document.getElementById("submitOTP");
-//   const otpError = document.getElementById("otpError");
-//   const timerElement = document.getElementById('timer');
-//   const timerElement1 = document.getElementById('showotptimer');
-
-
-//   function showOTPModal() {
-//       otpModal.style.display = "block";
-//       otpOverlay.style.display = "block";
-//       startTimer();
-//   }
-//   function showOTPModal1() {
-//     timerElement1.style.display = "block";
-//     otpOverlay.style.display = "block";
-
-// }
-
-//   function hideOTPModal() {
-//       otpModal.style.display = "none";
-//       otpOverlay.style.display = "none";
-//   }
-// console.log(String(otpApi2))
-//   function validateOTP(otp) {
-//     let otpsend = String(otpApi2) 
-
-//      if(otp === otpsend){
-
-//        return otp // Example OTP validation
-//      }else{
-//       otpError.style.display = "block";
-//      }
-//   }
-
-//   function startTimer() {
-//       let time = 30; // Timer duration in seconds
-
-//       const interval = setInterval(() => {
-//           time--;
-//           timerElement.textContent = time;
-//           if (time <= 0) {
-//               clearInterval(interval);
-//               timerElement.textContent = '0';
-//               // Enable resend functionality here if needed
-//           }
-//       }, 1000);
-//   }
-
-//   submitOTP.addEventListener("click", () => {
-//       const otpInputs = document.querySelectorAll('.otp-input');
-//       const otp = Array.from(otpInputs).map(input => input.value).join('');
-//       console.log(otp)
-//       if (validateOTP(otp)) {
-//         const adminType = JSON.parse(localStorage.getItem('adminType'));
-//         const userType = JSON.parse(localStorage.getItem('userEmail'));
-
-//         const currentTime = new Date().getTime();
-//             const COOKIE_EXPIRATION_HOURS_SUPER_ADMIN = 1; // 60 minutes
-//             userType.expirationTime = currentTime + (COOKIE_EXPIRATION_HOURS_SUPER_ADMIN * 60 * 60 * 1000); // Update expiration time
-//             localStorage.setItem('userEmail', JSON.stringify(userType));
-//         // Check if the adminType exists and update its status
-//         if (adminType) {
-//             adminType.status = "false"; // Update the status as needed
-
-        
-//             // Save the updated adminType back to localStorage
-//             localStorage.setItem('adminType', JSON.stringify(adminType));
-//         }
-    
-//         hideOTPModal();
-    
-//     location.reload();
-
-//         // displayTableRows();
-//           // Allow action after successful OTP verification
-//       } else {
-//           otpError.style.display = "block";
-//       }
-//   });
-
-//   closeModal.addEventListener("click", hideOTPModal);
-//   otpOverlay.addEventListener("click", hideOTPModal);
-
-//   // Add event listener to the 'Get OTP' button
-//   const getOtpButton = document.getElementById('get-otp-btn');
-//   getOtpButton.addEventListener('click', function () {
-//       showOTPModal1();
-//   });
-//   // const elements = document.querySelectorAll("button, input, select, textarea, a,li,div,th,td,span,i");
-//   // Add event listeners to elements with the class 'otp-exempt3'
-//   // const elements1 = document.querySelectorAll(".otp-exempt3");
-
-//   const elements = document.querySelectorAll("button, input, select, textarea, a, li, div, th, td, span, i");
-//   elements.forEach(element => {
-//       element.addEventListener("click", (event) => {
-//           if (element.classList.contains("otp-exempt3")) {
-//               event.preventDefault();
-       
-//                   showOTPModal();
-
-//           }
-//       });
-//     })
-// }
-
-
-// function initializePage1() {
-// // HTML for mobile number section and OTP modal
-// const otpModalHTML = `
-// <div id="otpModal" class="modal" style="display:none;z-index:2000">
-//     <div class="modal-content">
-//         <span class="close">&times;</span>
-//         <h2>OTP Verification</h2>
-//         <div class="col-md-12 d-flex justify-content-between align-items-center">
-//             <div class="form-group form-group-custom">
-//                 <input type="text" class="form-control" id="mobilenum" value="Mobile No. 7801804996" readonly style="text-align: center;" />
-//             </div>
-//             <div class="text-center">
-//                 <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
-//             </div>
-//         </div>
-//         <div id="showotptimer" style="display:none;">
-//             <div class="otp-inputs text-center">
-//                 <input type="text" maxlength="1" class="otp-input" />
-//                 <input type="text" maxlength="1" class="otp-input" />
-//                 <input type="text" maxlength="1" class="otp-input" />
-//                 <input type="text" maxlength="1" class="otp-input" />
-//                 <input type="text" maxlength="1" class="otp-input" />
-//                 <input type="text" maxlength="1" class="otp-input" />
-//             </div>
-//             <p class="resend-timer text-end">
-//                 Resend in <span id="timer">30</span> sec
-//                 <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
-//             </p>
-//             <button id="submitOTP" class="btn btn-primary">Submit</button>
-//             <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
-//         </div>
-//     </div>
-//     <div id="otpOverlay" class="overlay" style="display:none;"></div>
-// </div>`;
-
-// document.body.insertAdjacentHTML('beforeend', otpModalHTML);
-
-// // Get elements for OTP modal
-// const otpModal = document.getElementById("otpModal");
-// const otpOverlay = document.getElementById("otpOverlay");
-// const closeModal = otpModal.querySelector(".close");
-// const submitOTP = document.getElementById("submitOTP");
-// const otpError = document.getElementById("otpError");
-// const timerElement = document.getElementById('timer');
-// const timerElement1 = document.getElementById('showotptimer');
-// const resendOtpButton = document.getElementById('resend-otp-btn');
-
-// function showOTPModal() {
-//   otpModal.style.display = "block";
-//   otpOverlay.style.display = "block";
-//   startTimer();
-
-// }
-// function showOTPModal1() {
-// timerElement1.style.display = "block";
-// otpOverlay.style.display = "block";
-
-// }
-
-// function hideOTPModal() {
-//     otpModal.style.display = "none";
-//     otpOverlay.style.display = "none";
-//     resetTimer(); // Reset the timer when hiding the modal
-// }
-
-// function validateOTP(otp) {
-//     let otpsend = String(otpApi2); // Ensure otpApi2 is a string
-// console.log( otpsend)
-//     if (otp === otpsend) {
-//         otpError.style.display = "none"; // Hide error if OTP is valid
-//         return true;
-//     } else {
-//         otpError.style.display = "block"; // Show error if OTP is invalid
-//         return false;
-//     }
-// }
-
-// let timerIntervalId = null;
-
-// function startTimer() {
-//     let time = 30; // Timer duration in seconds
-
-//     if (timerIntervalId !== null) {
-//         clearInterval(timerIntervalId);
-//     }
-
-//     timerIntervalId = setInterval(() => {
-//         time--;
-//         timerElement.textContent = time;
-//         if (time <= 0) {
-//             clearInterval(timerIntervalId);
-//             timerElement.textContent = '0';
-//             resendOtpButton.style.display = 'inline-block'; // Show the resend button
-//         }
-//     }, 1000);
-// }
-
-// function resetTimer() {
-//     if (timerIntervalId !== null) {
-//         clearInterval(timerIntervalId);
-//         timerIntervalId = null;
-//     }
-//     timerElement.textContent = '30'; // Reset the timer display
-//     resendOtpButton.style.display = 'none'; // Hide the resend button
-// }
-
-// submitOTP.addEventListener("click", () => {
-//     const otpInputs = document.querySelectorAll('.otp-input');
-//     const otp = Array.from(otpInputs).map(input => input.value).join('');
-//     console.log( otp)
-//     if (validateOTP(otp)) {
-//         const adminType = JSON.parse(localStorage.getItem('adminType'));
-//         const userType = JSON.parse(localStorage.getItem('userEmail'));
-
-//         const currentTime = new Date().getTime();
-//         const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
-//         const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
-
-//         localStorage.setItem('loginTime', expirationTime.toISOString());
-//         hideOTPModal(); // Hide the OTP modal upon successful validation
-//     }
-// });
-
-// closeModal.addEventListener("click", hideOTPModal);
-// otpOverlay.addEventListener("click", hideOTPModal);
-// // resendOtpButton.addEventListener("click",)
-// // Close modal if clicking outside the modal content
-// resendOtpButton.addEventListener("click", (event) => {
-//   postPhoneNumber()
-//   // phoneNumber()
-//     if (event.target === resendOtpButton) {
-//       resendOtpButton.style.display = "none"
-//     }
-// });
-// const getOtpButton = document.getElementById('get-otp-btn');
-// getOtpButton.addEventListener('click', function () {
-//   showOTPModal1();
-//   postPhoneNumber()
-//   // phoneNumber()
-// });
-// const elements = document.querySelectorAll("button, input, select, textarea, a, li, div, th, td, span, i");
-// elements.forEach(element => {
-//     element.addEventListener("click", (event) => {
-//         if (element.classList.contains("otp-exempt3")) {
-//             event.preventDefault();
-         
-//                 showOTPModal();
-
-//         }
-//     });
-//   })
-// }
-
-
-// if( statusType == "true"){
-// otpAdd.classList.add('otp-exempt3')
-// }else{
-// otpAdd.classList.remove('otp-exempt3')
-
-// }
-
 function displayTableRows() {
   $("table tbody").empty();
   var tab_start = start_index - 1;
@@ -1145,18 +703,19 @@ function displayTableRows() {
   // Loop through the array for the specified range
   for (var i = tab_start; i < tab_end && i < array.length; i++) {
     var showdata = array[i];
-    var showteam = teamData.filter((p) => p.id == showdata.team_name);
-    
-    // Ensure showteam is not empty
-    var teamName = showteam.length > 0 ? showteam[0].team_name : "";
 
-    var tr = $("<tr></tr>");
+    console.log(showdata, "showData");
+
+    var tr = $("<tr></tr>")
+      .attr("data-player-id", showdata["id"]) // Store playerId in a data attribute
+      .attr("data-match-id", showdata["team_name"].id); // Store matchId in a data attribute
+
     var noCell = $("<td></td>").text(i + 1);
     var fullNameCell = $("<td colspan='2'></td>").text(showdata["player_name"] || "");
-    var shortNameCell = $("<td colspan='2'></td>").text(teamName || "");
-    
+    var shortNameCell = $("<td colspan='2'></td>").text(showdata["team_name"].team_name || "");
+
     // Use .html() to properly render the input element
-    var enterRun = $("<td class='responsive-td'></td>").html("<input type='text' placeholder='Enter Run' class='p-2 text-center'>");
+    var enterRun = $("<td class='responsive-td'></td>").html("<input type='text' placeholder='Enter Run' class='run-input p-2 text-center'>");
 
     tr.append(noCell)
       .append(fullNameCell)
@@ -1167,49 +726,102 @@ function displayTableRows() {
   }
 }
 
-
 // Function to post run data and redirect
+// Function to post run data and redirect
+// Function to post run data and update total_run in player_get
 function postRunData() {
+  // Array to hold player data objects
   var dataToPost = [];
 
   // Loop through all the rows in the table
   $("table tbody tr").each(function() {
-    var playerId = $(this).find(".run-input").data("player-id");
+    // Get the run value and convert it to a number
     var runValue = $(this).find(".run-input").val();
-    runValue = runValue ? runValue : 0;
+    runValue = runValue ? Number(runValue) : 0; // Convert to number
 
-    var playerName = $(this).find("td:eq(1)").text(); // Full name
-    var teamName = $(this).find("td:eq(2)").text(); // Team name
+    // Get playerId and matchId from the data attributes
+    var playerId = $(this).data("player-id");
+    var matchId = $(this).data("match-id");
 
+    // Create player data object with playerId and matchId
     var playerData = {
-      player_id: playerId,
-      player_declare: playerName,
-      team_declare: teamName,
-      total_run: runValue
+      player_declare: playerId,  // Use playerId instead of playerName
+      team_declare: matchId,     // Use matchId instead of teamName
+      total_run: runValue,
+      select_match: matchName    // Use matchName as it is
     };
 
+    // Push the playerData to the array
     dataToPost.push(playerData);
   });
 
-  // Perform an AJAX POST request to the API with the collected data
-  $.ajax({
-    url: 'YOUR_API_ENDPOINT', // Replace with your API endpoint
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(dataToPost),
-    success: function(response) {
-      console.log("Data posted successfully", response);
-      alert("Run data submitted successfully!");
+  console.log(dataToPost, "dataPost");
 
-      // Redirect to match-name.html
-      window.location.href = "match-name.html";
-    },
-    error: function(error) {
-      console.error("Error posting data", error);
-      alert("Failed to submit run data.");
+  // Send each player data object individually to the API
+  dataToPost.forEach(function(data) {
+    // POST request to submit the run data to the pool_declare endpoint
+    $.ajax({
+      url: 'https://krinik.pythonanywhere.com/pool_declare/', // Replace with your API endpoint
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data), // Convert the playerData object to JSON string
+
+      success: function(response) {
+        console.log("Data posted successfully for", data.player_declare, response);
+      },
+      error: function(error) {
+        console.error("Error posting data for", data.player_declare, error);
+        alert("Failed to submit run data for " + data.player_declare + ".");
+      }
+    });
+
+    // First, get the current total_run value from the player_get endpoint
+    $.ajax({
+  url: `https://krinik.pythonanywhere.com/player_get/${data.player_declare}/`, // Use playerId to fetch the player's current total_run
+  type: 'GET',
+  success: function(response) {
+    console.log(response,"olp")
+    // Check if the total_run is present in the response and log it
+    if (response && typeof response.data.total_run == 'number') {
+      var currentRun = response.data.total_run; // Get the current total_run from the API response
+      console.log("Current total_run from API for player", data.player_declare, ":", currentRun);
+
+      // Add the new run value to the existing total_run
+      var updatedRun = currentRun + data.total_run;
+      console.log("Updated total_run (current + new):", updatedRun);
+
+      // PATCH request to update the total_run field with the new value
+      $.ajax({
+        url: `https://krinik.pythonanywhere.com/player_get/${data.player_declare}/`, // Use playerId to update the player's total_run
+        type: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          total_run: updatedRun // Send the updated total_run value
+        }),
+        success: function(patchResponse) {
+          console.log("Total run updated successfully for player", data.player_declare, patchResponse);
+        },
+        error: function(patchError) {
+          console.error("Error updating total run for player", data.player_declare, patchError);
+          alert("Failed to update total run for " + data.player_declare + ".");
+        }
+      });
+    } else {
+      console.error("Error: total_run is not present or invalid in the API response for player", data.player_declare);
     }
+  },
+  error: function(getError) {
+    console.error("Error fetching current total run for player", data.player_declare, getError);
+    alert("Failed to fetch current total run for " + data.player_declare + ".");
+  }
+});
+
   });
+
+  // Optionally redirect after submitting
+  // window.location.href = "match-name.html";
 }
+
 
 // Set up the click event handler for the submit button
 $(document).ready(function() {
@@ -1219,86 +831,6 @@ $(document).ready(function() {
 });
 
 
-// async function handleDelete(id) {
-//   if( statusType == "true"){      
-
-// initializePage1()
-
-// }else{
-//   if (confirm('Are you sure you want to delete this league?')) {
-//     const url = `https://krinik.pythonanywhere.com/league_get/${id}/`;
-//     try {
-//       const response = await fetch(url, { method: "DELETE" });
-
-//       if (response.ok) {
-//         await fetchData();
-//       } else {
-//         console.error("Failed to delete the league");
-//       }
-//     } catch (error) {
-//       console.error("Error deleting data:", error);
-//     }
-//   }
-// }
-// }
-// function viewLeagueDetails(leagueName) {
-//   if( statusType == "true"){      
-
-// initializePage1()
-
-// }else{
-// // Encode league name for URL
-// var encodedLeagueName = encodeURIComponent(leagueName);
-// // Redirect to view league details page with league name as query parameter
-// window.location.href = 'view-league-details.html?leagueName=' + encodedLeagueName;
-// }
-// }
-
-
-// console.log(statusType,"sh")
-// async function handleEdit(id) {
-
-  
-
-//   if( statusType == "true"){      
-
-//       initializePage1()
-    
-//   }else{
-//     const url = `https://krinik.pythonanywhere.com/league_get/${id}/`;
-//   try {
-//     const response = await fetch(url);
-
-//     if (response.ok) {
-//       window.location.href = `editleague.html?id=${id}`;
-//     } else {
-//       console.error("Failed to fetch the league data");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//   }
-//   }
-
- 
-// }
-
-
-// const table = document.getElementById('tech-companies-1');
-// const downloadBtn = document.getElementById('download-btn');
-
-// downloadBtn.addEventListener('click', () => {
-// const workbook = XLSX.utils.table_to_book(table, { sheet: 'League Data' });
-// const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-// const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-// const url = URL.createObjectURL(data);
-// const a = document.createElement('a');
-// a.href = url;
-// a.download = 'league_data.xlsx';
-// a.click();
-
-// URL.revokeObjectURL(url);
-// a.remove();
-// });
 
 fetchData(NumberId);
 

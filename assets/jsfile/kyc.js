@@ -139,49 +139,49 @@ if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).leng
   // });
 
   function updateAmountFilters() {
-const startAmount = $('#startAmountRange').val().trim();
-const endAmount = $('#endAmountRange').val().trim();
+// const startAmount = $('#startAmountRange').val().trim();
+// const endAmount = $('#endAmountRange').val().trim();
 
 // Show or hide clear buttons based on input values
-if (startAmount !== '' && endAmount === '') {
-  $('#clearAmountStart').show();
-  $('#clearAmountEnd').hide();
-} else if (startAmount !== '' && endAmount !== '') {
-  $('#clearAmountStart').show();
-  $('#clearAmountEnd').show();
-} else if (startAmount === '' && endAmount === '') {
-  $('#clearAmountStart').hide();
-  $('#clearAmountEnd').hide();
-} else if (startAmount === '' && endAmount !== '') {
-  $('#clearAmountStart').hide();
-  $('#clearAmountEnd').show();
-}
+// if (startAmount !== '' && endAmount === '') {
+//   $('#clearAmountStart').show();
+//   $('#clearAmountEnd').hide();
+// } else if (startAmount !== '' && endAmount !== '') {
+//   $('#clearAmountStart').show();
+//   $('#clearAmountEnd').show();
+// } else if (startAmount === '' && endAmount === '') {
+//   $('#clearAmountStart').hide();
+//   $('#clearAmountEnd').hide();
+// } else if (startAmount === '' && endAmount !== '') {
+//   $('#clearAmountStart').hide();
+//   $('#clearAmountEnd').show();
+// }
 
 // Always call filterRankList to apply the filter
 filterRankList();
 }
 
 
-$('#startAmountRange').on('input', function () {
-updateAmountFilters();
-});
+// $('#startAmountRange').on('input', function () {
+// updateAmountFilters();
+// });
 
 // Event listeners for the end amount range input
-$('#endAmountRange').on('input', function () {
-updateAmountFilters();
-});
+// $('#endAmountRange').on('input', function () {
+// updateAmountFilters();
+// });
 
 // Event listener for clearing the start amount range
-$('#clearAmountStart').click(function () {
-$('#startAmountRange').val('');
-updateAmountFilters(); // Call the update function to handle the UI changes
-});
+// $('#clearAmountStart').click(function () {
+// $('#startAmountRange').val('');
+// updateAmountFilters(); // Call the update function to handle the UI changes
+// });
 
 // Event listener for clearing the end amount range
-$('#clearAmountEnd').click(function () {
-$('#endAmountRange').val('');
-updateAmountFilters(); // Call the update function to handle the UI changes
-});
+// $('#clearAmountEnd').click(function () {
+// $('#endAmountRange').val('');
+// updateAmountFilters(); // Call the update function to handle the UI changes
+// });
 
 // Initial call to update filters and hide/show clear buttons on page load
 updateAmountFilters();
@@ -194,16 +194,16 @@ filterRankList();
 
 
 function filterRankList() {
-  var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-  console.log('Search Text:', tab_filter_text);
+//   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+//   console.log('Search Text:', tab_filter_text);
   // var datefilter = $('#rangePicker').text().trim();
-  const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
-  console.log('Selected Status:', statusFilter);
-  var startDate, endDate;
+//   const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
+//   console.log('Selected Status:', statusFilter);
+//   var startDate, endDate;
 
   // Parse amount range
-  var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
-  var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
+//   var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
+//   var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
   // console.log('Start Amount:', startAmount);
   // console.log('End Amount:', endAmount);
@@ -218,28 +218,28 @@ function filterRankList() {
   // }
 
   // Filter the rankList based on text, status, date range, and amount range
-  var filteredArray = rankList.filter(function (object) {
-    var matchesText = true, matchesStatus = true,  matchesAmount = true; matchesAmount1 = true;
+//   var filteredArray = rankList.filter(function (object) {
+    // var matchesText = true, matchesStatus = true,  matchesAmount = true; matchesAmount1 = true;
 
     // Filter based on text input
-    if (tab_filter_text !== '') {
-      matchesText = (object.name && object.name.toLowerCase().includes(tab_filter_text)) ||
-        (object.mobile_no && object.mobile_no.toString().includes(tab_filter_text)) ||
-        (object.email && object.email.toLowerCase().includes(tab_filter_text))   ;
-    }
+//     if (tab_filter_text !== '') {
+//       matchesText = (object.name && object.name.toLowerCase().includes(tab_filter_text)) ||
+//         (object.mobile_no && object.mobile_no.toString().includes(tab_filter_text)) ||
+//         (object.email && object.email.toLowerCase().includes(tab_filter_text))   ;
+//     }
 
-    let status = object.status.toLowerCase();
-let statusup = "";
-if (status === "block") {
-  statusup = "unblock";
-} else if (status === "unblock") {
-  statusup = "block";
-}
+//     let status = object.status.toLowerCase();
+// let statusup = "";
+// if (status === "block") {
+//   statusup = "unblock";
+// } else if (status === "unblock") {
+//   statusup = "block";
+// }
 
-// Filter based on status dropdown
-if (statusFilter !== 'All Status') {
-  matchesStatus = (statusup === statusFilter.toLowerCase());
-}
+// // Filter based on status dropdown
+// if (statusFilter !== 'All Status') {
+//   matchesStatus = (statusup === statusFilter.toLowerCase());
+// }
 
     // Filter based on date range
     // if (startDate && endDate) {
@@ -249,22 +249,22 @@ if (statusFilter !== 'All Status') {
     // }
 
     // Filter based on amount range
-    if (!isNaN(object.wallet_amount)) {
-      const amount = parseFloat(object.wallet_amount);
-      matchesAmount = (amount >= startAmount && amount <= endAmount);
-      // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
-    }
-    if (!isNaN(object.winning_amount )) {
-      const amount = parseFloat(object.winning_amount);
-      matchesAmount1 = (amount >= startAmount && amount <= endAmount);
-      // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
-    }
+//     if (!isNaN(object.wallet_amount)) {
+//       const amount = parseFloat(object.wallet_amount);
+//       matchesAmount = (amount >= startAmount && amount <= endAmount);
+//       // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+//     }
+//     if (!isNaN(object.winning_amount )) {
+//       const amount = parseFloat(object.winning_amount);
+//       matchesAmount1 = (amount >= startAmount && amount <= endAmount);
+//       // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+//     }
 
-    return matchesText && matchesStatus  && matchesAmount && matchesAmount1;
-  });
+//     return matchesText && matchesStatus  && matchesAmount && matchesAmount1;
+//   });
 
   // Update the table with filtered data
-  array = filteredArray;
+//   array = filteredArray;
   preLoadCalculations(array.length);
   current_index = 1;
   displayIndexButtons();
@@ -440,8 +440,8 @@ return null;
       var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
       var shortNameCell = $("<td colspan='2'> </td>").text(showdata["mobile_no"] || "");
       var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
-      var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
-      var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
+    //   var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
+    //   var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
       var statushow = toCapitalizeCase(showdata["status"])
       var updateStatus = ""
 
@@ -459,9 +459,9 @@ return null;
       // );
       var statusCell = $("<td colspan='2'></td>");
       if(statushow === "Block"){
-        statusCell.text("Unblock")
+        statusCell.text("pending")
       }else if (statushow === "Unblock"){
-        statusCell.text("Block")
+        statusCell.text("pending")
       }
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         '<span class="sortable" onclick="handleView(\'' + showdata['user_id'] + '\')"><i class="far fa-eye"></i></span>'
@@ -499,8 +499,8 @@ return null;
         .append(fullNameCell)
         .append(shortNameCell)
         .append(emailCell)
-        .append(walletCell)
-        .append(winningCell)
+        // .append(walletCell)
+        // .append(winningCell)
         .append(statusCell)
         .append(viewCell)
         // .append(deleteCell);
@@ -526,7 +526,7 @@ async function handleView(id) {
     const response = await fetch(url);
 
     if (response.ok) {
-      window.location.href = `user-details-page.html?id=${id}`;
+      window.location.href = `user-kyc-view.html?id=${id}`;
     } else {
       console.error("Failed to fetch the league data");
     }

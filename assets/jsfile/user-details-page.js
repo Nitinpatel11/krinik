@@ -358,5 +358,41 @@ mainId = matchingData.id
       redirectToHistoryPage("user-withdraw-history")
     );
 
+    document.getElementById('addSubmit').onclick = function(e) {
+      // Setup the options for Razorpay payment
+      var options = {
+          "key": "rzp_test_bilBagOBVTi4lE", // Your API Key from Razorpay Dashboard
+          "amount": 50000, // Amount in paise (₹500 = 50000 paise)
+          "currency": "INR", // Currency type (INR for Indian Rupees)
+          "name": "Your Business Name", // Your business name
+          "description": "Payment for XYZ Service", // A description for the transaction
+          "image": "https://example.com/your-logo.png", // Your logo (optional)
+          "handler": function (response){
+              // This function is called when the payment is successful
+              alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+              
+              // Here you can handle what happens after payment, like sending payment ID to your server
+              console.log(response);
+          },
+          "prefill": {
+              "name": "John Doe", // Prefilled name of the customer
+              "email": "john@example.com", // Prefilled email of the customer
+              "contact": "9999999999" // Prefilled contact number
+          },
+          "theme": {
+              "color": "#F37254" // Theme color of the Razorpay checkout
+          }
+      };
+
+      // Create a new Razorpay instance with the options defined above
+      var rzp1 = new Razorpay(options);
+
+      // Open the Razorpay checkout popup
+      rzp1.open();
+
+      // Prevent the form from submitting (optional, since we're not using a form here)
+      e.preventDefault();
+  }
+
   fetchUserData();
 });

@@ -306,7 +306,7 @@ async function checkPlayerOverlap(playerName, shortPlayerName, leagueName, teamN
   const playerNameOverlap = existingPlayers.some(player => {
     const normalizedExistingPlayerName = (player.player_name || '').trim().toLowerCase();
     const normalizedExistingLeagueName = (player.league_name || '').trim().toLowerCase();
-    const normalizedExistingTeamName = (player.team_name || '').trim().toLowerCase();
+    const normalizedExistingTeamName = (player.team_name.team_name || '').trim().toLowerCase();
     return normalizedExistingPlayerName === normalizedPlayerName &&
       normalizedExistingLeagueName === leagueName.trim().toLowerCase() &&
       normalizedExistingTeamName === teamName.trim().toLowerCase();
@@ -315,7 +315,7 @@ async function checkPlayerOverlap(playerName, shortPlayerName, leagueName, teamN
   const shortPlayerNameOverlap = existingPlayers.some(player => {
     const normalizedExistingShortName = (player.player_short_name || '').trim().toLowerCase();
     const normalizedExistingLeagueName = (player.league_name || '').trim().toLowerCase();
-    const normalizedExistingTeamName = (player.team_name || '').trim().toLowerCase();
+    const normalizedExistingTeamName = (player.team_name.team_name || '').trim().toLowerCase();
     return normalizedExistingShortName === normalizedShortName &&
       normalizedExistingLeagueName === leagueName.trim().toLowerCase() &&
       normalizedExistingTeamName === teamName.trim().toLowerCase();
@@ -346,13 +346,13 @@ function editPlayerData(response) {
 
     // Set form field values
     leagueName.value = response.league_name;
-    teamName.value = response.team_name;
+    teamName.value = response.team_name.team_name;
     playerName.value = response.player_name;
     shortPlayerName.value = response.player_short_name;
 
     // Fetch teams for the selected league and set team name after fetching
     fetchTeams(response.league_name).then(() => {
-      teamName.value = response.team_name;
+      teamName.value = response.team_name.team_name;
     });
 
     const initialData = {
@@ -390,7 +390,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       const isValidLeagueName = validateLeagueSelection();
       const isValidTeamName = validateTeamSelection();
       const isValidPlayerName = validateInput(
-        'player-name',
+        'player-name', 
         'error-player-name',
         isValidTeamName1,
         'Please enter a player name',

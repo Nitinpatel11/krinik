@@ -70,12 +70,6 @@
         !1
       );
     }),
-    e(function () {
-      e('[data-toggle="tooltip"]').tooltip();
-    }),
-    e(function () {
-      e('[data-toggle="popover"]').popover();
-    }),
     Waves.init();
 })(jQuery);
 var bodyElem = document.documentElement,
@@ -269,7 +263,7 @@ window.onload = () => {
 function initializePage() {
   // Select all interactive elements
   const elements = document.querySelectorAll("button, input, select, textarea, a,li,div,th,td,span,i");
-  console.log("All elements:", elements); // Log all elements for debugging
+  // console.log("All elements:", elements); // Log all elements for debugging
 
   elements.forEach(element => {
 

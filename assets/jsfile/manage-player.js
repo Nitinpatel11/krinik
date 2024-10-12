@@ -576,7 +576,7 @@ otpAdd.classList.remove('otp-exempt3')
           var noCell = $("<td></td>").text(i + 1);
           var playerNameCell = $("<td colspan='2'></td>").text(object["player_name"] || "");
           var teamNameCell = $("<td colspan='2'></td>").text(object["player_short_name"] || "");
-          var shortNameCell = $("<td colspan='2'></td>").text(object["team_name"] || "");
+          var shortNameCell = $("<td colspan='2'></td>").text(object["team_name"].team_name || "");
           var leagueCell = $("<td colspan='2'></td>").text(object["league_name"] || "");
           var runCell = $("<td></td>").text(object["total_run"] || "");
           var logoCell = $("<td></td>").html(object["player_image"] ? `<img src="https://krinik.pythonanywhere.com${object["player_image"]}" alt="${object["player_image"]}" class="team-logo lazyload">` : '');
@@ -678,3 +678,5 @@ downloadBtn.addEventListener('click', () => {
   URL.revokeObjectURL(url);
   a.remove();
 });
+
+history.pushState(null, null, window.location.href);

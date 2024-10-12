@@ -1,538 +1,10 @@
-<!doctype html>
-<html lang="en">
 
-<head>
-  <meta charset="utf-8" />
-  <title>Add Pool</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-  <meta content="Themesdesign" name="author" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <!-- App favicon -->
-  <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
-  <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon">
-  <!-- Bootstrap Css -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <!-- Icons Css -->
-  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <!-- App Css-->
-  <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
 
 
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
-</head>
+import { refreshpage } from "./pagerefresh.js";
 
-<body data-topbar="colored">
-
-  <!-- Begin page -->
-  <div id="layout-wrapper">
-    <header id="page-topbar" class="">
-      <div class="navbar-header ">
-        <div class="d-flex ">
-          <!-- LOGO -->
-          <div class="navbar-brand-box">
-            <a href="./dashboard.html" class="logo logo-dark">
-              <span class="logo-sm">
-
-                <img src="./assets/images/krinikIn_Logo.svg" alt="" />
-              </span>
-              <span class="logo-lg">
-
-                <img src="./assets/images/krinikIn_Logo.svg" alt="" />
-              </span>
-            </a>
-
-            <a href="index.html" class="logo logo-light ">
-              <span class="logo-sm">
-
-                <img src="./assets/images/krinikIn_Logo.svg" alt="" />
-              </span>
-              <span class="logo-lg">
-
-                <img src="./assets/images/krinikIn_Logo.svg" alt="" />
-              </span>
-            </a>
-          </div>
-
-          <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect " id="vertical-menu-btn">
-            <i class="mdi mdi-backburger "></i>
-          </button>
-
-          <!-- App Search-->
-          <!-- <form class="app-search d-none d-lg-block">
-                            <div class="position-relative mt-3">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form> -->
-        </div>
-
-        <div class="  d-flex justify-content-center gap-4 time_show1">
-          <div class="dropdown d-flex justify-content-end ms-2  " id="enterotpdiv">
-            <!-- <button id="showotppage" type="button" class="btn btn-primary2  waves-effect" 
-             >Enter OTP
-            </button> -->
-
-          </div>
-
-          <div class="dropdown   dblock">
-            <div id="time_show" class="btn-primary2  px-3">
-            </div>
-          </div>
-
-
-        </div>
-
-      </div>
-    </header>
-
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="vertical-menu ">
-      <div data-simplebar class="h-100 ">
-        <!--- Sidemenu -->
-        <div id="sidebar-menu" class="">
-          <!-- Left Menu Start -->
-          <ul class="metismenu list-unstyled " id="side-menu">
-            <li class="menu-title">Menu</li>
-
-            <li>
-              <a href="./dashboard.html" class="waves-effect">
-                <div class=" icons-sm icon-set">
-                  <span class="material-symbols-outlined icon-margin">
-                    dashboard
-                    </span>
-               
-                <span>Dashboard</span>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="./user.html" class="waves-effect">
-                <div class="icons-sm icon-set">
-                  <span class="material-symbols-outlined icon-margin">
-                    person
-                    </span>
-               
-                <span>User</span>
-              </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="javascript: void(0);" class=" ">
-                <div class="icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin">
-                    sports_cricket
-                    </span>                    
-                    <span class="has-arrow waves-effect ">Sports Configuration</span>
-                                    
-                  </div> 
-                  
-                </a>
-
-              <ul class="sub-menu" aria-expanded="false">
-                <li><a href="./manage-league.html">Manage Leagues</a></li>
-                <li><a href="./manage-team.html">Manage Teams</a></li>
-                <li><a href="./manage-player.html">Manage Players</a></li>
-              </ul>
-            </li>
-            
-            <li>
-              <a href="javascript: void(0);" class=" ">
-                <div class="icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin">
-                    crossword
-                    </span>                   
-                    <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
-                                    
-                  </div> 
-                  
-                </a>
-
-              <ul class="sub-menu" aria-expanded="false">
-                <li><a href="./manage-match.html">Manage Match</a></li>
-                <li><a href="./manage-pool.html">Manage Pools</a></li>
-              </ul>
-            </li>
-
-            <li class="otp-exempt" style="display:none">
-              <a href="javascript: void(0);" class=" ">
-                <div class="icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin">
-                    receipt_long
-                    </span>                 
-                    <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
-                                    
-                  </div> 
-                  
-                </a>
-
-              <ul class="sub-menu" aria-expanded="false">
-                <li><a href="./all-transaction.html">All Transaction</a></li>
-                <li><a href="./wallet-transaction.html">Wallet Transaction</a></li>
-                <li><a href="./game-transaction.html">Game Transaction</a></li>
-              </ul>
-            </li>
-
-            <li class="otp-exempt" style="display:none">
-              <a href="./account-setting.html" class="waves-effect">
-                <div class="icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin">
-                    settings
-                    </span>
-                    <span>Account Setting</span>
-                </div>
-              </a>
-            </li>
-            <li class="otp-exempt" style="display:none">
-              <a href="./advertise.html" class="waves-effect">
-                <div class="icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin">
-                    ad
-                    </span>
-                    <span>Advertise</span>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="./kyc.html" class="waves-effect">
-                <div class="icons-sm icon-set">
-                  <span class="material-symbols-outlined icon-margin">
-                    person
-                    </span>
-               
-                <span>KYC</span>
-              </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="" class="waves-effect " id="logoutButton">
-                <div class=" icons-sm icon-set ">
-                  <span class="material-symbols-outlined icon-margin ">
-                    logout
-                    </span>
-                    <span class="">Logout</span>
-                </div>
-              </a>
-            </li>
-
-          
-                    </ul>
-        </div>
-        <!-- Sidebar -->
-      </div>
-    </div>
-    <!-- Left Sidebar End -->
-
-    <!-- ============================================================== -->
-    <!-- Start right Content here -->
-    <!-- ============================================================== -->
-    <div class="main-content">
-
-      <div class="page-content">
-
-        <!-- Page-Title -->
-        <div class="page-title-box">
-          <div class="container-fluid">
-            <div class="row align-items-center">
-              <div class="col-md-8">
-                <h4 class="page-title mb-1">Add Pool</h4>
-
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-        <!-- end page title end breadcrumb -->
-
-        <div class="page-content-wrapper">
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col-xl-7 col-md-9 col-sm-11">
-                <div class="card">
-                  <div class="card-body">
-                    <!-- <div class="container mt-5"> -->
-                    <div class="form-group mb-3 row mb-0">
-                      <div class="col-md-12">
-                        <div class="form-group form-group-custom mb-4">
-                          <select class="form-select" aria-label="Default select example" id="matchSelect">
-                            <option selected value="">Select Match</option>
-                          </select>
-                          <span id="error-match" class="span-error"></span>
-                        </div>
-
-                        <div class="form-group form-group-custom mb-4">
-
-                          <select class="form-select mt-3" aria-label="Default select example" id="poolTypeSelect">
-                            <option selected value="">Select Pool Type</option>
-                            <option value="Silver">Silver ( 2 Players without cap )</option>
-                            <option value="Gold">Gold ( 2 Players with Cap )</option>
-                            <option value="Platinum">Platinum ( 3 Players with C & VC )</option>
-                          </select>
-                          <span id="error-pool" class="span-error"></span>
-                        </div>
-
-                        <div class="form-group form-group-custom mb-4">
-
-
-                          <input class="form-control mt-3" type="text" placeholder="Pool Name" id="poolNameInput">
-                          <span id="error-pool-name" class="span-error"></span>
-                        </div>
-
-
-                        <div class="form-group form-group-custom mb-4">
-                          <div class="input-group mt-3">
-                            <input class="form-control" type="text" placeholder="Enter price" id="priceInput">
-                            <button class="btn btn-primary" id="addPriceButton">Add
-                              Price</button>
-                          </div>
-
-                          <span id="error-price" class="span-error"></span>
-                        </div>
-
-
-                        <div class="mt-3" id="priceList"></div>
-
-
-                        <div class="form-group form-group-custom mb-4">
-
-                          <input class="form-control mt-3" type="text" placeholder="Pool Winning Prize (9x)"
-                            id="winningPrizeInput">
-                          <span id="error-win-price" class="span-error"></span>
-                        </div>
-
-                        <div class="form-group form-group-custom  mb-4">
-                          <div class="datepicker-wrapper">
-                            <input class="form-control" type="text" name="match_start_date" id="fantasyStartDate"
-                              placeholder="Fantacy Start Date">
-                            <i id="calendarIconEnd" class="fas fa-calendar-alt date-icon2"></i>
-                          </div>
-                          <span id="error-fantacy-start-date" class="error-message" style="display: none;"></span>
-                        </div>
-                        <!-- <div class="form-group form-group-custom mb-4">
-                          <div class="datepicker-wrapper">
-                            <input class="form-control" type="text" name="match_end_date" id="fantasyEndDate"
-                              placeholder="Fantacy End Date">
-                            <i id="calendarIconStart" class="fas fa-calendar-alt date-icon"></i>
-                          </div>
-                          <span id="error-fantacy-end-date" class="error-message" style="display: none;"></span>
-                        </div> -->
-
-                        <div class="mt-4 text-center d-flex justify-content-center gap-5">
-                          <button class="btn btn-primary" type="submit" id="submitButton">Submit</button>
-                          <!-- <button class="btn btn-primary mt-3" id="submitButton">Submit</button> -->
-                          <button class="btn btn-primary grey-btn" type="button" id="cancel-btn"
-                            onclick="window.location.replace('./manage-pool.html')">Cancel</button>
-                        </div>
-
-                      </div>
-                    </div>
-
-
-
-                  </div>
-
-                </div>
-
-
-
-
-
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <!-- end col -->
-    </div>
-    <!-- end row -->
-
-
-
-  </div>
-  <!-- end container-fluid -->
-  </div>
-  <!-- end page-content-wrapper -->
-  </div>
-  <!-- End Page-content -->
-
-
-  <footer class="footer">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          2024 © Krinik.
-        </div>
-        <div class="col-sm-6">
-          <div class="text-sm-end d-none d-sm-block">
-            Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  </div>
-  <!-- end main content-->
-
-  </div>
-  <!-- END layout-wrapper -->
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-  <!-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const matchSelect = document.getElementById('matchSelect');
-            const priceInput = document.getElementById('priceInput');
-            const addPriceButton = document.getElementById('addPriceButton');
-            const priceList = document.getElementById('priceList');
-            const prices = [];
-    
-            // Fetch match data from the API
-            fetch('https://krinik.pythonanywhere.com/match_get/')
-                .then(response => {
-                    if (!response.ok) {
-                        console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const matchData = data.data;
-    
-                    // Populate the select dropdown with match display names
-                    matchData.forEach(match => {
-                        const option = document.createElement('option');
-                        option.value = match.match_display_name; // Use match display name as the value
-                        option.textContent = match.match_display_name;
-                        matchSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error fetching match data:', error));
-    
-            addPriceButton.addEventListener('click', function () {
-                const price = parseFloat(priceInput.value);
-                if (!isNaN(price)) {
-                    prices.push(price);
-                    updatePriceList();
-                    priceInput.value = '';
-                }
-            });
-    
-            function updatePriceList() {
-                priceList.innerHTML = '';
-                prices.forEach((price, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'price-item';
-                    div.innerHTML = `${price} <span onclick="removePrice(${index})">&times;</span>`;
-                    priceList.appendChild(div);
-                });
-            }
-    
-            window.removePrice = function(index) {
-                prices.splice(index, 1);
-                updatePriceList();
-            }
-    
-            document.getElementById('submitButton').addEventListener('click', function () {
-                const selectMatch = matchSelect.value; // Get selected match display name
-                const poolType = document.getElementById('poolTypeSelect').value;
-                const poolName = document.getElementById('poolNameInput').value;
-                const winningPrize = parseFloat(document.getElementById('winningPrizeInput').value);
-                const fantasyStartDate = document.getElementById('fantasyStartDate').value;
-                const fantasyEndDate = document.getElementById('fantasyEndDate').value;
-    
-                const payload = {
-                    select_match: selectMatch,
-                    pool_type: poolType,
-                    pool_name: poolName,
-                    price: prices,
-                    winning_price: winningPrize,
-                    fantacy_start_date: fantasyStartDate,
-                    fantacy_end_date: fantasyEndDate
-                };
-    
-                fetch('https://krinik.pythonanywhere.com/add_pool_get/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-    
-                    // Redirect based on pool_type and pass select_match and pool_name in the URL
-                    const urlParams = new URLSearchParams({
-                        match: selectMatch,
-                        pool_name: poolName
-                    });
-                    switch (payload.pool_type) {
-                        case 'Pool Type A':
-                            window.location.href = 'pool-A.html?' + urlParams.toString();
-                            break;
-                        case 'Pool Type B':
-                            window.location.href = 'pool-B.html?' + urlParams.toString();
-                            break;
-                        case 'Pool Type C':
-                            window.location.href = 'pool-C.html?' + urlParams.toString();
-                            break;
-                        default:
-                            // Redirect to a default page or handle unexpected cases
-                            console.log('Unknown pool type:', payload.pool_type);
-                            break;
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            });
-        });
-    </script> -->
-
-  <script src="./assets/js/logout.js"></script>
-  
-  <script type="module" src="./assets//jsfile/add-pool.js"></script>
-  <script type="module" src="./assets/jsfile/pagerefresh.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <!-- JAVASCRIPT -->
-  <script src="assets/libs/jquery/jquery.min.js"></script>
-  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/libs/metismenu/metisMenu.min.js"></script>
-  <script src="assets/libs/simplebar/simplebar.min.js"></script>
-  <script src="assets/libs/node-waves/waves.min.js"></script>
-
-  <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
-
-  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-  <!-- <script src="https://cdn.jsdelivr.net/npm/intersection-observer@latest/umd/intersection-observer.min.js"></script> -->
-
-
-  <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
-  <script src="assets/js/app.js"></script>
-
-
-  <!-- <script>
-    document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener('DOMContentLoaded', async function () {
       const matchSelect = document.getElementById('matchSelect');
       const priceInput = document.getElementById('priceInput');
       const addPriceButton = document.getElementById('addPriceButton');
@@ -866,25 +338,35 @@ matchData.forEach(match => {
 
 
       // function checkPoolOverlap(selectMatch, poolName,startDate1, existingPool) {
-      function checkPoolOverlap(selectMatch, poolName, existingPool) {
+      function checkPoolOverlap(selectMatch, poolName,poolType, existingPool) {
 
         // const startDate = document.getElementById('fantasyStartDate').value;
         if (!existingPool || existingPool.length === 0) {
-          return { matchNameOverlap: false, poolNameOverlap: false, dateOverlap: false };
+          return { matchNameOverlap: false };
         }
 
         const normalizedName = selectMatch.trim().toLowerCase();
         const normalizedShortName = poolName.trim().toLowerCase();
+        const normalizedShortType = poolType.trim().toLowerCase();
+
 
         const matchNameOverlap = existingPool.some(match => {
-          const normalizedExistingName = match.select_match.match_display_name.trim().toLowerCase();
-          return normalizedExistingName === normalizedName;
+          const normalizedExistingName = match?.select_match?.match_display_name?.trim().toLowerCase() ;
+          const normalizedExistingShortName = match.pool_name.trim().toLowerCase() ;
+          const normalizedExistingShortType = match.pool_type.trim().toLowerCase();
+          return normalizedExistingName === normalizedName && normalizedExistingShortName === normalizedShortName && normalizedExistingShortType === normalizedShortType;
         });
 
-        const poolNameOverlap = existingPool.some(league => {
-          const normalizedExistingShortName = league.pool_name.trim().toLowerCase();
-          return normalizedExistingShortName === normalizedShortName;
-        });
+        // const poolNameOverlap = existingPool.some(league => {
+        //   const normalizedExistingShortName = league.pool_name.trim().toLowerCase() ;
+        //   const normalizedExistingShortType = league.pool_type.trim().toLowerCase();
+        //   return normalizedExistingShortName === normalizedShortName && normalizedExistingShortType === normalizedShortType;
+        // });
+
+        // const poolTypeOverlap = existingPool.some(league => {
+        //     const normalizedExistingShortType = league.pool_type.trim().toLowerCase();
+        //     return normalizedExistingShortType === normalizedShortType;
+        //   });
 
         //                 const dateOverlap = existingPool.some(match => {
         //                     const matchStartDateStr1 = match.fantacy_start_date;
@@ -899,9 +381,10 @@ matchData.forEach(match => {
         //                     return startDateObj === matchStartDateStr;
         //                 });
         //                 console.log('Date Overlap:', dateOverlap);
-
+// console.log(matchNameOverlap,poolNameOverlap,poolTypeOverlap,"jsj")
         // return { matchNameOverlap, poolNameOverlap,dateOverlap };
-        return { matchNameOverlap, poolNameOverlap };
+        return { matchNameOverlap };
+
 
       }
 
@@ -1045,7 +528,7 @@ matchData.forEach(match => {
           'Please enter a valid winning price'
         );
 
-        isPriceAdd = checkPriceValidation()
+       const isPriceAdd = checkPriceValidation()
         // const teamValid = validateTeamSelection();
         // const playerValid = validatePlayerSelection();
         const datesValid = validateMatchDates();
@@ -1056,6 +539,7 @@ matchData.forEach(match => {
       }
 
       document.getElementById('submitButton').addEventListener('click', async function () {
+      
         const selectMatch = matchSelect.value; // Get selected match display name
         const poolType = document.getElementById('poolTypeSelect').value;
         const poolName = document.getElementById('poolNameInput').value;
@@ -1105,7 +589,7 @@ matchData.forEach(match => {
         //   }
         // }
         // const overlapResult = checkPoolOverlap(selectMatch, poolName,startDate1, existingPool);
-        const overlapResult = checkPoolOverlap(selectMatch, poolName, existingPool);
+        const overlapResult = checkPoolOverlap(selectMatch, poolName,poolType, existingPool);
 
 
         if (validateForm()) {
@@ -1113,7 +597,7 @@ matchData.forEach(match => {
 
           // Handle overlap errors
           // if (overlapResult.matchNameOverlap && overlapResult.poolNameOverlap && overlapResult.dateOverlap) {
-          if (overlapResult.matchNameOverlap && overlapResult.poolNameOverlap) {
+          if (overlapResult.matchNameOverlap) {
 
             document.getElementById('error-match').innerHTML = 'Match already exists';
             document.getElementById('error-match').style.display = 'inline';
@@ -1144,7 +628,8 @@ matchData.forEach(match => {
                 // Redirect based on pool_type and pass select_match and pool_name in the URL
                 const urlParams = new URLSearchParams({
                   match: selectMatch,
-                  pool_name: poolName
+                  pool_name: poolName,
+                  pool_type: poolType
                 });
                 switch (payload.pool_type) {
                   case 'Silver':
@@ -1178,9 +663,6 @@ matchData.forEach(match => {
       });
     });
 
-  </script> -->
+    
+    refreshpage()
   
-
-</body>
-
-</html>

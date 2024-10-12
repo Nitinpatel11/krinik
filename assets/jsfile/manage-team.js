@@ -673,3 +673,6 @@ downloadBtn.addEventListener('click', () => {
   URL.revokeObjectURL(url);
   a.remove();
 });
+
+
+history.pushState(null, null, window.location.href);

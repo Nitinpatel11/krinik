@@ -989,7 +989,7 @@ console.log(currentData,"current")
 
       // Log form data for verification
       console.log('Form data before sending:');
-      formData.forEach((value, key) => {
+      formData.map((value, key) => {
           console.log(key, value);
       });
 
@@ -1042,3 +1042,18 @@ console.log(currentData,"current")
       }
 
   });
+
+  history.pushState(null, null, window.location.href);
+       
+     
+
+
+
+
+  window.addEventListener('pageshow', function (event) {
+if (event.persisted || (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD)) {
+// Reload the page only once
+window.location.reload();
+}
+
+});

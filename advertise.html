@@ -22,7 +22,7 @@
     <!-- <link rel="shortcut icon" href="./assets/images/favicon.ico" /> -->
     <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon" >
     <!-- DataTables -->
-    <!-- <link
+    <link
       href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
       rel="stylesheet"
       type="text/css"
@@ -31,7 +31,7 @@
       href="./assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css"
       rel="stylesheet"
       type="text/css"
-    /> -->
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -39,17 +39,17 @@
     />
 
     <!-- Responsive datatable examples -->
-    <!-- <link
+    <link
       href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"
       rel="stylesheet"
       type="text/css"
-    /> -->
+    />
 
     <!-- datepicker -->
-    <!-- <link
+    <link
       href="./assets/libs/air-datepicker/air-datepicker.css"
       rel="stylesheet"
-    /> -->
+    />
 
     <!-- jvectormap -->
     <!-- <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" /> -->
@@ -304,7 +304,7 @@
             <div class="container-fluid">
               <div class="row align-items-center">
                 <div>
-                  <h4 class="page-title mb-1">Change Password</h4>
+                  <h4 class="page-title mb-1">Advertise</h4>
                 </div>
               </div>
             </div>
@@ -347,7 +347,7 @@
               </div>
               <!-- end row -->
 
-              <div class="row justify-content-center">
+              <div class="row justify-content-center ad-margin">
                 <div class="col-xl-5 col-sm-8">
                   <div class="card ad-card">
                     <div class="row">
@@ -355,46 +355,20 @@
                         <div
                           class="text-center justify-content-center align-items-center"
                         >
-                          <h2 class="text-dark mb-1 mt-4">CHANGE PASSWORD</h2>
+                          <h2 class="text-dark mb-1 mt-4">Upload Advertise</h2>
                         </div>
                       </div>
                     </div>
                     <div class="card-body p-4">
                       <div class="p-2">
-                        <form class="form-horizontal" id="login-pwd">
+                        <form class="form-horizontal" id="uploadForm">
                           <div class="row">
                             <div class="col-md-12">
                               <div class="form-group form-group-custom mb-4">
-                                <input
-                                  type="password"
-                                  class="form-control"
-                                  id="oldpd"
-                                  placeholder="Enter Old Password"
-                                />
-                                <span id="errorOldpwd"></span>
+                               
+                                <input type="file" class="form-control" id="fileInput" name="file" accept="image/*,video/*" >
+                                <span id="responseMessage"></span>
                                 <!-- <label for="username">Enter Old Password</label> -->
-                              </div>
-
-                              <div class="form-group form-group-custom mb-4">
-                                <input
-                                  type="password"
-                                  class="form-control"
-                                  id="newpd"
-                                  placeholder="Enter New Password"
-                                />
-                                <span id="errorNewpwd"></span>
-                                <!-- <label for="username"></label> -->
-                              </div>
-
-                              <div class="form-group form-group-custom mb-4">
-                                <input
-                                  type="password"
-                                  class="form-control"
-                                  id="confirmpd"
-                                 placeholder="Enter Confirm Password"
-                                />
-                                <span id="errorConNewpwd"></span>
-                                
                               </div>
 
                               <div class="mt-4 text-center">
@@ -440,7 +414,86 @@
     <!-- END layout-wrapper -->
     
     <script src="./assets/jsfile/account-setting.js"></script>
-    
+    <script>
+      let isFileUploaded = false;
+      const fileInput = document.getElementById('fileInput');
+      const responseMessage = document.getElementById('responseMessage');
+      const uploadForm = document.getElementById('uploadForm');
+  
+      // Fetch data and retrieve the ID
+      async function fetchdata() {
+          try {
+              let data1 = await fetch('https://krinik.pythonanywhere.com/ad_get/');
+              let data = await data1.json();
+              let response = data.data;
+  
+              if (response && response.length > 0) {
+                  let Id = response[0].id; // Access the first item in the array
+                  console.log(response, "Fetched data");
+                  
+                  // Wait for the user to submit the file, then upload using this Id
+                  uploadForm.addEventListener('submit', function (e) {
+                      e.preventDefault();  // Prevent default form submission
+  
+                      // Clear previous messages
+                      responseMessage.innerHTML = '';
+  
+                      // Check if a file has been selected
+                      if (!fileInput.files.length) {
+                          responseMessage.innerHTML = '<div class="alert alert-danger">Please select a file before submitting.</div>';
+                          return;
+                      }
+  
+                      // If the file is selected but not uploaded yet
+                      if (!isFileUploaded) {
+                          const selectedFile = fileInput.files[0];
+                          uploadFile(Id, selectedFile); // Pass the Id and file for uploading
+                      }
+                  });
+              } else {
+                  console.error("No data found.");
+              }
+          } catch (error) {
+              console.error("Error fetching data:", error);
+          }
+      }
+  
+      // Function to upload file and file type with the correct Id
+      function uploadFile(Id, file) {
+          const formData = new FormData();
+          formData.append('file', file);  // Append the actual file
+          formData.append(' type', file.type); // Append the file's MIME type (file type)
+  
+          // Send the PATCH request to the API endpoint
+          fetch(`https://krinik.pythonanywhere.com/ad_get/${Id}/`, {
+              method: 'PATCH',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.status === 'success') {
+                  isFileUploaded = true;
+                  alert("File and file type uploaded successfully!"); // Set flag to true when file is successfully uploaded
+                  location.reload();
+              } else {
+                  responseMessage.innerHTML = '<div class="alert alert-danger">File upload failed.</div>';
+              }
+          })
+          .catch(error => {
+              responseMessage.innerHTML = '<div class="alert alert-danger">Error: ' + error.message + '</div>';
+          });
+      }
+  
+      // Listen for file selection to clear previous messages
+      fileInput.addEventListener('change', function () {
+          responseMessage.innerHTML = ''; // Clear previous messages
+      });
+  
+      // Fetch the initial data to get the Id
+      fetchdata();
+  </script>
+  
+  
 
     <!-- JAVASCRIPT -->
     <script src="./assets/libs/jquery/jquery.min.js"></script>
@@ -455,24 +508,24 @@
     <script src="./assets/js/logout.js"></script>
 
     <!-- Required datatable js -->
-    <!-- <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script> -->
-    <!-- <script src="./assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script> -->
+    <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="./assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
     <!-- Buttons examples -->
-    <!-- <script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script> -->
-    <!-- <script src="./assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script> -->
+    <script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="./assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
     <script src="./assets/libs/jszip/jszip.min.js"></script>
     <!-- <script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script> -->
     <!-- <script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script> -->
-    <!-- <script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script> -->
-    <!-- <script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script> -->
-    <!-- <script src="./assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script> -->
+    <script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="./assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
     <!-- Responsive examples -->
-    <!-- <script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script> -->
-    <!-- <script src="./assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script> -->
+    <script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="./assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
     <!-- datepicker -->
-    <!-- <script src="./assets/libs/air-datepicker/air-datepicker.css"></script> -->
-    <!-- <script src="./assets/libs/air-datepicker/air-datepicker.js"></script> -->
+    <script src="./assets/libs/air-datepicker/air-datepicker.css"></script>
+    <script src="./assets/libs/air-datepicker/air-datepicker.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- apexcharts -->
