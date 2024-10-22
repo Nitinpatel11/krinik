@@ -458,6 +458,7 @@
           <!-- Sidebar -->
         </div>
       </div>
+      
       <!-- Left Sidebar End -->
 
 
@@ -834,29 +835,6 @@ let urlpooltime
 
       teamLogoName1.textContent = response.select_team_A.team_name;
       teamLogoName2.textContent = response.select_team_B.team_name;
-//       let defaultTime = new Date();  // Current date and time
-// console.log(defaultTime.getTime(), "defaultTime");
-
-// const matchStartDate = response.match_start_date;  // "11-09-2024 17:15"
-// const matchDateTimeStr = matchStartDate.replace("/","-"); // Ensures compatibility with Date parsing
-// console.log(matchDateTimeStr,"matchDateTimeStr")
-
-// Parse the match date and time to a Date object
-// const matchDateTime = new Date(matchDateTimeStr);
-// console.log(matchDateTime,"match_date")
-// console.log(defaultTime,"dmatch_date")
-// // Calculate the remaining time in milliseconds
-// let remainingTime = matchDateTime - defaultTime; 
-
-// // Calculate the number of days, hours, and minutes
-// let remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-// let remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-// let remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-
-// console.log(`Remaining Time: ${remainingDays} days, ${remainingHours} hours, ${remainingMinutes} minutes`);
-
-// // Format the result as DD:HH:MM
-// let formattedRemainingTime = `${remainingDays.toString().padStart(2, '0')}d:${remainingHours.toString().padStart(2, '0')}h:${remainingMinutes.toString().padStart(2, '0')}m`;
 
 let defaultTime = new Date();  // Current date and time
 console.log(defaultTime.getTime(), "defaultTime");
@@ -1127,8 +1105,8 @@ updateCountdown();
 
         const leagueNameData = userData.select_league.league_name
         
-      const teamA = userData.select_team_A.team_name;
-      const teamB = userData.select_team_B.team_name;
+      const teamA = userData.select_team_A.id;
+      const teamB = userData.select_team_B.id;
       const playersA = userData.select_player_A;
       const playersB = userData.select_player_B;
       disableplayersA = userData.disable_player_A;
@@ -1294,6 +1272,7 @@ updateCountdown();
 
 
   function displayTableRows1() {
+
     $("table tbody").empty();
     var tab_start = start_index - 1;
     var tab_end = end_index;
@@ -1319,27 +1298,11 @@ updateCountdown();
       var userNameCell = $("<td colspan='2'></td>").text(showdata.user_data["name"] || "");
       var amountCell = $("<td colspan='2'> </td>").text(showdata["entry_fee"] || "");
 
-      // var logoCell = $("<td></td>").html(
-      //   showdata["league_image"]
-      //     ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
-      //     : ""
-      // );
+ 
       var pairCell = $("<td colspan='2'></td>").text(showdata.user_data["pool_name"].length || "");
       var totalPoolCell = $("<td colspan='2'> </td>").text(showdata["player_pair"].length || "");
 
-      // var dateCell = $("<td colspan='2'></td>").text(
-      //   (showdata["start_league_date"] || "") +
-      //   " - " +
-      //   (showdata["end_league_date"] || "")
-      // );
-      // var statusCell = $("<td colspan='2'></td>").text(status);
-      // var viewCell = $("<td></td>").html(
-      //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-      //     '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
-      // );
-      // var editCell = $("<td></td>").html(
-      //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
-      // );
+     
       var deleteCell = $("<td></td>").html(
         '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
       );
@@ -1390,9 +1353,11 @@ updateCountdown();
 
       if (userData1 && userData1.status === "success" && userData1.data) {
         const rankList = userData1.data;
+
+        
         console.log(rankList,"league che")
         // Filter players by team name
-        const matchingData = rankList.filter(item => item.team_name === teamName && item.league_name === leagueNameData);
+        const matchingData = rankList.filter(item => item.team_name.id === teamName && item.league_name === leagueNameData);
         console.log(matchingData,'matchdata che')
         if (matchingData.length > 0) {
           // Filter out players already in playersName and those in disablePlayers

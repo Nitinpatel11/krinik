@@ -473,6 +473,8 @@ let NumberId = Number(id);
 console.log(typeof NumberId, NumberId, "NumberId");
 let teamData
 let matchName
+let userplayerdata = []
+let user_match_data
 
 async function fetchData(NumberId) {
   try {
@@ -484,17 +486,28 @@ async function fetchData(NumberId) {
       url: `https://krinik.pythonanywhere.com/player_get/`,
       method: "GET"
     });
+    const user_match = await $.ajax({
+      url: `https://krinik.pythonanywhere.com/user_match_get/`,
+      method: "GET"
+    });
    
-
+    
  teamData = data1.data
  console.log(teamData,"uio")
+    let matchCheck = user_match.data
+    console.log(matchCheck,"dataCheck");
+    
 
     if (data && data.status === "success") {
       console.log(data.data);
       console.log(NumberId, "fit");
 
       // Log all IDs in the response data
-    
+    if(matchCheck.length > 0){
+      user_match_data = matchCheck.filter((p) => p.match.id === NumberId )
+      
+    }
+    console.log(user_match_data,"user_match_data")
       // Compare the values directly
       let filtermatchview = data.data.find((p) => p.id === NumberId);
       matchName = filtermatchview.match_display_name
@@ -509,13 +522,14 @@ async function fetchData(NumberId) {
       
       if (filtermatchview) {
         let filteredPlayers = Players12
-          .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId is in AllPlayers
-          .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
+   .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId exists in AllPlayers
+   .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
+ // Map to actual player data from teamData
 
         console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
-
+        let sortfiltereplayers = [...new Set(filteredPlayers)]
         // Now, you can use this filtered data
-        rankList = filteredPlayers;
+        rankList = sortfiltereplayers;
 
         array = rankList;
         filterAndDisplay();
@@ -729,9 +743,10 @@ function displayTableRows() {
 // Function to post run data and redirect
 // Function to post run data and redirect
 // Function to post run data and update total_run in player_get
-function postRunData() {
+async function postRunData() {
   // Array to hold player data objects
   var dataToPost = [];
+  // var totalMatchScore = 0;
 
   // Loop through all the rows in the table
   $("table tbody tr").each(function() {
@@ -750,12 +765,19 @@ function postRunData() {
       total_run: runValue,
       select_match: matchName    // Use matchName as it is
     };
+    var playerData1 = {
+      player_id: playerId,  // Use playerId instead of playerName
+          // Use matchId instead of teamName
+      run: runValue,
+         // Use matchName as it is
+    };
 
     // Push the playerData to the array
     dataToPost.push(playerData);
+    userplayerdata.push(playerData1)
   });
 
-  console.log(dataToPost, "dataPost");
+  // console.log(dataToPost, "dataPost");
 
   // Send each player data object individually to the API
   dataToPost.forEach(function(data) {
@@ -767,7 +789,7 @@ function postRunData() {
       data: JSON.stringify(data), // Convert the playerData object to JSON string
 
       success: function(response) {
-        console.log("Data posted successfully for", data.player_declare, response);
+        // console.log("Data posted successfully for", data.player_declare, response);
       },
       error: function(error) {
         console.error("Error posting data for", data.player_declare, error);
@@ -818,7 +840,157 @@ function postRunData() {
 
   });
 
-  // Optionally redirect after submitting
+  let matchScores = []; // Array to store match scores
+
+// Use Promise.all to handle asynchronous operations in the forEach loop
+const matchPromises = user_match_data.map(async (match) => {
+    let totalMatchScore = 0;  // Reset totalMatchScore for each match
+
+    // Loop through match players
+    match.player.forEach(player => {
+        // Find the corresponding player in userplayerdata using player_id
+        const matchedPlayer = userplayerdata.find(p => p.player_id === player.id);
+
+        if (matchedPlayer) {
+            // If the player is found, get their run, default to 0 if not available
+            const playerRun = matchedPlayer.run || 0;
+            console.log(playerRun, "player");
+            let finalRun = playerRun;
+
+            // Adjust player run based on captain and vice-captain conditions
+            if (player.match_captain) {
+                finalRun = playerRun * 2;  // Double the run if the player is the captain
+            } else if (player.match_vice_captain) {
+                finalRun = playerRun * 1.5;  // 1.5x the run if the player is the vice-captain
+            }
+
+            // Add the adjusted run to totalMatchScore
+            totalMatchScore += finalRun;
+        }
+    });
+
+    // Output total match score for debugging
+    console.log(`Total Match Score for match ${match.id}:`, totalMatchScore);
+
+    // Store the total score for each match
+    matchScores.push({
+        matchId: match.id,
+        pool_name: match.pool_name,
+        score: totalMatchScore
+    });
+    console.log(matchScores, "matchScores");
+
+    // PATCH the total match score to the API for each match
+    try {
+        await $.ajax({
+            url: `https://krinik.pythonanywhere.com/user_match_get/${match.id}`,  // Use match ID for updating
+            type: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                score: totalMatchScore  // Send the calculated total score
+            }),
+            success: function(response) {
+                console.log(`Total match score updated successfully for match ${match.id}`, response);
+            },
+            error: function(error) {  // Error handling for the AJAX call
+                console.error(`Error updating match score for match ${match.id}:`, error);
+            }
+        });
+    } catch (error) {
+        console.error(`Failed to update score for match ${match.id}:`, error);
+    }
+});
+
+// Wait for all match score calculations and PATCH requests to complete
+Promise.all(matchPromises).then(() => {
+    // Group match scores by pool_name
+    const groupedScores = matchScores.reduce((acc, match) => {
+        // If the pool_name does not exist in the accumulator, create an array for it
+        if (!acc[match.pool_name]) {
+            acc[match.pool_name] = [];
+        }
+        // Add the match to the corresponding pool_name group
+        acc[match.pool_name].push(match);
+        return acc;
+    }, {});
+
+    console.log(groupedScores, "Grouped Scores by Pool");
+
+    // Iterate over each pool group to calculate the highest score and update the winning status
+    Object.keys(groupedScores).forEach(poolName => {
+        const poolMatches = groupedScores[poolName];
+
+        // Find the highest score in the current pool
+        const maxScore = Math.max(...poolMatches.map(match => match.score));
+
+        // Update the winning status for each match in the pool
+        poolMatches.forEach(async (match) => {
+            let winningStatus = match.score === maxScore ? "Winner" : "Contestant"; // Determine winner based on maxScore
+
+            // PATCH the winning status to the API for each match
+            try {
+                await $.ajax({
+                    url: `https://krinik.pythonanywhere.com/user_match_get/${match.matchId}`,  // Use match ID for updating
+                    type: 'PATCH',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        winning_status: winningStatus  // Send the winning status
+                    }),
+                    success: function(response) {
+                        console.log(`Winning status updated successfully for match ${match.matchId}`, response);
+                    },
+                    error: function(error) {
+                        console.error(`Error updating winning status for match ${match.matchId}:`, error);
+                    }
+                });
+            } catch (error) {
+                console.error(`Failed to update winning status for match ${match.matchId}:`, error);
+            }
+        });
+    });
+}).catch(error => {
+    console.error('Error in processing matches:', error);
+});
+
+    // Next, POST individual player scores in players_score
+    user_match_data.forEach((match) => {
+    const players_score = [];
+
+    // Loop through the players in the match
+    match.player.forEach((player) => {
+        // Find the corresponding player in userplayerdata using player_id
+        const matchedPlayer = userplayerdata.find(p => p.player_id === player.id);
+
+        if (matchedPlayer) {
+            // Push the matched player data to the players_score array
+            players_score.push(matchedPlayer);
+        }
+    });
+
+    // Prepare data without checking players_score length
+    const updatedData = {
+        players_score: players_score  // Set players_score with the filtered players
+    };
+
+    // Send a PATCH request to update the players_score field
+    $.ajax({
+        url: `https://krinik.pythonanywhere.com/user_match_get/${match.id}`, // API endpoint with match ID
+        type: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify(updatedData), // Send only the players_score field as an array
+        success: function(response) {
+            console.log("Player scores posted successfully for match", match.id, response);
+        },
+        error: function(error) {
+            console.error("Error posting player scores for match", match.id, error);
+            alert("Failed to submit player scores for match " + match.id + ".");
+        }
+    });
+});
+
+
+
+    // Optionally redirect after submitting
   // window.location.href = "match-name.html";
 }
 

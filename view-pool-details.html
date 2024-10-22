@@ -862,19 +862,20 @@ document.getElementById("contestResult").addEventListener("click", () => redirec
 const table = document.getElementById('contestTable');
 const downloadBtn = document.getElementById('download-btn');
 
-downloadBtn.addEventListener('click', () => {
-const workbook = XLSX.utils.table_to_book(table, { sheet: 'Contest Data' });
-const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-const url = URL.createObjectURL(data);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'contest_data.xlsx';
-a.click();
+// downloadBtn.addEventListener('click', () => {
+// const workbook = XLSX.utils.table_to_book(table, { sheet: 'Contest Data' });
+// const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+// const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+// const url = URL.createObjectURL(data);
+// const a = document.createElement('a');
+// a.href = url;
+// a.download = 'contest_data.xlsx';
+// a.click();
 
-URL.revokeObjectURL(url);
-a.remove();
-});
+// URL.revokeObjectURL(url);
+// a.remove();
+// });
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
 
@@ -888,6 +889,6 @@ a.remove();
 
         <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 
-
+        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
         <script src="assets/js/app.js"></script>
 </html>
