@@ -29,14 +29,15 @@ async function fetchData(url, type, updateData) {
 function populateSelect(data) {
     const selectElement = document.getElementById('league-name');
     selectElement.innerHTML = '<option value="">Select League</option>';
-    const currentDate1 = new Date(); 
-   const currentDate = (moment(currentDate1, 'YYYY-MM-DD').format('DD-MM-YYYY')) // Get the current date and time
-    console.log(currentDate)
-// console.log(data[2].end_league_date)
-data.forEach(league => {
-        const leagueEndDate = league.end_league_date;  // Convert start_league_date to a Date object
 
-        // Only add the league to the dropdown if it hasn't expired (currentDate is before leagueStartDate)
+    const currentDate = moment().toDate(); // Get the current date as a Date object
+    console.log("Current Date: ", currentDate);
+
+    data.forEach(league => {
+        const leagueEndDate = moment(league.end_league_date, 'DD-MM-YYYY').toDate(); // Convert end_league_date to a Date object
+        console.log("League End Date: ", leagueEndDate);
+
+        // Compare Date objects directly
         if (currentDate < leagueEndDate) {
             const option = document.createElement('option');
             option.value = league.league_name;
@@ -45,6 +46,7 @@ data.forEach(league => {
         }
     });
 }
+
 
 function validateInput(inputId, errorId, validationFunction, emptyMessage, invalidMessage) {
 const inputElement = document.getElementById(inputId);

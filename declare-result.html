@@ -475,6 +475,7 @@ let teamData
 let matchName
 let userplayerdata = []
 let user_match_data
+let totalMoney
 
 async function fetchData(NumberId) {
   try {
@@ -508,6 +509,12 @@ async function fetchData(NumberId) {
       
     }
     console.log(user_match_data,"user_match_data")
+
+    totalMoney = user_match_data.reduce((accumulator, userMatch) => {
+        return userMatch.total_amount + accumulator;
+      }, 0);
+      console.log("Total Money:", totalMoney);
+
       // Compare the values directly
       let filtermatchview = data.data.find((p) => p.id === NumberId);
       matchName = filtermatchview.match_display_name

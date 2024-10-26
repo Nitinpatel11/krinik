@@ -7,7 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesdesign" name="author" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- App favicon -->
@@ -51,6 +53,7 @@
     height: 60px;
   }
 
+
   /* .btnss {
     padding: 5px 30px;
     border: 2px solid #E20101;
@@ -64,13 +67,13 @@
     background-color: #E20101;
     color: white;
   } */
-/* 
+  /* 
   .btnss:focus {
     outline: none;
     background-color: #E20101;
     color: white;
   } */
-/* 
+  /* 
   .btnss {
     padding: 5px 30px;
     border: 2px solid #E20101;
@@ -104,13 +107,15 @@
     overflow: hidden;
 
   }
-  .profile-picture img{
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
+
+  .profile-picture img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
   .full-name {
-    margin-left: 35px;
+    /* margin-left: 35px;  */
   }
 
   .info {
@@ -141,7 +146,7 @@
       margin: auto;
     }
 
-    
+
 
     .buttons {
       margin-top: -65px;
@@ -162,7 +167,7 @@
 
     .button_wrapper div {
       width: 100% !important;
-      margin: 0px !important;
+      /* margin: 0px !important; */
     }
 
     .details {
@@ -170,9 +175,9 @@
       margin-top: 15px !important;
     }
 
-    .details div {
+    /* .details div {
       margin-top: 14px !important;
-    }
+    } */
 
     .about_wrapper {
       display: flex;
@@ -184,6 +189,80 @@
     .info {
       font-weight: 700;
       font-size: 1rem;
+    }
+  }
+
+  .w-80 {
+    width: 80%;
+  }
+
+  .w-20 {
+    width: 20%;
+  }
+
+  /* Default modal width for larger screens */
+  .modal-responsive-custom {
+    max-width: 900px;
+    /* Set a custom width for larger screens */
+  }
+
+  /* For medium screens like tablets, reduce the width */
+  @media (max-width: 991px) {
+    .modal-responsive-custom {
+      max-width: 700px;
+    }
+  }
+
+  /* For smaller screens like smartphones, make the modal full-width */
+  @media (max-width: 575px) {
+    .modal-responsive-custom {
+      max-width: 100%;
+      margin: 0 15px;
+      /* Add some margin for better spacing on small screens */
+    }
+
+    .detailsdivine {
+      margin-top: 25px !important;
+      row-gap: 10px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .w-80 {
+      width: 80%;
+    }
+
+    .w-20 {
+      width: 20%;
+    }
+
+    /* Adjust button size or spacing for mobile if necessary */
+    .btn {
+      width: 100%;
+      /* Make button full-width on small screens */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .button_wrapper {
+      padding: 5px;
+      /* Adjust padding */
+    }
+
+    .item {
+      margin-bottom: 15px;
+      /* Space between items */
+    }
+
+    .btn {
+      margin-top: 0px;
+      /* Space above buttons */
+      width: 100%;
+      /* Full-width buttons */
+    }
+
+    .boxstyle {
+      padding: 0 !important;
     }
   }
 </style>
@@ -198,22 +277,22 @@
           <div class="navbar-brand-box">
             <a href="./dashboard.html" class="logo logo-dark">
               <span class="logo-sm">
-                
+
                 <img src="./assets/images/krinikIn_Logo.svg" alt="" />
               </span>
               <span class="logo-lg">
-              
-                <img src="./assets/images/krinikIn_Logo.svg" alt=""  />
+
+                <img src="./assets/images/krinikIn_Logo.svg" alt="" />
               </span>
             </a>
 
             <a href="index.html" class="logo logo-light ">
               <span class="logo-sm">
-             
-                <img src="./assets/images/krinikIn_Logo.svg" alt=""  />
+
+                <img src="./assets/images/krinikIn_Logo.svg" alt="" />
               </span>
               <span class="logo-lg">
-                
+
                 <img src="./assets/images/krinikIn_Logo.svg" alt="" />
               </span>
             </a>
@@ -237,159 +316,159 @@
             <!-- <button id="showotppage" type="button" class="btn btn-primary2  waves-effect" 
              >Enter OTP
             </button> -->
-            
+
           </div>
-        
+
           <div class="dropdown   dblock">
             <div id="time_show" class="btn-primary2  px-3">
             </div>
           </div>
 
-          
+
         </div>
-        
+
       </div>
     </header>
 
-       <!-- ========== Left Sidebar Start ========== -->
-       <div class="vertical-menu ">
-        <div data-simplebar class="h-100 ">
-          <!--- Sidemenu -->
-          <div id="sidebar-menu" class="">
-            <!-- Left Menu Start -->
-            <ul class="metismenu list-unstyled " id="side-menu">
-              <li class="menu-title">Menu</li>
-  
-              <li>
-                <a href="./dashboard.html" class="waves-effect">
-                  <div class=" icons-sm icon-set">
-                    <span class="material-symbols-outlined icon-margin">
-                      dashboard
-                      </span>
-                 
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="vertical-menu ">
+      <div data-simplebar class="h-100 ">
+        <!--- Sidemenu -->
+        <div id="sidebar-menu" class="">
+          <!-- Left Menu Start -->
+          <ul class="metismenu list-unstyled " id="side-menu">
+            <li class="menu-title">Menu</li>
+
+            <li>
+              <a href="./dashboard.html" class="waves-effect">
+                <div class=" icons-sm icon-set">
+                  <span class="material-symbols-outlined icon-margin">
+                    dashboard
+                  </span>
+
                   <span>Dashboard</span>
-                  </div>
-                </a>
-              </li>
-  
-              <li>
-                <a href="./user.html" class="waves-effect">
-                  <div class="icons-sm icon-set">
-                    <span class="material-symbols-outlined icon-margin">
-                      person
-                      </span>
-                 
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="./user.html" class="waves-effect">
+                <div class="icons-sm icon-set">
+                  <span class="material-symbols-outlined icon-margin">
+                    person
+                  </span>
+
                   <span>User</span>
                 </div>
-                </a>
-              </li>
-  
-              <li>
-                <a href="javascript: void(0);" class=" ">
-                  <div class="icons-sm icon-set ">
-                    <span class="material-symbols-outlined icon-margin">
-                      sports_cricket
-                      </span>                    
-                      <span class="has-arrow waves-effect ">Sports Configuration</span>
-                                      
-                    </div> 
-                    
-                  </a>
-  
-                <ul class="sub-menu" aria-expanded="false">
-                  <li><a href="./manage-league.html">Manage Leagues</a></li>
-                  <li><a href="./manage-team.html">Manage Teams</a></li>
-                  <li><a href="./manage-player.html">Manage Players</a></li>
-                </ul>
-              </li>
-              
-              <li>
-                <a href="javascript: void(0);" class=" ">
-                  <div class="icons-sm icon-set ">
-                    <span class="material-symbols-outlined icon-margin">
-                      crossword
-                      </span>                   
-                      <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
-                                      
-                    </div> 
-                    
-                  </a>
-  
-                <ul class="sub-menu" aria-expanded="false">
-                  <li><a href="./manage-match.html">Manage Match</a></li>
-                  <li><a href="./manage-pool.html">Manage Pools</a></li>
-                </ul>
-              </li>
-  
-              <li class="otp-exempt" style="display:none">
-                <a href="javascript: void(0);" class=" ">
-                  <div class="icons-sm icon-set ">
-                    <span class="material-symbols-outlined icon-margin">
-                      receipt_long
-                      </span>                 
-                      <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
-                                      
-                    </div> 
-                    
-                  </a>
-  
-                <ul class="sub-menu" aria-expanded="false">
-                  <li><a href="./all-transaction.html">All Transaction</a></li>
-                  <li><a href="./wallet-transaction.html">Wallet Transaction</a></li>
-                  <li><a href="./game-transaction.html">Game Transaction</a></li>
-                </ul>
-              </li>
-  
-              <li class="otp-exempt" style="display:none">
-                <a href="./account-setting.html" class="waves-effect">
-                  <div class="icons-sm icon-set ">
-                    <span class="material-symbols-outlined icon-margin">
-                      settings
-                      </span>
-                      <span>Account Setting</span>
-                  </div>
-                </a>
-              </li>
-              <li class="otp-exempt" style="display:none">
-                <a href="./advertise.html" class="waves-effect">
-                  <div class="icons-sm icon-set ">
-                    <span class="material-symbols-outlined icon-margin">
-                      ad
-                      </span>
-                      <span>Advertise</span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="./kyc.html" class="waves-effect">
-                  <div class="icons-sm icon-set">
-                    <span class="material-symbols-outlined icon-margin">
-                      person
-                      </span>
-                 
+              </a>
+            </li>
+
+            <li>
+              <a href="javascript: void(0);" class=" ">
+                <div class="icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin">
+                    sports_cricket
+                  </span>
+                  <span class="has-arrow waves-effect ">Sports Configuration</span>
+
+                </div>
+
+              </a>
+
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="./manage-league.html">Manage Leagues</a></li>
+                <li><a href="./manage-team.html">Manage Teams</a></li>
+                <li><a href="./manage-player.html">Manage Players</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="javascript: void(0);" class=" ">
+                <div class="icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin">
+                    crossword
+                  </span>
+                  <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
+
+                </div>
+
+              </a>
+
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="./manage-match.html">Manage Match</a></li>
+                <li><a href="./manage-pool.html">Manage Pools</a></li>
+              </ul>
+            </li>
+
+            <li class="otp-exempt" style="display:none">
+              <a href="javascript: void(0);" class=" ">
+                <div class="icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin">
+                    receipt_long
+                  </span>
+                  <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
+
+                </div>
+
+              </a>
+
+              <ul class="sub-menu" aria-expanded="false">
+                <li><a href="./all-transaction.html">All Transaction</a></li>
+                <li><a href="./wallet-transaction.html">Wallet Transaction</a></li>
+                <li><a href="./game-transaction.html">Game Transaction</a></li>
+              </ul>
+            </li>
+
+            <li class="otp-exempt" style="display:none">
+              <a href="./account-setting.html" class="waves-effect">
+                <div class="icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin">
+                    settings
+                  </span>
+                  <span>Account Setting</span>
+                </div>
+              </a>
+            </li>
+            <li class="otp-exempt" style="display:none">
+              <a href="./advertise.html" class="waves-effect">
+                <div class="icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin">
+                    ad
+                  </span>
+                  <span>Advertise</span>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="./kyc.html" class="waves-effect">
+                <div class="icons-sm icon-set">
+                  <span class="material-symbols-outlined icon-margin">
+                    person
+                  </span>
+
                   <span>KYC</span>
                 </div>
-                </a>
-              </li>
-  
-              <li>
-                <a href="" class="waves-effect " id="logoutButton">
-                  <div class=" icons-sm icon-set ">
-                    <span class="material-symbols-outlined icon-margin ">
-                      logout
-                      </span>
-                      <span class="">Logout</span>
-                  </div>
-                </a>
-              </li>
-  
-            
-                      </ul>
-          </div>
-          <!-- Sidebar -->
+              </a>
+            </li>
+
+            <li>
+              <a href="" class="waves-effect " id="logoutButton">
+                <div class=" icons-sm icon-set ">
+                  <span class="material-symbols-outlined icon-margin ">
+                    logout
+                  </span>
+                  <span class="">Logout</span>
+                </div>
+              </a>
+            </li>
+
+
+          </ul>
         </div>
+        <!-- Sidebar -->
       </div>
-      <!-- Left Sidebar End -->
+    </div>
+    <!-- Left Sidebar End -->
 
     <!-- ============================================================== -->
     <!-- Start right Content here -->
@@ -413,20 +492,17 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <div class="row bg-white rounded shadow-sm p-4">
+                    <div class="row bg-white rounded shadow-sm ">
 
                       <!-- Left Column - Profile Details and Buttons -->
                       <div class="col-md-12 d-flex flex-column order-md-1">
-                        <div class="d-flex mb-3 profile_wrapper ">
+                        <div class="d-flex mb-3 profile_wrapper gap-3">
                           <div class="profile-picture  rounded-circle">
                             <img src="" alt="" id="user-image-view">
                           </div>
                           <div
                             class="full-name  fs-5 fw-bold  d-flex flex-column justify-content-start align-items-start mb-3">
-                            <!-- </div> -->
-                            <!-- <div class=""> -->
-                            <!-- <div class="about_wrapper"> -->
-                            <!-- <div class=" border-left pl-3"> -->
+                           
                             <div class="info mb-2">Full Name : <span id="user-fullname" class="span-user"></span></div>
 
                             <div class="info mb-2">Mobile No : <span id="user-mob" class="span-user"></span></div>
@@ -437,203 +513,148 @@
                       </div>
                     </div>
 
-                    <!-- Buttons Section -->
-                    <!-- <div class="buttons"> -->
-                      <!-- <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
-                        <button class="btn btn-outline-dark m-1" id="user-unlock">
-                          <span id="user-unlock-text" ></span>
-                        </button>
-                        <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
-                        <button class="btn btn-outline-dark m-1" id="user-transaction-history" >Transaction History</button>
-                      </div> -->
-                    
-                      <!-- <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
-                        <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
-                        <button class="btn btn-outline-dark m-1" id="user-add-amount" data-toggle="modal" data-target="#addAmountModal">Add Amount</button>
-                        <button class="btn btn-outline-dark m-1" id="user-game-history">Game History</button>
-                        <button class="btn btn-outline-dark m-1" id="user-withdraw" >Withdraw History</button>
-                      </div> -->
-
-                      <!-- Add Amount Modal -->
-                      <!-- <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
-                              <button type="button" class="close btn-primary4" data-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined close-margin btn-primary5">
-                                  close
-                                  </span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form>
-                                <div class="form-group">
-                                  <label for="id">Player ID</label>
-                                  <input type="text" class="form-control user-select-btn" id="playerid" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="name">Player Name</label>
-                                  <input type="text" class="form-control user-select-btn" id="player-name" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num">Total Play Amount</label>
-                                  <input type="number" class="form-control user-select-btn" id="player-total-amount" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num1">Total Winning Amount</label>
-                                  <input type="number" class="form-control user-select-btn" id="player-total-winning" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num3">Add Amount In Play</label>
-                                  <input type="number" class="form-control" id="player-add-amount" required>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num4">Add Amount In Winning</label>
-                                  <input type="number" class="form-control" id="player-winning-amount" required>
-                                </div>
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btnss btn-primary" data-dismiss="modal"  id="addSubmit" >Submit</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-
-                      <!-- Deduct Amount Modal -->
-                      <!-- <div class="modal fade" id="deductAmountModal" tabindex="-1"
-                        aria-labelledby="deductAmountModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="deductAmountModalLabel">Deduct Amount</h5>
-                              <button type="button" class="close btn-primary4" data-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined close-margin btn-primary5">
-                                  close
-                                  </span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form>
-                                <div class="form-group">
-                                  <label for="deductPlayerId">Player ID</label>
-                                  <input type="text" class="form-control" id="playerid1" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductPlayerName">Player Name</label>
-                                  <input type="text" class="form-control" id="player-name1" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductTotalPlayAmount">Total Play Amount</label>
-                                  <input type="number" class="form-control" id="player-total-amount1" required
-                                    readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductTotalWinningAmount">Total Winning Amount</label>
-                                  <input type="number" class="form-control" id="player-total-winning1" required
-                                    readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductAmountInPlay">Deduct In Play Amount</label>
-                                  <input type="number" class="form-control" id="deductAmountInPlay" required>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductAmountInWinning">Deduct In Winning Amount</label>
-                                  <input type="number" class="form-control" id="deductAmountInWinning" required>
-                                </div>
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btnss btn-primary" data-dismiss="modal" id="deductAmount">Submit</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-                    <!-- </div> -->
+                   
 
                     <!-- Details Section -->
                     <div class="button_wrapper">
-                      <div class="details d-flex justify-content-between w-75 m-auto text-center ">
-                        <div class="item border rounded p-4 flex-fill m-1 border-black h-100 ">
-                          <div class=" d-flex justify-content-between align-items-center mb-2">
-                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>aadhar front</span>
+                      <div class="details d-flex justify-content-between w-75 m-auto text-center">
+                        <div class="item border rounded p-4 boxstyle flex-fill m-1 border-black h-100">
+                          <!-- Aadhar Front -->
+                          <div class="d-flex justify-content-between detailsdivine flex-column flex-md-row align-items-center mb-3">
+                            <div class="item border rounded py-lg-4 py-md-4 flex-fill m-1 border-black">
+                              <div class="d-flex align-items-center flex-column flex-md-row">
+                                <div class="col-8 col-md-9 fontstyle">Aadhar Front</div>
+                                <div class="col-4 col-md-3">
+                                  <i class="fa-solid fa-eye colorall" onclick="showImage(apiData.aadhar_front,'Aadhar Front')"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="w-25">
+                              <button class="btn btn-danger btn-sm">PDF Download</button>
+                            </div>
                           </div>
-                          <div class="w-25">
-
-                            <button> pdf download</button>
+                    
+                          <!-- Aadhar Back -->
+                          <div class="d-flex justify-content-between detailsdivine flex-column flex-md-row align-items-center mb-3">
+                            <div class="item border rounded py-lg-4 py-md-4 boxstyle flex-fill m-1 border-black">
+                              <div class="d-flex align-items-center flex-column flex-md-row">
+                                <div class="w-80 col-8 col-md-9 fontstyle">Aadhar Back</div>
+                                <div class="w-20 col-4 col-md-3">
+                                  <i class="fa-solid fa-eye colorall" onclick="showImage(apiData.aadhar_back,'Aadhar Back')"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="w-25">
+                              <button class="btn btn-danger btn-sm">PDF Download</button>
+                            </div>
                           </div>
-                        </div>
-                        <div class=" d-flex justify-content-between align-items-center mb-2">
-                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>aadhar back</span>
+                    
+                          <!-- Pan Card -->
+                          <div class="d-flex justify-content-between detailsdivine flex-column flex-md-row align-items-center mb-3">
+                            <div class="item border rounded py-lg-4 py-md-4 boxstyle flex-fill m-1 border-black">
+                              <div class="d-flex align-items-center flex-column flex-md-row">
+                                <div class="w-80 col-8 col-md-9 fontstyle">PAN Card</div>
+                                <div class="w-20 col-4 col-md-3">
+                                  <i class="fa-solid fa-eye colorall" onclick="showImage(apiData.pan_card,'PAN Card')"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="w-25">
+                              <button class="btn btn-danger btn-sm">PDF Download</button>
+                            </div>
                           </div>
-                          <div class="w-25">
-
-                            <button> pdf download</button>
-                          </div>
-                        </div>
-                        <div class=" d-flex justify-content-between align-items-center mb-2">
-                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>pan card </span>
-                          </div>
-                          <div class="w-25">
-
-                            <button> pdf download</button>
-                          </div>
-                        </div>
-                        
-                        <div class=" d-flex justify-content-between align-items-center mb-2">
-                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>Pass Book </span>
-                          </div>
-                          <div class="w-25">
-
-                            <button> pdf download</button>
-                          </div>
-                        </div>
-                        <div class=" d-flex justify-content-between align-items-center mb-2">
-                          <div class="item border rounded p-4 flex-fill m-1 h-100 border-black "> <span>Cheque </span>
-                          </div>
-                          <div class="w-25">
-
-                            <button> pdf download</button>
+                    
+                          <!-- Bank Account Details (Read-Only Inputs) -->
+                          <div class="account-details mt-4">
+                            <h5 class="text-center">Bank Account Details</h5>
+                            <div class="row">
+                              <div class="col-md-6 mb-3">
+                                <label for="account_number" class="form-label">Account Number</label>
+                                <input type="text" id="account_number" class="form-control text-center" readonly>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                <label for="ifsc_code" class="form-label">IFSC Code</label>
+                                <input type="text" id="ifsc_code" class="form-control text-center" readonly>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 mb-3">
+                                <label for="bank_name" class="form-label">Bank Name</label>
+                                <input type="text" id="bank_name" class="form-control text-center" readonly>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                <label for="branch_name" class="form-label">Branch Name</label>
+                                <input type="text" id="branch_name" class="form-control text-center" readonly>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 mb-3">
+                                <label for="state" class="form-label">State</label>
+                                <input type="text" id="state" class="form-control text-center" readonly>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                        <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount"></p> <span>Refer Amount</span> -->
+                    </div>
+
+
+
+
+                    <!-- Modal for Image Popover -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-responsive-custom">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                            <i class="fa-solid fa-xmark fa-2x colorall" data-bs-dismiss="modal" aria-label="Close"></i>
+                          </div>
+                          <div class="modal-body text-center position-relative">
+                            <img id="preview-image" src="" alt="Preview" class="img-fluid border"
+                              style="width: 100%; height: 300px; object-fit: contain;">
+                          </div>
                         </div>
                       </div>
+                    </div>
 
-                      <div class="button_wrapper">
-                        <div class="details d-flex justify-content-between w-50 m-auto text-center mt-5">
-                          <div class="item border rounded p-4 flex-fill m-1 border-black h-100"> <span>Approve</span>
-                          </div>
-                          <button class="item border rounded p-4 flex-fill m-1 h-100 border-black"><span>Reject</span>
-                          </button>
-                          <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span>
+
+
+                    <!-- Bootstrap CDN (if not already added) -->
+
+
+
+                    <div class="button_wrapper">
+                      <div class="details d-flex justify-content-between w-50 m-auto text-center mt-5">
+                        <div class="item border rounded p-4 flex-fill m-1 border-black h-100"> <span>Approve</span>
+                        </div>
+                        <button class="item border rounded p-4 flex-fill m-1 h-100 border-black"><span>Reject</span>
+                        </button>
+                        <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span>
                           </div> -->
-                          <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount"></p> <span>Refer Amount</span> -->
-                          </div>
-                        </div>
+                        <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount"></p> <span>Refer Amount</span> -->
+                      </div>
                     </div>
                   </div>
-
-                  <!-- Right Column - Information Details -->
-
-
                 </div>
+
+                <!-- Right Column - Information Details -->
+
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- end row -->
+  <!-- end row -->
   </div>
   <!-- container-fluid -->
- 
+
   <!-- end page-content-wrapper -->
- 
+
   <!-- End Page-content -->
 
   <footer class="footer">
@@ -653,8 +674,47 @@
   <!-- end main content-->
   </div>
   <!-- END layout-wrapper -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- Script to handle image preview and API data -->
+  <script>
+    let apiData = {}; // Placeholder for API data
+    
+    // Simulate API call to get image data and bank details
+    function fetchDataFromAPI() {
+      apiData = {
+        aadhar_front: "./assets/images/default_player.png",
+        aadhar_back: "./assets/images/default_team.png",
+        pan_card: "./assets/images/image-logo.png",
+        account_number: "78965241269",
+        ifsc_code: "Dfathwuja",
+        bank_name: "Bank of Baroda",
+        branch_name: "Ahmedabad",
+        state: "Gujarat"
+      };
   
+      // Populate the read-only fields with the fetched data
+      document.getElementById('account_number').value = apiData.account_number;
+      document.getElementById('ifsc_code').value = apiData.ifsc_code;
+      document.getElementById('bank_name').value = apiData.bank_name;
+      document.getElementById('branch_name').value = apiData.branch_name;
+      document.getElementById('state').value = apiData.state;
+    }
+  
+    // Function to show the image and update modal title
+    function showImage(imageSrc, title) {
+      document.getElementById('preview-image').src = imageSrc;
+      document.getElementById('imageModalLabel').innerText = title;
+      
+      var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+      imageModal.show();
+    }
+  
+    // Call the function to simulate API data fetching
+    fetchDataFromAPI();
+  </script>
+
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- JAVASCRIPT -->
   <script src="./assets/libs/jquery/jquery.min.js"></script>
@@ -662,7 +722,7 @@
   <script src="./assets/libs/metismenu/metisMenu.min.js"></script>
   <script src="./assets/libs/simplebar/simplebar.min.js"></script>
   <script src="./assets/libs/node-waves/waves.min.js"></script>
-  
+
   <script src="./assets/jsfile/user-kyc-view.js"></script>
   <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->

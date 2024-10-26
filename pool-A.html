@@ -162,9 +162,9 @@
                 <div class=" icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     dashboard
-                    </span>
-               
-                <span>Dashboard</span>
+                  </span>
+
+                  <span>Dashboard</span>
                 </div>
               </a>
             </li>
@@ -174,10 +174,10 @@
                 <div class="icons-sm icon-set">
                   <span class="material-symbols-outlined icon-margin">
                     person
-                    </span>
-               
-                <span>User</span>
-              </div>
+                  </span>
+
+                  <span>User</span>
+                </div>
               </a>
             </li>
 
@@ -186,12 +186,12 @@
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     sports_cricket
-                    </span>                    
-                    <span class="has-arrow waves-effect ">Sports Configuration</span>
-                                    
-                  </div> 
-                  
-                </a>
+                  </span>
+                  <span class="has-arrow waves-effect ">Sports Configuration</span>
+
+                </div>
+
+              </a>
 
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="./manage-league.html">Manage Leagues</a></li>
@@ -199,19 +199,16 @@
                 <li><a href="./manage-player.html">Manage Players</a></li>
               </ul>
             </li>
-            
+
             <li>
               <a href="javascript: void(0);" class=" ">
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     crossword
-                    </span>                   
-                    <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
-                                    
-                  </div> 
-                  
-                </a>
-
+                  </span>
+                  <span class="has-arrow has-arrow1 waves-effect ">Manage Contest</span>
+                </div>
+              </a>
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="./manage-match.html">Manage Match</a></li>
                 <li><a href="./manage-pool.html">Manage Pools</a></li>
@@ -223,12 +220,10 @@
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     receipt_long
-                    </span>                 
-                    <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
-                                    
-                  </div> 
-                  
-                </a>
+                  </span>
+                  <span class="has-arrow has-arrow2 waves-effect ">Transactions</span>
+                </div>
+              </a>
 
               <ul class="sub-menu" aria-expanded="false">
                 <li><a href="./all-transaction.html">All Transaction</a></li>
@@ -242,8 +237,8 @@
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     settings
-                    </span>
-                    <span>Account Setting</span>
+                  </span>
+                  <span>Account Setting</span>
                 </div>
               </a>
             </li>
@@ -252,20 +247,9 @@
                 <div class="icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin">
                     ad
-                    </span>
-                    <span>Advertise</span>
+                  </span>
+                  <span>Advertise</span>
                 </div>
-              </a>
-            </li>
-            <li>
-              <a href="./kyc.html" class="waves-effect">
-                <div class="icons-sm icon-set">
-                  <span class="material-symbols-outlined icon-margin">
-                    person
-                    </span>
-               
-                <span>KYC</span>
-              </div>
               </a>
             </li>
 
@@ -274,14 +258,14 @@
                 <div class=" icons-sm icon-set ">
                   <span class="material-symbols-outlined icon-margin ">
                     logout
-                    </span>
-                    <span class="">Logout</span>
+                  </span>
+                  <span class="">Logout</span>
                 </div>
               </a>
             </li>
 
-          
-                    </ul>
+
+          </ul>
         </div>
         <!-- Sidebar -->
       </div>
@@ -319,9 +303,67 @@
               <div class="col-lg-5 col-sm-12">
                 <div class="card-body mt-4">
                   <h5 class="text-center" id="createdPairsHeading">Created Pairs</h5>
-                  <div id="createdPairsContainer">
-                    <!-- Display created pairs here -->
+                  <div class="row">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                  <div class="table-rep-plugin">
+                                    <div class="table-responsive mb-0 table table-scroll"
+                                      data-pattern="priority-columns" id="table-scrolling">
+                                      <table id="tech-companies-1"
+                                        class="table table-striped text-center align-items-center fixed-table">
+                                        <thead>
+                                          <tr>
+                                            <th>No.</th>
+                                            <th>Player 1</th>
+                                            <th>Player 2</th>
+                                            <th>Limit</th>
+                                            <th>Edit</th>
+                                            <th>Remove</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <!-- Table rows will be populated here -->
+                                        </tbody>
+                                      </table>
+
+
+                                    </div>
+                                    <div id="noDataFound" style="display:none;" class="no-data-div">
+                                      <img src="./assets/images/no-data.jpg" alt="No Data Found">
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row pagi" id="pagination" style="display:none">
+                                  <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                                      Showing 1 to 10 of 57 leagues
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers pagination index_buttons"
+                                      id="datatable_paginate">
+                                      <ul class="pagination-list d-flex list-unstyled"></ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- end col -->
+                      </div>
+                      <!-- end row -->
+                    </div>
                   </div>
+                  <!-- <div id="createdPairsContainer">
+                  
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -344,6 +386,37 @@
 
 
 
+  <!-- Edit Modal -->
+  <div id="editModal" style="display: none;">
+    <div class="modal-content">
+      <h3>Edit Limit</h3>
+      <input type="number" id="editLimitInput" placeholder="New Limit" />
+      <button id="saveEditButton">Save</button>
+      <button id="closeEditButton">Close</button>
+    </div>
+  </div>
+
+  <style>
+    /* Simple modal styles */
+    #editModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+  </style>
+
 
   <!-- </div> -->
 
@@ -353,7 +426,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -367,13 +439,16 @@
     const poolName = urlParams.get('pool_name');
     var id = urlParams.get('id');
 
+    let allPlayers = [];
+    let createdPairs = [];
+
     // Fetch existing pairs for the pool
     fetch(`https://krinik.pythonanywhere.com/pair_get/`)
       .then(response => response.json())
       .then(data => {
-        const pairs = data.data.filter((x) => x.pool_name.id == id); // Assuming the response has a 'pairs' array
-        console.log('laavu', pairs)
+        const pairs = data.data.filter((x) => x.pool_name.id == id);
         createdPairs = pairs.map(pair => ({
+          id: pair.id, // Save the id for deleting the pair later
           player_1: pair.player_1.player_name,
           player_2: pair.player_2.player_name,
           limit: pair.limit
@@ -382,24 +457,41 @@
       })
       .catch(error => console.error('Error fetching pairs:', error));
 
-    function displayCreatedPairs() {
-      playerPairsContainer.innerHTML = '';
-      createdPairs.forEach(pair => {
-        const pairText = document.createElement('div');
-        pairText.textContent = `[${pair.player_1}, ${pair.player_2}, Limit: ${pair.limit}]`;
-        playerPairsContainer.appendChild(pairText);
-      });
+
+    function deletePair(pairId, pairDiv) {
+      if (!pairId) {
+        // Remove the static pair from createdPairs
+        createdPairs = createdPairs.filter((x) => x.byD !== pairDiv);
+
+        // Remove the corresponding inputGroup from the DOM
+        const inputGroup = document.querySelector(`.input-group[data-byd="${pairDiv}"]`);
+        if (inputGroup) {
+          inputGroup.remove(); // Remove the dropdown container
+        }
+
+        displayCreatedPairs();
+      } else {
+        // Backend pair deletion
+        fetch(`https://krinik.pythonanywhere.com/pair_get/${pairId}/`, {
+          method: 'DELETE',
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            console.log(`Pair with ID ${pairId} deleted successfully.`);
+            displayCreatedPairs();
+          })
+          .catch(error => console.error('Error deleting pair:', error));
+      }
     }
 
-    let allPlayers = [];
-    let createdPairs = [];
 
     fetch('https://krinik.pythonanywhere.com/match_get/')
       .then(response => response.json())
       .then(data => {
         const matchData = data.data;
         const selectedMatch = matchData.find(match => match.match_display_name.includes(matchName));
-        console.log(data.data)
         if (selectedMatch) {
           const teamAName = selectedMatch.select_team_A.team_name;
           const teamBName = selectedMatch.select_team_B.team_name;
@@ -411,19 +503,37 @@
           ];
 
           createPlayerPairDropdown();
+          addPairButton.addEventListener('click', function () {
+            // Get the last input group (if exists) and its limit input field
+            const lastInputGroup = pairsInputContainer.querySelector('.input-group:last-child');
 
-          addPairButton.addEventListener('click', createPlayerPairDropdown);
+            // Check if the last input group exists and if its limit input field has a value
+            if (lastInputGroup) {
+              const lastLimitInput = lastInputGroup.querySelector('input[type="text"]');
+
+              if (!lastLimitInput.value) {
+                // If the last limit input is empty, prevent adding a new pair
+                alert('Please enter a limit for the current pair before adding a new one.');
+                return;
+              }
+            }
+
+            // If there is a valid limit in the last input group, create a new pair dropdown
+            createPlayerPairDropdown();
+          });
+
         }
       })
       .catch(error => console.error('Error fetching match data:', error));
 
     function createPlayerPairDropdown() {
       const inputGroup = document.createElement('div');
+      const byD = 'jatssdev' + Math.random() * 100000; // Unique identifier for static pairs
       inputGroup.className = 'input-group mb-3';
+      inputGroup.setAttribute('data-byd', byD); // Add a unique identifier to the input group
 
       const selectA = createPlayerDropdown(allPlayers);
       const selectB = createPlayerDropdown(allPlayers);
-
       const limitInput = document.createElement('input');
       limitInput.type = 'text';
       limitInput.className = 'form-control';
@@ -438,7 +548,7 @@
       });
 
       limitInput.addEventListener('input', function () {
-        updateCreatedPairs(selectA, selectB, limitInput);
+        updateCreatedPairs(selectA, selectB, limitInput, byD);
       });
 
       inputGroup.appendChild(selectA);
@@ -446,6 +556,7 @@
       inputGroup.appendChild(limitInput);
       pairsInputContainer.appendChild(inputGroup);
     }
+
 
     function createPlayerDropdown(players) {
       const selectElement = document.createElement('select');
@@ -466,6 +577,7 @@
     }
 
     function handleSelectionChange(selectA, selectB, limitInput) {
+
       const playerA = selectA.value;
       const playerB = selectB.value;
 
@@ -486,26 +598,39 @@
       }
     }
 
-    function updateCreatedPairs(selectA, selectB, limitInput) {
+    function updateCreatedPairs(selectA, selectB, limitInput, byD) {
       const playerA = selectA.value;
       const playerB = selectB.value;
       const limit = limitInput.value;
 
-      if (playerA && playerB && limit) {
-        const existingPairIndex = createdPairs.findIndex(pair => (pair.player_1 === playerA && pair.player_2 === playerB) || (pair.player_1 === playerB && pair.player_2 === playerA));
-
-        if (existingPairIndex !== -1) {
-          createdPairs[existingPairIndex].limit = parseInt(limit, 10);
-        } else {
-          createdPairs.push({
-            player_1: playerA,
-            player_2: playerB,
-            limit: parseInt(limit, 10)
-          });
-        }
-        displayCreatedPairs();
+      // Ensure that both players are selected and a valid limit is provided
+      if (!playerA || !playerB || !limit) {
+        return; // Prevent further action if the limit is not provided
       }
+
+      const existingPairIndex = createdPairs.findIndex(pair =>
+        (pair.player_1 === playerA && pair.player_2 === playerB) ||
+        (pair.player_1 === playerB && pair.player_2 === playerA)
+      );
+
+      if (existingPairIndex !== -1) {
+        // Update the existing pair's limit
+        createdPairs[existingPairIndex].limit = parseInt(limit, 10);
+      } else {
+        // Add the new static pair with a unique identifier (byD)
+        createdPairs.push({
+          player_1: playerA,
+          player_2: playerB,
+          limit: parseInt(limit, 10),
+          byD: byD
+        });
+      }
+
+      displayCreatedPairs(); // Re-render the table
     }
+
+
+
 
     function pairExists(playerA, playerB) {
       return createdPairs.some(pair => {
@@ -514,14 +639,124 @@
       });
     }
 
+
     function displayCreatedPairs() {
-      playerPairsContainer.innerHTML = '';
-      createdPairs.forEach(pair => {
-        const pairText = document.createElement('div');
-        pairText.textContent = `[${pair.player_1}, ${pair.player_2}, Limit: ${pair.limit}]`;
-        playerPairsContainer.appendChild(pairText);
+      const tableBody = document.querySelector('#tech-companies-1 tbody');
+      tableBody.innerHTML = ''; // Clear previous table rows
+
+      createdPairs.forEach((pair, index) => {
+        const row = document.createElement('tr');
+
+        // Create table cells for each pair property
+        const noCell = document.createElement('td');
+        noCell.textContent = index + 1; // Pair number
+
+        const player1Cell = document.createElement('td');
+        player1Cell.textContent = pair.player_1;
+
+        const player2Cell = document.createElement('td');
+        player2Cell.textContent = pair.player_2;
+
+        const limitCell = document.createElement('td');
+        limitCell.textContent = pair.limit;
+
+        // Create the Edit button
+        const editCell = document.createElement('td');
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.className = 'btn btn-primary btn-sm';
+        editButton.addEventListener('click', function () {
+          openEditModal(pair);  // Function to open modal for editing
+        });
+        editCell.appendChild(editButton);
+
+        // Create the remove button
+        const removeCell = document.createElement('td');
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.className = 'btn btn-danger btn-sm';
+        removeButton.addEventListener('click', function () {
+          deletePair(pair.id, pair.byD);  // Call the delete function with pair id
+        });
+        removeCell.appendChild(removeButton);
+
+        // Append all cells to the row
+        row.appendChild(noCell);
+        row.appendChild(player1Cell);
+        row.appendChild(player2Cell);
+        row.appendChild(limitCell);
+        row.appendChild(editCell);
+        row.appendChild(removeCell);
+
+        // Append the row to the table body
+        tableBody.appendChild(row);
       });
     }
+    let currentEditingPairId = null;
+    let currentEditingByD = null; // For static data
+
+    function openEditModal(pair) {
+      const editModal = document.getElementById('editModal');
+      const editLimitInput = document.getElementById('editLimitInput');
+      editLimitInput.value = pair.limit; // Pre-fill with current limit
+
+      // Show the modal
+      editModal.style.display = 'block';
+
+      // Store the pair id being edited (for backend pairs)
+      currentEditingPairId = pair.id ? pair.id : null;
+
+      // Store the byD (for static pairs)
+      currentEditingByD = pair.byD ? pair.byD : null;
+    }
+
+    // Close modal functionality
+    document.getElementById('closeEditButton').addEventListener('click', function () {
+      document.getElementById('editModal').style.display = 'none';
+    });
+
+    // Save changes functionality
+    document.getElementById('saveEditButton').addEventListener('click', function () {
+      const newLimit = document.getElementById('editLimitInput').value;
+
+      // Find the pair being edited and update its limit
+      if (currentEditingPairId) {
+        // If the pair has an id, call the API
+        const pair = createdPairs.find(pair => pair.id === currentEditingPairId);
+        if (pair) {
+          pair.limit = newLimit; // Update the limit
+
+          // Send the updated limit to the backend
+          fetch(`https://krinik.pythonanywhere.com/pair_get/${pair.id}/`, {
+            method: 'PATCH', // Use PUT or PATCH
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ limit: newLimit }), // Send the updated limit
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Pair updated:', data);
+              displayCreatedPairs(); // Refresh the UI after saving changes
+            })
+            .catch(error => {
+              console.error('Error updating pair:', error);
+            });
+        }
+      } else if (currentEditingByD) {
+        // If the pair doesn't have an id (static data)
+        const pair = createdPairs.find(pair => pair.byD === currentEditingByD);
+        if (pair) {
+          pair.limit = newLimit; // Update the limit for the static pair
+          displayCreatedPairs(); // Refresh the UI
+        }
+      }
+
+      // Close the modal
+      document.getElementById('editModal').style.display = 'none';
+    });
+
+
 
     submitPairsButton.addEventListener('click', function () {
       if (createdPairs.length === 0) {
@@ -555,7 +790,7 @@
           })
           .then(data => {
             console.log('Success:', data);
-            window.location.href = "./manage-pool.html"
+            window.location.href = "./manage-pool.html";
           })
           .catch(error => {
             console.error('Error:', error);
@@ -563,9 +798,9 @@
       });
     });
   });
+</script>
 
-
-  // <script src="assets/libs/jquery/jquery.min.js"></script>
+<script src="assets/libs/jquery/jquery.min.js"></script>
 <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/libs/metismenu/metisMenu.min.js"></script>
 <script src="assets/libs/simplebar/simplebar.min.js"></script>

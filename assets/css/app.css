@@ -115,6 +115,8 @@ File: Main Css File
     border: none;
 
       }
+
+      
       .flatpickr-clear-button{
         background-color: rgb(100, 100, 100);
     border: none;
@@ -4507,6 +4509,15 @@ width: auto !important;
 .lds-spinner div:nth-child(12) {
     transform: rotate(330deg);
     animation-delay: 0s;
+}
+.colorall{
+  color: #E20101 !important;
+}
+.colorall:hover{
+  color: #E20101 !important;
+}
+.fontstyle{
+  font-weight: 600;
 }
 
 @keyframes lds-spinner {

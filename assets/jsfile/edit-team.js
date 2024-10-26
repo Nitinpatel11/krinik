@@ -40,18 +40,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function populateSelect(data) {
         const selectElement = document.getElementById('league-name');
-        if (!selectElement) {
-            console.error('Select element not found');
-            return;
-        }
         selectElement.innerHTML = '<option value="">Select League</option>';
-         // Clear existing options
-         const currentDate1 = new Date(); 
-         const currentDate = (moment(currentDate1, 'YYYY-MM-DD').format('DD-MM-YYYY')) 
-        data.forEach(league => {
-            const leagueEndDate = league.end_league_date;  // Convert start_league_date to a Date object
     
-            // Only add the league to the dropdown if it hasn't expired (currentDate is before leagueStartDate)
+        const currentDate = moment().toDate(); // Get the current date as a Date object
+        console.log("Current Date: ", currentDate);
+    
+        data.forEach(league => {
+            const leagueEndDate = moment(league.end_league_date, 'DD-MM-YYYY').toDate(); // Convert end_league_date to a Date object
+            console.log("League End Date: ", leagueEndDate);
+    
+            // Compare Date objects directly
             if (currentDate < leagueEndDate) {
                 const option = document.createElement('option');
                 option.value = league.league_name;
