@@ -397,7 +397,7 @@
           <div class="container-fluid">
             <div class="row align-items-center">
               <div>
-                <h4 class="page-title mb-1">User Details Page</h4>
+                <h4 class="page-title mb-1">User Withdrawal Request</h4>
               </div>
             </div>
           </div>
@@ -427,7 +427,7 @@
 
                             <div class="info mb-2">Mobile No : <span id="user-mob" class="span-user"></span></div>
                             <div class="info mb-2">Email Id : <span id="user-email" class="span-user"></span></div>
-                            <div class="info mb-2"><span>Registration Date & Time :</span> <span id="reg-time" class="span-user"></span></div>
+                            <!-- <div class="info mb-2"><span>Registration Date & Time :</span> <span id="reg-time" class="span-user"></span></div> -->
                           </div>
                         </div>
                       </div>
@@ -435,23 +435,49 @@
 
                     <!-- Buttons Section -->
                     <div class="buttons">
-                      <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
-                        <button class="btn btn-outline-dark m-1" id="user-unlock">
-                          <span id="user-unlock-text" ></span>
-                        </button>
-                        <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
-                        <button class="btn btn-outline-dark m-1" id="user-transaction-history" >Transaction History</button>
+                      <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3">
+                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock">
+                          <!-- <span id="user-unlock-text" ></span> -->
+                          <p id="deposit-amount" class="para-bottom">0</p> <span>Deposited Amount</span>
+                        </div>
+                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock1">
+                            <!-- <span id="user-unlock-text" ></span> -->
+                            <p id="bonus-amount" class="para-bottom">0</p> <span>Bonus Amount</span>
+                          </div><div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock2">
+                            <!-- <span id="user-unlock-text" ></span> -->
+                            <p id="refer-amount" class="para-bottom">0</p> <span>Referral Amount</span>
+                          </div>
+                        
+                        <!-- <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
+                        <button class="btn btn-outline-dark m-1" id="user-transaction-history" >Transaction History</button> -->
                       </div>
                     
-                      <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
-                        <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
+                      <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3 mt-3">
+                        <!-- <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
                         <button class="btn btn-outline-dark m-1" id="user-add-amount" data-toggle="modal" data-target="#addAmountModal">Add Amount</button>
                         <button class="btn btn-outline-dark m-1" id="user-game-history">Game History</button>
-                        <button class="btn btn-outline-dark m-1" id="user-withdraw" >Withdraw History</button>
+                        <button class="btn btn-outline-dark m-1" id="user-withdraw" >Withdraw History</button> -->
+                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock3">
+                            <!-- <span id="user-unlock-text" ></span> -->
+                            <p id="winning-amount" class="para-bottom">0</p> <span>Winning Amount</span>
+                          </div><div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock4">
+                            <!-- <span id="user-unlock-text" ></span> -->
+                            <p id="total-amount" class="para-bottom">0</p> <span>Total Amount</span>
+                          </div>
                       </div>
+                      <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3 mt-3">
+                        <!-- <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
+                        <button class="btn btn-outline-dark m-1" id="user-add-amount" data-toggle="modal" data-target="#addAmountModal">Add Amount</button>
+                        <button class="btn btn-outline-dark m-1" id="user-game-history">Game History</button>
+                        <button class="btn btn-outline-dark m-1" id="user-withdraw" >Withdraw History</button> -->
+                        <div class="item  m-1 border rounded p-2 withdraw-color m-1 border-black" id="user-unlock3">
+                            <!-- <span id="user-unlock-text" ></span> -->
+                            <p id="withdraw-amount" class="para-bottom">0</p> <span>Withdraw Amount</span>
+                          
+                      </div></div>
 
                       <!-- Add Amount Modal -->
-                      <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel"
+                      <!-- <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
@@ -496,10 +522,10 @@
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                       <!-- Deduct Amount Modal -->
-                      <div class="modal fade" id="deductAmountModal" tabindex="-1"
+                      <!-- <div class="modal fade" id="deductAmountModal" tabindex="-1"
                         aria-labelledby="deductAmountModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
@@ -546,17 +572,15 @@
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
 
                     <!-- Details Section -->
-                    <div class="button_wrapper">
-                      <div class="details d-flex justify-content-between w-100 text-center mt-5">
-                        <div class="item border rounded p-2 flex-fill m-1 border-black h-100"><p id="wallet-amount" class="para-bottom"></p> <span>Wallet Amount</span>
-                        </div>
-                        <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="winning-amount" class="para-bottom"></p> <span>Winning Amount</span>
-                        </div>
-                        <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span>
+                    <div class="button_wrapper buttons mt-5">
+                      <div class="details d-flex justify-content-between w-50 m-auto text-center mt-5">
+                        <div class=" border rounded p-2  m-1 border-black w-50 h-100" id="Approvebtn"><span>Approve</span></div>
+                        <div class=" border rounded p-2  m-1 h-100 w-50 border-black" id="Rejectbtn"> <span>Reject</span></div>
+                        <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span> -->
                         </div>
                         <!-- <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount"></p> <span>Refer Amount</span> -->
                         </div>
@@ -602,7 +626,7 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- JAVASCRIPT -->
   <script src="./assets/libs/jquery/jquery.min.js"></script>
-  <script src="./assets/jsfile/user-details-page.js"></script>
+  <script src="./assets/jsfile/view-user-withdrawal.js"></script>
   <script src="./assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/libs/metismenu/metisMenu.min.js"></script>
   <script src="./assets/libs/simplebar/simplebar.min.js"></script>

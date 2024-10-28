@@ -1094,4 +1094,5 @@ a.remove();
 });
 history.pushState(null, null, window.location.href);
 
+
 fetchData();

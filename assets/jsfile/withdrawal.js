@@ -12,12 +12,13 @@ var max_index = 0;
 async function fetchData() {
   try {
     const data = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/user_get/",
+      url: "https://krinik.pythonanywhere.com/withdraw_amount_get/",
       method: "GET"
     });
 
     if (data && data.status === "success") {
       rankList = data.data;
+      console.log(rankList)
       array = rankList;
       filterAndDisplay();
       // totaldataleague.innerHTML = array.length;
@@ -46,60 +47,60 @@ function preLoadCalculations(filteredArrayLength) {
 }
 
 $(document).ready(function () {
-  const $dropdownBtn3 = $('#dropdownBtn3');
-const $dropdownContent3 = $('#dropdownContent3');
-const $selectedStatus = $('#selectedStatus');
-const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
-const $clearStatus = $('#clearStatus');
+//   const $dropdownBtn3 = $('#dropdownBtn3');
+// const $dropdownContent3 = $('#dropdownContent3');
+// const $selectedStatus = $('#selectedStatus');
+// const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
+// const $clearStatus = $('#clearStatus');
 
-function toggleDropdown() {
-const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
-$dropdownBtn3.attr('aria-expanded', isExpanded);
-}
+// function toggleDropdown() {
+// const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
+// $dropdownBtn3.attr('aria-expanded', isExpanded);
+// }
 
-// Click event for the selected status element to toggle the dropdown
-$selectedStatus.on('click', function() {
-toggleDropdown();
-});
+// // Click event for the selected status element to toggle the dropdown
+// $selectedStatus.on('click', function() {
+// toggleDropdown();
+// });
 
-// Click event for the arrow to toggle the dropdown
-$arrow.on('click', function() {
-toggleDropdown();
-});
+// // Click event for the arrow to toggle the dropdown
+// $arrow.on('click', function() {
+// toggleDropdown();
+// });
 
-// Click event for selecting an item from the dropdown
-$dropdownContent3.on('click', 'a', function() {
-const selectedValue = $(this).data('value');
-$selectedStatus.text(selectedValue).data('value', selectedValue);
-$dropdownContent3.removeClass('show');
+// // Click event for selecting an item from the dropdown
+// $dropdownContent3.on('click', 'a', function() {
+// const selectedValue = $(this).data('value');
+// $selectedStatus.text(selectedValue).data('value', selectedValue);
+// $dropdownContent3.removeClass('show');
 
-if (selectedValue === 'All Status') {
-  $arrow.show();
-  $clearStatus.hide();
-} else {
-  $arrow.hide();
-  $clearStatus.show();
-}
-filterRankList(); // Filter based on the selected status
-});
+// if (selectedValue === 'All Status') {
+//   $arrow.show();
+//   $clearStatus.hide();
+// } else {
+//   $arrow.hide();
+//   $clearStatus.show();
+// }
+// filterRankList(); // Filter based on the selected status
+// });
 
-// Click event for clearing the selected status
-$clearStatus.on('click', function() {
-$selectedStatus.text('All Status').data('value', 'All Status');
-$arrow.show();
-$clearStatus.hide();
-$dropdownContent3.removeClass('show'); // Hide the dropdown content
-$dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
-filterRankList(); // Filter with the reset status
-});
+// // Click event for clearing the selected status
+// $clearStatus.on('click', function() {
+// $selectedStatus.text('All Status').data('value', 'All Status');
+// $arrow.show();
+// $clearStatus.hide();
+// $dropdownContent3.removeClass('show'); // Hide the dropdown content
+// $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
+// filterRankList(); // Filter with the reset status
+// });
 
-// Click event for closing the dropdown if clicked outside
-$(document).on('click', function(event) {
-if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
-  $dropdownContent3.removeClass('show');
-  $dropdownBtn3.attr('aria-expanded', 'false');
-}
-});
+// // Click event for closing the dropdown if clicked outside
+// $(document).on('click', function(event) {
+// if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
+//   $dropdownContent3.removeClass('show');
+//   $dropdownBtn3.attr('aria-expanded', 'false');
+// }
+// });
 
 
 
@@ -138,7 +139,7 @@ if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).leng
   //   filterRankList();
   // });
 
-  function updateAmountFilters() {
+  // function updateAmountFilters() {
 // const startAmount = $('#startAmountRange').val().trim();
 // const endAmount = $('#endAmountRange').val().trim();
 
@@ -158,8 +159,8 @@ if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).leng
 // }
 
 // Always call filterRankList to apply the filter
-filterRankList();
-}
+// filterRankList();
+// }
 
 
 // $('#startAmountRange').on('input', function () {
@@ -184,10 +185,10 @@ filterRankList();
 // });
 
 // Initial call to update filters and hide/show clear buttons on page load
-updateAmountFilters();
-$('#tab_filter_text').on('input', function () {
-filterRankList();
-});
+// updateAmountFilters();
+// $('#tab_filter_text').on('input', function () {
+// filterRankList();
+// });
 
 
 });
@@ -197,7 +198,7 @@ function filterRankList() {
   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
 //   console.log('Search Text:', tab_filter_text);
   // var datefilter = $('#rangePicker').text().trim();
-  const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
+  // const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
 //   console.log('Selected Status:', statusFilter);
 //   var startDate, endDate;
 
@@ -219,22 +220,26 @@ function filterRankList() {
 
   // Filter the rankList based on text, status, date range, and amount range
   var filteredArray = rankList.filter(function (object) {
-    var matchesText = true, matchesStatus = true  
+    var matchesText = true 
 
     // Filter based on text input
     if (tab_filter_text !== '') {
-      matchesText = (object.name && object.name.toLowerCase().includes(tab_filter_text)) ||
-        (object.mobile_no && object.mobile_no.toString().includes(tab_filter_text)) ||
-        (object.email && object.email.toLowerCase().includes(tab_filter_text))   ;
+      matchesText = (object.user_data.user_id && object.user_data.user_id.toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data.name && object.user_data.name.toString().toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data.email && object.user_data.email.toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data.mobile_no && object.user_data.mobile_no.toString().includes(tab_filter_text)) ||
+        (object.user_data.user_doc.account_number && object.user_data.user_doc.account_number.toString().toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data.user_doc.bank_name && object.user_data.user_doc.bank_name.toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data.user_doc.ifsc_code && object.user_data.user_doc.ifsc_code.toLowerCase().includes(tab_filter_text))    ;
     }
 
-    let status = object.profile_status.toLowerCase();
+    // let status = object.profile_status.toLowerCase();
 
 
 // // Filter based on status dropdown
-if (statusFilter !== 'All Status') {
-  matchesStatus = (status === statusFilter.toLowerCase());
-}
+// if (statusFilter !== 'All Status') {
+//   matchesStatus = (status === statusFilter.toLowerCase());
+// }
 
     // Filter based on date range
     // if (startDate && endDate) {
@@ -255,7 +260,7 @@ if (statusFilter !== 'All Status') {
 //       // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
 //     }
 
-    return matchesText && matchesStatus ;
+    return matchesText ;
   });
 
   // Update the table with filtered data
@@ -416,17 +421,22 @@ return null;
       var tr = $("<tr></tr>");
 
       var noCell = $("<td></td>").text(i + 1);
-      var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
-      var shortNameCell = $("<td colspan='2'> </td>").text(showdata["mobile_no"] || "");
-      var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
+      var userIdCell = $("<td colspan='2'></td>").text(showdata.user_data["user_id"] || "");
+console.log(userIdCell,"DATA")
+      var fullNameCell = $("<td colspan='2'></td>").text(showdata.user_data["name"] || "");
+      var shortNameCell = $("<td colspan='2'> </td>").text(showdata.user_data["mobile_no"] || "");
+      var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
+      var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["bank_name"] || "");
+      var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
+      var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
     //   var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
     //   var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
-      var statushow = toCapitalizeCase(showdata["status"])
+      // var statushow = toCapitalizeCase(showdata["status"])
       
-      var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["profile_status"] || ""));
+      // var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["profile_status"] || ""));
     
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
-        '<span class="sortable" onclick="handleView(\'' + showdata['user_id'] + '\')"><i class="far fa-eye"></i></span>'
+        '<span class="sortable" onclick="handleView(\'' + showdata.user_data['user_id'] + '\',\'' + showdata['id'] + '\')"><i class="far fa-eye"></i></span>'
       );
       
       if (admintype  == "super admin") {
@@ -440,7 +450,7 @@ return null;
       // var deleteCell = $("<td></td>").html(
       //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
       // );
-      if (statushow === "block") {
+      // if (statushow === "block") {
         // noCell.addClass("disabled-row");
         // fullNameCell.addClass("disabled-row");
         // shortNameCell.addClass("disabled-row");
@@ -448,22 +458,23 @@ return null;
         // walletCell.addClass("disabled-row");
         // winningCell.addClass("disabled-row");
         // statusCell.addClass("disabled-row");
-        disableButton(noCell);
-        disableButton(fullNameCell);
-        disableButton(shortNameCell);
-        disableButton(emailCell);
-        disableButton(walletCell);
-        disableButton(winningCell);
-        disableButton(statusCell)
-      }
+      //   disableButton(noCell);
+      //   disableButton(fullNameCell);
+      //   disableButton(shortNameCell);
+      //   disableButton(emailCell);
+      //   disableButton(walletCell);
+      //   disableButton(winningCell);
+      //   disableButton(statusCell)
+      // }
 
       tr.append(noCell)
+      .append(userIdCell)
         .append(fullNameCell)
         .append(shortNameCell)
         .append(emailCell)
-        // .append(walletCell)
-        // .append(winningCell)
-        .append(statusCell)
+        .append(bankNameCell)
+        .append(accountNameCell)
+        .append(IFSCCell)
         .append(viewCell)
         // .append(deleteCell);
         
@@ -481,14 +492,14 @@ function toCapitalizeCase(str) {
   });
 }
 
-async function handleView(id) {
+async function handleView(user_id,id) {
   
-  const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
+  const url = `https://krinik.pythonanywhere.com/user_get/${user_id}/`;
   try {
     const response = await fetch(url);
 
     if (response.ok) {
-      window.location.href = `user-kyc-view.html?id=${id}`;
+      window.location.href = `view-withdrawal.html?id=${id}&user_id=${user_id}`;
     } else {
       console.error("Failed to fetch the league data");
     }
