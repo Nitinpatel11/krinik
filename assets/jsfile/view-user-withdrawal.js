@@ -4,10 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const user_id = urlParams.get("user_id");
 
     let updateWinning = 0;
-    let userData5
-    const Approvebtn = document.getElementById("Approvebtn");
-    const Rejectbtn = document.getElementById("Rejectbtn");
 
+    const Approvebtn = document.getElementById("Approvebtn");
     const userFullName = document.getElementById("user-fullname");
     const userImageView = document.getElementById("user-image-view");
     const userMob = document.getElementById("user-mob");
@@ -19,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const winningAmount = document.getElementById("winning-amount");
     const totalAmount = document.getElementById("total-amount");
     const withdrawAmount = document.getElementById("withdraw-amount");
-  
+
     async function fetchUserData() {
         try {
             if (!user_id) {
@@ -43,19 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const userData = userData1.data;
             const userData3 = userData2.data;
-            userData5 = userData3.amount;
+            const userData5 = userData3.amount;
 
             // Disable Approve button if amount is 0
             if (userData5 === 0) {
                 Approvebtn.disabled = true;
-                Rejectbtn.disabled = true;
-                Approvebtn.classList.remove("clickbtn1");
-                Rejectbtn.classList.remove("clickbtn1");
-                Rejectbtn.style = "border:1px solid black;opacity:0.7";
-      Approvebtn.style = "border:1px solid black;opacity:0.7";
             } else {
-                Approvebtn.classList.add("clickbtn1");
-                Rejectbtn.classList.add("clickbtn1");
+                Approvebtn.disabled = false;
             }
 
             editPlayerData(userData, userData5);
@@ -63,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error fetching player data:", error);
         }
     }
-  
+
     function editPlayerData(response, amount) {
         if (response) {
             userImageView.src = `https://krinik.pythonanywhere.com${response.image}`;
@@ -78,44 +70,41 @@ document.addEventListener("DOMContentLoaded", () => {
             withdrawAmount.textContent = amount;
 
             updateWinning = response.winning_amount - amount;
-            console.log(updateWinning, "Updated Winning Amount");
         } else {
             console.error("Data is not in the expected format:", response);
         }
     }
 
     Approvebtn.addEventListener("click", async () => {
-        if (userData5 === 0) {
-            Approvebtn.disabled = true;
-            Rejectbtn.disabled = true
-            Approvebtn.style = "pointer:none;color:black;border:1px solid black "
-        } else {
-            Approvebtn.disabled = false;
-            Rejectbtn.disabled = false
-            if (confirm("Are you sure you want to approve it?")) {
-                await patchData(updateWinning, 0);
-                window.location.href = "withdrawal.html"
-            }
+        if (confirm("Are you sure you want to approve it?")) {
+            const currentWalletAmount = parseFloat(totalAmount.textContent);
+            const newWalletAmount = currentWalletAmount - parseFloat(withdrawAmount.textContent);
+
+            await patchData(updateWinning, 0, newWalletAmount);
         }
     });
 
-    async function patchData(winningAmountValue, amountValue) {
+    async function patchData(winningAmountValue, amountValue, walletAmountValue) {
         try {
             const apiUrl1 = `https://krinik.pythonanywhere.com/withdraw_amount_get/user_id/${user_id}/id/${id}/`;
             const apiUrl2 = `https://krinik.pythonanywhere.com/user_get/${user_id}/`;
 
+            // First PATCH request to update `winning_amount` and `wallet_amount`
             const response1 = await fetch(apiUrl2, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ winning_amount: winningAmountValue })
+                body: JSON.stringify({
+                    winning_amount: winningAmountValue,
+                    wallet_amount: walletAmountValue
+                })
             });
 
             if (!response1.ok) {
-                throw new Error("Failed to patch winning_amount in first API");
+                throw new Error("Failed to patch winning_amount and wallet_amount in first API");
             }
+            console.log("Patch for winning_amount and wallet_amount successful:", await response1.json());
 
-            console.log("Patch for winning_amount successful:", await response1.json());
-
+            // Second PATCH request to update `amount`
             const response2 = await fetch(apiUrl1, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
@@ -125,9 +114,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response2.ok) {
                 throw new Error("Failed to patch amount in second API");
             }
-
             console.log("Patch for amount successful:", await response2.json());
-            fetchUserData(); // Refresh data after patching
+
+            // Re-fetch data to update `totalAmount` and other fields
+            await fetchUserData();
         } catch (error) {
             console.error("Error patching data:", error);
         }

@@ -761,8 +761,8 @@ body[data-layout=horizontal] .footer {
   white-space: nowrap;
 }
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a {
-  padding: 15px 20px;
-  min-height: 55px;
+  padding: 10px 20px;
+  min-height: 10px;
   transition: none;
 }
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a:hover, .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a:active, .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a:focus {
@@ -775,9 +775,10 @@ body[data-layout=horizontal] .footer {
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a.mm-active {
   background: var(--bs-sidebar-menu-item-active-bg);
 }
-.vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a span {
-  display: none;
-  padding-left: 25px;
+.vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a span:nth-child(2) {
+  /* display: none;
+  padding-left: 25px; */
+  margin-left: 15px;
 }
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li > a span.uim-svg {
   padding-left: 0px;

@@ -328,6 +328,7 @@ this.value = toCapitalizeCase(this.value);
                     document.getElementById('error-league-name').innerHTML = 'League name already exists.';
                     document.getElementById('error-league-name').style.display = 'inline';
                     document.getElementById('error-short-league-name').innerHTML = 'Short league name already exists.';
+             
                     document.getElementById('error-short-league-name').style.display = 'inline';
 
                 }else if (overlapResult.leagueNameOverlap) {

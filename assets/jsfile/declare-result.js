@@ -21,26 +21,42 @@ let userplayerdata = []
 let user_match_data
 let totalMoney
 
-async function fetchData(NumberId) {
+async function apiCall() {
   try {
-    const data = await $.ajax({
-      url: `https://krinik.pythonanywhere.com/match_get/`,
-      method: "GET"
-    });
-    const data1 = await $.ajax({
-      url: `https://krinik.pythonanywhere.com/player_get/`,
-      method: "GET"
-    });
-    const user_match = await $.ajax({
-      url: `https://krinik.pythonanywhere.com/user_match_get/`,
-      method: "GET"
-    });
+    console.log("Starting API calls...");
+
+    // Using Promise.all to execute all requests concurrently
+    const [data, data1, user_match] = await Promise.all([
+      $.ajax({ url: `https://krinik.pythonanywhere.com/match_get/`, method: "GET" }),
+      $.ajax({ url: `https://krinik.pythonanywhere.com/player_get/`, method: "GET" }),
+      $.ajax({ url: `https://krinik.pythonanywhere.com/user_match_get/`, method: "GET" })
+    ]);
+
+    // // Accessing data properties if available
+    // console.log(matchData.data);
+    // console.log(userMatchData.data);
+
+    // const teamData = playerData.data;
+    teamData = data1.data
+    console.log(teamData,"uio")
+       let matchCheck = user_match.data
+       console.log(matchCheck,"dataCheck");
    
+
+    fetchData(NumberId,data,teamData,matchCheck)
+
+  } catch (error) {
+    console.error("Error occurred:", error);
+  }
+}
+
+
+
+async function fetchData(NumberId,data,teamData,matchCheck) {
+  try { 
     
- teamData = data1.data
- console.log(teamData,"uio")
-    let matchCheck = user_match.data
-    console.log(matchCheck,"dataCheck");
+  
+
     
 
     if (data && data.status === "success") {
@@ -75,11 +91,11 @@ async function fetchData(NumberId) {
         let filteredPlayers = Players12
    .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId exists in AllPlayers
    .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
- // Map to actual player data from teamData
+
 
         console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
         let sortfiltereplayers = [...new Set(filteredPlayers)]
-        // Now, you can use this filtered data
+      
         rankList = sortfiltereplayers;
 
         array = rankList;
@@ -95,6 +111,8 @@ async function fetchData(NumberId) {
   }
 }
 
+
+apiCall()
 
 function filterAndDisplay() {
   // filterRankList();
