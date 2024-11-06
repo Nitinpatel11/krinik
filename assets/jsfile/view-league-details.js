@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const teamTableBody = document.getElementById('teamTableBody');
 
     // Fetch team data from the API
-    fetch('https://krinik.pythonanywhere.com/team_get/')
+    fetch('https://krinik.in/team_get/')
         .then(response => response.json())
         .then(data => {
             const teamData = data.data;
@@ -48,7 +48,7 @@ const endLeagueDateInput = document.getElementById('endLeagueDate');
 const leagueImagePreview = document.getElementById('leagueImagePreview');
 
 // Fetch league details based on league name
-fetch('https://krinik.pythonanywhere.com/league_get/')
+fetch('https://krinik.in/league_get/')
 .then(response => response.json())
 .then(data => {
 const leagueData = data.data;
@@ -64,7 +64,7 @@ endLeagueDateInput.value = filteredLeague.end_league_date;
 
 // Display league image
 if (filteredLeague.league_image) {
-    leagueImagePreview.src = 'https://krinik.pythonanywhere.com' + filteredLeague.league_image;
+    leagueImagePreview.src = 'https://krinik.in' + filteredLeague.league_image;
 } else {
     leagueImagePreview.src = ''; // Clear image source if no image available
 }

@@ -211,7 +211,7 @@ async function handleFormSubmission(event) {
                     formData.append('team_name', teamName);
                     formData.append('team_short_name', shortTeamName);
 
-                    const response = await fetch('https://krinik.pythonanywhere.com/team_get/', {
+                    const response = await fetch('https://krinik.in/team_get/', {
                         method: 'POST',
                         body: formData
                     });
@@ -235,12 +235,12 @@ async function handleFormSubmission(event) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-    await fetchData('https://krinik.pythonanywhere.com/league_get/', 'GET', data => {
+    await fetchData('https://krinik.in/league_get/', 'GET', data => {
         existingLeagues = data;
         populateSelect(data);
     });
 
-    await fetchData('https://krinik.pythonanywhere.com/team_get/', 'GET', data => {
+    await fetchData('https://krinik.in/team_get/', 'GET', data => {
         existingTeams = data;
     });
 

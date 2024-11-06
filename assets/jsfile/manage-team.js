@@ -13,7 +13,7 @@
   async function fetchData() {
       try {
           // Fetch teams data
-          const teamsResponse = await fetch("https://krinik.pythonanywhere.com/team_get/", {
+          const teamsResponse = await fetch("https://krinik.in/team_get/", {
               method: "GET",
               headers: {
                   'Content-Type': 'application/json'
@@ -21,14 +21,14 @@
           });
 
           // Fetch leagues data
-          const leaguesResponse = await fetch("https://krinik.pythonanywhere.com/league_get/", {
+          const leaguesResponse = await fetch("https://krinik.in/league_get/", {
               method: "GET",
               headers: {
                   'Content-Type': 'application/json'
               }
           });
         //   const otpapi = await $.ajax({
-        //   url: "https://krinik.pythonanywhere.com/send_otp_get/",
+        //   url: "https://krinik.in/send_otp_get/",
         //   method: "GET"
         // });
 //         if (otpapi && otpapi.status === "success") {
@@ -68,7 +68,7 @@
   async function postPhoneNumber() {
   try {
     const response = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/send_otp_get/", // Change this to your POST endpoint
+      url: "https://krinik.in/send_otp_get/", // Change this to your POST endpoint
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ phone_number: "7801804996"})
@@ -87,7 +87,7 @@ async function phoneNumber() {
   try {
    
     const otpapi = await $.ajax({
-          url: "https://krinik.pythonanywhere.com/send_otp_get/",
+          url: "https://krinik.in/send_otp_get/",
           method: "GET"
         });        
 
@@ -526,7 +526,7 @@ otpAdd.classList.remove('otp-exempt3')
           var leagueCell = $("<td colspan='2'></td>").text(object["league_name"] || "");
           var logoCell = $("<td></td>").html(
               object["team_image"] ?
-                  '<img src="https://krinik.pythonanywhere.com' + object["team_image"] + '" alt="' + object["team_image"] + '" class="team-logo lazyload">' :
+                  '<img src="https://krinik.in' + object["team_image"] + '" alt="' + object["team_image"] + '" class="team-logo lazyload">' :
                   ''
           );
           var dateCell = $("<td></td>").text(convertDateFormat(object["team_date"] || ""));
@@ -585,7 +585,7 @@ initializePage1()
 
 }else{
       if (confirm('Are you sure you want to delete this team?')) {
-          const url = `https://krinik.pythonanywhere.com/team_get/${id}/`;
+          const url = `https://krinik.in/team_get/${id}/`;
           try {
               const response = await fetch(url, {
                   method: "DELETE"
@@ -611,7 +611,7 @@ initializePage1()
 initializePage1()
 
 }else{
-      const url = `https://krinik.pythonanywhere.com/team_get/${id}/`;
+      const url = `https://krinik.in/team_get/${id}/`;
       try {
           const response = await fetch(url);
 

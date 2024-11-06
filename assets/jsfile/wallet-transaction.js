@@ -12,7 +12,7 @@ var max_index = 0;
 async function fetchData() {
   try {
     const data = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/wallet_transaction/",
+      url: "https://krinik.in/wallet_transaction/",
       method: "GET"
     });
 

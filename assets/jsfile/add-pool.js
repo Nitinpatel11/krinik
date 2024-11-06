@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', async function () {
       const noNumberOrWhitespaceRegex = /^(?!.*[\uD83C-\uDBFF\uDC00-\uDFFF])^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+(?: [a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+)*$/;
       const noNumberOrWhitespaceRegex1 = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
       const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
-      existingPool = await myFetch("https://krinik.pythonanywhere.com/add_pool_get/", "GET")
+      existingPool = await myFetch("https://krinik.in/add_pool_get/", "GET")
       // existingPool = existingPool1
 
       console.log(existingPool)
       // Fetch match data from the API
       async function fetchMatchData() {
         try {
-          const response = await fetch('https://krinik.pythonanywhere.com/match_get/');
+          const response = await fetch('https://krinik.in/match_get/');
           if (!response.ok) {
             console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
             throw new Error('Network response was not ok');
@@ -561,7 +561,7 @@ matchData.forEach(match => {
 
         // } else {
         //   try {
-        //     const response = await fetch('https://krinik.pythonanywhere.com/add_pool_get/', {
+        //     const response = await fetch('https://krinik.in/add_pool_get/', {
         //       method: 'POST',
         //       headers: {
         //         'Content-Type': 'application/json'
@@ -608,7 +608,7 @@ matchData.forEach(match => {
             // Proceed with form submission if there are no overlap errors
             if (confirm("Are you sure you want to add this match?")) {
               try {
-                const response = await fetch('https://krinik.pythonanywhere.com/add_pool_get/', {
+                const response = await fetch('https://krinik.in/add_pool_get/', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'

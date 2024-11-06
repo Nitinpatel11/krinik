@@ -548,7 +548,7 @@
             return;
           }
     
-          const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
+          const url = `https://krinik.in/user_get/${id}/`;
           console.log('Fetching player data from:', url);
     
           const response = await fetch(url);
@@ -571,7 +571,7 @@
   async function fetchData(Id) {
     try {
       const response = await $.ajax({
-        url: "https://krinik.pythonanywhere.com/withdraw_history/",
+        url: "https://krinik.in/withdraw_history/",
         method: "GET"
       });
 

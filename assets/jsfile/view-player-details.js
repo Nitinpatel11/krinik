@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     const id = urlParams.get('id');
 
     // Fetch data
-    const viewPlayer = await fetch(`https://krinik.pythonanywhere.com/view_player/${id}/`);
+    const viewPlayer = await fetch(`https://krinik.in/view_player/${id}/`);
     console.log(viewPlayer)
 
 
-    const playerResponse = await fetch(`https://krinik.pythonanywhere.com/player_get/${id}/`);
+    const playerResponse = await fetch(`https://krinik.in/player_get/${id}/`);
  
 console.log(playerResponse)
     const viewPlayerDetails1 = await viewPlayer.json();
@@ -34,7 +34,7 @@ console.log(playerResponse)
 
     // Display team image
     if (playerData.player_image) {
-      teamImagePreview.src = 'https://krinik.pythonanywhere.com' + playerData.player_image;
+      teamImagePreview.src = 'https://krinik.in' + playerData.player_image;
     } else {
       teamImagePreview.src = ''; // Clear image source if no image available
     }

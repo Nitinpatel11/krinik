@@ -12,7 +12,7 @@ var max_index = 0;
 async function fetchData() {
   try {
     const data = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/user_get/",
+      url: "https://krinik.in/user_get/",
       method: "GET"
     });
 
@@ -447,7 +447,7 @@ return null;
 
       // var logoCell = $("<td></td>").html(
       //   showdata["league_image"]
-      //     ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
+      //     ? `<img src="https://krinik.in${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
       //     : ""
       // );
 
@@ -521,7 +521,7 @@ function toCapitalizeCase(str) {
 
 async function handleView(id) {
   
-  const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
+  const url = `https://krinik.in/user_get/${id}/`;
   try {
     const response = await fetch(url);
 

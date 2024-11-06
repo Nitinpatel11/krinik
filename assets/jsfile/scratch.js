@@ -31,7 +31,7 @@ function uploadCouponFile(file, textInput) {
   formData.append('image', file);
   formData.append('coupon_point', textInput);
 
-  fetch('https://krinik.pythonanywhere.com/scratch_coupon_get/', {
+  fetch('https://krinik.in/scratch_coupon_get/', {
       method: 'POST',
       body: formData
   })

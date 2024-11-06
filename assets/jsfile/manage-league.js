@@ -15,7 +15,7 @@ let otpAdd = document.querySelector("#add-new-btn");
 async function fetchData() {
   try {
     const data = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/league_get/",
+      url: "https://krinik.in/league_get/",
       method: "GET"
     });
   
@@ -37,7 +37,7 @@ async function fetchData() {
 async function postPhoneNumber() {
 try {
 const response = await $.ajax({
-  url: "https://krinik.pythonanywhere.com/send_otp_get/", // Change this to your POST endpoint
+  url: "https://krinik.in/send_otp_get/", // Change this to your POST endpoint
   method: "POST",
   contentType: "application/json",
   data: JSON.stringify({ phone_number: "7801804996"})
@@ -56,7 +56,7 @@ console.error("Error posting phone number:", error);
 async function phoneNumber() {
 try {
 const otpapi = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/send_otp_get/",
+      url: "https://krinik.in/send_otp_get/",
       method: "GET"
     });
 
@@ -947,7 +947,7 @@ function displayTableRows() {
 
     var logoCell = $("<td></td>").html(
       showdata["league_image"]
-        ? `<img src="https://krinik.pythonanywhere.com${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
+        ? `<img src="https://krinik.in${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
         : ""
     );
 
@@ -1019,7 +1019,7 @@ initializePage1()
 
 }else{
   if (confirm('Are you sure you want to delete this league?')) {
-    const url = `https://krinik.pythonanywhere.com/league_get/${id}/`;
+    const url = `https://krinik.in/league_get/${id}/`;
     try {
       const response = await fetch(url, { method: "DELETE" });
 
@@ -1058,7 +1058,7 @@ async function handleEdit(id) {
       initializePage1()
     
   }else{
-    const url = `https://krinik.pythonanywhere.com/league_get/${id}/`;
+    const url = `https://krinik.in/league_get/${id}/`;
   try {
     const response = await fetch(url);
 

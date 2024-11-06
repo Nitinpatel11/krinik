@@ -12,7 +12,7 @@ var max_index = 0;
 async function fetchData() {
   try {
     const data = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/user_get/",
+      url: "https://krinik.in/user_get/",
       method: "GET"
     });
 
@@ -483,7 +483,7 @@ function toCapitalizeCase(str) {
 
 async function handleView(id) {
   
-  const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
+  const url = `https://krinik.in/user_get/${id}/`;
   try {
     const response = await fetch(url);
 

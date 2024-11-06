@@ -27,9 +27,9 @@ async function apiCall() {
 
     // Using Promise.all to execute all requests concurrently
     const [data, data1, user_match] = await Promise.all([
-      $.ajax({ url: `https://krinik.pythonanywhere.com/match_get/`, method: "GET" }),
-      $.ajax({ url: `https://krinik.pythonanywhere.com/player_get/`, method: "GET" }),
-      $.ajax({ url: `https://krinik.pythonanywhere.com/user_match_get/`, method: "GET" })
+      $.ajax({ url: `https://krinik.in/match_get/`, method: "GET" }),
+      $.ajax({ url: `https://krinik.in/player_get/`, method: "GET" }),
+      $.ajax({ url: `https://krinik.in/user_match_get/`, method: "GET" })
     ]);
 
     // // Accessing data properties if available
@@ -311,7 +311,7 @@ async function postRunData() {
   dataToPost.forEach(function(data) {
     // POST request to submit the run data to the pool_declare endpoint
     $.ajax({
-      url: 'https://krinik.pythonanywhere.com/pool_declare/', // Replace with your API endpoint
+      url: 'https://krinik.in/pool_declare/', // Replace with your API endpoint
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data), // Convert the playerData object to JSON string
@@ -327,7 +327,7 @@ async function postRunData() {
 
     // First, get the current total_run value from the player_get endpoint
     $.ajax({
-  url: `https://krinik.pythonanywhere.com/player_get/${data.player_declare}/`, // Use playerId to fetch the player's current total_run
+  url: `https://krinik.in/player_get/${data.player_declare}/`, // Use playerId to fetch the player's current total_run
   type: 'GET',
   success: function(response) {
     console.log(response,"olp")
@@ -342,7 +342,7 @@ async function postRunData() {
 
       // PATCH request to update the total_run field with the new value
       $.ajax({
-        url: `https://krinik.pythonanywhere.com/player_get/${data.player_declare}/`, // Use playerId to update the player's total_run
+        url: `https://krinik.in/player_get/${data.player_declare}/`, // Use playerId to update the player's total_run
         type: 'PATCH',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -411,7 +411,7 @@ const matchPromises = user_match_data.map(async (match) => {
     // PATCH the total match score to the API for each match
     try {
         await $.ajax({
-            url: `https://krinik.pythonanywhere.com/user_match_get/${match.id}`,  // Use match ID for updating
+            url: `https://krinik.in/user_match_get/${match.id}`,  // Use match ID for updating
             type: 'PATCH',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -458,7 +458,7 @@ Promise.all(matchPromises).then(() => {
             // PATCH the winning status to the API for each match
             try {
                 await $.ajax({
-                    url: `https://krinik.pythonanywhere.com/user_match_get/${match.matchId}`,  // Use match ID for updating
+                    url: `https://krinik.in/user_match_get/${match.matchId}`,  // Use match ID for updating
                     type: 'PATCH',
                     contentType: 'application/json',
                     data: JSON.stringify({
@@ -502,7 +502,7 @@ Promise.all(matchPromises).then(() => {
 
     // Send a PATCH request to update the players_score field
     $.ajax({
-        url: `https://krinik.pythonanywhere.com/user_match_get/${match.id}`, // API endpoint with match ID
+        url: `https://krinik.in/user_match_get/${match.id}`, // API endpoint with match ID
         type: 'PATCH',
         contentType: 'application/json',
         data: JSON.stringify(updatedData), // Send only the players_score field as an array

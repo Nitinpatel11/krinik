@@ -11,7 +11,7 @@
         // Function to fetch leagues from API
         async function fetchLeagues() {
             try {
-                const response = await fetch('https://krinik.pythonanywhere.com/league_get/');
+                const response = await fetch('https://krinik.in/league_get/');
                 if (!response.ok) {
                     throw new Error('Failed to fetch leagues'); 
 
@@ -33,7 +33,7 @@
         }
         async function fetchPlayers() {
             try {
-                const response = await fetch('https://krinik.pythonanywhere.com/player_get/');
+                const response = await fetch('https://krinik.in/player_get/');
                 if (!response.ok) {
                     throw new Error('Failed to fetch leagues');
                 }
@@ -52,7 +52,7 @@
         // Function to fetch teams based on the selected league
         async function fetchTeams(leagueName) {
             try {
-                const response = await fetch(`https://krinik.pythonanywhere.com/team_get/`);
+                const response = await fetch(`https://krinik.in/team_get/`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch teams');
                 }
@@ -303,7 +303,7 @@ function isValidTeamName1(value) {
                                     console.log(key, value);
                                 });
 
-                                const response = await fetch('https://krinik.pythonanywhere.com/player_get/', {
+                                const response = await fetch('https://krinik.in/player_get/', {
                                     method: 'POST',
                                     body: formData,
                                 });

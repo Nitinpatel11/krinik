@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
    
    
-    myFetch("https://krinik.pythonanywhere.com/league_get/", "GET")
+    myFetch("https://krinik.in/league_get/", "GET")
 
     function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
         const input = document.getElementById(inputId);
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
 
                         try {
-                            const response = await fetch('https://krinik.pythonanywhere.com/league_get/', {
+                            const response = await fetch('https://krinik.in/league_get/', {
                                 method: 'POST',
                                 body: formData
                             });
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     try {
-        existingLeagues = await myFetch("https://krinik.pythonanywhere.com/league_get/", "GET");
+        existingLeagues = await myFetch("https://krinik.in/league_get/", "GET");
         // existingLeagues = existingLeagues1.data
         console.log(existingLeagues)
         function toCapitalizeCase(str) {
@@ -354,7 +354,7 @@ this.value = toCapitalizeCase(this.value);
                         }
 
                         try {
-                            const response = await fetch('https://krinik.pythonanywhere.com/league_get/', {
+                            const response = await fetch('https://krinik.in/league_get/', {
                                 method: 'POST',
                                 body: formData
                             });

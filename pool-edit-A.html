@@ -371,10 +371,10 @@
     let allPlayers = [];
     let createdPairs = [];  
 
-    fetch('https://krinik.pythonanywhere.com/pair_get/')
+    fetch('https://krinik.in/pair_get/')
 
     
-    fetch('https://krinik.pythonanywhere.com/pair_get/')
+    fetch('https://krinik.in/pair_get/')
       .then(response => response.json())
       .then(data => {
         const matchData = data.data;
@@ -519,7 +519,7 @@
           limit: pair.limit
         };
 
-        fetch('https://krinik.pythonanywhere.com/pair_get/', {
+        fetch('https://krinik.in/pair_get/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

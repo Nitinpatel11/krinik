@@ -14,14 +14,14 @@ let otpAdd = document.querySelector("#otpAdd");
 
 async function fetchData() {
   try {
-    const response = await fetch("https://krinik.pythonanywhere.com/add_pool_get/", {
+    const response = await fetch("https://krinik.in/add_pool_get/", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     });
     //           const otpapi = await $.ajax({
-    //           url: "https://krinik.pythonanywhere.com/send_otp_get/",
+    //           url: "https://krinik.in/send_otp_get/",
     //           method: "GET"
     //         });
     //         if (otpapi && otpapi.status === "success") {
@@ -57,7 +57,7 @@ fetchData()
 async function postPhoneNumber() {
   try {
     const response = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/send_otp_get/", // Change this to your POST endpoint
+      url: "https://krinik.in/send_otp_get/", // Change this to your POST endpoint
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ phone_number: "7801804996" })
@@ -77,7 +77,7 @@ async function phoneNumber() {
   try {
 
     const otpapi = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/send_otp_get/",
+      url: "https://krinik.in/send_otp_get/",
       method: "GET"
     });
 
@@ -657,7 +657,7 @@ async function handleDelete(id) {
   } else {
     if (confirm("Are you sure you want to delete this match?")) {
 
-      const url = `https://krinik.pythonanywhere.com/add_pool_get/pool_id/${id}/`;
+      const url = `https://krinik.in/add_pool_get/pool_id/${id}/`;
       try {
         const response = await fetch(url, {
           method: "DELETE",
@@ -684,7 +684,7 @@ async function handleView(id) {
     initializePage1()
 
   } else {
-    const url = `https://krinik.pythonanywhere.com/add_pool_get/pool_id/${id}/`;
+    const url = `https://krinik.in/add_pool_get/pool_id/${id}/`;
     try {
       const response = await fetch(url);
 
@@ -705,7 +705,7 @@ async function handleEdit(id) {
     initializePage1()
 
   } else {
-    const url = `https://krinik.pythonanywhere.com/add_pool_get/pool_id/${id}/`;
+    const url = `https://krinik.in/add_pool_get/pool_id/${id}/`;
     try {
       const response = await fetch(url);
 

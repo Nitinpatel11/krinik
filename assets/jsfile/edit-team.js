@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function fetchExistingLeagues() {
         try {
-            const response = await fetch("https://krinik.pythonanywhere.com/league_get/");
+            const response = await fetch("https://krinik.in/league_get/");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function fetchExistingTeams() {
         try {
-            const response = await fetch("https://krinik.pythonanywhere.com/team_get/");
+            const response = await fetch("https://krinik.in/team_get/");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (response) {
-            imageFile.src = `https://krinik.pythonanywhere.com${response.team_image}`;
+            imageFile.src = `https://krinik.in${response.team_image}`;
             teamName.value = response.team_name;
             shortTeamName.value = response.team_short_name;
 
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const id = urlParams.get('id');
     if (id) {
         try {
-            const response = await fetch(`https://krinik.pythonanywhere.com/team_get/${id}/`);
+            const response = await fetch(`https://krinik.in/team_get/${id}/`);
             if (!response.ok) {
                 throw new Error('Failed to fetch team data');
             }
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            const response = await fetch(`https://krinik.pythonanywhere.com/team_get/${id}/`, {
+            const response = await fetch(`https://krinik.in/team_get/${id}/`, {
                 method: method,
                 body: formData
             });

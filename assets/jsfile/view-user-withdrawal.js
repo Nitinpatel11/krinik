@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const url = `https://krinik.pythonanywhere.com/user_get/${user_id}/`;
-            const url1 = `https://krinik.pythonanywhere.com/withdraw_amount_get/user_id/${user_id}/id/${id}/`;
+            const url = `https://krinik.in/user_get/${user_id}/`;
+            const url1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${id}/`;
             console.log("Fetching player data from:", url);
             console.log("Fetching withdrawal data from:", url1);
 
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function editPlayerData(response, amount) {
         if (response) {
-            userImageView.src = `https://krinik.pythonanywhere.com${response.image}`;
+            userImageView.src = `https://krinik.in${response.image}`;
             userFullName.textContent = response.name;
             userMob.textContent = response.mobile_no;
             userEmail.textContent = response.email;
@@ -86,8 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function patchData(winningAmountValue, amountValue, walletAmountValue) {
         try {
-            const apiUrl1 = `https://krinik.pythonanywhere.com/withdraw_amount_get/user_id/${user_id}/id/${id}/`;
-            const apiUrl2 = `https://krinik.pythonanywhere.com/user_get/${user_id}/`;
+            const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${id}/`;
+            const apiUrl2 = `https://krinik.in/user_get/${user_id}/`;
 
             // First PATCH request to update `winning_amount` and `wallet_amount`
             const response1 = await fetch(apiUrl2, {

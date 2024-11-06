@@ -46,7 +46,7 @@ let matchpwd;
 
 async function fetchData() {
   try {
-    const response = await fetch("https://krinik.pythonanywhere.com/login/");
+    const response = await fetch("https://krinik.in/login/");
     if (!response.ok) {
       console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
       throw new Error('Network response was not ok');
@@ -174,7 +174,7 @@ return; // Stop submission if any validation fails
           errorConPwdInput.textContent = '';
 
           try {
-            const response = await fetch(`https://krinik.pythonanywhere.com/login/${matchId}/`, {
+            const response = await fetch(`https://krinik.in/login/${matchId}/`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json'

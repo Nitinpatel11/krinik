@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   async function fetchTeams(leagueName) {
     try {
-      const response = await fetch(`https://krinik.pythonanywhere.com/team_get/?league_name=${leagueName}`);
+      const response = await fetch(`https://krinik.in/team_get/?league_name=${leagueName}`);
       if (!response.ok) throw new Error('Failed to fetch teams');
       const data = await response.json();
       if (data.status === 'success' && Array.isArray(data.data)) {
@@ -99,7 +99,7 @@ select_team_B:matchData.select_team_B
 
   async function fetchMatchById(matchId) {
     try {
-      const response = await fetch(`https://krinik.pythonanywhere.com/match_get/${matchId}/`);
+      const response = await fetch(`https://krinik.in/match_get/${matchId}/`);
       if (!response.ok) throw new Error('Failed to fetch match data');
       const data = await response.json();
       if (data.status === 'success' && data.data) {
@@ -138,7 +138,7 @@ select_team_B:matchData.select_team_B
 
   async function fetchLeagues() {
     try {
-      const response = await fetch('https://krinik.pythonanywhere.com/league_get/');
+      const response = await fetch('https://krinik.in/league_get/');
       if (!response.ok) throw new Error('Failed to fetch leagues');
       const data = await response.json();
       if (data.status === 'success' && Array.isArray(data.data)) {
@@ -153,7 +153,7 @@ select_team_B:matchData.select_team_B
 
   async function fetchTeams(leagueName) {
     try {
-      const response = await fetch(`https://krinik.pythonanywhere.com/team_get/`);
+      const response = await fetch(`https://krinik.in/team_get/`);
       if (!response.ok) throw new Error('Failed to fetch teams');
       const data = await response.json();
       if (data.status === 'success' && Array.isArray(data.data)) {
@@ -199,7 +199,7 @@ select_team_B:matchData.select_team_B
   // Function to fetch players for a given team
   async function fetchPlayers(teamName, dropdownId) {
     try {
-      const response = await fetch('https://krinik.pythonanywhere.com/player_get/');
+      const response = await fetch('https://krinik.in/player_get/');
       if (!response.ok) throw new Error('Failed to fetch players');
       const data = await response.json();
       if (data.status === 'success' && Array.isArray(data.data)) {
@@ -591,7 +591,7 @@ select_team_B:matchData.select_team_B
             }
         }
         let existingMatches = []
-        existingMatches = await myFetch("https://krinik.pythonanywhere.com/match_get/", "GET");
+        existingMatches = await myFetch("https://krinik.in/match_get/", "GET");
         console.log(existingMatches, "ok")
 
 
@@ -1018,7 +1018,7 @@ console.log(currentData,"current")
               // Proceed with form submission if there are no overlap errors
               if (confirm("Are you sure you want to add this match?")) {
                   try {
-                      const response = await fetch('https://krinik.pythonanywhere.com/match_get/', {
+                      const response = await fetch('https://krinik.in/match_get/', {
                           method: 'PATCH',
                           body: formData
                       });

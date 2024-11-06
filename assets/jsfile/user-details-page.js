@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const url = `https://krinik.pythonanywhere.com/user_get/${id}/`;
+      const url = `https://krinik.in/user_get/${id}/`;
       console.log("Fetching player data from:", url);
 
       const response = await fetch(url);
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Send PATCH request to update the state on the server
     try {
-      const url = `https://krinik.pythonanywhere.com/user_get/${id}/`; // Updated URL
+      const url = `https://krinik.in/user_get/${id}/`; // Updated URL
       const response = await fetch(url, {
         method: "PATCH",
         headers: {
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (response) {
       // Update image source
-      userImageView.src = `https://krinik.pythonanywhere.com${response.image}`;
+      userImageView.src = `https://krinik.in${response.image}`;
 
       // Set form field values
       userFullName.textContent = response.name;
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const url = `https://krinik.pythonanywhere.com/add_wallet/`;
+      const url = `https://krinik.in/add_wallet/`;
       console.log("Fetching player data from:", url);
 
       const response = await fetch(url);
@@ -235,7 +235,7 @@ mainId = matchingData.id
     const amount2 =
       parseFloat(playerTotalWinning) + parseFloat(playerWinningAmount || 0);
 
-    const matchUrl = `https://krinik.pythonanywhere.com/add_wallet/${mainId}/`;
+    const matchUrl = `https://krinik.in/add_wallet/${mainId}/`;
 
     try {
       const patchResponse = await fetch(matchUrl, {
@@ -285,7 +285,7 @@ mainId = matchingData.id
       const amount2 =
         parseFloat(playerTotalWinning) - parseFloat(playerWinningAmount1 || 0);
 
-      const matchUrl = `https://krinik.pythonanywhere.com/add_wallet/${mainId}/`;
+      const matchUrl = `https://krinik.in/add_wallet/${mainId}/`;
 
       try {
         const patchResponse = await fetch(matchUrl, {

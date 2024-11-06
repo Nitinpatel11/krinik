@@ -12,28 +12,28 @@
 
   async function fetchData() {
       try {
-          const teamsResponse = await fetch("https://krinik.pythonanywhere.com/team_get/", {
+          const teamsResponse = await fetch("https://krinik.in/team_get/", {
               method: "GET",
               headers: {
                   'Content-Type': 'application/json'
               }
           });
 
-          const leaguesResponse = await fetch("https://krinik.pythonanywhere.com/league_get/", {
+          const leaguesResponse = await fetch("https://krinik.in/league_get/", {
               method: "GET",
               headers: {
                   'Content-Type': 'application/json'
               }
           });
 
-          const playersResponse = await fetch("https://krinik.pythonanywhere.com/player_get/", {
+          const playersResponse = await fetch("https://krinik.in/player_get/", {
               method: "GET",
               headers: {
                   'Content-Type': 'application/json'
               }
           });
         //   const otpapi = await $.ajax({
-        //   url: "https://krinik.pythonanywhere.com/send_otp_get/",
+        //   url: "https://krinik.in/send_otp_get/",
         //   method: "GET"
         // });
 //         if (otpapi && otpapi.status === "success") {
@@ -74,7 +74,7 @@
   async function postPhoneNumber() {
   try {
     const response = await $.ajax({
-      url: "https://krinik.pythonanywhere.com/send_otp_get/", // Change this to your POST endpoint
+      url: "https://krinik.in/send_otp_get/", // Change this to your POST endpoint
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ phone_number: "7801804996"})
@@ -93,7 +93,7 @@ async function phoneNumber() {
   try {
    
     const otpapi = await $.ajax({
-          url: "https://krinik.pythonanywhere.com/send_otp_get/",
+          url: "https://krinik.in/send_otp_get/",
           method: "GET"
         });        
 
@@ -272,7 +272,7 @@ function filterRankList() {
     let matchesText = true;
 
     if (tab_filter_text !== '') {
-      matchesText = (object.team_name && object.team_name.toLowerCase().includes(tab_filter_text)) ||
+      matchesText = (object.team_name.team_name && object.team_name.team_name.toLowerCase().includes(tab_filter_text)) ||
                     (object.player_short_name && object.player_short_name.toLowerCase().includes(tab_filter_text)) ||
                     (object.player_name && object.player_name.toLowerCase().includes(tab_filter_text)) ||
                     (object.team_date && object.team_date.toLowerCase().includes(tab_filter_text)) ||
@@ -284,7 +284,7 @@ function filterRankList() {
     }
 
     if (selectedTeam && selectedTeam !== 'All Teams') {
-      matchesText = matchesText && object.team_name === selectedTeam;
+      matchesText = matchesText && object.team_name.team_name === selectedTeam;
     }
 
     return matchesText;
@@ -579,7 +579,7 @@ otpAdd.classList.remove('otp-exempt3')
           var shortNameCell = $("<td colspan='2'></td>").text(object["team_name"].team_name || "");
           var leagueCell = $("<td colspan='2'></td>").text(object["league_name"] || "");
           var runCell = $("<td></td>").text(object["total_run"] || "");
-          var logoCell = $("<td></td>").html(object["player_image"] ? `<img src="https://krinik.pythonanywhere.com${object["player_image"]}" alt="${object["player_image"]}" class="team-logo lazyload">` : '');
+          var logoCell = $("<td></td>").html(object["player_image"] ? `<img src="https://krinik.in${object["player_image"]}" alt="${object["player_image"]}" class="team-logo lazyload">` : '');
 
           if(statusType == "true"){
             var viewCell = $("<td class='otp-exempt3'></td>").html(`<span class="sortable otp-exempt3" onclick="viewPlayerDetails('${object["player_name"]}')"><i class="far fa-eye otp-exempt3"></i></span>`);
@@ -622,7 +622,7 @@ initializePage1()
 
 }else{
     if (confirm('Are you sure you want to delete this player?')) {
-          const url = `https://krinik.pythonanywhere.com/player_get/${id}/`;
+          const url = `https://krinik.in/player_get/${id}/`;
           try {
               const response = await fetch(url, {
                   method: "DELETE"
@@ -646,7 +646,7 @@ initializePage1()
 initializePage1()
 
 }else{
-      const url = `https://krinik.pythonanywhere.com/player_get/${id}/`;
+      const url = `https://krinik.in/player_get/${id}/`;
       try {
           const response = await fetch(url);
 

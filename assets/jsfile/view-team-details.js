@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Fetch team data
     const teamResponse = await fetch(
-      `https://krinik.pythonanywhere.com/team_get/`
+      `https://krinik.in/team_get/`
     );
     const teamResponse1 = await fetch(
-      `https://krinik.pythonanywhere.com/league_get/`
+      `https://krinik.in/league_get/`
     );
     const teamResponse2 = await fetch(
-      `https://krinik.pythonanywhere.com/player_get/`
+      `https://krinik.in/player_get/`
     );
 
     const teamData = (await teamResponse.json()).data;
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Display team image
       if (specificTeam.team_image) {
         teamImagePreview.src =
-          "https://krinik.pythonanywhere.com" + specificTeam.team_image;
+          "https://krinik.in" + specificTeam.team_image;
       } else {
         teamImagePreview.src = ""; // Clear image source if no image available
       }

@@ -39,7 +39,7 @@ async function fetchUserData() {
       return;
     }
 
-    const apiUrl = `https://krinik.pythonanywhere.com/user_get/${id}/`;
+    const apiUrl = `https://krinik.in/user_get/${id}/`;
     console.log("Fetching player data from:", apiUrl);
 
     const response = await fetch(apiUrl);
@@ -80,7 +80,7 @@ function editPlayerData(response) {
 
   if (response) {
     // Update image source
-    userImageView.src = `https://krinik.pythonanywhere.com/${response.image}`;
+    userImageView.src = `https://krinik.in/${response.image}`;
 
     // Set form field values
     userFullName.textContent = response.name || "N/A";
@@ -88,13 +88,13 @@ function editPlayerData(response) {
     userEmail.textContent = response.email || "N/A";
 
     apiData = {
-      aadhar_front: `https://krinik.pythonanywhere.com/${
+      aadhar_front: `https://krinik.in/${
         response.user_doc?.aadhar_card_front || ""
       }`,
-      aadhar_back: `https://krinik.pythonanywhere.com/${
+      aadhar_back: `https://krinik.in/${
         response.user_doc?.aadhar_card_back || ""
       }`,
-      pan_card: `https://krinik.pythonanywhere.com/${
+      pan_card: `https://krinik.in/${
         response.user_doc?.pan_card_front || ""
       }`,
     };
@@ -272,7 +272,7 @@ function setupRejectionMessageOptions() {
 
 async function patchData(field, value) {
   try {
-    const apiUrl = `https://krinik.pythonanywhere.com/user_get/${id}/`; // Adjust the endpoint as needed
+    const apiUrl = `https://krinik.in/user_get/${id}/`; // Adjust the endpoint as needed
 
     const response = await fetch(apiUrl, {
       method: "PATCH",

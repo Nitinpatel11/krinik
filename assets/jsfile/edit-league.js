@@ -38,7 +38,7 @@
             let existingLeagues = [];
 
             try {
-                const response = await fetch("https://krinik.pythonanywhere.com/league_get/");
+                const response = await fetch("https://krinik.in/league_get/");
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -64,7 +64,7 @@
 
                 if (response) {
                     // Populate form fields
-                    imageFile.src = `https://krinik.pythonanywhere.com${response.league_image}`;
+                    imageFile.src = `https://krinik.in${response.league_image}`;
                     leagueName.value = response.league_name;
                     shortLeagueName.value = response.short_league_name;
                     startLeagueDate.value = convertDateFormat(response.start_league_date);
@@ -88,7 +88,7 @@
             const id = urlParams.get('id');
             if (id) {
                 try {
-                    const response = await fetch(`https://krinik.pythonanywhere.com/league_get/${id}/`, { method: "GET" });
+                    const response = await fetch(`https://krinik.in/league_get/${id}/`, { method: "GET" });
                     if (!response.ok) {
                         throw new Error('Failed to fetch league data');
                     }
@@ -188,7 +188,7 @@
                 }
 
                 try {
-                    const response = await fetch(`https://krinik.pythonanywhere.com/league_get/${id}/`, {
+                    const response = await fetch(`https://krinik.in/league_get/${id}/`, {
                         method: method,
                         body: formData
                     });

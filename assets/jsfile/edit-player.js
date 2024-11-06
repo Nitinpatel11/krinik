@@ -16,7 +16,7 @@ let initialData = {};
 // Function to fetch leagues from API
 async function fetchLeagues() {
   try {
-    const response = await fetch('https://krinik.pythonanywhere.com/league_get/');
+    const response = await fetch('https://krinik.in/league_get/');
     if (!response.ok) {
       throw new Error('Failed to fetch leagues');
     }
@@ -37,7 +37,7 @@ async function fetchLeagues() {
 
 async function fetchExistingPlayers() {
   try {
-    const response = await fetch("https://krinik.pythonanywhere.com/player_get/");
+    const response = await fetch("https://krinik.in/player_get/");
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -53,7 +53,7 @@ async function fetchExistingPlayers() {
 // Function to fetch teams based on the selected league
 async function fetchTeams(leagueName) {
   try {
-    const response = await fetch('https://krinik.pythonanywhere.com/team_get/');
+    const response = await fetch('https://krinik.in/team_get/');
     if (!response.ok) {
       throw new Error('Failed to fetch teams');
     }
@@ -183,7 +183,7 @@ async function fetchPlayerData() {
       return;
     }
 
-    const url = `https://krinik.pythonanywhere.com/player_get/${id}/`;
+    const url = `https://krinik.in/player_get/${id}/`;
     console.log('Fetching player data from:', url);
 
     const response = await fetch(url);
@@ -220,7 +220,7 @@ async function submitFormData(data, method) {
   });
 
   try {
-    const response = await fetch(`https://krinik.pythonanywhere.com/player_get/${id}/`, {
+    const response = await fetch(`https://krinik.in/player_get/${id}/`, {
       method: method,
       body: formData
     });
@@ -343,7 +343,7 @@ function editPlayerData(response) {
 
   if (response) {
     // Update image source
-    imageFile.src = `https://krinik.pythonanywhere.com${response.player_image}`;
+    imageFile.src = `https://krinik.in${response.player_image}`;
 
     // Set form field values
     leagueName.value = response.league_name;

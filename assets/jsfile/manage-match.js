@@ -12,14 +12,14 @@
 
     async function fetchData() {
         try {
-            const response = await fetch("https://krinik.pythonanywhere.com/match_get/", {
+            const response = await fetch("https://krinik.in/match_get/", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
       //       const otpapi = await $.ajax({
-      //   url: "https://krinik.pythonanywhere.com/send_otp_get/",
+      //   url: "https://krinik.in/send_otp_get/",
       //   method: "GET"
       // });
 //         if (otpapi && otpapi.status === "success") {
@@ -53,7 +53,7 @@
     async function postPhoneNumber() {
 try {
   const response = await $.ajax({
-    url: "https://krinik.pythonanywhere.com/send_otp_get/", // Change this to your POST endpoint
+    url: "https://krinik.in/send_otp_get/", // Change this to your POST endpoint
     method: "POST",
     contentType: "application/json",
     data: JSON.stringify({ phone_number: "7801804996"})
@@ -73,7 +73,7 @@ async function phoneNumber() {
 try {
  
   const otpapi = await $.ajax({
-        url: "https://krinik.pythonanywhere.com/send_otp_get/",
+        url: "https://krinik.in/send_otp_get/",
         method: "GET"
       });        
 
@@ -622,7 +622,7 @@ initializePage1()
 }else{
       if(confirm("Are you sure you want to delete this match?")){
 
-        const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
+        const url = `https://krinik.in/match_get/${id}/`;
         try {
             const response = await fetch(url, {
                 method: "DELETE",
@@ -648,7 +648,7 @@ initializePage1()
 initializePage1()
 
 }else{
-    const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
+    const url = `https://krinik.in/match_get/${id}/`;
     try {
       const response = await fetch(url);
 
@@ -669,7 +669,7 @@ initializePage1()
 initializePage1()
 
 }else{
-    const url = `https://krinik.pythonanywhere.com/match_get/${id}/`;
+    const url = `https://krinik.in/match_get/${id}/`;
     try {
       const response = await fetch(url);
 
