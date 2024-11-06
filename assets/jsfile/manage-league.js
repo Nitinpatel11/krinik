@@ -919,98 +919,176 @@ let timerIntervalId = null;
 
 
 
+// function displayTableRows() {
+//   $("table tbody").empty();
+//   var tab_start = start_index - 1;
+//   var tab_end = end_index;
+
+//   if (array.length === 0) {
+//     $("#noDataFound").show();
+//     $("#pagination").hide();
+//     $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+//     return;
+//   } else {
+//     $("#noDataFound").hide();
+//     $("#pagination").show();
+//     $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+//   }
+
+//   for (var i = tab_start; i < tab_end; i++) {
+//     var showdata = array[i];
+//     var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+
+//     var tr = $("<tr></tr>");
+
+//     var noCell = $("<td></td>").text(i + 1);
+//     var fullNameCell = $("<td colspan='2'></td>").text(showdata["league_name"] || "");
+//     var shortNameCell = $("<td colspan='2'> </td>").text(showdata["short_league_name"] || "");
+
+//     var logoCell = $("<td></td>").html(
+//       showdata["league_image"]
+//         ? `<img src="https://krinik.in${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
+//         : ""
+//     );
+
+
+//     var dateCell = $("<td colspan='2'></td>").text(
+//       (showdata["start_league_date"] || "") +
+//       " - " +
+//       (showdata["end_league_date"] || "")
+//     );
+//     var statusCell = $("<td colspan='2'></td>").text(status);
+   
+  
+//     if(statusType == "true"){
+//       var viewCell = $("<td class='otp-exempt3'></td>").html(
+//       // '<span class="" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
+//         '<span class=" otp-exempt3 " onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye otp-exempt3"></i></span>'
+//     );
+//       var editCell = $("<td class=''></td>").html(
+//         '<span class=" otp-exempt3" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit otp-exempt3"></i></span>'
+//       );
+//       var deleteCell = $("<td class='otp-exempt3'></td>").html(
+//       '<span class=" otp-exempt3" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt otp-exempt3"></i></span>'
+//     );
+
+//     }else{
+//       var viewCell = $("<td class=''></td>").html(
+//       // '<span class="" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
+//         '<span class="  " onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye "></i></span>'
+//     );
+//       var editCell = $("<td class=''></td>").html(
+//       '<span class="" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit "></i></span>'
+//     );
+//     var deleteCell = $("<td class=''></td>").html(
+//       '<span class=" " onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt "></i></span>'
+//     );
+//     }
+    
+//     // console.log(statusType ,"dfg")
+//     tr.append(noCell)
+//       .append(fullNameCell)
+//       .append(shortNameCell)
+//       .append(logoCell)
+//       .append(dateCell)
+//       .append(statusCell)
+//       .append(viewCell)
+//       .append(editCell)
+//       .append(deleteCell);
+
+//     if (status === "Completed") {
+//       noCell.addClass("disabled-row");
+//       fullNameCell.addClass("disabled-row");
+//       shortNameCell.addClass("disabled-row");
+//       logoCell.addClass("disabled-row");
+//       dateCell.addClass("disabled-row");
+//       statusCell.addClass("disabled-row");
+//       editCell.addClass("disabled-row");
+//     }
+ 
+
+//     $("table tbody").append(tr);
+//   }
+//   // lazyLoadImages(); // Call the lazy loading function after adding rows
+// }
+const columnWidths = [
+  "5%",   // Column for serial number
+  "15%",  // Column for full league name
+  "15%",  // Column for short league name
+  "10%",  // Column for logo
+  "15%",  // Column for dates
+  "8%",  // Column for status
+  "5%",   // Column for view action
+  "5%",   // Column for edit action
+  "5%"    // Column for delete action
+];
+
 function displayTableRows() {
   $("table tbody").empty();
   var tab_start = start_index - 1;
   var tab_end = end_index;
 
   if (array.length === 0) {
-    $("#noDataFound").show();
-    $("#pagination").hide();
-    $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
-    return;
+      $("#noDataFound").show();
+      $("#pagination").hide();
+      return;
   } else {
-    $("#noDataFound").hide();
-    $("#pagination").show();
-    $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+      $("#noDataFound").hide();
+      $("#pagination").show();
   }
 
   for (var i = tab_start; i < tab_end; i++) {
-    var showdata = array[i];
-    var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+      var showdata = array[i];
+      var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
 
-    var tr = $("<tr></tr>");
+      var tr = $("<tr></tr>");
+      var noCell = $("<td></td>").text(i + 1).css("width", columnWidths[0]);
+      var fullNameCell = $("<td></td>").text(showdata["league_name"] || "").css("width", columnWidths[1]);
+      var shortNameCell = $("<td></td>").text(showdata["short_league_name"] || "").css("width", columnWidths[2]);
 
-    var noCell = $("<td></td>").text(i + 1);
-    var fullNameCell = $("<td colspan='2'></td>").text(showdata["league_name"] || "");
-    var shortNameCell = $("<td colspan='2'> </td>").text(showdata["short_league_name"] || "");
+      var logoCell = $("<td></td>").html(
+          showdata["league_image"]
+              ? `<img src="https://krinik.in${showdata["league_image"]}" alt="" class="team-logo" />`
+              : ""
+      ).css("width", columnWidths[3]);
 
-    var logoCell = $("<td></td>").html(
-      showdata["league_image"]
-        ? `<img src="https://krinik.in${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
-        : ""
-    );
+      var dateCell = $("<td></td>").text(
+          (showdata["start_league_date"] || "") +
+          " - " +
+          (showdata["end_league_date"] || "")
+      ).css("width", columnWidths[4]);
 
+      var statusCell = $("<td></td>").text(status).css("width", columnWidths[5]);
 
-    var dateCell = $("<td colspan='2'></td>").text(
-      (showdata["start_league_date"] || "") +
-      " - " +
-      (showdata["end_league_date"] || "")
-    );
-    var statusCell = $("<td colspan='2'></td>").text(status);
-   
-  
-    if(statusType == "true"){
-      var viewCell = $("<td class='otp-exempt3'></td>").html(
-      // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-        '<span class="sortable otp-exempt3 " onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye otp-exempt3"></i></span>'
-    );
-      var editCell = $("<td class=''></td>").html(
-        '<span class="sortable otp-exempt3" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit otp-exempt3"></i></span>'
-      );
-      var deleteCell = $("<td class='otp-exempt3'></td>").html(
-      '<span class="sortable otp-exempt3" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt otp-exempt3"></i></span>'
-    );
+      var viewCell = $("<td></td>").html(
+          `<span onclick="viewLeagueDetails('${showdata["league_name"]}')"><i class="far fa-eye"></i></span>`
+      ).css("width", columnWidths[6]);
 
-    }else{
-      var viewCell = $("<td class=''></td>").html(
-      // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-        '<span class="sortable  " onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye "></i></span>'
-    );
-      var editCell = $("<td class=''></td>").html(
-      '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit "></i></span>'
-    );
-    var deleteCell = $("<td class=''></td>").html(
-      '<span class="sortable " onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt "></i></span>'
-    );
-    }
-    
-    // console.log(statusType ,"dfg")
-    tr.append(noCell)
-      .append(fullNameCell)
-      .append(shortNameCell)
-      .append(logoCell)
-      .append(dateCell)
-      .append(statusCell)
-      .append(viewCell)
-      .append(editCell)
-      .append(deleteCell);
+      var editCell = $("<td></td>").html(
+          `<span onclick="handleEdit(${showdata["id"]})"><i class="far fa-edit"></i></span>`
+      ).css("width", columnWidths[7]);
 
-    if (status === "Completed") {
-      noCell.addClass("disabled-row");
-      fullNameCell.addClass("disabled-row");
-      shortNameCell.addClass("disabled-row");
-      logoCell.addClass("disabled-row");
-      dateCell.addClass("disabled-row");
-      statusCell.addClass("disabled-row");
-      editCell.addClass("disabled-row");
-    }
- 
+      var deleteCell = $("<td></td>").html(
+          `<span onclick="handleDelete(${showdata["id"]})"><i class="far fa-trash-alt"></i></span>`
+      ).css("width", columnWidths[8]);
 
-    $("table tbody").append(tr);
+      tr.append(noCell)
+        .append(fullNameCell)
+        .append(shortNameCell)
+        .append(logoCell)
+        .append(dateCell)
+        .append(statusCell)
+        .append(viewCell)
+        .append(editCell)
+        .append(deleteCell);
+
+      $("table tbody").append(tr);
   }
-  // lazyLoadImages(); // Call the lazy loading function after adding rows
 }
+
+
+
+
 
 async function handleDelete(id) {
   if( statusType == "true"){      

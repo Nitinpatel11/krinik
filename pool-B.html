@@ -428,7 +428,7 @@
 
     // Fetch the pair data for "Gold" pool from the API
     try {
-      const response = await fetch('https://krinik.pythonanywhere.com/pair_captain_get/');
+      const response = await fetch('https://krinik.in/pair_captain_get/');
       const data = await response.json();
       const pairsData = data.data;
 
@@ -455,7 +455,7 @@
     // Function to fetch match data and populate player lists
     async function fetchMatchData(matchName) {
       try {
-        const response = await fetch('https://krinik.pythonanywhere.com/match_get/');
+        const response = await fetch('https://krinik.in/match_get/');
         const data = await response.json();
         const matchData = data.data.find(match => match.match_display_name.includes(matchName));
 
@@ -575,7 +575,7 @@
         const pair = createdPairs.find(pair => pair.id === currentEditingPairId);
         if (pair) {
           pair.limit = newLimit;
-          fetch(`https://krinik.pythonanywhere.com/pair_captain_get/${pair.id}/`, {
+          fetch(`https://krinik.in/pair_captain_get/${pair.id}/`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
@@ -616,7 +616,7 @@
         displayCreatedPairs();
       } else {
         // Backend pair deletion
-        fetch(`https://krinik.pythonanywhere.com/pair_captain_get/${pairId}/`, {
+        fetch(`https://krinik.in/pair_captain_get/${pairId}/`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
@@ -767,7 +767,7 @@
             pool_type: "Gold" // Change this to Gold for the current pool
           };
 
-          const response = await fetch('https://krinik.pythonanywhere.com/pair_captain_get/', {
+          const response = await fetch('https://krinik.in/pair_captain_get/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

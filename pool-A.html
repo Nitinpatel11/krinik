@@ -480,7 +480,7 @@
     let createdPairs = [];
 
     // Fetch existing pairs for the pool
-    fetch(`https://krinik.pythonanywhere.com/pair_get/`)
+    fetch(`https://krinik.in/pair_get/`)
       .then(response => response.json())
       .then(data => {
         const pairs = data.data.filter((x) => x.pool_name.id == id);
@@ -509,7 +509,7 @@
         displayCreatedPairs();
       } else {
         // Backend pair deletion
-        fetch(`https://krinik.pythonanywhere.com/pair_get/${pairId}/`, {
+        fetch(`https://krinik.in/pair_get/${pairId}/`, {
           method: 'DELETE',
         })
           .then(response => {
@@ -524,7 +524,7 @@
     }
 
 
-    fetch('https://krinik.pythonanywhere.com/match_get/')
+    fetch('https://krinik.in/match_get/')
       .then(response => response.json())
       .then(data => {
         const matchData = data.data;
@@ -764,7 +764,7 @@
           pair.limit = newLimit; // Update the limit
 
           // Send the updated limit to the backend
-          fetch(`https://krinik.pythonanywhere.com/pair_get/${pair.id}/`, {
+          fetch(`https://krinik.in/pair_get/${pair.id}/`, {
             method: 'PATCH', // Use PUT or PATCH
             headers: {
               'Content-Type': 'application/json',
@@ -811,7 +811,7 @@
           pool_type: "Silver"
         };
 
-        fetch('https://krinik.pythonanywhere.com/pair_get/', {
+        fetch('https://krinik.in/pair_get/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

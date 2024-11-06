@@ -26,9 +26,70 @@
   <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
 
 
-  <style>
+ <style>
+  /* Container for the table to allow scrolling */
+/* Wrapper for making only the table body scrollable */
+.table-container {
+    max-width: 100%; /* Adjust height as needed */
+    overflow-x: auto;
+    border: 1px solid #ddd;
+}
 
-  </style>
+/* Set fixed layout for consistent column widths */
+.table {
+    width: 1100px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Header styles */
+.table thead {
+    position: sticky;
+    top: 0;
+    background-color: #d32f2f; /* Header background color */
+    color: #fff;
+    /* z-index: 1; */
+}
+
+.table thead th {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+/* Body cell styles */
+.table tbody td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+/* Alternate row coloring for better readability */
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Set specific column widths */
+.table th:nth-child(1), .table td:nth-child(1) { width: 5%; }
+.table th:nth-child(2), .table td:nth-child(2) { width: 18%; }
+.table th:nth-child(3), .table td:nth-child(3) { width: 12%; }
+.table th:nth-child(4), .table td:nth-child(4) { width: 10%; }
+.table th:nth-child(5), .table td:nth-child(5) { width: 15%; }
+.table th:nth-child(6), .table td:nth-child(6) { width: 8%; }
+.table th:nth-child(7), .table td:nth-child(7) { width: 5%; }
+.table th:nth-child(8), .table td:nth-child(8) { width: 5%; }
+.table th:nth-child(9), .table td:nth-child(9) { width: 5%; }
+/* Image adjustments */
+.table img.team-logo {
+    max-width: 40px;
+    max-height: 40px;
+    display: inline-block;
+}
+
+
+ </style>
 
 
 
@@ -355,62 +416,51 @@
                     <div class="card-body">
                       <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                         <div class="row">
-                          <div class="table-rep-plugin">
-                            <div class="table-responsive mb-0 table table-scroll" data-pattern="priority-columns"
-                              id="table-scrolling">
-                              <table id="tech-companies-1"
-                                class="table table-striped text-center align-items-center fixed-table">
-                                <thead class="align-items-center">
-                                  <tr>
-                                    <th data-priority="">No.</th>
-                                    <th data-priority="" class="sortable" data-column="league_name" colspan="2">League Full Name
-
-                                    </th>
-                                    <th data-priority="" colspan="2">
-                                      League Short Name
-                                    </th>
-                                    <th data-priority="">Logo</th>
-                                    <th data-priority="" colspan="2">
-                                      Start & End Date
-                                    </th>
-                                    <th data-priority="" colspan="2">Status
-                                
-                                    </th>
-                                    <th data-priority="" >View</th>
-
-                                    <th data-priority="">Edit</th>
-                                    <th data-priority="">Delete</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                              </table>
-
+                            <div class="table-rep-plugin" id="table-scrolling">
+                              <div id="table-wrapper" class="table-container">
+                                <table id="fixed-header-table" class="table table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>League Full Name</th>
+                                            <th>League Short Name</th>
+                                            <th>Logo</th>
+                                            <th>Start & End Date</th>
+                                            <th>Status</th>
+                                            <th>View</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows will be dynamically inserted here -->
+                                    </tbody>
+                                </table>
                             </div>
-                            <div id="noDataFound" style="display:none;" class="no-data-div">
-                              <img src="./assets/images/no-data.jpg" alt="No Data Found">
+                            
+                                <div id="noDataFound" style="display:none;" class="no-data-div">
+                                    <img src="./assets/images/no-data.jpg" alt="No Data Found">
+                                </div>
                             </div>
-                          </div>
                         </div>
-
                         <div class="row pagi" id="pagination" style="display:none">
-                          <div class="col-sm-12 col-md-5">
-                            <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
-                              Showing 1 to 10 of 57 leagues
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                                    Showing 1 to 10 of 57 leagues
+                                </div>
                             </div>
-                          </div>
-                          <div class="col-sm-12 col-md-7">
-                            <div class="dataTables_paginate paging_simple_numbers pagination index_buttons"
-                              id="datatable_paginate">
-                              <ul class="pagination-list d-flex list-unstyled"></ul>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers pagination index_buttons" id="datatable_paginate">
+                                    <ul class="pagination-list d-flex list-unstyled"></ul>
+                                </div>
                             </div>
-                          </div>
                         </div>
                         <div class="d-flex justify-content-end pagi">
-                          
-                          <button  type="button" id="download-btn" class="btn dropbtn-color addnew">Download Excel</button>
+                            <button type="button" id="download-btn" class="btn dropbtn-color addnew">Download Excel</button>
                         </div>
-                      </div>
+                    </div>
+                    
+                    
                     </div>
                   </div>
                 </div>
