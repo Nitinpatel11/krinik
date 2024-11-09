@@ -2,30 +2,37 @@ document.addEventListener("DOMContentLoaded", async function () {
   try {
     // Get the team name from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const teamName = urlParams.get("teamName");
+    const teamName = Number(urlParams.get("teamName"));
 
     // Fetch team data
     const teamResponse = await fetch(
       `https://krinik.in/team_get/`
     );
-    const teamResponse1 = await fetch(
-      `https://krinik.in/league_get/`
-    );
+    // const teamResponse1 = await fetch(
+    //   `https://krinik.in/league_get/`
+    // );
     const teamResponse2 = await fetch(
       `https://krinik.in/player_get/`
     );
 
-    const teamData = (await teamResponse.json()).data;
-    const leagueData = (await teamResponse1.json()).data;
-    const playerData = (await teamResponse2.json()).data;
+    // const [data, data1, user_match,admin_wallet] = await Promise.all([
+    //   $.ajax({ url: `https://krinik.in/match_get/`, method: "GET" }),
+    //   $.ajax({ url: `https://krinik.in/player_get/`, method: "GET" }),
+     
+    // ]);
 
+    const teamData = (await teamResponse.json()).data;
+    // const leagueData = (await teamResponse1.json()).data;
+    const playerData = (await teamResponse2.json()).data;
+    console.log(playerData,"playDta")
+    
     // Find the team data with matching team name
-    const specificTeam = teamData.find((team) => team.team_name === teamName);
+    const specificTeam = teamData.find((team) => team.id === teamName);
     console.log(specificTeam);
     // Filter players based on the team and league
     const filteredPlayers = playerData.filter((player) => {
       return (
-        player.team_name === specificTeam.team_name &&  player.league_name == specificTeam.league_name
+        player.team_name.id === specificTeam.id 
       );
     });
     console.log(filteredPlayers);
@@ -60,8 +67,20 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Clear existing content
       playerListBody.innerHTML = "";
 
+      if (filteredPlayers.length === 0) {
+        $("#noDataFound").show();
+        $("#pagination").hide();
+        $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+        return;
+      } else {
+        $("#noDataFound").hide();
+        $("#pagination").show();
+        $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+      }
+
       // Iterate over filtered players and create rows in the table
       filteredPlayers.forEach((player, index) => {
+        
         const row = document.createElement("tr");
         row.innerHTML = `
                               <td>${index + 1}</td>

@@ -578,7 +578,9 @@ otpAdd.classList.remove('otp-exempt3')
           var teamNameCell = $("<td colspan='2'></td>").text(object["player_short_name"] || "");
           var shortNameCell = $("<td colspan='2'></td>").text(object["team_name"].team_name || "");
           var leagueCell = $("<td colspan='2'></td>").text(object["league_name"] || "");
-          var runCell = $("<td></td>").text(object["total_run"] || "");
+          var runCell = $("<td></td>").text(object["total_run"] || 0);
+          // console.log(object["total_run"])
+         
           var logoCell = $("<td></td>").html(object["player_image"] ? `<img src="https://krinik.in${object["player_image"]}" alt="${object["player_image"]}" class="team-logo lazyload">` : '');
 
           if(statusType == "true"){
@@ -601,9 +603,8 @@ otpAdd.classList.remove('otp-exempt3')
             .append(viewCell)
             .append(editCell)
             .append(deleteCell);
-
-          $("table tbody").append(tr);
-      }
+            $("table tbody").append(tr);
+          }
       // lazyLoadImages();
   }
   function viewPlayerDetails(id) {

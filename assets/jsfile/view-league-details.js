@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update table with filtered team data
             teamTableBody.innerHTML = ''; // Clear existing rows
+
+            if (filteredTeams.length === 0) {
+                $("#noDataFound").show();
+                $("#pagination").hide();
+                $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+                return;
+              } else {
+                $("#noDataFound").hide();
+                $("#pagination").show();
+                $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+              }
             filteredTeams.forEach((team, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `

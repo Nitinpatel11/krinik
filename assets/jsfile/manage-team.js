@@ -544,7 +544,7 @@ otpAdd.classList.remove('otp-exempt3')
           }
           else{
             var viewCell = $("<td></td>").html(
-                `<span class="sortable" onclick="viewTeamDetails('${object["team_name"]}')"><i class="far fa-eye"></i></span>`
+                `<span class="sortable" onclick="viewTeamDetails('${object["id"]}')"><i class="far fa-eye"></i></span>`
           );
           var editCell = $("<td></td>").html(
               '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'

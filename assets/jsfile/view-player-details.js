@@ -4,20 +4,24 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Get the team name from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-
+let playerTotalRun
+let viewPlayerDetails
     // Fetch data
     const viewPlayer = await fetch(`https://krinik.in/view_player/${id}/`);
-    console.log(viewPlayer)
+    // console.log(viewPlayer)
 
 
     const playerResponse = await fetch(`https://krinik.in/player_get/${id}/`);
  
-console.log(playerResponse)
-    const viewPlayerDetails1 = await viewPlayer.json();
-    const viewPlayerDetails = viewPlayerDetails1[0]
-    const playerTotalRun = viewPlayerDetails1[1]
+// console.log(playerResponse)
+if(viewPlayer){
 
-    console.log(viewPlayerDetails)
+  const viewPlayerDetails1 = await viewPlayer.json();
+   viewPlayerDetails = viewPlayerDetails1[0]
+playerTotalRun = viewPlayerDetails1[1]
+  console.log(viewPlayerDetails)
+}
+
 
     const playerData = (await playerResponse.json()).data;
     console.log(playerData)
@@ -29,7 +33,7 @@ console.log(playerResponse)
 
  
     teamNameHeading.textContent = playerData.player_name;
-    startLeagueDate.value = playerTotalRun.total_runs;
+    startLeagueDate.value = playerTotalRun ? playerTotalRun.total_runs :  0;
 
 
     // Display team image
@@ -44,6 +48,16 @@ console.log(playerResponse)
 
     // Clear existing content
     playerListBody.innerHTML = '';
+    if (viewPlayerDetails.length === 0) {
+      $("#noDataFound").show();
+      $("#pagination").hide();
+      $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+      return;
+    } else {
+      $("#noDataFound").hide();
+      $("#pagination").show();
+      $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+    }
 
     // Iterate over filtered players and create rows in the table
     viewPlayerDetails.forEach((player, index) => {

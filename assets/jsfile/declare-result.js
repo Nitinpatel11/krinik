@@ -69,12 +69,12 @@ async function fetchData(NumberId,data,teamData,matchCheck) {
       
     }
     console.log(user_match_data,"user_match_data")
-
+    if(matchCheck.length > 0){
     totalMoney = user_match_data.reduce((accumulator, userMatch) => {
         return userMatch.total_amount + accumulator;
       }, 0);
-      console.log("Total Money:", totalMoney);
-
+    }
+    console.log("Total Money:", totalMoney);
       // Compare the values directly
       let filtermatchview = data.data.find((p) => p.id === NumberId);
       matchName = filtermatchview.match_display_name
@@ -524,7 +524,7 @@ Promise.all(matchPromises).then(() => {
 
 
 
-fetchData(NumberId);
+// fetchData(NumberId);
 // Set up the click event handler for the submit button
 $(document).ready(function() {
   $("#submitButton").on("click", function() {
