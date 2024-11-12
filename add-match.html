@@ -727,24 +727,27 @@
                 selectElement.disabled = false;
             }
             function populateSelect1(data) {
-                const selectElement = document.getElementById('league-name');
-                selectElement.innerHTML = '<option value="">Select League</option>';
-                const currentDate1 = new Date();
-                const currentDate = (moment(currentDate1, 'YYYY-MM-DD').format('DD-MM-YYYY')) // Get the current date and time
-                console.log(currentDate)
-                // console.log(data[2].end_league_date)
-                data.forEach(league => {
-                    const leagueEndDate = league.end_league_date;  // Convert start_league_date to a Date object
+    const selectElement = document.getElementById('league-name');
+    selectElement.innerHTML = '<option value="">Select League</option>';
+    
+    const currentDate = moment().format('DD-MM-YYYY'); // Get the current date in 'DD-MM-YYYY' format
+    console.log(currentDate, "currentDate");
 
-                    // Only add the league to the dropdown if it hasn't expired (currentDate is before leagueStartDate)
-                    if (currentDate < leagueEndDate) {
-                        const option = document.createElement('option');
-                        option.value = league.league_name;
-                        option.textContent = league.league_name;
-                        selectElement.appendChild(option);
-                    }
-                });
-            }
+    data.forEach(league => {
+        const leagueEndDate = moment(league.end_league_date, 'DD-MM-YYYY').format('DD-MM-YYYY'); // Format league end date
+        console.log(leagueEndDate, "leagueEndDate");
+
+        // Compare the formatted currentDate and leagueEndDate
+        if (moment(currentDate, 'DD-MM-YYYY').isBefore(moment(leagueEndDate, 'DD-MM-YYYY'))) {
+            const option = document.createElement('option');
+            option.value = league.league_name;
+            option.textContent = league.league_name;
+            selectElement.appendChild(option);
+            console.log(selectElement,"selec")
+        }
+    });
+}
+
 
 
             async function fetchLeagues() {

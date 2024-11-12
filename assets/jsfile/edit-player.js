@@ -343,7 +343,7 @@ function editPlayerData(response) {
 
   if (response) {
     // Update image source
-    imageFile.src = `https://krinik.in${response.player_image}`;
+    imageFile.src = `https://krinik.in/${response.player_image}`;
 
     // Set form field values
     leagueName.value = response.league_name;
@@ -416,10 +416,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         const overlapResult = await checkPlayerOverlap(playerName, shortPlayerName, leagueName, teamName, existingPlayers);
 
         if (isValidLeagueName && isValidTeamName && isValidPlayerName && isValidShortPlayerName) {
-          const hasLeagueChanged = currentData.leagueName !== initialData.league_name;
-          const hasTeamChanged = currentData.teamName !== initialData.team_name;
-          const hasPlayerChanged = currentData.playerName !== initialData.player_name;
-          const hasShortPlayerChanged = currentData.shortPlayerName !== initialData.player_short_name;
+          const hasLeagueChanged = currentData.league_name !== initialData.league_name;
+          const hasTeamChanged = currentData.team_name !== initialData.team_name;
+          const hasPlayerChanged = currentData.player_name !== initialData.player_name;
+          const hasShortPlayerChanged = currentData.player_short_name !== initialData.player_short_name;
           const hasImageChanged = currentData.player_image !== initialData.player_image;
 
           if (hasLeagueChanged || hasTeamChanged || hasPlayerChanged || hasShortPlayerChanged || hasImageChanged) {
