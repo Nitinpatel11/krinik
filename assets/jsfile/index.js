@@ -2,9 +2,6 @@
 import { redirectToPage } from './loader.js';
 import { refreshpage } from './pagerefresh.js';
 
-
-
-
 const loginForm = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
@@ -14,48 +11,37 @@ const errorPassword = document.getElementById("error-password");
 const errorAdminType = document.getElementById("error-admin-type");
 const errorMessage = document.getElementById("error-message");
 
-const COOKIE_NAME = "userEmail";
 const ADMIN_TYPE_COOKIE_NAME = "adminType";
-const COOKIE_EXPIRATION_HOURS_ADMIN = 24; // 30 minutes for regular admin
-const COOKIE_EXPIRATION_HOURS_SUPER_ADMIN = 1; // 60 minutes for super admin
+
 const STATUS_ADMIN = "true";
 const STATUS_ADMIN1 = "false";
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordRegex = /.{6,}/;
+const adminTypeRegex = /^(super admin|admin)$/;
 
-
-
-function setLocalStorage(key, value, hours, status) {
-  const currentTime = new Date().getTime();
-  const expirationTime = currentTime + hours * 60 * 60 * 1000; // Convert hours to milliseconds
-  localStorage.setItem(key, JSON.stringify({ value, expirationTime, status }));
+function setsessionStorage(key, value, status) {
+  sessionStorage.setItem(key, JSON.stringify({ value, status }));
 }
 
-function getLocalStorage(key) {
-  const item = localStorage.getItem(key);
-  if (item) {
-    const parsedItem = JSON.parse(item);
-    const currentTime = new Date().getTime();
-    if (currentTime < parsedItem.expirationTime) {
-      return parsedItem.value;
-    } else {
-      localStorage.removeItem(key);
-    }
-  }
-  return null;
+function getsessionStorage(key) {
+  const item = sessionStorage.getItem(key);
+  return item ? JSON.parse(item).value : null;
 }
 
-function eraseLocalStorage(key) {
-  localStorage.removeItem(key);
-}
+function checksessionStorageExpiration() {
+  const adminType = getsessionStorage(ADMIN_TYPE_COOKIE_NAME);
 
-function checkLocalStorageExpiration() {
-  const email = getLocalStorage(COOKIE_NAME);
-  // const reloaded = sessionStorage.getItem('reloaded');
+  console.log("Checking session storage:");
+  console.log("Admin Type:", adminType);
+  console.log("Redirected flag:", sessionStorage.getItem("redirected"));
 
-  if (!email && !localStorage.getItem("redirected")) {
-    localStorage.setItem("redirected", "true");
+  if (!adminType && !sessionStorage.getItem("redirected")) {
+    console.log("Redirecting to index.html");
+    sessionStorage.setItem("redirected", "true");
     window.location.replace("./index.html");
   } else {
-    localStorage.removeItem("redirected");
+    console.log("User is authenticated, removing 'redirected' flag.");
+    sessionStorage.removeItem("redirected");
   }
 }
 function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
@@ -86,42 +72,9 @@ function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
   return validate;
 }
 
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const passwordRegex = /.{6,}/;
-const adminTypeRegex = /^(super admin|admin)$/;
-
-function validateAll() {
-  const validateEmail = validateInput(
-    "email",
-    "error-email",
-    emailRegex,
-    "Email is required",
-    "Invalid email address"
-  );
-  const validatePassword = validateInput(
-    "password",
-    "error-password",
-    passwordRegex,
-    "Password is required",
-    "Password must be at least 6 characters long"
-  );
-  const validateAdminType = validateInput(
-    "admin-type",
-    "error-admin-type",
-    adminTypeRegex,
-    "Admin type is required",
-    "Invalid admin type"
-  );
-
-  const isEmailValid = validateEmail();
-  const isPasswordValid = validatePassword();
-  const isAdminTypeValid = validateAdminType();
-
-  return isEmailValid && isPasswordValid && isAdminTypeValid;
-}
 let loginApi = async () => {
   try {
-    const response = await fetch("https://krinik.in/login/");
+    const response = await fetch("https://krinik.pythonanywhere.com/login/");
     let data1 = await response.json();
     // console.log("API Data:", data1.data); // Log the fetched data for debugging
     return data1.data; // return the data array for validation
@@ -130,7 +83,7 @@ let loginApi = async () => {
     return null; // Handle error and return null if API call fails
   }
 };
-// loginApi()
+
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault(); // Prevent form from submitting by default
 
@@ -139,9 +92,6 @@ loginForm.addEventListener("submit", async (event) => {
   let password = document.getElementById("password").value.trim();
   let adminType = document.getElementById("admin-type").value.trim();
 
-  // console.log("Input Email:", email);
-  // console.log("Input Password:", password);
-  // console.log("Input Admin Type:", adminType);
 
   // Form validation
   const validateEmail = validateInput(
@@ -183,26 +133,12 @@ loginForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  // Check if the email, password, and admin type match with API data
-  // const matchingUser = loginData.find(
-  //   (user) =>
-  //     user.email == email &&
-  //     user.password == password &&
-  //     user.admin_type == adminType
-  // );
-  // console.log(loginData[0].admin_type,"match data")
-
+ 
   const matchingEmail = loginData.find(user => user.email == email);
 const matchingPassword = loginData.find(user => user.password == password && user.email == email );
 const matchingAdminType = loginData.find(user => user.admin_type == adminType && user.email == email);
 
-  // if (!matchingUser) {
-  //   // Show validation error if credentials don't match
-  //   console.log("No matching user found. Email, password, or admin type is incorrect.");
 
-
-  //   return;
-  // }
 
   if (!matchingEmail && !matchingPassword && !matchingAdminType) {
     document.getElementById("error-email").textContent = "Invalid email";
@@ -243,51 +179,42 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
   
   // Condition 7: All fields match (successful login)
   } else if (matchingEmail && matchingPassword && matchingAdminType) {
-    console.log("Login successful!");
-    try {
-      if (adminType === "super admin") {
-        setLocalStorage(
-          COOKIE_NAME,
-          email,
-          COOKIE_EXPIRATION_HOURS_SUPER_ADMIN,
-          STATUS_ADMIN
-        );
-        setLocalStorage(
-          ADMIN_TYPE_COOKIE_NAME,
-          adminType,
-          COOKIE_EXPIRATION_HOURS_SUPER_ADMIN,
-          STATUS_ADMIN
-        );
-      } else {
-        setLocalStorage(
-          COOKIE_NAME,
-          email,
-          COOKIE_EXPIRATION_HOURS_ADMIN,
-          STATUS_ADMIN1
-        );
-        setLocalStorage(
-          ADMIN_TYPE_COOKIE_NAME,
-          adminType,
-          COOKIE_EXPIRATION_HOURS_ADMIN,
-          STATUS_ADMIN1
-        );
-      }
-      redirectToPage("dashboard.html"); // Redirect to the dashboard
-    } catch (error) {
-      console.error("Error during login:", error);
+  console.log("Login successful!");
+  // sessionStorage.setItem("isLoggedIn", "true");
+  try {
+    if (adminType === "super admin") {
+      // setsessionStorage(COOKIE_NAME, email, COOKIE_EXPIRATION_HOURS_SUPER_ADMIN, STATUS_ADMIN);
+      setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN);
+    } else {
+      // setsessionStorage(COOKIE_NAME, email, null, STATUS_ADMIN1);
+      setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
     }
-    // Proceed with your successful login logic here, like setting localStorage or redirecting
-    // ...
+    redirectToPage("dashboard.html");
+  } catch (error) {
+    console.error("Error during login:", error);
   }
+}
 
-  // Clear error messages if valid
-  // document.getElementById("error-email").textContent = "";
-  // document.getElementById("error-password").textContent = "";
-  // document.getElementById("error-admin-type").textContent = "";
 
-  // Set cookies and redirect based on admin type
+  
  
 });
+function erasesessionStorage(key) {
+  sessionStorage.removeItem(key);
+}
+// Call checksessionStorageExpiration after page load to avoid premature redirects
+window.addEventListener("load", () => {
+  checksessionStorageExpiration();
+  refreshpage()
+});
+  window.addEventListener('pageshow', function (event) {
+  if (event.persisted || (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD)) {
+  window.location.reload();  
+  erasesessionStorage(ADMIN_TYPE_COOKIE_NAME);
+  }
+  
+  });
+    
+  
 
-refreshpage()
-checkLocalStorageExpiration();
+

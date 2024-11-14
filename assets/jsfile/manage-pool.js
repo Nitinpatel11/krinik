@@ -1,4 +1,4 @@
-
+import {getAdminType,createOTPModal}  from "../js/initial.js"
 var rankList = [];
 var array = [];
 var array_length = 0;

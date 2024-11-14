@@ -429,11 +429,11 @@ return null;
         '<span class="sortable" onclick="handleView(\'' + showdata['user_id'] + '\')"><i class="far fa-eye"></i></span>'
       );
       
-      if (admintype  == "super admin") {
-        viewCell.hide()
-      }else{
-  viewCell.show();
-}
+//       if (admintype  == "super admin") {
+//         viewCell.hide()
+//       }else{
+//   viewCell.show();
+// }
       // var editCell = $("<td></td>").html(
       //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
       // );

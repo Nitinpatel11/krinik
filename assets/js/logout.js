@@ -67,76 +67,93 @@
 //         };
 
 
-let LOCAL_STORAGE_KEY = 'userEmail';
+// let LOCAL_STORAGE_KEY = 'userEmail';
 let LOCAL_STORAGE_KEY1 = 'adminType';
-// let LOCAL_STORAGE_KEY2 = 'logoutTime';
 
-
-function eraseLocalStorage(key) {
-  localStorage.removeItem(key);
-  
+// Function to remove a session storage key
+function erasesessionStorage(key) {
+  sessionStorage.removeItem(key);
 }
 
+// Function to show the logout confirmation modal
 function showLogoutModal(event) {
-    event.preventDefault();
-  
-    const modal = document.createElement('div');
-    modal.id = 'logoutModal';
-    modal.classList.add('modal');
-  
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-  
-    const header = document.createElement('h2');
-    header.textContent = 'Are you sure you want to logout?';
-  
-    const modalButtons = document.createElement('div');
-    modalButtons.classList.add('modal-buttons');
-  
-    const confirmButton = document.createElement('button');
-    confirmButton.id = 'confirmLogout';
-    confirmButton.textContent = 'Yes, Logout';
-    confirmButton.onclick = () => {
-      eraseLocalStorage(LOCAL_STORAGE_KEY);
-      eraseLocalStorage(LOCAL_STORAGE_KEY1);
-    //   eraseLocalStorage(LOCAL_STORAGE_KEY2);
-      checkLocalStorageExpiration()
-      window.location.href = './index.html';
-    };
-  
-    const cancelButton = document.createElement('button');
-    cancelButton.id = 'cancelLogout';
-    cancelButton.textContent = 'Cancel';
-    cancelButton.onclick = () => modal.style.display = 'none';
-  
-    modalButtons.appendChild(confirmButton);
-    modalButtons.appendChild(cancelButton);
-    modalContent.appendChild(header);
-    modalContent.appendChild(modalButtons);
-    modal.appendChild(modalContent);
-  
-    document.body.appendChild(modal);
-  
-    modal.style.display = 'block';
+  event.preventDefault(); // Prevent default behavior to stop potential form submissions
+
+  // Check if the modal already exists, if so, don't create a new one
+  if (document.getElementById('logoutModal')) {
+    document.getElementById('logoutModal').style.display = 'block'; // Show existing modal
+    return;
   }
-  
-  document.getElementById('logoutButton').addEventListener('click', showLogoutModal);
-  
-  window.onclick = function(event) {
-    const modal = document.getElementById('logoutModal');
-    if (event.target === modal) {
-      modal.style.display = 'none';
-    }
+
+  // Create modal structure if it doesn't exist
+  const modal = document.createElement('div');
+  modal.id = 'logoutModal';
+  modal.classList.add('modal');
+
+  const modalContent = document.createElement('div');
+  modalContent.classList.add('modal-content');
+
+  const header = document.createElement('h2');
+  header.textContent = 'Are you sure you want to logout?';
+
+  const modalButtons = document.createElement('div');
+  modalButtons.classList.add('modal-buttons');
+
+  const confirmButton = document.createElement('button');
+  confirmButton.id = 'confirmLogout';
+  confirmButton.textContent = 'Yes, Logout';
+
+  // On confirm, erase session storage and redirect
+  confirmButton.onclick = () => {
+    erasesessionStorage(LOCAL_STORAGE_KEY1);
+    sessionStorage.setItem("redirected", "true"); // Prevent loop on redirect
+    window.location.href = './index.html'; // Redirect to login page
+    modal.style.display = 'none'; // Hide modal
   };
-  
-  function checkLocalStorageExpiration() {
-    const email = getLocalStorage(LOCAL_STORAGE_KEY);
-    // const reloaded = sessionStorage.getItem('reloaded');
-  
-    if (!email && !localStorage.getItem('redirected')) {
-      localStorage.setItem('redirected', 'true');
-      window.location.replace('./index.html');
-    } else {
-      localStorage.removeItem('redirected');
-    }
+
+  const cancelButton = document.createElement('button');
+  cancelButton.id = 'cancelLogout';
+  cancelButton.textContent = 'Cancel';
+
+  // On cancel, close the modal
+  cancelButton.onclick = () => modal.style.display = 'none';
+
+  // Append elements to the modal
+  modalButtons.appendChild(confirmButton);
+  modalButtons.appendChild(cancelButton);
+  modalContent.appendChild(header);
+  modalContent.appendChild(modalButtons);
+  modal.appendChild(modalContent);
+
+  document.body.appendChild(modal);
+  modal.style.display = 'block'; // Show modal
+}
+
+// Bind showLogoutModal to logout button click
+document.getElementById('logoutButton').addEventListener('click', showLogoutModal);
+
+// Close modal if user clicks outside of it
+window.onclick = function(event) {
+  const modal = document.getElementById('logoutModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
   }
+};
+
+// Function to check session storage expiration and handle redirects
+function checkLocalStorageExpiration() {
+  const adminType = sessionStorage.getItem('adminType');
+
+  console.log("Checking session storage:");
+  console.log("Admin Type:", adminType);
+  console.log("Redirected flag:", sessionStorage.getItem("redirected"));
+
+  if (!adminType && !sessionStorage.getItem("redirected")) {
+    console.log("Redirecting to index.html");
+    sessionStorage.setItem("redirected", "true");
+    window.location.replace("./index.html");
+  } else {
+    console.log("User is authenticated, removing 'redirected' flag.");
+    sessionStorage.removeItem("redirected");
+  }
+}

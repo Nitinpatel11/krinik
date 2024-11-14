@@ -4559,3 +4559,12 @@ width: auto !important;
   color: white;
   
 }
+
+.blur {
+  filter: blur(4px);
+}
+
+.close{
+  font-size: 40px;
+  color: #E20101;
+}

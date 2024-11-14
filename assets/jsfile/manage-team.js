@@ -1,4 +1,4 @@
-
+import {getAdminType,createOTPModal}  from "../js/initial.js"
 
    var rankList = [];
     var array = [];
@@ -9,7 +9,18 @@
     var current_index = 1;
     var max_index = 0;
   let totaldatateam = document.querySelector("#total-team-data");
-  let otpAdd = document.querySelector("#otpAdd");
+  const otpModalInstance = createOTPModal();
+
+  let addNewBtn = document.getElementById("addNewBtn")
+  const adminInfo = getAdminType();
+const isSuperAdmin = adminInfo?.value === "super admin";
+const isStatusTrue = adminInfo?.status === "true";
+  function showOTP() {
+  
+      otpModalInstance.show()
+      
+  }
+
   async function fetchData() {
       try {
           // Fetch teams data
@@ -27,19 +38,7 @@
                   'Content-Type': 'application/json'
               }
           });
-        //   const otpapi = await $.ajax({
-        //   url: "https://krinik.in/send_otp_get/",
-        //   method: "GET"
-        // });
-//         if (otpapi && otpapi.status === "success") {
-//     // Access the first item in the data array
-//     let otpApi1 = otpapi.data[0];
-    
-//     // Get the phone_number from the first item
-//      otpApi = otpApi1.phone_number;
-//      otpApi2 = otpApi1.otp
-//     console.log(otpApi);
-// }
+
 
           if (teamsResponse.ok && leaguesResponse.ok) {
               const teamsData = await teamsResponse.json();
@@ -65,47 +64,7 @@
       }
   }
 
-  async function postPhoneNumber() {
-  try {
-    const response = await $.ajax({
-      url: "https://krinik.in/send_otp_get/", // Change this to your POST endpoint
-      method: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({ phone_number: "7801804996"})
-    });
-
-    if (response && response.status === "success") {
-      console.log("Phone number posted successfully");
-    } else {
-      console.error("Failed to post phone number", response);
-    }
-  } catch (error) {
-    console.error("Error posting phone number:", error);
-  }
-}
-async function phoneNumber() {
-  try {
-   
-    const otpapi = await $.ajax({
-          url: "https://krinik.in/send_otp_get/",
-          method: "GET"
-        });        
-
-    if (otpapi && otpapi.status === "success" ) {
-      let otpApi1 = otpapi.data[0];
-    
-    // Get the phone_number from the first item
-     otpApi = otpApi1.phone_number;
-     otpApi2 = otpApi1.otp
-    console.log(otpApi);
-      console.log("Phone number posted successfully");
-    } else {
-      console.error("Failed to post phone number", response);
-    }
-  } catch (error) {
-    console.error("Error posting phone number:", error);
-  }
-}
+ 
 
 
   $(document).ready(function () {
@@ -334,171 +293,7 @@ function displayIndexButtons() {
         highlightIndexButton();
     }
 
-    const adminType =  JSON.parse(localStorage.getItem('adminType'))
-   const adminVal = adminType.value
-   const statusType =  adminType.status
 
-
-
-//    function initializePage1() {
-//     // HTML for mobile number section and OTP modal
-//     const otpModalHTML = `
-//     <div id="otpModal" class="modal" style="display:none;z-index:2000">
-//         <div class="modal-content">
-//             <span class="close">&times;</span>
-//             <h2>OTP Verification</h2>
-//             <div class="col-md-12 d-flex justify-content-between align-items-center">
-//                 <div class="form-group form-group-custom">
-//                     <input type="text" class="form-control" id="mobilenum" value="Mobile No. 7801804996" readonly style="text-align: center;" />
-//                 </div>
-//                 <div class="text-center">
-//                     <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
-//                 </div>
-//             </div>
-//             <div id="showotptimer" style="display:none;">
-//                 <div class="otp-inputs text-center">
-//                     <input type="text" maxlength="1" class="otp-input" />
-//                     <input type="text" maxlength="1" class="otp-input" />
-//                     <input type="text" maxlength="1" class="otp-input" />
-//                     <input type="text" maxlength="1" class="otp-input" />
-//                     <input type="text" maxlength="1" class="otp-input" />
-//                     <input type="text" maxlength="1" class="otp-input" />
-//                 </div>
-//                 <p class="resend-timer text-end">
-//                     Resend in <span id="timer">30</span> sec
-//                     <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
-//                 </p>
-//                 <button id="submitOTP" class="btn btn-primary">Submit</button>
-//                 <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
-//             </div>
-//         </div>
-//         <div id="otpOverlay" class="overlay" style="display:none;"></div>
-//     </div>`;
-
-//     document.body.insertAdjacentHTML('beforeend', otpModalHTML);
-
-//     // Get elements for OTP modal
-//     const otpModal = document.getElementById("otpModal");
-//     const otpOverlay = document.getElementById("otpOverlay");
-//     const closeModal = otpModal.querySelector(".close");
-//     const submitOTP = document.getElementById("submitOTP");
-//     const otpError = document.getElementById("otpError");
-//     const timerElement = document.getElementById('timer');
-//     const timerElement1 = document.getElementById('showotptimer');
-//     const resendOtpButton = document.getElementById('resend-otp-btn');
-
-//     function showOTPModal() {
-//       otpModal.style.display = "block";
-//       otpOverlay.style.display = "block";
-//       startTimer();
-    
-//   }
-//   function showOTPModal1() {
-//     timerElement1.style.display = "block";
-//     otpOverlay.style.display = "block";
-    
-// }
-
-//     function hideOTPModal() {
-//         otpModal.style.display = "none";
-//         otpOverlay.style.display = "none";
-//         resetTimer(); // Reset the timer when hiding the modal
-//     }
-
-//     function validateOTP(otp) {
-//         let otpsend = String(otpApi2); // Ensure otpApi2 is a string
-
-//         if (otp === otpsend) {
-//             otpError.style.display = "none"; // Hide error if OTP is valid
-//             return true;
-//         } else {
-//             otpError.style.display = "block"; // Show error if OTP is invalid
-//             return false;
-//         }
-//     }
-
-//     let timerIntervalId = null;
-
-//     function startTimer() {
-//         let time = 30; // Timer duration in seconds
-
-//         if (timerIntervalId !== null) {
-//             clearInterval(timerIntervalId);
-//         }
-
-//         timerIntervalId = setInterval(() => {
-//             time--;
-//             timerElement.textContent = time;
-//             if (time <= 0) {
-//                 clearInterval(timerIntervalId);
-//                 timerElement.textContent = '0';
-//                 resendOtpButton.style.display = 'inline-block'; // Show the resend button
-//             }
-//         }, 1000);
-//     }
-
-//     function resetTimer() {
-//         if (timerIntervalId !== null) {
-//             clearInterval(timerIntervalId);
-//             timerIntervalId = null;
-//         }
-//         timerElement.textContent = '30'; // Reset the timer display
-//         resendOtpButton.style.display = 'none'; // Hide the resend button
-//     }
-
-//     submitOTP.addEventListener("click", () => {
-//         const otpInputs = document.querySelectorAll('.otp-input');
-//         const otp = Array.from(otpInputs).map(input => input.value).join('');
-//         if (validateOTP(otp)) {
-//             const adminType = JSON.parse(localStorage.getItem('adminType'));
-//             const userType = JSON.parse(localStorage.getItem('userEmail'));
-
-//             const currentTime = new Date().getTime();
-//             const COOKIE_EXPIRATION_HOURS = adminType === 'super_admin' ? 1 : 0.5; // 60 or 30 minutes based on admin type
-//             const expirationTime = new Date(currentTime + COOKIE_EXPIRATION_HOURS * 60 * 60 * 1000);
-
-//             localStorage.setItem('loginTime', expirationTime.toISOString());
-//             hideOTPModal(); // Hide the OTP modal upon successful validation
-//         }
-//     });
-
-//     closeModal.addEventListener("click", hideOTPModal);
-//     otpOverlay.addEventListener("click", hideOTPModal);
-//     // resendOtpButton.addEventListener("click",)
-//     // Close modal if clicking outside the modal content
-//     resendOtpButton.addEventListener("click", (event) => {
-//       postPhoneNumber()
-//       phoneNumber()
-//         if (event.target === resendOtpButton) {
-//           resendOtpButton.style.display = "none"
-//         }
-//     });
-//     const getOtpButton = document.getElementById('get-otp-btn');
-//   getOtpButton.addEventListener('click', function () {
-//       showOTPModal1();
-//       postPhoneNumber()
-//       phoneNumber()
-//   });
-//     const elements = document.querySelectorAll("button, input, select, textarea, a, li, div, th, td, span, i");
-//     elements.forEach(element => {
-//         element.addEventListener("click", (event) => {
-//             if (element.classList.contains("otp-exempt3")) {
-//                 event.preventDefault();
-             
-//                     showOTPModal();
-  
-//             }
-//         });
-//       })
-// }
-
-
-if( statusType == "true"){
-otpAdd.classList.add('otp-exempt3')
-}else{
-otpAdd.classList.remove('otp-exempt3')
-
-}
   function displayTableRows() {
       $("table tbody").empty();
       var tab_start = (current_index - 1) * table_size;
@@ -531,28 +326,18 @@ otpAdd.classList.remove('otp-exempt3')
           );
           var dateCell = $("<td></td>").text(convertDateFormat(object["team_date"] || ""));
 
-          if(statusType == "true"){
+         
             var viewCell = $("<td class='otp-exempt3'></td>").html(
                 `<span class="sortable otp-exempt3" onclick="viewTeamDetails('${object["team_name"]}')"><i class="far fa-eye otp-exempt3"></i></span>`
-          );
+            )
           var editCell = $("<td class='otp-exempt3'></td>").html(
               '<span class="sortable otp-exempt3" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit otp-exempt3"></i></span>'
           );
           var deleteCell = $("<td class='otp-exempt3'></td>").html(
               '<span class="sortable otp-exempt3" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt otp-exempt3"></i></span>'
           );
-          }
-          else{
-            var viewCell = $("<td></td>").html(
-                `<span class="sortable" onclick="viewTeamDetails('${object["id"]}')"><i class="far fa-eye"></i></span>`
-          );
-          var editCell = $("<td></td>").html(
-              '<span class="sortable" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit"></i></span>'
-          );
-          var deleteCell = $("<td></td>").html(
-              '<span class="sortable" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-          );
-          }
+          
+          
          
 
           tr.append(noCell)
@@ -569,19 +354,27 @@ otpAdd.classList.remove('otp-exempt3')
       }
       // lazyLoadImages(); // Lazy load images after table rows are appended
   }
-  function viewTeamDetails(teamName) {
-    if( statusType == "true"){      
 
-initializePage1()
+  addNewBtn.addEventListener("click",()=>{
+    if (isSuperAdmin && isStatusTrue) {
+      showOTP()
+  
+  }else{
+    window.location.href = "./addteam.html"
+  }
+  })
+
+  function viewTeamDetails(teamName) {
+    if (isSuperAdmin && isStatusTrue) {
+      showOTP()
 
 }else{
     window.location.href = `view-team-details.html?teamName=${encodeURIComponent(teamName)}`;
 }
   }
   async function handleDelete(id) {
-    if( statusType == "true"){      
-
-initializePage1()
+    if (isSuperAdmin && isStatusTrue) {
+      showOTP()
 
 }else{
       if (confirm('Are you sure you want to delete this team?')) {
@@ -606,9 +399,8 @@ initializePage1()
 
   // Ensure the edit functionality is working properly with appropriate URL handling
   async function handleEdit(id) {
-    if( statusType == "true"){      
-
-initializePage1()
+    if (isSuperAdmin && isStatusTrue) {
+      showOTP()
 
 }else{
       const url = `https://krinik.in/team_get/${id}/`;
@@ -626,7 +418,13 @@ initializePage1()
       }
   }
   }
+  window.prev = prev;
+  window.next = next;
+  window.indexPagination = indexPagination;
 
+  window.handleEdit = handleEdit;
+window.handleDelete = handleDelete;
+window.viewTeamDetails = viewTeamDetails;
   // Function to convert date format from YYYY-MM-DD to DD-MM-YYYY
   function convertDateFormat(dateString) {
       // Assuming dateString is in the format YYYY-MM-DD

@@ -387,30 +387,9 @@ element.style.opacity = "0.5";
 console.error("Invalid element:", element); // Debug line
 }
 }
-function getLocalStorage1(key) {
-const item = localStorage.getItem(key);
-console.log("Retrieved item from localStorage:", item); // Log the raw item
-
-if (item) {
-try {
-  const parsedItem = JSON.parse(item);
-  console.log("Parsed item:", parsedItem); // Log the parsed item
-
-  // const currentTime = Date.now();
-  // if (parsedItem.expirationTime && currentTime > parsedItem.expirationTime) {
-  //   console.log("Item has expired. Removing from localStorage.");
-  //   localStorage.removeItem(key);
-  //   return null;
-  // }
-  
-  return parsedItem.value;
-} catch (e) {
-  console.error("Error parsing item from localStorage:", e);
-  return null;
-}
-}
-
-return null;
+function getsessionStorage(key) {
+  const item = sessionStorage.getItem(key);
+  return item ? JSON.parse(item).value : null;
 }
 
   function displayTableRows() {
@@ -428,7 +407,7 @@ return null;
       $("#pagination").show();
       $("#table-scrolling").css("overflow-x", "auto"); // Add this line
     }
-    const admintype = getLocalStorage1("adminType");
+    const admintype = getsessionStorage("adminType");
 
     for (var i = tab_start; i < tab_end; i++) {
       var showdata = array[i];
@@ -467,11 +446,11 @@ return null;
         '<span class="sortable" onclick="handleView(\'' + showdata['user_id'] + '\')"><i class="far fa-eye"></i></span>'
       );
       
-      if (admintype  == "super admin") {
-        viewCell.hide()
-      }else{
-  viewCell.show();
-}
+//       if (admintype  == "super admin") {
+//         viewCell.hide()
+//       }else{
+//   viewCell.show();
+// }
       // var editCell = $("<td></td>").html(
       //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
       // );

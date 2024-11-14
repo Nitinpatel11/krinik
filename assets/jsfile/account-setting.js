@@ -1,4 +1,4 @@
-
+import {checkAdminAccess}  from "../js/initial.js"
 
 const loginForm = document.getElementById('login-pwd');
 const oldPwdInput = document.getElementById('oldpd');
@@ -211,3 +211,4 @@ return; // Stop submission if any validation fails
 }
 
 fetchData().then(passwordMatch);
+window.onload = checkAdminAccess();
