@@ -1,30 +1,33 @@
-
+import {checkAdminAccess}  from "../js/initial.js"
 document.addEventListener('DOMContentLoaded', async function () {
+  let playerTotalRun
+  let viewPlayerDetails
   try {
     // Get the team name from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-let playerTotalRun
-let viewPlayerDetails
+    const id = Number(urlParams.get('id'));
+    console.log(id)
     // Fetch data
     const viewPlayer = await fetch(`https://krinik.in/view_player/${id}/`);
     // console.log(viewPlayer)
 
 
+    // console.log(playerResponse)
+    if(viewPlayer){
+      
+      const viewPlayerDetails1 = await viewPlayer.json();
+      viewPlayerDetails = viewPlayerDetails1[0]
+      playerTotalRun = viewPlayerDetails1[1]
+      console.log(viewPlayerDetails)
+    }
+    
     const playerResponse = await fetch(`https://krinik.in/player_get/${id}/`);
- 
-// console.log(playerResponse)
-if(viewPlayer){
+  
+    
+        const playerData1 = await playerResponse.json();
+        const playerData = playerData1.data;
 
-  const viewPlayerDetails1 = await viewPlayer.json();
-   viewPlayerDetails = viewPlayerDetails1[0]
-playerTotalRun = viewPlayerDetails1[1]
-  console.log(viewPlayerDetails)
-}
-
-
-    const playerData = (await playerResponse.json()).data;
-    console.log(playerData)
+        console.log(playerData)
 
 
     const teamImagePreview = document.getElementById('leagueImagePreview');
@@ -97,5 +100,6 @@ playerTotalRun = viewPlayerDetails1[1]
     URL.revokeObjectURL(url);
     a.remove();
   });
+  window.onload = checkAdminAccess();
 });
 

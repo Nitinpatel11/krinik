@@ -1,3 +1,5 @@
+import {checkAdminAccess}  from "../js/initial.js"
+
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     // Get the team name from the URL query parameters
@@ -94,4 +96,5 @@ document.addEventListener("DOMContentLoaded", async function () {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
+  window.onload = checkAdminAccess();
 });

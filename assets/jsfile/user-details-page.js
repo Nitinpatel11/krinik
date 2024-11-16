@@ -1,9 +1,14 @@
+import {getAdminType,sendNotification}  from "../js/initial.js"
+
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   const userUnlockText = document.getElementById("user-unlock-text");
 let userScratchData
   console.log(id);
+  const adminInfo = getAdminType();
+const isSuperAdmin = adminInfo?.value === "super admin";
+const isStatusTrue = adminInfo?.status === "true";
 
   async function fetchUserData() {
     try {
@@ -24,9 +29,9 @@ let userScratchData
 
       const userData1 = await response.json();
       const userData = userData1.data;
-      userScratchData = userData1.data.scrach_list.map(p=>p.id);
+      userScratchData = userData.scrach_list.map(p=>p.value.id);
 
-      const userData5 = userData.user_id;
+      // const userData5 = userData.user_id;
 
       console.log(userScratchData, "id che nathi");
       editPlayerData(userData);
@@ -132,10 +137,10 @@ async function getRandomCoupon() {
   }
 }
 
-
-
 async function assignCouponToUser(userId, newCoupon) {
+ 
   const userEndpoint = `https://krinik.in/user_get/${userId}/`;
+  console.log(userEndpoint,"data cheche")
 
   try {
      
@@ -157,7 +162,11 @@ async function assignCouponToUser(userId, newCoupon) {
       });
 
       if (response.ok) {
-          alert('Scratch Coupon assigned successfully!');
+        alert('Scratch Coupon assigned successfully!');
+        await sendNotification(userId, {
+          title: "Congratulations! 🎉",
+          body: `You've received a new scratch coupon. Check your account now to reveal the surprise!`
+      });
           console.log('Coupon assigned successfully!');
           const updatedUserData = await response.json();
           console.log("Updated User Data:", updatedUserData);  // log updated user data for verification
@@ -168,8 +177,6 @@ async function assignCouponToUser(userId, newCoupon) {
       console.error('Error assigning coupon:', error);
   }
 }
-
-
 
 
   function editPlayerData(response) {
@@ -226,6 +233,16 @@ async function assignCouponToUser(userId, newCoupon) {
         // enableButton(userAddAmount);
         enableButton(userGameHistory);
         enableButton(userWithdraw);
+      }
+      if (isSuperAdmin && isStatusTrue) {
+    disableButton(userTransactionHistory);
+        // disableButton(userDeduction);
+        // disableButton(userAddAmount);
+        disableButton(userScratch);
+
+        disableButton(userGameHistory);
+        disableButton(userWithdraw);
+
       }
 
       console.log(userFullName.textContent);
@@ -421,7 +438,7 @@ async function assignCouponToUser(userId, newCoupon) {
       return char.toUpperCase();
     });
   }
-
+ 
   function redirectToHistoryPage(page) {
     const urlParams = new URLSearchParams(window.location.search);
     const name = urlParams.get("name");
@@ -495,4 +512,5 @@ async function assignCouponToUser(userId, newCoupon) {
   // }
 
   fetchUserData();
+  // window.onload = checkAdminAccess();
 });

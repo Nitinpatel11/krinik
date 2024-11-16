@@ -1,9 +1,9 @@
-
+import {checkAdminAccess}  from "../js/initial.js"
 document.addEventListener('DOMContentLoaded', function () {
     // Get the league name from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const leagueName = urlParams.get('leagueName');
-
+// console.log(leagueName)
     // Get reference to the table body
     const teamTableBody = document.getElementById('teamTableBody');
 
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             const teamData = data.data;
-
+console.log(teamData)
             // Filter the team data based on the league name
             const filteredTeams = teamData.filter(team => team.league_name === leagueName);
 
@@ -45,12 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error fetching team data:', error);
             // Handle error, such as displaying a message to the user
         });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-// Get the league name from the URL
-const urlParams = new URLSearchParams(window.location.search);
-const leagueName = urlParams.get('leagueName');
 
 // Get references to HTML elements
 const leagueNameHeading = document.getElementById('leagueNameHeading');
@@ -87,5 +81,6 @@ console.error('League details not found for league name:', leagueName);
 console.error('Error fetching league data:', error);
 // Handle error, such as displaying a message to the user
 });
+window.onload = checkAdminAccess();
 });
 

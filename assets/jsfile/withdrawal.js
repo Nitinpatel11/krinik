@@ -1,4 +1,4 @@
-
+import {checkAdminAccess}  from "../js/initial.js"
 var rankList = [];
 var array = [];
 var array_length = 0;
@@ -491,6 +491,15 @@ function toCapitalizeCase(str) {
       return char.toUpperCase();
   });
 }
+window.toCapitalizeCase = toCapitalizeCase;
+window.indexPagination = indexPagination;
+
+window.prev = prev;
+window.next = next;
+window.indexPagination = indexPagination;
+window.disableButton = disableButton;
+window.handleView = handleView;
+
 
 async function handleView(user_id,id) {
   
@@ -517,3 +526,4 @@ window.addEventListener('pageshow', function (event) {
 });
 
 fetchData();
+window.onload = checkAdminAccess();

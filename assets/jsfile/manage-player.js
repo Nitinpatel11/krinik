@@ -441,7 +441,7 @@ function displayIndexButtons() {
           var logoCell = $("<td></td>").html(object["player_image"] ? `<img src="https://krinik.in${object["player_image"]}" alt="${object["player_image"]}" class="team-logo lazyload">` : '');
 
          
-            var viewCell = $("<td class='otp-exempt3'></td>").html(`<span class="sortable otp-exempt3" onclick="viewPlayerDetails('${object["player_name"]}')"><i class="far fa-eye otp-exempt3"></i></span>`);
+            var viewCell = $("<td class='otp-exempt3'></td>").html(`<span class="sortable otp-exempt3" onclick="viewPlayerDetails('${object["id"]}')"><i class="far fa-eye otp-exempt3"></i></span>`);
           var editCell = $("<td class='otp-exempt3'></td>").html('<span class="sortable otp-exempt3" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit otp-exempt3"></i></span>');
           var deleteCell = $("<td class='otp-exempt3'></td>").html('<span class="sortable otp-exempt3" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt otp-exempt3"></i></span>');
          

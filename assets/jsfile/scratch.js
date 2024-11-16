@@ -1,4 +1,5 @@
- 
+import {checkAdminAccess}  from "../js/initial.js"
+
   let isFileUploadedCoupon = false;
 
   const fileInput1 = document.getElementById('fileInput1');
@@ -61,3 +62,4 @@ function uploadCouponFile(file, textInput) {
       responseMessage2.innerHTML = '';
   });
 
+  window.onload = checkAdminAccess();

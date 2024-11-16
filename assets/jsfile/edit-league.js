@@ -1,4 +1,35 @@
 
+import {checkAdminAccess}  from "../js/initial.js"
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const noNumberOrWhitespaceRegex = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
+           
+;
+            const dateFormatRegex = /^\d{2}-\d{2}-\d{4}$/;
+            const defaultImageSrc = '././assets/images/default_league_2.png';
+            let existingLeagues = [];
+
+            try {
+                const response = await fetch("https://krinik.in/league_get/");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+               let  existingLeagues1 = await response.json();
+               existingLeagues = existingLeagues1.data
+                console.log(existingLeagues,"olpol")
+                if (!Array.isArray(existingLeagues)) {
+                    throw new Error('Expected array from API, but received:', existingLeagues);
+                }
+
+                console.log('Existing leagues:', existingLeagues);
+            } catch (error) {
+                console.error('Error fetching or processing existing leagues:', error);
+            }
+
+            let initialData = {}; // Variable to store initial data
+
+            
         $(function () {
             let startPicker = flatpickr('#startDate', {
                 dateFormat: 'd-m-Y',
@@ -29,31 +60,6 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            const noNumberOrWhitespaceRegex = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
-           
-;
-            const dateFormatRegex = /^\d{2}-\d{2}-\d{4}$/;
-            const defaultImageSrc = '././assets/images/default_league_2.png';
-            let existingLeagues = [];
-
-            try {
-                const response = await fetch("https://krinik.in/league_get/");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                existingLeagues = await response.json();
-                if (!Array.isArray(existingLeagues)) {
-                    throw new Error('Expected array from API, but received:', existingLeagues);
-                }
-
-                console.log('Existing leagues:', existingLeagues);
-            } catch (error) {
-                console.error('Error fetching or processing existing leagues:', error);
-            }
-
-            let initialData = {}; // Variable to store initial data
 
             function editplayerdata(response) {
                 const leagueName = document.getElementById('league-name');
@@ -162,12 +168,12 @@
                 const normalizedName = leagueName.trim().toLowerCase();
                 const normalizedShortName = shortLeagueName.trim().toLowerCase();
 
-                const leagueNameOverlap = existingLeagues.data.some(league => {
+                const leagueNameOverlap = existingLeagues.some(league => {
                     const normalizedExistingName = league.league_name.trim().toLowerCase();
                     return normalizedExistingName === normalizedName;
                 });
 
-                const shortLeagueNameOverlap = existingLeagues.data.some(league => {
+                const shortLeagueNameOverlap = existingLeagues.some(league => {
                     const normalizedExistingShortName = league.short_league_name.trim().toLowerCase();
                     return normalizedExistingShortName === normalizedShortName;
                 });
@@ -351,4 +357,6 @@
                     reader.readAsDataURL(imageFile);
                 }
             });
+
+            window.onload = checkAdminAccess();
         });

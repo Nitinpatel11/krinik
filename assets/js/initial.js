@@ -335,6 +335,110 @@ export function checkAdminAccess() {
       console.log("Access granted.");
     } else {
       // If not, redirect to the dashboard
+      initializePage()
       console.log("Access denied. Redirecting to dashboard...");
     }
   }
+
+
+ export let sendNotification = async (userId = null, customPayload = {}) => {
+    try {
+      let tokens = [];
+      let allUser = []
+  
+      // If a specific userId is provided, fetch only that user's data
+      if (userId) {
+        console.log(userId,"id che ok")
+        let response = await fetch(`https://krinik.in/user_get/${userId}/`);
+        if (!response.ok) {
+          console.error(`Failed to fetch user data for ID ${userId}. Status:`, response.status);
+          return;
+        }
+        let data1 = await response.json();
+        let data =  data1.data
+        if (data.device_token) {
+          
+          tokens.push(data.device_token);
+        } else {
+          console.error(`No device token found for user ID ${userId}`);
+          return;
+        }
+      } else {
+        // Fetch all users if no specific userId is provided
+        let response = await fetch('https://krinik.in/user_get/');
+        if (!response.ok) {
+          console.error('Failed to fetch users. Status:', response.status);
+          return;
+        }
+        let data = await response.json();
+        tokens = data.data.map((user) => user.device_token);
+        allUser = data.data.map((userId)=> user.user_id)
+        console.log(allUser,"alluser")
+      }
+  
+      // Define the notification payload
+      let payload = {
+        tokens: tokens,
+        title: customPayload.title || "",
+        body: customPayload.body || "",
+       
+      };
+  
+      // Send the notification request
+      const response2 = await fetch('https://fcm-notification-u6yp.onrender.com/send-notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+  
+      if (!response2.ok) {
+        console.error('Network response was not ok. Status:', response2.status, 'Status Text:', response2.statusText);
+        throw new Error('Network response was not ok');
+      }
+  
+      // Patch the notification data to the endpoint
+      const patchPayload = {
+        title: customPayload.title,
+        message: customPayload.body,
+        user_data: userId ? [userId] : allUser,  // Use userId if provided, otherwise use allUser
+        // read: false, // Assuming the notification starts as unread
+    };
+  
+      // Patch URL based on whether a user ID is provided
+      const patchUrl = userId 
+        ? `https://krinik.in/notification_get/` 
+        : 'https://krinik.in/notification_get/';
+  // console.log(patchUrl,"pcatc")
+      const postResponse = await fetch(patchUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(patchPayload)
+      });
+  
+      if (!postResponse.ok) {
+        console.error('Failed to patch notification data. Status:', postResponse.status);
+        throw new Error('Failed to patch notification data');
+      }
+  
+      console.log('Notification sent and data patched successfully');
+      return { notificationResponse: response2, postResponse: postResponse };
+  
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+  // Usage examples
+  // Send notification to all users and patch data with default payload
+  // sendNotification();
+  
+  // Send notification to a specific user and patch data with custom payload
+  // sendNotification('specific_user_id_here', {
+  //   title: "Exclusive Offer!",
+  //   body: "Hello! Check out our exclusive offer just for you."
+  // });
+  

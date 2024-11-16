@@ -1,4 +1,4 @@
-
+import {checkAdminAccess}  from "../js/initial.js"
 var rankList = [];
 var array = [];
 var array_length = 0;
@@ -363,7 +363,9 @@ function indexPagination(index) {
     highlightIndexButton();
 }
 
-
+window.prev = prev;
+window.next = next;
+window.indexPagination = indexPagination;
 
 function displayTableRows() {
   $("table tbody").empty();
@@ -460,3 +462,4 @@ a.click();
 URL.revokeObjectURL(url);
 a.remove();
 });
+window.onload = checkAdminAccess();

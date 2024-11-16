@@ -1,4 +1,5 @@
 import {checkAdminAccess}  from "../js/initial.js"
+
 var rankList = [];
 var array = [];
 var array_length = 0;
@@ -7,30 +8,69 @@ var start_index = 1;
 var end_index = 0;
 var current_index = 1;
 var max_index = 0;
-// let totaldataleague = document.querySelector("#total-league-data");
+let userNameSpan = document.querySelector("#user-name-span");
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+console.log(id);
 
-async function fetchData() {
+async function fetchUserData() {
   try {
-    const data = await $.ajax({
-      url: "https://krinik.in/game_amount_get/",
-      method: "GET"
-    });
-
-    if (data && data.status === "success") {
-      rankList = data.data;
-      array = rankList;
-      filterAndDisplay();
-      console.log(array)
-      //   totaldataleague.innerHTML = array.length;
-    } else {
-      console.error("Error: Invalid data format");
+    if (!id) {
+      console.warn('No player ID found in URL.');
+      return;
     }
+
+    const url = `https://krinik.in/user_get/${id}/`;
+    console.log('Fetching player data from:', url);
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch player data');
+    }
+
+    const userData1 = await response.json();
+    const userDataId = userData1.data.id;
+    console.log(userData1,"olpmn"); 
+    fetchData(userDataId)
+    // const newAmounts = await addAmount(userData.id);
+
   } catch (error) {
-    console.error("Error fetching data", error);
+    console.error('Error fetching player data:', error);
   }
 }
 
-fetchData();
+
+async function fetchData(Id) {
+try {
+const response = await $.ajax({
+  url: "https://krinik.in/withdraw_history/",
+  method: "GET"
+});
+
+if (response && response.status === "success" && response.data) {
+  // Filter data where id matches the URL id
+  let store =response.data
+console.log(store,"ok")
+          rankList = store.filter(item => item.id === Id);
+          userNameSpan.innerHTML = rankList[0].Player_Name
+          console.log(userNameSpan,"ploik")
+  // Check if the rankList is not empty
+  if (rankList.length > 0) {
+    array = rankList;
+    console.log(array,"plo")
+    filterAndDisplay(); // Call the function to filter and display data
+  } else {
+    console.error("No matching data found for the given ID");
+  }
+} else {
+  console.error("Error: Invalid data format or ID mismatch");
+}
+} catch (error) {
+console.error("Error fetching data", error);
+}
+}
+
+fetchUserData();
 
 function filterAndDisplay() {
   filterRankList();
@@ -44,7 +84,6 @@ function preLoadCalculations(filteredArrayLength) {
   array_length = filteredArrayLength || array.length;
   max_index = Math.ceil(array_length / table_size);
 }
-
 
 $(document).ready(function () {
 const $dropdownBtn3 = $('#dropdownBtn3');
@@ -105,39 +144,39 @@ $dropdownBtn3.attr('aria-expanded', 'false');
 
 
 // Initialize Flatpickr
-let picker = flatpickr('#rangePicker', {
-  mode: 'range',
-  dateFormat: 'd-m-Y',
-  onClose: function (selectedDates, dateStr, instance) {
-    if (!selectedDates || selectedDates.length === 0) {
-      instance.clear();
-      $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-      $('#clearDates').hide();
-      $('#calendarIcon').show();
-    } else {
-      $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
-      $('#clearDates').show();
-      $('#calendarIcon').hide();
-    }
-    filterRankList();
-  },
-  clickOpens: false,
-  allowInput: false
-});
+// let picker = flatpickr('#rangePicker', {
+//   mode: 'range',
+//   dateFormat: 'd-m-Y',
+//   onClose: function (selectedDates, dateStr, instance) {
+//     if (!selectedDates || selectedDates.length === 0) {
+//       instance.clear();
+//       $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+//       $('#clearDates').hide();
+//       $('#calendarIcon').show();
+//     } else {
+//       $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
+//       $('#clearDates').show();
+//       $('#calendarIcon').hide();
+//     }
+//     filterRankList();
+//   },
+//   clickOpens: false,
+//   allowInput: false
+// });
 
-$('#rangePicker, #calendarIcon').click(function () {
-  if (!$('#rangePicker').hasClass('has-dates')) {
-    picker.open();
-  }
-});
+// $('#rangePicker, #calendarIcon').click(function () {
+//   if (!$('#rangePicker').hasClass('has-dates')) {
+//     picker.open();
+//   }
+// });
 
-$('#clearDates').click(function () {
-  picker.clear();
-  $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-  $('#clearDates').hide();
-  $('#calendarIcon').show();
-  filterRankList();
-});
+// $('#clearDates').click(function () {
+//   picker.clear();
+//   $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+//   $('#clearDates').hide();
+//   $('#calendarIcon').show();
+//   filterRankList();
+// });
 
 function updateAmountFilters() {
 const startAmount = $('#startAmountRange').val().trim();
@@ -161,7 +200,6 @@ $('#clearAmountEnd').show();
 // Always call filterRankList to apply the filter
 filterRankList();
 }
-
 
 $('#startAmountRange').on('input', function () {
 updateAmountFilters();
@@ -189,86 +227,87 @@ updateAmountFilters();
 $('#tab_filter_text').on('input', function () {
 filterRankList();
 });
-
-
 });
 
-
-
-
-
 function filterRankList() {
-var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+  var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
 console.log('Search Text:', tab_filter_text);
-var datefilter = $('#rangePicker').text().trim();
-const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
-console.log('Selected Status:', statusFilter);
-var startDate, endDate;
+// var datefilter = $('#rangePicker').text().trim();
+const statusFilter = $("#selectedStatus").data('value') || ''; 
+  var startDate, endDate;
+  var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
+  var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
-// Parse amount range
-var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
-var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
+//   if (datefilter !== '' && datefilter !== 'Start & End Date') {
+//   var dates = datefilter.split(' - ');
+//   startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
+//   endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
+//   // console.log('Parsed Start Date:', startDate);
+//   // console.log('Parsed End Date:', endDate);
+// }
+  var filteredArray = rankList.filter(function (object) {
+    // var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
+    var matchesText = true, matchesStatus = true, matchesAmount = true;
 
-// console.log('Start Amount:', startAmount);
-// console.log('End Amount:', endAmount);
 
-// Parse the date range from the range picker
-if (datefilter !== '' && datefilter !== 'Start & End Date') {
-  var dates = datefilter.split(' - ');
-  startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
-  endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
-  // console.log('Parsed Start Date:', startDate);
-  // console.log('Parsed End Date:', endDate);
-}
+    if (tab_filter_text !== '') {
+      matchesText = (object.Player_Name && object.Player_Name.toLowerCase().includes(tab_filter_text)) ||
+        (object.Account && object.Account.toString().toLowerCase().includes(tab_filter_text)) ||
+        (object.Payment_Method && object.Payment_Method.toLowerCase().includes(tab_filter_text)) ;
+    }
 
-// Filter the rankList based on text, status, date range, and amount range
-var filteredArray = rankList.filter(function (object) {
-  var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
-
-  // Filter based on text input
-  if (tab_filter_text !== '') {
-    matchesText = (object.pool.pool_name && object.pool.pool_name.toLowerCase().includes(tab_filter_text)) ||
-      (object.pool.pool_type && object.pool.pool_type.toLowerCase().includes(tab_filter_text)) ||
-      (object.username.name && object.username.name.toLowerCase().includes(tab_filter_text)) ||
-      (object.username.mobile_no  && object.username.mobile_no.toString().includes(tab_filter_text)) ||
-      (object.transactions_id && object.transactions_id.toLowerCase().toString().includes(tab_filter_text))  ;
-  }
-
-  // Filter based on status dropdown
-  if (statusFilter !== 'All Status') {
-  const status = object.status.toLowerCase()
+    // if (statusFilter !== '') {
+    //   const status = getStatus(object.Status);
+    //   matchesStatus = (status === statusFilter);
+    // }
+    if (statusFilter !== 'All Status') {
+  const status = object.Status.toLowerCase()
   console.log(status)
   matchesStatus = (status === statusFilter);
-  // console.log(matchesStatus ,"okli")
+  console.log(matchesStatus ,"okli")
 }
 
-  // Filter based on date range
-  if (startDate && endDate) {
-    const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
-    matchesDate = (objectDate >= startDate && objectDate <= endDate);
-    // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
-  }
+  //   if (startDate && endDate) {
+  //   const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+  //   matchesDate = (objectDate >= startDate && objectDate <= endDate);
+  //   // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
+  // }
 
   // Filter based on amount range
-  if (!isNaN(object.amount)) {
-    const amount = parseFloat(object.amount);
+  if (!isNaN(object.Amount)) {
+    const amount = parseFloat(object.Amount);
     matchesAmount = (amount >= startAmount && amount <= endAmount);
     // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
   }
 
-  return matchesText && matchesStatus && matchesDate && matchesAmount;
-});
 
-// Update the table with filtered data
-array = filteredArray;
-preLoadCalculations(array.length);
-current_index = 1;
-displayIndexButtons();
-highlightIndexButton();
-displayTableRows();
+    // return matchesText && matchesStatus && matchesDate && matchesAmount;
+    return matchesText && matchesStatus && matchesAmount;
+
+  });
+
+  array = filteredArray;
+  preLoadCalculations();
+  current_index = 1;
+  displayIndexButtons();
+  highlightIndexButton()
+  displayTableRows();
 }
+// function getStatus(start_date, end_date) {
+//   var currentDate = new Date();
+//   var startDate = moment(start_date, "DD/MM/YYYY").toDate();
+//   var endDate = moment(end_date, "DD/MM/YYYY").toDate();
 
-
+//   if (startDate < currentDate && currentDate <= endDate) {
+//     return "Running";
+//   } else if (startDate < currentDate && endDate < currentDate) {
+//     return "Completed";
+//   } else if (startDate > currentDate && endDate > currentDate) {
+//     return "Upcoming";
+//   } else {
+//     return "unknown";
+//   }
+// }
 function getStatus(status) {
 if (status === "success" || status === "Success") {
   return `<span class="material-symbols-outlined" style="color:green">check_circle</span>`;
@@ -353,6 +392,9 @@ function prev() {
     highlightIndexButton();
   }
 }
+window.prev = prev;
+window.next = next;
+window.indexPagination = indexPagination;
 
 function next() {
   if (current_index < max_index) {
@@ -388,74 +430,56 @@ function displayTableRows() {
 
   for (var i = tab_start; i < tab_end; i++) {
     var showdata = array[i];
-    var status = getStatus(showdata["status"]);
-  var status1 = showdata["status"].toLowerCase()
-  var credit_debit = showdata["credit_debit"].toLowerCase()
-  console.log(status1)
-  console.log(credit_debit) 
+    console.log(showdata,"showing")
+    // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
 
     var tr = $("<tr></tr>");
 
     var noCell = $("<td></td>").text(i + 1);
-    var poolNameCell = $("<td colspan='3'></td>").text(showdata.pool["pool_name"] || "");
-    var poolTypeCell = $("<td colspan='3'> </td>").text(showdata.pool["pool_type"] || "");
-    var userNameCell = $("<td colspan='3'> </td>").text(showdata.username["name"] || "");
-    var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
+    var poolNameCell = $("<td colspan='3'></td>").text(showdata["Player_Name"] || "");
+    var poolTypeCell = $("<td colspan='3'> </td>").text(showdata["Payment_Method"] || "");
+    var userNameCell = $("<td colspan='3'> </td>").text(showdata["Account"] || "");
+    // var mobileCell = $("<td colspan='3'> </td>").text(showdata["Amount"] || "");
 
-    var transactionId = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
-    var credit_debitCell = $("<td colspan='2'> </td>").text(showdata["credit_debit"] || "");
-    var amountCell = $("<td colspan='3'> </td>"); // Initialize amountCell
+    // var transactionId = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
+    // var credit_debitCell = $("<td colspan='2'> </td>").text(showdata["Status"] || "");
+    var amountCell = $("<td colspan='3'> </td>").text(showdata["Amount"] || ""); // Initialize amountCell
 
-try {
-if (credit_debit === "credit" && status1 === "success") {
-amountCell.html(`<span style="color: green; font-weight: 600">&#x2b;${showdata["amount"] || ""}</span>`);
-} else if (credit_debit === "debit" && status1 === "success") {
-amountCell.html(`<span style="color: red; font-weight: 600">&#x2212;${showdata["amount"] || ""}</span>`);
-} else if (credit_debit === "credit" && status1 === "fail") {
-amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-} else if (credit_debit === "debit" && status1 === "fail") {
-amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-} else if (credit_debit === "credit" && status1 === "pending") {
-amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-} else if (credit_debit === "debit" && status1 === "pending") {
-amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-}
-} catch (error) {
-console.error("Error updating amountCell:", error);
-amountCell.html("<span>Error displaying amount</span>");
-}
+    // if (showdata["credit_debit"] === "credit" || showdata["credit_debit"] === "Credit") {
+    //   amountCell.html(`<span style="color: green;font-weight:600">&#x2b;${showdata["amount"] || ""}</span>`);
+    // } else if (showdata["credit_debit"] === "debit" || showdata["credit_debit"] === "Debit") {
+    //   amountCell.html(`<span style="color: red;font-weight:600">&#x2212;${showdata["amount"] || ""}</span>`);
+    // }
+    var statusCell = $("<td colspan='2'></td>").text(showdata["Status"]);
+    if (showdata["Status"] === "success" || showdata["Status"] === "Success") {
+      statusCell.html(`<span class="material-symbols-outlined" style="color:green">check_circle</span>`);
+    } else if (showdata["Status"] === "fail" || showdata["Status"]=== "Fail") {
+      statusCell.html(` <span class="material-symbols-outlined" style="color:red">error</span>`);
+    }else if (showdata["Status"] === "pending" || showdata["Status"]=== "Pending") {
+      statusCell.html(`<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`);
+    }
 
+    var actionCell = $("<td colspan='2'></td>").text(showdata["Action"]);
+    if (showdata["Action"] === "check" || showdata["Action"] === "Check") {
+      actionCell.html(` <span class="material-symbols-outlined" style="color : blue">verified</span> `);
+    }
 
-     var statusCell = $("<td colspan='2'></td>").html(status);
-
-     var dateCell = $("<td colspan='2'></td>").text(moment(showdata["date_time"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
-
-    // var viewCell = $("<td></td>").html(
-    //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
-    //     '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
-    // );
-    // var editCell = $("<td></td>").html(
-    //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
-    // );
-    // var deleteCell = $("<td></td>").html(
-    //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-    // );
    
     tr.append(noCell)
       .append(poolNameCell)
       .append(poolTypeCell)
       .append(userNameCell)
-      .append(mobileCell)
-      .append(transactionId)
-      .append(credit_debitCell)
+      // .append(mobileCell)
+      // .append(transactionId)
+      // .append(credit_debitCell)
       .append(amountCell)
       .append(statusCell)
-      .append(dateCell)
+      .append(actionCell)
     // .append(deleteCell);
 
-    if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
+    // if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
 
-    }
+    // }
 
     $("table tbody").append(tr);
   }
@@ -463,21 +487,5 @@ amountCell.html("<span>Error displaying amount</span>");
 }
 
 
-const table = document.getElementById('tech-companies-1');
-const downloadBtn = document.getElementById('download-btn');
-
-downloadBtn.addEventListener('click', () => {
-const workbook = XLSX.utils.table_to_book(table, { sheet: 'Game Transaction Data' });
-const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-const url = URL.createObjectURL(data);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'game_transaction_data.xlsx';
-a.click();
-
-URL.revokeObjectURL(url);
-a.remove();
-});
-
 window.onload = checkAdminAccess();
+

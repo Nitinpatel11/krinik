@@ -1,4 +1,4 @@
-
+import {checkAdminAccess}  from "../js/initial.js"
 $(function () {
     let startPicker = flatpickr('#startDate', {
         dateFormat: 'd-m-Y',
@@ -410,3 +410,4 @@ window.location.replace('./manage-league.html');
 history.pushState(null, null, window.location.href = ('./manage-league.html'));
 }
 
+window.onload = checkAdminAccess();

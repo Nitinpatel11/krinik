@@ -1,3 +1,5 @@
+import {checkAdminAccess}  from "../js/initial.js"
+
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -6,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let updateWinning = 0;
 
     const Approvebtn = document.getElementById("Approvebtn");
+    const Rejectbtn = document.getElementById("Rejectbtn");
+
     const userFullName = document.getElementById("user-fullname");
     const userImageView = document.getElementById("user-image-view");
     const userMob = document.getElementById("user-mob");
@@ -83,6 +87,17 @@ document.addEventListener("DOMContentLoaded", () => {
             await patchData(updateWinning, 0, newWalletAmount);
         }
     });
+    Rejectbtn.addEventListener("click", async () => {
+        if (confirm("Are you sure you want to reject it?")) {
+            await sendNotification(user_id, {
+                title: "Withdrawal Request Rejected",
+                body: "Unfortunately, your withdrawal request has been rejected. Please contact support for further assistance or to resolve any issues."
+              });
+              
+            alert("Rejected successfully")
+            window.location.href = "./withdrawal.html"
+        }
+    });
 
     async function patchData(winningAmountValue, amountValue, walletAmountValue) {
         try {
@@ -114,6 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response2.ok) {
                 throw new Error("Failed to patch amount in second API");
             }
+            if(response1.ok && response2.ok){
+
+                await sendNotification(user_id, {
+                    title: "Withdrawal Request Accepted!",
+                    body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
+                  });
+                  
+            }
+
             console.log("Patch for amount successful:", await response2.json());
 
             // Re-fetch data to update `totalAmount` and other fields
@@ -124,4 +148,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     fetchUserData();
+    window.onload = checkAdminAccess();
 });

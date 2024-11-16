@@ -328,7 +328,7 @@ function displayIndexButtons() {
 
          
             var viewCell = $("<td class='otp-exempt3'></td>").html(
-                `<span class="sortable otp-exempt3" onclick="viewTeamDetails('${object["team_name"]}')"><i class="far fa-eye otp-exempt3"></i></span>`
+                `<span class="sortable otp-exempt3" onclick="viewTeamDetails('${object["id"]}')"><i class="far fa-eye otp-exempt3"></i></span>`
             )
           var editCell = $("<td class='otp-exempt3'></td>").html(
               '<span class="sortable otp-exempt3" onclick="handleEdit(' + object["id"] + ')"><i class="far fa-edit otp-exempt3"></i></span>'

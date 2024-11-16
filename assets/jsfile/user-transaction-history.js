@@ -7,30 +7,70 @@ var start_index = 1;
 var end_index = 0;
 var current_index = 1;
 var max_index = 0;
-// let totaldataleague = document.querySelector("#total-league-data");
+let userNameSpan = document.querySelector("#user-name-span");
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+console.log(id);
 
-async function fetchData() {
+
+async function fetchUserData() {
   try {
-    const data = await $.ajax({
-      url: "https://krinik.in/all_transaction/",
-      method: "GET"
-    });
-
-    if (data && data.status === "success") {
-      rankList = data.data;
-      array = rankList;
-      console.log(array)
-      filterAndDisplay();
-      //   totaldataleague.innerHTML = array.length;
-    } else {
-      console.error("Error: Invalid data format");
+    if (!id) {
+      console.warn('No player ID found in URL.');
+      return;
     }
+
+    const url = `https://krinik.in/user_get/${id}/`;
+    console.log('Fetching player data from:', url);
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch player data');
+    }
+
+    const userData1 = await response.json();
+    const userDataId = userData1.data.id;
+    console.log(userData1,"olpmn"); 
+    fetchData(userDataId)
+    // const newAmounts = await addAmount(userData.id);
+
   } catch (error) {
-    console.error("Error fetching data", error);
+    console.error('Error fetching player data:', error);
   }
 }
 
-fetchData();
+
+async function fetchData(Id) {
+try {
+const response = await $.ajax({
+  url: "https://krinik.in/all_transaction/",
+  method: "GET"
+});
+
+if (response && response.status === "success" && response.data) {
+  // Filter data where id matches the URL id
+  let store =response.data
+console.log(store,"ok")
+          rankList = store.filter(item => item.id === Id);
+          userNameSpan.innerHTML = rankList[0].user_id
+  console.log(userNameSpan,"ploik")
+  // Check if the rankList is not empty
+  if (rankList.length > 0) {
+    array = rankList;
+    console.log(array,"plo")
+    filterAndDisplay(); // Call the function to filter and display data
+  } else {
+    console.error("No matching data found for the given ID");
+  }
+} else {
+  console.error("Error: Invalid data format or ID mismatch");
+}
+} catch (error) {
+console.error("Error fetching data", error);
+}
+}
+
+fetchUserData();
 
 function filterAndDisplay() {
   filterRankList();
@@ -45,11 +85,8 @@ function preLoadCalculations(filteredArrayLength) {
   max_index = Math.ceil(array_length / table_size);
 }
 
-
-
-
 $(document).ready(function () {
-  const $dropdownBtn3 = $('#dropdownBtn3');
+const $dropdownBtn3 = $('#dropdownBtn3');
 const $dropdownContent3 = $('#dropdownContent3');
 const $selectedStatus = $('#selectedStatus');
 const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
@@ -77,11 +114,11 @@ $selectedStatus.text(selectedValue).data('value', selectedValue);
 $dropdownContent3.removeClass('show');
 
 if (selectedValue === 'All Status') {
-  $arrow.show();
-  $clearStatus.hide();
+$arrow.show();
+$clearStatus.hide();
 } else {
-  $arrow.hide();
-  $clearStatus.show();
+$arrow.hide();
+$clearStatus.show();
 }
 filterRankList(); // Filter based on the selected status
 });
@@ -99,63 +136,65 @@ filterRankList(); // Filter with the reset status
 // Click event for closing the dropdown if clicked outside
 $(document).on('click', function(event) {
 if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
-  $dropdownContent3.removeClass('show');
-  $dropdownBtn3.attr('aria-expanded', 'false');
+$dropdownContent3.removeClass('show');
+$dropdownBtn3.attr('aria-expanded', 'false');
 }
 });
 
-  // Initialize Flatpickr
-  let picker = flatpickr('#rangePicker', {
-    mode: 'range',
-    dateFormat: 'd-m-Y',
-    onClose: function (selectedDates, dateStr, instance) {
-      if (!selectedDates || selectedDates.length === 0) {
-        instance.clear();
-        $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-        $('#clearDates').hide();
-        $('#calendarIcon').show();
-      } else {
-        $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
-        $('#clearDates').show();
-        $('#calendarIcon').hide();
-      }
-      filterRankList();
-    },
-    clickOpens: false,
-    allowInput: false
-  });
 
-  $('#rangePicker, #calendarIcon').click(function () {
-    if (!$('#rangePicker').hasClass('has-dates')) {
-      picker.open();
+
+// Initialize Flatpickr
+let picker = flatpickr('#rangePicker', {
+  mode: 'range',
+  dateFormat: 'd-m-Y',
+  onClose: function (selectedDates, dateStr, instance) {
+    if (!selectedDates || selectedDates.length === 0) {
+      instance.clear();
+      $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+      $('#clearDates').hide();
+      $('#calendarIcon').show();
+    } else {
+      $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
+      $('#clearDates').show();
+      $('#calendarIcon').hide();
     }
-  });
-
-  $('#clearDates').click(function () {
-    picker.clear();
-    $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-    $('#clearDates').hide();
-    $('#calendarIcon').show();
     filterRankList();
-  });
+  },
+  clickOpens: false,
+  allowInput: false
+});
 
-  function updateAmountFilters() {
+$('#rangePicker, #calendarIcon').click(function () {
+  if (!$('#rangePicker').hasClass('has-dates')) {
+    picker.open();
+  }
+});
+
+$('#clearDates').click(function () {
+  picker.clear();
+  $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+  $('#clearDates').hide();
+  $('#calendarIcon').show();
+  filterRankList();
+});
+
+function updateAmountFilters() {
 const startAmount = $('#startAmountRange').val().trim();
 const endAmount = $('#endAmountRange').val().trim();
 
 // Show or hide clear buttons based on input values
 if (startAmount !== '' && endAmount === '') {
-  $('#clearAmountStart').show();
-  $('#clearAmountEnd').hide();
+$('#clearAmountStart').show();
+$('#clearAmountEnd').hide();
 } else if (startAmount !== '' && endAmount !== '') {
-  $('#clearAmountStart').show();
-  $('#clearAmountEnd').show();
+$('#clearAmountStart').show();
+$('#clearAmountEnd').show();
 } else if (startAmount === '' && endAmount === '') {
-  $('#clearAmountStart').hide();
-  $('#clearAmountEnd').hide();
+$('#clearAmountStart').hide();
+$('#clearAmountEnd').hide();
 } else if (startAmount === '' && endAmount !== '') {
-  $('#clearAmountStart').hide();
-  $('#clearAmountEnd').show();
+$('#clearAmountStart').hide();
+$('#clearAmountEnd').show();
 }
 
 // Always call filterRankList to apply the filter
@@ -188,89 +227,97 @@ updateAmountFilters();
 $('#tab_filter_text').on('input', function () {
 filterRankList();
 });
-
 });
-
 
 function filterRankList() {
   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-  var datefilter = $('#rangePicker').text().trim();
-  const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
-  console.log('Selected Status:', statusFilter);
+console.log('Search Text:', tab_filter_text);
+var datefilter = $('#rangePicker').text().trim();
+const statusFilter = $("#selectedStatus").data('value') || ''; 
   var startDate, endDate;
-
-  // Parse amount range
   var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
-  var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
+var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
-  // console.log('Start Amount:', startAmount);
-  // console.log('End Amount:', endAmount);
+if (datefilter !== '' && datefilter !== 'Start & End Date') {
+  var dates = datefilter.split(' - ');
+  startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
+  endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
+  // console.log('Parsed Start Date:', startDate);
+  // console.log('Parsed End Date:', endDate);
+}
 
-  // Parse the date range from the range picker
-  if (datefilter !== '' && datefilter !== 'Start & End Date') {
-    var dates = datefilter.split(' - ');
-    startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
-    endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
-    // console.log('Parsed Start Date:', startDate);
-    // console.log('Parsed End Date:', endDate);
-  }
 
-  // Filter the rankList based on text, status, date range, and amount range
   var filteredArray = rankList.filter(function (object) {
     var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
 
-    // Filter based on text input
     if (tab_filter_text !== '') {
-      matchesText = (object.user_id && object.user_id.toLowerCase().includes(tab_filter_text)) ||
-        (object.order_id && object.order_id.toLowerCase().includes(tab_filter_text));
+      matchesText = (object. order_id && object. order_id.toLowerCase().includes(tab_filter_text)) 
     }
 
-    // Filter based on status dropdown
     if (statusFilter !== 'All Status') {
-    const status = object.status.toLowerCase()
-    console.log(status)
-    matchesStatus = (status === statusFilter);
-    // console.log(matchesStatus ,"okli")
+  const status = object.status.toLowerCase()
+  console.log(status)
+  matchesStatus = (status === statusFilter);
+  // console.log(matchesStatus ,"okli")
+}
+
+
+
+
+    // if (startDate && endDate) {
+    //   matchesDate = (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
+    //     moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
+    // }
+    if (startDate && endDate) {
+    const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+    matchesDate = (objectDate >= startDate && objectDate <= endDate);
+    // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
   }
 
-    // Filter based on date range
-    if (startDate && endDate) {
-      const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
-      matchesDate = (objectDate >= startDate && objectDate <= endDate);
-      // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
-    }
+  // Filter based on amount range
+  if (!isNaN(object.amount)) {
+    const amount = parseFloat(object.amount);
+    matchesAmount = (amount >= startAmount && amount <= endAmount);
+    // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+  }
 
-    // Filter based on amount range
-    if (!isNaN(object.amount)) {
-      const amount = parseFloat(object.amount);
-      matchesAmount = (amount >= startAmount && amount <= endAmount);
-      // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
-    }
 
-    return matchesText && matchesStatus && matchesDate && matchesAmount;
+  return matchesText && matchesStatus && matchesDate && matchesAmount;
   });
 
-  // Update the table with filtered data
   array = filteredArray;
-  preLoadCalculations(array.length);
+  preLoadCalculations();
   current_index = 1;
   displayIndexButtons();
-  highlightIndexButton();
+  highlightIndexButton()
   displayTableRows();
 }
+// function getStatus(start_date, end_date) {
+//   var currentDate = new Date();
+//   var startDate = moment(start_date, "DD/MM/YYYY").toDate();
+//   var endDate = moment(end_date, "DD/MM/YYYY").toDate();
 
+//   if (startDate < currentDate && currentDate <= endDate) {
+//     return "Running";
+//   } else if (startDate < currentDate && endDate < currentDate) {
+//     return "Completed";
+//   } else if (startDate > currentDate && endDate > currentDate) {
+//     return "Upcoming";
+//   } else {
+//     return "unknown";
+//   }
+// }
 function getStatus(status) {
-  if (status === "success" || status === "Success") {
-    return `<span class="material-symbols-outlined" style="color:green">check_circle</span>`;
-  } else if (status === "fail" || status === "Fail") {
-    return `<span class="material-symbols-outlined" style="color:red">error</span>`;
-  } else if (status === "pending" || status === "Pending") {
-    return `<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`;
-  } else {
-    return "unknown";
-  }
+if (status === "success" || status === "Success") {
+  return `<span class="material-symbols-outlined" style="color:green">check_circle</span>`;
+} else if (status === "fail" || status === "Fail") {
+  return `<span class="material-symbols-outlined" style="color:red">error</span>`;
+} else if (status === "pending" || status === "Pending") {
+  return `<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`;
+} else {
+  return "unknown";
 }
-
+}
 
 function displayIndexButtons() {
   $(".index_buttons ul").empty();
@@ -378,50 +425,35 @@ function displayTableRows() {
 
   for (var i = tab_start; i < tab_end; i++) {
     var showdata = array[i];
-    var status = getStatus(showdata["status"]);
-    var status1 = showdata["status"].toLowerCase()
-    var credit_debit = showdata["credit_debit"].toLowerCase()
-    console.log(status1)
-    console.log(credit_debit)
-
+    // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
 
     var tr = $("<tr></tr>");
 
     var noCell = $("<td></td>").text(i + 1);
-    var poolNameCell = $("<td colspan='3'></td>").text(showdata["user_id"] || "");
-    var poolTypeCell = $("<td colspan='3'> </td>").text(showdata["order_id"] || "");
-  
+    // var poolNameCell = $("<td colspan='3'></td>").text(showdata.pool["pool_name"] || "");
+    // var poolTypeCell = $("<td colspan='3'> </td>").text(showdata.pool["pool_type"] || "");
+    // var userNameCell = $("<td colspan='3'> </td>").text(showdata.username["name"] || "");
+    // var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
+
+    var transactionId = $("<td colspan='3'> </td>").text(showdata["order_id"] || "");
+    var credit_debitCell = $("<td colspan='2'> </td>").text(showdata["credit_debit"] || "");
     var amountCell = $("<td colspan='3'> </td>"); // Initialize amountCell
 
-    try {
-      if (credit_debit === "credit" && status1 === "success") {
-        amountCell.html(`<span style="color: green; font-weight: 600">&#x2b;${showdata["amount"] || ""}</span>`);
-      } else if (credit_debit === "debit" && status1 === "success") {
-        amountCell.html(`<span style="color: red; font-weight: 600">&#x2212;${showdata["amount"] || ""}</span>`);
-      } else if (credit_debit === "credit" && status1 === "fail") {
-        amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-      } else if (credit_debit === "debit" && status1 === "fail") {
-        amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-      } else if (credit_debit === "credit" && status1 === "pending") {
-        amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-      } else if (credit_debit === "debit" && status1 === "pending") {
-        amountCell.html(`<span>${showdata["amount"] || ""}</span>`); // Default display
-      }
-    } catch (error) {
-      console.error("Error updating amountCell:", error);
-      amountCell.html("<span>Error displaying amount</span>");
+    if (showdata["credit_debit"] === "credit" || showdata["credit_debit"] === "Credit") {
+      amountCell.html(`<span style="color: green;font-weight:600">&#x2b;${showdata["amount"] || ""}</span>`);
+    } else if (showdata["credit_debit"] === "debit" || showdata["credit_debit"] === "Debit") {
+      amountCell.html(`<span style="color: red;font-weight:600">&#x2212;${showdata["amount"] || ""}</span>`);
+    }
+    var statusCell = $("<td colspan='2'></td>").text(showdata["status"]);
+    if (showdata["status"] === "success" || showdata["status"] === "Success") {
+      statusCell.html(`<span class="material-symbols-outlined" style="color:green">check_circle</span>`);
+    } else if (showdata["status"] === "fail" || showdata["status"]=== "Fail") {
+      statusCell.html(` <span class="material-symbols-outlined" style="color:red">error</span>`);
+    }else if (showdata["status"] === "pending" || showdata["status"]=== "Pending") {
+      statusCell.html(`<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`);
     }
 
-    var statusCell = $("<td colspan='2'></td>").html(status);
-    // if (showdata["status"] === "success" || showdata["status"] === "Success") {
-    //   statusCell.html(`<span class="material-symbols-outlined" style="color:green">check_circle</span>`);
-    // } else if (showdata["status"] === "fail" || showdata["status"]=== "Fail") {
-    //   statusCell.html(` <span class="material-symbols-outlined" style="color:red">error</span>`);
-    // }else if (showdata["status"] === "pending" || showdata["status"]=== "Pending") {
-    //   statusCell.html(`<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`);
-    // }
     var dateCell = $("<td colspan='2'></td>").text(moment(showdata["date_time"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
-
 
     // var viewCell = $("<td></td>").html(
     //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
@@ -433,43 +465,25 @@ function displayTableRows() {
     // var deleteCell = $("<td></td>").html(
     //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
     // );
-
+   
     tr.append(noCell)
-      .append(poolNameCell)
-      .append(poolTypeCell)
+      // .append(poolNameCell)
+      // .append(poolTypeCell)
       // .append(userNameCell)
       // .append(mobileCell)
-      // .append(transactionId)
-      // .append(credit_debitCell)
+      .append(transactionId)
+      .append(credit_debitCell)
       .append(amountCell)
       .append(statusCell)
       .append(dateCell)
     // .append(deleteCell);
 
-    // if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
+    if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
 
-    // }
+    }
 
     $("table tbody").append(tr);
   }
 
 }
-
-const table = document.getElementById('tech-companies-1');
-const downloadBtn = document.getElementById('download-btn');
-
-downloadBtn.addEventListener('click', () => {
-const workbook = XLSX.utils.table_to_book(table, { sheet: 'All Transaction Data' });
-const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-const url = URL.createObjectURL(data);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'all_transaction_data.xlsx';
-a.click();
-
-URL.revokeObjectURL(url);
-a.remove();
-});
-
 window.onload = checkAdminAccess();
