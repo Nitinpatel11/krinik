@@ -37,8 +37,8 @@ async function fetchUserData() {
     const responseurl = await fetch(url1);
     const urlpool = await responseurl.json();
     const urlpooldata = urlpool.data;
-
-    const urlpool1 = urlpooldata.find((p) => p.select_match.match_id == id);
+console.log(urlpooldata,"poll")
+    const urlpool1 = urlpooldata.find((p) => p.select_match ? p.select_match.match_id == id : null);
     if (urlpool1) {
       urlpooltime = urlpool1.date_time;
     }
