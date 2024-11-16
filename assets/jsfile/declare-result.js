@@ -607,7 +607,7 @@
       console.log(user_match_data,"user_match_data")
       if(matchCheck.length > 0){
       totalMoney = user_match_data.reduce((accumulator, userMatch) => {
-          return userMatch.total_amount + accumulator;
+          return userMatch.invest_amount + accumulator;
         }, 0);
       }
       console.log("Total Money:", totalMoney);
