@@ -1098,8 +1098,7 @@
   
     // Return or use the arrays as needed
     return { dataToPost, userplayerdata };
-  };
-  
+  };  
   
   const postAndUpdateRuns = (dataToPost) => {
     dataToPost.forEach((data) => {
@@ -1334,8 +1333,8 @@
     return matchScores;
   };
   
-  const updateMatchWinningStatus = (matchScores)=> {
-    // Group match scores by pool_name, pool_type, and price
+  const updateMatchWinningStatus = async (matchScores) => {
+    // Group match scores by `pool_name`, `pool_type`, and `price`
     const groupedScores = matchScores.reduce((acc, match) => {
       const key = `${match.pool_name}-${match.pool_type}-${match.price}`;
       if (!acc[key]) {
@@ -1347,43 +1346,46 @@
   
     console.log(groupedScores, "Grouped Scores by Pool and Type");
   
-    // Iterate over each pool-type group to calculate the highest score and update the winning status
-    const poolMatchDeclare = Object.keys(groupedScores).map(poolKey => {
+    // Iterate over each group to determine the winning status
+    for (const poolKey in groupedScores) {
       const poolMatches = groupedScores[poolKey];
-      const maxScore = poolMatches.length === 1 ? poolMatches[0].totalScore : Math.max(...poolMatches.map(match => match.totalScore));
   
-  console.log(poolMatches, "poolMatches");
-      const updatePromises = poolMatches.map(async (match) => {
-        // Determine winning status based on totalScore comparison
-        const winningStatus = match.totalScore === maxScore ? "Winner" : "Contestant";
+      // Find the maximum score for the group
+      const maxScore = Math.max(...poolMatches.map((match) => match.score));
   
-        // Find the corresponding entry in matchScores to update winning status
-        const existingMatchWinner = matchScores.find(score => score.matchId === match.matchId);
-        if (existingMatchWinner) {
-          existingMatchWinner.winning_status = winningStatus;
+      console.log(`Processing Pool: ${poolKey}, Max Score: ${maxScore}`);
+  
+      // Assign "Winner" to all matches with `score === maxScore`
+      for (const match of poolMatches) {
+        const winningStatus = match.score === maxScore ? "Winner" : "Contestant";
+  
+        // Update the local matchScores array
+        const existingMatch = matchScores.find((m) => m.matchId === match.matchId);
+        if (existingMatch) {
+          existingMatch.winning_status = winningStatus;
         }
   
-        // Update winning status for the match via AJAX request
+        // Send AJAX PATCH request to update the backend
         await $.ajax({
           url: `https://krinik.in/user_match_get/${match.matchId}`,
-          type: 'PATCH',
-          contentType: 'application/json',
+          type: "PATCH",
+          contentType: "application/json",
           data: JSON.stringify({ winning_status: winningStatus }),
-          success: function(response) {
+          success: function (response) {
             console.log(`Winning status updated successfully for match ${match.matchId}`, response);
           },
-          error: function(error) {
+          error: function (error) {
             console.error(`Error updating winning status for match ${match.matchId}:`, error);
-          }
+          },
         });
-      });
+      }
+    }
   
-      // Wait for all updates in this pool group to complete
-      return Promise.all(updatePromises);
-    });
+    // Return the updated match scores
     return matchScores;
-   
-  }
+  };
+  
+ 
   
   
   const allocateMoneyToWinners = async (matchScores, totalMoney) => {
@@ -1526,123 +1528,49 @@
   // console.log(fetchUserMatchData(),"oklokl")
   
   
-  // const postData = async () => {
-  //   // Step 1: Process player data
-  //   const { dataToPost, userplayerdata } = processPlayerData(); // Get dataToPost and userplayerdata
-  
-  //   if (dataToPost.length > 0) {
-  //   // Step 2: Post and update runs
-  //   await postAndUpdateRuns(dataToPost); // Pass dataToPost to postAndUpdateRuns
-  
-  //   // Step 3: Fetch user match data from API
-  //   try {
-  //     const response = await fetch(`https://krinik.in/user_match_get/`); // Adjust API URL
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch match data");
-  //     }
-  
-  //     const userMatchData = await response.json(); // Assume it returns an array of matches
-     
-  //     let user_match_data1 = [];
-  //     if (userMatchData && Array.isArray(userMatchData.data)) {
-  //       user_match_data1 = userMatchData.data.filter((match) => match.match.id === NumberId);
-  //     }
-  
-  //     // Step 5: Update match scores
-  //     if (user_match_data1.length > 0) {
-        
-  //       await updatePlayerScores(user_match_data1, userplayerdata); 
-  //       const matchScores = await updateMatchScores(user_match_data1, userplayerdata);
-  //         console.log("Match scores updated in API:", matchScores);
-  
-  //         // Step 5.2: Call matchScoring to update global matchScores and perform additional processing
-  //         if (matchScores) {
-  //           const updatedMatchScores = await matchScoring(user_match_data1, userplayerdata);
-  //           console.log("Match scores updated globally:", updatedMatchScores);
-  //           if(updateMatchScores){
-  
-  //            const updatedWinner =  await updateMatchWinningStatus(updatedMatchScores); // Use updatedMatchScores from the previous step
-  //             console.log("Winning status updated for all matches.");
-  
-  //             if(updatedWinner){
-  //               await allocateMoneyToWinners(updatedMatchScores, totalMoney); // Pass the updated match scores and totalMoney to allocate
-  //               console.log("Prize money allocated to winners successfully.");
-  //             }
-  //           }
-  //         }
-  //       } else {
-  //         console.error("Invalid match data fetched from API");
-  //       }
-     
-  //     } catch (error) {
-  //       console.error("Error fetching match data:", error);
-  //     }
-  //   } else {
-  //     console.error("No data to post");
-  //   }
-  // };
-  
   const postData = async () => {
     // Step 1: Process player data
     const { dataToPost, userplayerdata } = processPlayerData(); // Get dataToPost and userplayerdata
   
     if (dataToPost.length > 0) {
-      // Step 2: Post and update runs
-      await postAndUpdateRuns(dataToPost); // Pass dataToPost to postAndUpdateRuns
+    // Step 2: Post and update runs
+    await postAndUpdateRuns(dataToPost); // Pass dataToPost to postAndUpdateRuns
   
-      // Step 3: Fetch user match data from API
-      try {
-        const response = await fetch(`https://krinik.in/user_match_get/`); // Adjust API URL
-        if (!response.ok) {
-          throw new Error("Failed to fetch match data");
-        }
+    // Step 3: Fetch user match data from API
+    try {
+      const response = await fetch(`https://krinik.in/user_match_get/`); // Adjust API URL
+      if (!response.ok) {
+        throw new Error("Failed to fetch match data");
+      }
   
-        const userMatchData = await response.json(); // Assume it returns an array of matches
-        let user_match_data1 = [];
-        if (userMatchData && Array.isArray(userMatchData.data)) {
-          user_match_data1 = userMatchData.data.filter((match) => match.match.id === NumberId);
-        }
+      const userMatchData = await response.json(); // Assume it returns an array of matches
+     
+      let user_match_data1 = [];
+      if (userMatchData && Array.isArray(userMatchData.data)) {
+        user_match_data1 = userMatchData.data.filter((match) => match.match.id === NumberId);
+      }
   
-        // Step 5: Update match scores
-        if (user_match_data1.length > 0) {
-          
-          await updatePlayerScores(user_match_data1, userplayerdata); 
-          const matchScores = await updateMatchScores(user_match_data1, userplayerdata);
+      // Step 5: Update match scores
+      if (user_match_data1.length > 0) {
+        
+        await updatePlayerScores(user_match_data1, userplayerdata); 
+        const matchScores = await updateMatchScores(user_match_data1, userplayerdata);
           console.log("Match scores updated in API:", matchScores);
   
           // Step 5.2: Call matchScoring to update global matchScores and perform additional processing
           if (matchScores) {
             const updatedMatchScores = await matchScoring(user_match_data1, userplayerdata);
             console.log("Match scores updated globally:", updatedMatchScores);
+            if(updateMatchScores){
   
-            // Call user_match_get after matchScoring
-            const userMatchDataAfterScoring = await fetchUserMatchData();
-            if (!userMatchDataAfterScoring) {
-              console.error("Error fetching match data after scoring");
-              return;
+             const updatedWinner =  await updateMatchWinningStatus(updatedMatchScores); // Use updatedMatchScores from the previous step
+              console.log("Winning status updated for all matches.");
+  
+              if(updatedWinner){
+                await allocateMoneyToWinners(updatedMatchScores, totalMoney); // Pass the updated match scores and totalMoney to allocate
+                console.log("Prize money allocated to winners successfully.");
+              }
             }
-  
-            // Step 6: Update match winning status
-            const updatedWinner = await updateMatchWinningStatus(updatedMatchScores); // Use updatedMatchScores from the previous step
-            console.log("Winning status updated for all matches.");
-  
-            // Call user_match_get before updateMatchWinningStatus
-            const userMatchDataBeforeWinnerUpdate = await fetchUserMatchData();
-            if (!userMatchDataBeforeWinnerUpdate) {
-              console.error("Error fetching match data before updating winning status");
-              return;
-            }
-  
-            // Step 7: Allocate money to winners based on updated match scores
-            await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
-            console.log("Prize money allocated to winners successfully.");
-  
-            // Call user_match_get again before allocating money to winners
-            // const userMatchDataAfterWinnerUpdate = await fetchUserMatchData();
-            // if (!userMatchDataAfterWinnerUpdate) {
-            //   console.error("Error fetching match data after updating winning status");
-            //   return;
-            // }
           }
         } else {
           console.error("Invalid match data fetched from API");
@@ -1656,8 +1584,133 @@
     }
   };
   
+  // const postData = async () => {
+  //   // Step 1: Process player data
+  //   const { dataToPost, userplayerdata } = processPlayerData(); // Get dataToPost and userplayerdata
+  
+  //   if (dataToPost.length > 0) {
+  //     // Step 2: Post and update runs
+  //     await postAndUpdateRuns(dataToPost); // Pass dataToPost to postAndUpdateRuns
+  
+  //     // Step 3: Fetch user match data from API
+  //     try {
+  //       const response = await fetch(`https://krinik.in/user_match_get/`); // Adjust API URL
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch match data");
+  //       }
+  
+  //       const userMatchData = await response.json(); // Assume it returns an array of matches
+  //       let user_match_data1 = [];
+  //       if (userMatchData && Array.isArray(userMatchData.data)) {
+  //         user_match_data1 = userMatchData.data.filter((match) => match.match.id === NumberId);
+  //       }
+  
+  //       // Step 5: Update match scores
+  //       if (user_match_data1.length > 0) {
+          
+  //         await updatePlayerScores(user_match_data1, userplayerdata); 
+  //         const matchScores = await updateMatchScores(user_match_data1, userplayerdata);
+  //         console.log("Match scores updated in API:", matchScores);
+  
+  //         // Step 5.2: Call matchScoring to update global matchScores and perform additional processing
+  //         if (matchScores) {
+  //           const updatedMatchScores = await matchScoring(user_match_data1, userplayerdata);
+  //           console.log("Match scores updated globally:", updatedMatchScores);
+  
+  //           // Call user_match_get after matchScoring
+  //           const userMatchDataAfterScoring = await fetchUserMatchData();
+  //           if (!userMatchDataAfterScoring) {
+  //             console.error("Error fetching match data after scoring");
+  //             return;
+  //           }
+  
+  //           // Step 6: Update match winning status
+  //           const updatedWinner = await updateMatchWinningStatus(updatedMatchScores); // Use updatedMatchScores from the previous step
+  //           console.log("Winning status updated for all matches.");
+  
+  //           // Call user_match_get before updateMatchWinningStatus
+  //           const userMatchDataBeforeWinnerUpdate = await fetchUserMatchData();
+  //           if (!userMatchDataBeforeWinnerUpdate) {
+  //             console.error("Error fetching match data before updating winning status");
+  //             return;
+  //           }
+  
+  //           // Step 7: Allocate money to winners based on updated match scores
+  //           await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
+  //           console.log("Prize money allocated to winners successfully.");
+  
+  //           // Call user_match_get again before allocating money to winners
+  //           // const userMatchDataAfterWinnerUpdate = await fetchUserMatchData();
+  //           // if (!userMatchDataAfterWinnerUpdate) {
+  //           //   console.error("Error fetching match data after updating winning status");
+  //           //   return;
+  //           // }
+  //         }
+  //       } else {
+  //         console.error("Invalid match data fetched from API");
+  //       }
+     
+  //     } catch (error) {
+  //       console.error("Error fetching match data:", error);
+  //     }
+  //   } else {
+  //     console.error("No data to post");
+  //   }
+  // };
+  
   // fetchData(NumberId);
   // Set up the click event handler for the submit button
+  
+  
+  // const postData = async () => {
+  //   // Step 1: Process player data
+  //   const { dataToPost, userplayerdata } = processPlayerData();
+  //   if (!dataToPost.length) {
+  //     console.error("No data to post");
+  //     return;
+  //   }
+  
+  //   // Step 2: Post and update runs
+  //   await postAndUpdateRuns(dataToPost);
+  
+  //   // Step 3: Fetch user match data
+  //   const userMatchData = await fetchUserMatchData();
+  //   if (!userMatchData) {
+  //     console.error("Failed to fetch user match data");
+  //     return;
+  //   }
+  
+  //   // Filter matches by specific condition (e.g., match ID)
+  //   const user_match_data1 = userMatchData.filter((match) => match.match.id === NumberId);
+  //   if (!user_match_data1.length) {
+  //     console.error("Invalid match data fetched from API");
+  //     return;
+  //   }
+  
+  //   // Step 4: Update match scores
+  //   await updatePlayerScores(user_match_data1, userplayerdata);
+  //   const matchScores = await updateMatchScores(user_match_data1, userplayerdata);
+  //   if (!matchScores) {
+  //     console.error("Failed to update match scores");
+  //     return;
+  //   }
+  
+  //   console.log("Match scores updated:", matchScores);
+  
+  //   // Step 5: Update match winning status
+  //   const updatedMatchScores = await updateMatchWinningStatus(matchScores);
+  //   if (!updatedMatchScores) {
+  //     console.error("Failed to update match winning status");
+  //     return;
+  //   }
+  
+  //   console.log("Winning status updated successfully");
+  
+  //   // Step 6: Allocate money to winners
+  //   await allocateMoneyToWinners(updatedMatchScores, totalMoney);
+  //   console.log("Prize money allocated to winners successfully");
+  // };
+  
   $(document).ready(function() {
     $("#submitButton").on("click", function() {
       // postRunData(); // Call the function to post data

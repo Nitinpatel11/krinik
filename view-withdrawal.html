@@ -462,105 +462,49 @@
                             <!-- <span id="user-unlock-text" ></span> -->
                             <p id="withdraw-amount" class="para-bottom">0</p> <span>Withdraw Amount</span>
                           
-                      </div></div>
+                      </div>
+                      <div class="d-flex justify-content-center mt-1">
+                        <button class="btn btn-primary" id="gift-bonus-btn" data-bs-toggle="modal" data-bs-target="#giftBonusModal" style=" display: none;">
+                          Gift Bonus
+                        </button>
+                      </div>
+                      
+                    </div>
 
-                      <!-- Add Amount Modal -->
-                      <!-- <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
-                              <button type="button" class="close btn-primary4" data-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined close-margin btn-primary5">
-                                  close
-                                  </span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form>
-                                <div class="form-group">
-                                  <label for="id">Player ID</label>
-                                  <input type="text" class="form-control user-select-btn" id="playerid" required readonly>
+                    <div class="modal fade" id="giftBonusModal" tabindex="-1" aria-labelledby="giftBonusModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="giftBonusModalLabel">Gift Bonus</h5>
+                            <!-- Close button to close the modal -->
+                            <!-- <a class="close" data-bs-dismiss="modal" aria-label="Close">&times;</a> -->
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button> -->
+                            <button type="button" class="close btn-primary4" data-bs-dismiss="modal" aria-label="Close">
+                              <span class="material-symbols-outlined close-margin btn-primary5">
+                                close
+                                </span>
+                            </button>
+
+                          </div>
+                          <div class="modal-body">
+                            <form id="gift-bonus-form">
+                              <div class="form-group mb-3">
+                                <label for="manualBonusInput" class="form-label">Enter Bonus Amount</label>
+                                <input type="number" class="form-control" id="manualBonusInput" placeholder="Enter amount" required>
+                              </div>
+                              <div class="d-flex flex-column flex-sm-row justify-content-between">
+                                <div class="border rounded p-2 withdraw-color border-black text-center mb-3 mb-sm-0" id="defaultBonusBtn">
+                                  Default Bonus 
+                                  <p class="defaultBonus">(1000)</p>
                                 </div>
-                                <div class="form-group mt-2">
-                                  <label for="name">Player Name</label>
-                                  <input type="text" class="form-control user-select-btn" id="player-name" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num">Total Play Amount</label>
-                                  <input type="number" class="form-control user-select-btn" id="player-total-amount" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num1">Total Winning Amount</label>
-                                  <input type="number" class="form-control user-select-btn" id="player-total-winning" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num3">Add Amount In Play</label>
-                                  <input type="number" class="form-control" id="player-add-amount" required>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="num4">Add Amount In Winning</label>
-                                  <input type="number" class="form-control" id="player-winning-amount" required>
-                                </div>
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btnss btn-primary" data-dismiss="modal"  id="addSubmit" >Submit</button>
-                            </div>
+                                <button type="submit" class="border rounded p-2 withdraw-color1" id="submitManualBonus" data-bs-dismiss="modal">
+                                  Submit Bonus
+                                </button>
+                              </div>
+                            </form>
                           </div>
                         </div>
-                      </div> -->
-
-                      <!-- Deduct Amount Modal -->
-                      <!-- <div class="modal fade" id="deductAmountModal" tabindex="-1"
-                        aria-labelledby="deductAmountModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="deductAmountModalLabel">Deduct Amount</h5>
-                              <button type="button" class="close btn-primary4" data-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined close-margin btn-primary5">
-                                  close
-                                  </span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form>
-                                <div class="form-group">
-                                  <label for="deductPlayerId">Player ID</label>
-                                  <input type="text" class="form-control" id="playerid1" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductPlayerName">Player Name</label>
-                                  <input type="text" class="form-control" id="player-name1" required readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductTotalPlayAmount">Total Play Amount</label>
-                                  <input type="number" class="form-control" id="player-total-amount1" required
-                                    readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductTotalWinningAmount">Total Winning Amount</label>
-                                  <input type="number" class="form-control" id="player-total-winning1" required
-                                    readonly>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductAmountInPlay">Deduct In Play Amount</label>
-                                  <input type="number" class="form-control" id="deductAmountInPlay" required>
-                                </div>
-                                <div class="form-group mt-2">
-                                  <label for="deductAmountInWinning">Deduct In Winning Amount</label>
-                                  <input type="number" class="form-control" id="deductAmountInWinning" required>
-                                </div>
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btnss btn-primary" data-dismiss="modal" id="deductAmount">Submit</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
+                      </div>
                     </div>
 
                     <!-- Details Section -->

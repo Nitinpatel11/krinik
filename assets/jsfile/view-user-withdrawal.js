@@ -1,4 +1,4 @@
-import {checkAdminAccess}  from "../js/initial.js"
+import {checkAdminAccess,sendNotification}  from "../js/initial.js"
 
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const user_id = urlParams.get("user_id");
 
     let updateWinning = 0;
+     
 
     const Approvebtn = document.getElementById("Approvebtn");
     const Rejectbtn = document.getElementById("Rejectbtn");
@@ -21,6 +22,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const winningAmount = document.getElementById("winning-amount");
     const totalAmount = document.getElementById("total-amount");
     const withdrawAmount = document.getElementById("withdraw-amount");
+    const giftBonusButton = document.getElementById("gift-bonus-btn");
+    
+    const defaultBonusBtn = document.getElementById('defaultBonusBtn');
+  const manualBonusInput = document.getElementById('manualBonusInput');
+  const giftBonusForm = document.getElementById('gift-bonus-form');
+  const giftBonusModal = document.getElementById('giftBonusModal');
+  
+  // When "Default Bonus" is clicked, set the value in the input field
+  defaultBonusBtn.addEventListener('click', function() {    
+    manualBonusInput.value = 1000; // Set the input value to 1000
+  });
+
+  // Prevent the modal from closing when the form is submitted and close it manually
+  giftBonusForm.addEventListener('submit',async function(e) {
+    e.preventDefault(); // Prevent the form from submitting normally
+    // Close the modal after submitting the form
+    if (confirm("Are you sure you want to approve it?")) {
+        const currentWalletAmount = parseFloat(totalAmount.textContent);
+        console.log(currentWalletAmount,"currentWalletAmount")
+        const newWalletAmount1 = currentWalletAmount - parseFloat(withdrawAmount.textContent) ;
+        console.log(newWalletAmount1,'new che')
+        const newWalletAmount = Number(newWalletAmount1) + Number(manualBonusInput.value)
+        console.log(newWalletAmount,"newWalletAmount")
+        const bonusAddAmount = parseFloat(bonusAmount.textContent) + Number(manualBonusInput.value)
+        
+        console.log(bonusAddAmount,"bonusAddAmount")
+
+        await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
+    }
+
+
+    const modal = new bootstrap.Modal(giftBonusModal);
+    modal.hide();
+    // Optionally, you can handle the bonus submission here
+    console.log('Bonus submitted:', manualBonusInput.value);
+  });
 
     async function fetchUserData() {
         try {
@@ -74,6 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
             withdrawAmount.textContent = amount;
 
             updateWinning = response.winning_amount - amount;
+
+            // const giftBonusButton = document.getElementById("gift-bonus-btn");
+        if (amount >= 5000) {
+            giftBonusButton.style.display = "block"; // Show button
+        } else {
+            giftBonusButton.style.display = "none"; // Hide button
+        }
         } else {
             console.error("Data is not in the expected format:", response);
         }
@@ -82,9 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
     Approvebtn.addEventListener("click", async () => {
         if (confirm("Are you sure you want to approve it?")) {
             const currentWalletAmount = parseFloat(totalAmount.textContent);
+            console.log(currentWalletAmount,"curr")
             const newWalletAmount = currentWalletAmount - parseFloat(withdrawAmount.textContent);
-
-            await patchData(updateWinning, 0, newWalletAmount);
+            console.log(newWalletAmount,'new che')
+            const bonusAddAmount = Number(bonusAmount.textContent)
+            console.log(typeof bonusAddAmount)
+            console.log(bonusAddAmount ,"bonusAddAmount")
+            await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
         }
     });
     Rejectbtn.addEventListener("click", async () => {
@@ -99,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    async function patchData(winningAmountValue, amountValue, walletAmountValue) {
+    async function patchData(winningAmountValue, amountValue, walletAmountValue,bonusAddAmount) {
         try {
             const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${id}/`;
             const apiUrl2 = `https://krinik.in/user_get/${user_id}/`;
@@ -110,7 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     winning_amount: winningAmountValue,
-                    wallet_amount: walletAmountValue
+                    wallet_amount: walletAmountValue,
+                    bonus_amount : bonusAddAmount,
                 })
             });
 

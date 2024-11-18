@@ -4560,6 +4560,7 @@ width: auto !important;
   
 }
 
+
 .blur {
   filter: blur(4px);
 }
@@ -4567,4 +4568,14 @@ width: auto !important;
 .close{
   font-size: 40px;
   color: #E20101;
+}
+
+.defaultBonus{
+  margin-bottom: 0 !important;
+}
+
+.withdraw-color1{
+  background-color: #3ddc97;
+  color: white;
+  
 }
