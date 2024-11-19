@@ -1,4 +1,4 @@
-
+import {checkAdminAccess,sendNotification}  from "../js/initial.js"
 // var rankList = [];
 // var array = [];
 // var array_length = 0;
@@ -1569,6 +1569,11 @@
               if(updatedWinner){
                 await allocateMoneyToWinners(updatedMatchScores, totalMoney); // Pass the updated match scores and totalMoney to allocate
                 console.log("Prize money allocated to winners successfully.");
+                await sendNotification(null, {
+                  title: "Result Declared!",
+                  body: "The results are out! Check the app to see if you’re a winner!"
+              });
+              
               }
             }
           }
@@ -1710,7 +1715,7 @@
   //   await allocateMoneyToWinners(updatedMatchScores, totalMoney);
   //   console.log("Prize money allocated to winners successfully");
   // };
-  
+  window.onload = checkAdminAccess();
   $(document).ready(function() {
     $("#submitButton").on("click", function() {
       // postRunData(); // Call the function to post data

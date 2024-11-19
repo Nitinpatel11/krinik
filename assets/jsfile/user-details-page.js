@@ -103,13 +103,16 @@ const isStatusTrue = adminInfo?.status === "true";
   }
 
   async function assignRandomCouponToUser(userId) {
-    const coupon = await getRandomCoupon();
-    console.log(coupon,"coupon")
-    if (coupon) {
-        await assignCouponToUser(userId, coupon);
-    } else {
-        console.error('No coupon available to assign.');
+    if(confirm("Are you sure to gift coupon to user?")){
+      const coupon = await getRandomCoupon();
+      console.log(coupon,"coupon")
+      if (coupon) {
+          await assignCouponToUser(userId, coupon);
+      } else {
+          console.error('No coupon available to assign.');
+      }
     }
+   
 }
 
 async function getRandomCoupon() {

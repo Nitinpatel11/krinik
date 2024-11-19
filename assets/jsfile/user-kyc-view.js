@@ -1,3 +1,5 @@
+import {checkAdminAccess,sendNotification}  from "../js/initial.js"
+
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
@@ -18,16 +20,16 @@ const branch_name = document.getElementById("branch_name");
 const state = document.getElementById("state");
 
 let apiData = {};
-const items = [
-  "aadhar_card_front",
-  "aadhar_card_back",
-  "pan_card_front",
-  "account_number",
-  "ifsc_code",
-  "bank_name",
-  "branch_name",
-  "state",
-];
+// const items = [
+//   "aadhar_card_front",
+//   "aadhar_card_back",
+//   "pan_card_front",
+//   "account_number",
+//   "ifsc_code",
+//   "bank_name",
+//   "branch_name",
+//   "state",
+// ];
 let userApproved;
 // ApproveMessageButton.classList.add("clickbtn1");
 //       rejectionMessageButton.classList.add("clickbtn1");
@@ -99,10 +101,10 @@ function editPlayerData(response) {
       }`,
     };
    
-    account_number.value =     response.user_doc?.account_number || "";
-    ifsc_code.value =      response.user_doc?.ifsc_code || "";
-    bank_name.value =      response.user_doc?.bank_name || "";
-    branch_name.value =      response.user_doc?.branch_name || "";
+    account_number.value = response.user_doc?.account_number || "";
+    ifsc_code.value =  response.user_doc?.ifsc_code || "";
+    bank_name.value =  response.user_doc?.bank_name || "";
+    branch_name.value =  response.user_doc?.branch_name || "";
     state.value = response.user_doc?.state || "";
     if (account_number.value == "" && ifsc_code.value == "" && bank_name.value == "" && branch_name.value == "" && state.value == ""  ) {
       
@@ -132,20 +134,25 @@ function setupImageEventListeners() {
   panFrontDownloadBtn.addEventListener("click", () => {
     downloadImageAsPDF(apiData.pan_card, "PAN Card Front");
   });
-  setupRejectionMessageOptions();
+  // setupRejectionMessageOptions();
 
   // Inside setupImageEventListeners function
-  rejectionMessageButton.addEventListener("click", (e) => {
+  rejectionMessageButton.addEventListener("click", async(e) => {
     e.preventDefault(); // Prevent the default action of the button
 
     // Check if the selected value is "Select Message"
-    if (rejectionMessageSelect.value === "Select Message") {
+    if (rejectionMessageSelect.value === "") {
       errorMessageSpan.style = "text-align:Start;color:red";
       errorMessageSpan.textContent = "Please select a rejection message."; // Show error message
     } else {
       errorMessageSpan.textContent = ""; // Clear any previous error messages
       // Proceed with patching the rejection reason
+      await sendNotification(id, {
+        title: "KYC Rejected",
+        body: "We're sorry, your KYC verification was unsuccessful. Please check your details and try again."
+    });
       patchData("rejection_reason", rejectionMessageSelect.value);
+    
     }
   });
 
@@ -165,6 +172,11 @@ function setupImageEventListeners() {
   if (userApproved !== "Approved") {
     
     await patchData("profile_status", "Approved");
+    await sendNotification(id, {
+      title: "KYC Approved!",
+      body: "Congratulations! Your KYC has been successfully verified. You can now enjoy full access to all features."
+  });
+  
     window.location.href = "kyc.html";
       return; // Optional: return here as well to ensure no further code runs
   }
@@ -239,36 +251,36 @@ async function downloadImageAsPDF(imageSrc, title) {
   imgElement.style.display = "none"; // Hide the image element
 }
 
-function generateCombinations(array) {
-  const results = [];
+// function generateCombinations(array) {
+//   const results = [];
 
-  const f = (start, combination) => {
-    // Only add combinations if the current combination is not empty
-    if (combination.length > 0) {
-      results.push(combination.join(" & "));
-    }
-    for (let i = start; i < array.length; i++) {
-      f(i + 1, combination.concat(array[i]));
-    }
-  };
+//   const f = (start, combination) => {
+//     // Only add combinations if the current combination is not empty
+//     if (combination.length > 0) {
+//       results.push(combination.join(" & "));
+//     }
+//     for (let i = start; i < array.length; i++) {
+//       f(i + 1, combination.concat(array[i]));
+//     }
+//   };
 
-  f(0, []);
-  return results;
-}
+//   f(0, []);
+//   return results;
+// }
 
 // Populate the select dropdown with rejection message options
 
-function setupRejectionMessageOptions() {
-  const rejectionMessages = generateCombinations(items);
+// function setupRejectionMessageOptions() {
+  // const rejectionMessages = generateCombinations(items);
   // Add "Select Message" as the default option
-  rejectionMessageSelect.innerHTML = `<option value="Select Message">Select Message</option>`;
-  rejectionMessages.forEach((message) => {
-    const option = document.createElement("option");
-    option.value = message;
-    option.textContent = message; // No prefix needed
-    rejectionMessageSelect.appendChild(option);
-  });
-}
+  // rejectionMessageSelect.innerHTML = `<option value="Select Message">Select Message</option>`;
+  // rejectionMessages.forEach((message) => {
+  //   const option = document.createElement("option");
+  //   option.value = message;
+  //   option.textContent = message; // No prefix needed
+  //   rejectionMessageSelect.appendChild(option);
+  // });
+// }
 
 async function patchData(field, value) {
   try {
@@ -299,3 +311,4 @@ async function patchData(field, value) {
 
 // Fetch the user data on page load
 fetchUserData();
+window.onload = checkAdminAccess();
