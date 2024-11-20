@@ -372,7 +372,7 @@ export function checkAdminAccess() {
         }
         let data = await response.json();
         tokens = data.data.map((user) => user.device_token);
-        allUser = data.data.map((userId)=> user.user_id)
+        allUser = data.data.map((user)=> user.user_id)
         console.log(allUser,"alluser")
       }
   

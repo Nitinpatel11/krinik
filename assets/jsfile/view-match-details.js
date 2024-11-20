@@ -18,6 +18,13 @@ import {checkAdminAccess}  from "../js/initial.js"
   const id = Number(urlParams.get('id'));
   let remainTiming = document.querySelector('#remainTiming')
   let statusShow = document.getElementById('statusShow')
+  let declareResult = document.getElementById('declareResult')
+  let matchResult = document.getElementById('matchResult')
+  let totalAmountData = document.getElementById('total-amount-data')
+
+let userData
+let userMoney
+
   let urlpooltime
   let arr = [];  // Declare arr globally if you need to use it outside the function
 let userId
@@ -34,6 +41,13 @@ async function fetchUserData() {
     const url1 = `https://krinik.in/pool_declare/`;
     console.log('Fetching pool data from:', url1);
 
+    
+    const url2 = `https://krinik.in/user_match_get/`;
+    console.log('Fetching pool data from:', url2);
+    
+    const url5 = `https://krinik.in/user_get/`;
+    console.log('Fetching pool data from:', url5);
+
     const responseurl = await fetch(url1);
     const urlpool = await responseurl.json();
     const urlpooldata = urlpool.data;
@@ -44,14 +58,37 @@ console.log(urlpooldata,"poll")
     }
 
     console.log(urlpooltime, "poll");
+
+    const responseurl2 = await fetch(url2);
+    const userMatchData1 = await responseurl2.json();
+    const userMatchData = userMatchData1.data
+
+    console.log(userMatchData, "userData");
+
+    const userMatchData2 = userMatchData.filter((p) => p.match.id ? p.match.id === id : null);
+    const userMatchData3 = userMatchData2.filter((p)=> p.disable_user === false)
+    console.log(userMatchData2,"userMatchData2")
+    console.log(userMatchData3,"userMatchData3")
+
+    if (userMatchData3) {
+      userMoney = userMatchData3.reduce((total,curr)=> total + curr.invest_amount,0)
+      totalAmountData.textContent = userMoney
+      console.log(userMoney,"userMatchData3")
+    }
     
     const response = await fetch(url);
+
     if (!response.ok) {
       throw new Error('Failed to fetch player data');
     }
+    const response5 = await fetch(url5);
+    const userGetData = await response5.json();
+    console.log(userGetData,"userGetData")
+
 
     const userData1 = await response.json();
     const userData = userData1.data;
+    // console.log(userData,"userData che")
     const disabledDataPlayerA = userData.disable_player_A || [];
     const disabledDataPlayerB = userData.disable_player_B || [];
     arr = userData.player_list || [];  // Use global arr
@@ -140,7 +177,9 @@ console.log(userId,"pl")
         if (remainingTimeStart > 0) {
           // Match hasn't started yet
           statusShow.textContent = "Upcoming";
-
+          declareResult.style = "display:none";
+          matchResult.style = "display:none";
+          
           // Convert the remaining time to a human-readable format for the countdown
           let duration = moment.duration(remainingTimeStart);
           let formattedRemainingTime = `${duration.months()} months, ${duration.days()} days, ${duration.hours()} hours, ${duration.minutes()} minutes, ${duration.seconds()} seconds`;
@@ -152,11 +191,18 @@ console.log(userId,"pl")
           // - It has started and the current time is between the start and end time
           statusShow.textContent = "Live";
           remainTiming.textContent = "Live";
+          matchResult.style = "display:none";
+  document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
+
 
         } else if (remainingTimeEnd && remainingTimeEnd <= 0) {
           // Match has ended if we have the end date and the current time is past the end date
           statusShow.textContent = "Completed";
           remainTiming.textContent = "Completed";
+
+          // document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
+          declareResult.style = "display:none"
+          document.getElementById("matchResult").addEventListener("click", () => redirectToHistoryPage('match-name'));
 
           // Stop the countdown as the match is completed
           clearInterval(countdownInterval);
@@ -516,7 +562,9 @@ window.handleDisable = handleDisable
     highlightIndexButton();
   }
 
-
+  window.prev = prev
+  window.next = next
+  window.indexPagination = indexPagination
 
   function displayTableRows1() {
 
@@ -583,9 +631,18 @@ window.handleDisable = handleDisable
     }
   }
 
-  document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
 
-
+  // function declarefun() {
+  //   const declareResultButton = document.getElementById("declareResult");
+  
+  //   if (declareResultButton) {
+  //     declareResultButton.addEventListener("click", () => {
+  //       redirectToHistoryPage('declare-result');
+  //     });
+  //   } else {
+  //     console.error("Element with ID 'declareResult' not found.");
+  //   }
+  // }
 
 
   // Function to open the modal and populate it with checkboxes
