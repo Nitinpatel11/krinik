@@ -319,7 +319,7 @@ if (status === "success" || status === "Success") {
   return "unknown";
 }
 }
-
+window.getStatus = getStatus
 
 function displayIndexButtons() {
   $(".index_buttons ul").empty();

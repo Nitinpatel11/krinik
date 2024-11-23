@@ -1388,13 +1388,267 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
  
   
   
+  // const allocateMoneyToWinners = async (matchScores, totalMoney) => {
+  //   try {
+  //     // Group matches for winners only by pool, type, price, and multiX
+  //     const MoneyPay = matchScores.reduce((acc, match) => {
+  //       if (match.winning_status === "Winner") {
+  //         const key = `${match.pool_name}-${match.pool_type}-${match.price}-winner`;
+  
+  //         if (!acc[key]) {
+  //           acc[key] = [];
+  //         }
+  //         acc[key].push(match);
+  //       }
+  //       return acc;
+  //     }, {});
+  
+  //     console.log(MoneyPay, "Grouped Money Pay for Winners Only by Pool, Type, Price, and MultiX");
+  
+  //     // Allocate money based on multiX and player matching
+  //     const matchMoneydeclare = Object.keys(MoneyPay).map(poolKey => {
+  //       const matchMoney = MoneyPay[poolKey];
+  
+  //       // Function to check if player arrays are identical
+  //       const arePlayerDetailsIdentical = (players1, players2) => {
+  //         const sorted1 = players1.map(p => p.player_id).sort();
+  //         const sorted2 = players2.map(p => p.player_id).sort();
+  //         return JSON.stringify(sorted1) === JSON.stringify(sorted2);
+  //       };
+  
+  //       // Process each match in the pool group
+  //       const allocationPromises = matchMoney.map(async (match, index) => {
+  //         const matchPlayersDetails = match.players_details;
+  
+  //         // Determine if prize should be split based on identical players
+  //         let shouldSplit = false;
+  //         for (let i = 0; i < matchMoney.length; i++) {
+  //           if (i !== index && arePlayerDetailsIdentical(matchPlayersDetails, matchMoney[i].players_details)) {
+  //             shouldSplit = true;
+  //             break;
+  //           }
+  //         }
+  
+  //         // Calculate prize amount
+  //         const totalPrize = match.price * match.multiX;
+  //         const finalPrize = shouldSplit ? totalPrize / 2 : totalPrize;
+  
+  //         // Deduct prize from totalMoney
+  //         totalMoney -= finalPrize;
+  
+  //         // Allocate prize to each player
+  //         for (let player of match.players_details) {
+  //           const playerId = player.player_id;
+  //           try {
+  //             await $.ajax({
+  //               url: `https://krinik.in/user_match_get/${match.matchId}`,
+  //               type: 'PATCH',
+  //               contentType: 'application/json',
+  //               data: JSON.stringify({
+  //                 player_id: playerId,
+  //                 total_amount: finalPrize
+  //               }),
+  //               success: function(response) {
+  //                 console.log(`Prize money ${finalPrize} allocated successfully for player ${playerId} in match ${match.matchId}`, response);
+  //               },
+  //               error: function(error) {
+  //                 console.error(`Error allocating prize money for player ${playerId} in match ${match.matchId}:`, error);
+  //               }
+  //             });
+  //           } catch (error) {
+  //             console.error(`Failed to allocate prize money for player ${playerId} in match ${match.matchId}:`, error);
+  //           }
+  //         }
+  //       });
+  
+  //       return Promise.all(allocationPromises);
+  //     });
+  
+  //     // Wait for all prize allocations to complete
+  //     await Promise.all(matchMoneydeclare);
+  
+  //     console.log(`Remaining total money after allocations: ${totalMoney}`);
+  
+  //     // Fetch the current balance in admin wallet
+  //     let currentWalletBalance = 0;
+  //     let currentadminId;
+  //     await $.ajax({
+  //       url: `https://krinik.in/admin_wallet/`,
+  //       type: 'GET',
+  //       success: function(response) {
+  //         if (response.status === "success" && response.data && response.data.length > 0) {
+  //           currentadminId = response.data[0].id;
+  //           currentWalletBalance = response.data[0].total_amount; // Access total_amount from the first item in data array
+  //           console.log(`Fetched current admin wallet balance: ${currentWalletBalance}`);
+  //         } else {
+  //           console.error("Invalid response format or no data available in admin wallet response.");
+  //         }
+  //       },
+  //       error: function(error) {
+  //         console.error(`Error fetching current admin wallet balance:`, error);
+  //       }
+  //     });
+  
+  //     // Calculate the new remaining balance by adding totalMoney (even if negative)
+  //     let moneyall = currentWalletBalance + totalMoney;
+  
+  //     // Update the admin wallet with the new balance (optional)
+  //     await $.ajax({
+  //       url: `https://krinik.in/admin_wallet/${currentadminId}/`,
+  //       type: 'PATCH',
+  //       contentType: 'application/json',
+  //       data: JSON.stringify({
+  //         total_amount: moneyall
+  //       }),
+  //       success: function(response) {
+  //         console.log(`Admin wallet updated with new balance: ${moneyall}`, response);
+  //       },
+  //       error: function(error) {
+  //         console.error(`Error updating admin wallet balance:`, error);
+  //       }
+  //     });
+  
+  //   } catch (error) {
+  //     console.error("Error during money allocation process:", error);
+  //   }
+  // };
+  
+
+  // const allocateMoneyToWinners = async (matchScores, totalMoney) => {
+  //   try {
+  //     // Group matches for winners only by pool, type, price, and multiX
+  //     const MoneyPay = matchScores.reduce((acc, match) => {
+  //       if (match.winning_status === "Winner") {
+  //         const key = `${match.pool_name}-${match.pool_type}-${match.price}-winner`;
+  
+  //         if (!acc[key]) {
+  //           acc[key] = [];
+  //         }
+  //         acc[key].push(match);
+  //       }
+  //       return acc;
+  //     }, {});
+  
+  //     console.log(MoneyPay, "Grouped Money Pay for Winners Only by Pool, Type, Price, and MultiX");
+  
+  //     // Allocate money based on multiX and player matching
+  //     const matchMoneydeclare = Object.keys(MoneyPay).map(poolKey => {
+  //       const matchMoney = MoneyPay[poolKey];
+  
+  //       // Function to check if player arrays are identical
+  //       const arePlayerDetailsIdentical = (players1, players2) => {
+  //         const sorted1 = players1.map(p => p.player_id).sort();
+  //         const sorted2 = players2.map(p => p.player_id).sort();
+  //         return JSON.stringify(sorted1) === JSON.stringify(sorted2);
+  //       };
+  
+  //       // Process each match in the pool group
+  //       const allocationPromises = matchMoney.map(async (match, index) => {
+  //         const matchPlayersDetails = match.players_details;
+  
+  //         // **Scenario 1: Each user gets the full ₹500 prize without splitting**
+  //         let finalPrize = match.price * match.multiX; // No splitting in this case
+  
+  //         // **Scenario 2: Split prize among all identical player groups**
+  //         let groups = [];
+  //         for (let i = 0; i < matchMoney.length; i++) {
+  //           const currentMatchPlayersDetails = matchMoney[i].players_details;
+  //           if (arePlayerDetailsIdentical(matchPlayersDetails, currentMatchPlayersDetails)) {
+  //             groups.push(matchMoney[i]);
+  //           }
+  //         }
+  
+  //         // Split prize based on number of identical groups (not by 2)
+  //         if (groups.length > 1) {
+  //           finalPrize = (match.price * match.multiX) / groups.length; // Split by the number of identical groups
+  //         }
+  
+  //         // Deduct prize from totalMoney
+  //         totalMoney -= finalPrize;
+  
+  //         // Allocate prize to each player
+  //         for (let player of match.players_details) {
+  //           const playerId = player.player_id;
+  //           try {
+  //             await $.ajax({
+  //               url: `https://krinik.in/user_match_get/${match.matchId}`,
+  //               type: 'PATCH',
+  //               contentType: 'application/json',
+  //               data: JSON.stringify({
+  //                 player_id: playerId,
+  //                 total_amount: finalPrize
+  //               }),
+  //               success: function(response) {
+  //                 console.log(`Prize money ${finalPrize} allocated successfully for player ${playerId} in match ${match.matchId}`, response);
+  //               },
+  //               error: function(error) {
+  //                 console.error(`Error allocating prize money for player ${playerId} in match ${match.matchId}:`, error);
+  //               }
+  //             });
+  //           } catch (error) {
+  //             console.error(`Failed to allocate prize money for player ${playerId} in match ${match.matchId}:`, error);
+  //           }
+  //         }
+  //       });
+  
+  //       return Promise.all(allocationPromises);
+  //     });
+  
+  //     // Wait for all prize allocations to complete
+  //     await Promise.all(matchMoneydeclare);
+  
+  //     console.log(`Remaining total money after allocations: ${totalMoney}`);
+  
+  //     // Fetch the current balance in admin wallet
+  //     let currentWalletBalance = 0;
+  //     let currentadminId;
+  //     await $.ajax({
+  //       url: `https://krinik.in/admin_wallet/`,
+  //       type: 'GET',
+  //       success: function(response) {
+  //         if (response.status === "success" && response.data && response.data.length > 0) {
+  //           currentadminId = response.data[0].id;
+  //           currentWalletBalance = response.data[0].total_amount; // Access total_amount from the first item in data array
+  //           console.log(`Fetched current admin wallet balance: ${currentWalletBalance}`);
+  //         } else {
+  //           console.error("Invalid response format or no data available in admin wallet response.");
+  //         }
+  //       },
+  //       error: function(error) {
+  //         console.error(`Error fetching current admin wallet balance:`, error);
+  //       }
+  //     });
+  
+  //     // Calculate the new remaining balance by adding totalMoney (even if negative)
+  //     let moneyall = currentWalletBalance + totalMoney;
+  
+  //     // Update the admin wallet with the new balance (optional)
+  //     await $.ajax({
+  //       url: `https://krinik.in/admin_wallet/${currentadminId}/`,
+  //       type: 'PATCH',
+  //       contentType: 'application/json',
+  //       data: JSON.stringify({
+  //         total_amount: moneyall
+  //       }),
+  //       success: function(response) {
+  //         console.log(`Admin wallet updated with new balance: ${moneyall}`, response);
+  //       },
+  //       error: function(error) {
+  //         console.error(`Error updating admin wallet balance:`, error);
+  //       }
+  //     });
+  
+  //   } catch (error) {
+  //     console.error("Error during money allocation process:", error);
+  //   }
+  // };
+ 
   const allocateMoneyToWinners = async (matchScores, totalMoney) => {
     try {
-      // Group matches for winners only by pool, type, price, and multiX
+      // Step 1: Group matches by pool, type, price, and multiX
       const MoneyPay = matchScores.reduce((acc, match) => {
         if (match.winning_status === "Winner") {
           const key = `${match.pool_name}-${match.pool_type}-${match.price}-winner`;
-  
           if (!acc[key]) {
             acc[key] = [];
           }
@@ -1405,114 +1659,121 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
   
       console.log(MoneyPay, "Grouped Money Pay for Winners Only by Pool, Type, Price, and MultiX");
   
-      // Allocate money based on multiX and player matching
-      const matchMoneydeclare = Object.keys(MoneyPay).map(poolKey => {
-        const matchMoney = MoneyPay[poolKey];
+      // Step 2: Identify identical player groups
+      const identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
+        const matches = MoneyPay[poolKey];
   
-        // Function to check if player arrays are identical
-        const arePlayerDetailsIdentical = (players1, players2) => {
-          const sorted1 = players1.map(p => p.player_id).sort();
-          const sorted2 = players2.map(p => p.player_id).sort();
-          return JSON.stringify(sorted1) === JSON.stringify(sorted2);
-        };
-  
-        // Process each match in the pool group
-        const allocationPromises = matchMoney.map(async (match, index) => {
+        matches.forEach(match => {
           const matchPlayersDetails = match.players_details;
   
-          // Determine if prize should be split based on identical players
-          let shouldSplit = false;
-          for (let i = 0; i < matchMoney.length; i++) {
-            if (i !== index && arePlayerDetailsIdentical(matchPlayersDetails, matchMoney[i].players_details)) {
-              shouldSplit = true;
-              break;
-            }
+          // Step 3: Create a unique identifier for player details (e.g., sorted player IDs)
+          const sortedPlayerIds = matchPlayersDetails
+            .map(player => player.playerId)
+            .sort()
+            .join("-"); // Create a sorted string of player IDs to identify identical groups
+  
+          if (!acc[sortedPlayerIds]) {
+            acc[sortedPlayerIds] = [];
           }
+          acc[sortedPlayerIds].push(match);
+        });
   
-          // Calculate prize amount
-          const totalPrize = match.price * match.multiX;
-          const finalPrize = shouldSplit ? totalPrize / 2 : totalPrize;
+        return acc;
+      }, {});
   
-          // Deduct prize from totalMoney
-          totalMoney -= finalPrize;
+      console.log(identicalPlayerGroups, "Grouped Matches by Identical Players");
   
-          // Allocate prize to each player
-          for (let player of match.players_details) {
-            const playerId = player.player_id;
+      // Step 4: Process each identical group
+      const matchMoneyDeclare = Object.keys(identicalPlayerGroups).map(async (playerKey) => {
+        const groupMatches = identicalPlayerGroups[playerKey];
+        const finalPrizePerGroup = groupMatches[0].price * groupMatches[0].multiX;
+  
+        console.log(groupMatches, "Group Matches for Identical Players");
+        console.log(finalPrizePerGroup, "Initial Prize");
+  
+        // Split prize among identical groups
+        const prizePerMatch = finalPrizePerGroup / groupMatches.length;
+  
+        // Deduct the prize from the total money
+        totalMoney -= prizePerMatch;
+  
+        // Allocate prize to each player in each match of the identical group
+        for (const match of groupMatches) {
+          for (const player of match.players_details) {
+            const playerId = player.playerId;
+  
             try {
               await $.ajax({
                 url: `https://krinik.in/user_match_get/${match.matchId}`,
-                type: 'PATCH',
-                contentType: 'application/json',
+                type: "PATCH",
+                contentType: "application/json",
                 data: JSON.stringify({
                   player_id: playerId,
-                  total_amount: finalPrize
+                  total_amount: prizePerMatch,
                 }),
-                success: function(response) {
-                  console.log(`Prize money ${finalPrize} allocated successfully for player ${playerId} in match ${match.matchId}`, response);
+                success: (response) => {
+                  console.log(`Prize money ${prizePerMatch} allocated successfully for player ${playerId} in match ${match.matchId}`, response);
                 },
-                error: function(error) {
+                error: (error) => {
                   console.error(`Error allocating prize money for player ${playerId} in match ${match.matchId}:`, error);
-                }
+                },
               });
             } catch (error) {
               console.error(`Failed to allocate prize money for player ${playerId} in match ${match.matchId}:`, error);
             }
           }
-        });
-  
-        return Promise.all(allocationPromises);
+        }
       });
   
       // Wait for all prize allocations to complete
-      await Promise.all(matchMoneydeclare);
+      await Promise.all(matchMoneyDeclare);
   
       console.log(`Remaining total money after allocations: ${totalMoney}`);
   
       // Fetch the current balance in admin wallet
       let currentWalletBalance = 0;
-      let currentadminId;
+      let currentAdminId;
       await $.ajax({
         url: `https://krinik.in/admin_wallet/`,
-        type: 'GET',
-        success: function(response) {
-          if (response.status === "success" && response.data && response.data.length > 0) {
-            currentadminId = response.data[0].id;
-            currentWalletBalance = response.data[0].total_amount; // Access total_amount from the first item in data array
+        type: "GET",
+        success: (response) => {
+          if (response.status === "success" && response.data?.length > 0) {
+            currentAdminId = response.data[0].id;
+            currentWalletBalance = response.data[0].total_amount;
             console.log(`Fetched current admin wallet balance: ${currentWalletBalance}`);
           } else {
             console.error("Invalid response format or no data available in admin wallet response.");
           }
         },
-        error: function(error) {
-          console.error(`Error fetching current admin wallet balance:`, error);
-        }
-      });
-  
-      // Calculate the new remaining balance by adding totalMoney (even if negative)
-      let moneyall = currentWalletBalance + totalMoney;
-  
-      // Update the admin wallet with the new balance (optional)
-      await $.ajax({
-        url: `https://krinik.in/admin_wallet/${currentadminId}/`,
-        type: 'PATCH',
-        contentType: 'application/json',
-        data: JSON.stringify({
-          total_amount: moneyall
-        }),
-        success: function(response) {
-          console.log(`Admin wallet updated with new balance: ${moneyall}`, response);
+        error: (error) => {
+          console.error("Error fetching current admin wallet balance:", error);
         },
-        error: function(error) {
-          console.error(`Error updating admin wallet balance:`, error);
-        }
       });
   
+      // Calculate and update the new admin wallet balance
+      const updatedWalletBalance = currentWalletBalance + totalMoney;
+      await $.ajax({
+        url: `https://krinik.in/admin_wallet/${currentAdminId}/`,
+        type: "PATCH",
+        contentType: "application/json",
+        data: JSON.stringify({
+          total_amount: updatedWalletBalance,
+        }),
+        success: (response) => {
+          console.log(`Admin wallet updated with new balance: ${updatedWalletBalance}`, response);
+        },
+        error: (error) => {
+          console.error("Error updating admin wallet balance:", error);
+        },
+      });
     } catch (error) {
       console.error("Error during money allocation process:", error);
     }
   };
   
+  
+  
+
   const fetchUserMatchData = async () => {
     try {
       const response = await fetch(`https://krinik.in/user_match_get/`);

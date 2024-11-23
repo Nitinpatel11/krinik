@@ -211,7 +211,7 @@ async function assignCouponToUser(userId, newCoupon) {
 
       // Set form field values
       userFullName.textContent = response.name;
-      userMob.textContent = response.mobile_no;
+      userMob.textContent = `+${response.mobile_no}`;
       userEmail.textContent = response.email;
       regTime.textContent = response.date_time;
       walletAmount.textContent = response.wallet_amount;

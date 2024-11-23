@@ -304,6 +304,7 @@ async function patchData(field, value) {
     console.log("Patch successful:", result);
     // Optionally, refresh the user data after patching
     fetchUserData();
+   
   } catch (error) {
     console.error("Error patching data:", error);
   }

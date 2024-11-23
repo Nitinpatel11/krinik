@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let updateWinning = 0;
      
-
+    let userData5
     const Approvebtn = document.getElementById("Approvebtn");
     const Rejectbtn = document.getElementById("Rejectbtn");
 
@@ -82,15 +82,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const userData = userData1.data;
             const userData3 = userData2.data;
-            const userData5 = userData3.amount;
+            userData5 = Number(userData3.amount);
 
-            // Disable Approve button if amount is 0
-            if (userData5 === 0) {
+             if (userData5 === 0) {
                 Approvebtn.disabled = true;
+                Approvebtn.style.pointerEvents = "none";
+                Rejectbtn.disabled = true;
+                Rejectbtn.style.pointerEvents = "none";
             } else {
                 Approvebtn.disabled = false;
-            }
+                Rejectbtn.disabled = false;
 
+                // Approvebtn.style.pointerEvents = "auto";
+            }
             editPlayerData(userData, userData5);
         } catch (error) {
             console.error("Error fetching player data:", error);
@@ -122,9 +126,17 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Data is not in the expected format:", response);
         }
     }
+    console.log(userData5,"userdata che ")
 
     Approvebtn.addEventListener("click", async () => {
-        if (confirm("Are you sure you want to approve it?")) {
+
+        if (Number(userData5) === 0) {
+            Approvebtn.disabled = true;
+            Approvebtn.style.pointerEvents = "none";
+            return;
+        }     
+       if (confirm("Are you sure you want to approve it?")) {
+            Approvebtn.disabled = false;
             const currentWalletAmount = parseFloat(totalAmount.textContent);
             console.log(currentWalletAmount,"curr")
             const newWalletAmount = currentWalletAmount - parseFloat(withdrawAmount.textContent);
@@ -133,10 +145,18 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(typeof bonusAddAmount)
             console.log(bonusAddAmount ,"bonusAddAmount")
             await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
+            fetchUserData();
         }
     });
     Rejectbtn.addEventListener("click", async () => {
+        if (Number(userData5) === 0) {
+            Approvebtn.disabled = true;
+            Approvebtn.style.pointerEvents = "none";
+            return;
+        }  
+
         if (confirm("Are you sure you want to reject it?")) {
+            Approvebtn.disabled = false;
             await sendNotification(user_id, {
                 title: "Withdrawal Request Rejected",
                 body: "Unfortunately, your withdrawal request has been rejected. Please contact support for further assistance or to resolve any issues."
@@ -190,7 +210,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Patch for amount successful:", await response2.json());
 
             // Re-fetch data to update `totalAmount` and other fields
-            await fetchUserData();
+            fetchUserData();
+
         } catch (error) {
             console.error("Error patching data:", error);
         }
