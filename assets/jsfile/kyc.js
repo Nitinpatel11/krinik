@@ -412,7 +412,10 @@ return null;
     for (var i = tab_start; i < tab_end; i++) {
       var showdata = array[i];
       // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
-
+      if (showdata["profile_status"] !== "pending" && showdata["profile_status"] !== "approved") {
+        continue;
+      }
+  
       var tr = $("<tr></tr>");
 
       var noCell = $("<td></td>").text(i + 1);
@@ -423,7 +426,10 @@ return null;
     //   var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
       var statushow = toCapitalizeCase(showdata["status"])
       
-      var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["profile_status"] || ""));
+        
+        var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["profile_status"] || ""));
+     
+      
     
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         '<span class="sortable" onclick="handleView(\'' + showdata['user_id'] + '\')"><i class="far fa-eye"></i></span>'

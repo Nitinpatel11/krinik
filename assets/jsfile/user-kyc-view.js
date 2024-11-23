@@ -52,7 +52,7 @@ async function fetchUserData() {
     const userData1 = await response.json();
     const userData = userData1.data;
     userApproved = userData1.data.profile_status;
-    if (userApproved === "Approved") {
+    if (userApproved === "approved") {
       rejectionMessageButton.disabled = true;
       ApproveMessageButton.disabled = true;
       ApproveMessageButton.classList.remove("clickbtn1");
@@ -143,7 +143,7 @@ function setupImageEventListeners() {
     // Check if the selected value is "Select Message"
     if (rejectionMessageSelect.value === "") {
       errorMessageSpan.style = "text-align:Start;color:red";
-      errorMessageSpan.textContent = "Please select a rejection message."; // Show error message
+      errorMessageSpan.textContent = "Please write a rejection message."; // Show error message
     } else {
       errorMessageSpan.textContent = ""; // Clear any previous error messages
       // Proceed with patching the rejection reason
@@ -169,9 +169,9 @@ function setupImageEventListeners() {
   }
   
   // Check if user is not approved and redirect if necessary
-  if (userApproved !== "Approved") {
+  if (userApproved !== "approved") {
     
-    await patchData("profile_status", "Approved");
+    await patchData("profile_status", "approved");
     await sendNotification(id, {
       title: "KYC Approved!",
       body: "Congratulations! Your KYC has been successfully verified. You can now enjoy full access to all features."

@@ -830,14 +830,14 @@ if (moment(currentDate, 'DD-MM-YYYY').isBefore(moment(leagueEndDate, 'DD-MM-YYYY
                                 const errorText = await response.text();
                                 throw new Error(`Failed to submit match data: ${response.status} ${response.statusText} - ${errorText}`);
                             }
+                            
+                            const responseData = await response.json();
                             await sendNotification(null, {
                                 title: "New Match Added!",
                                 body: "New match is live in the app. Check it out and join now!"
                               })
-
-                            const responseData = await response.json();
                             console.log('Response data:', responseData);
-                            window.location.href = 'manage-match.html'; // Redirect on successful submission
+                            window.location.href = './manage-match.html'; // Redirect on successful submission
                         } catch (error) {
                             console.error('Error:', error);
                             alert('An error occurred while submitting the match data.');

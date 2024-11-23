@@ -1656,32 +1656,36 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
         }
         return acc;
       }, {});
-  
+      
       console.log(MoneyPay, "Grouped Money Pay for Winners Only by Pool, Type, Price, and MultiX");
-  
-      // Step 2: Identify identical player groups
+      
+      // Step 2: Identify identical player groups, including price, pool_name, and pool_type
       const identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
         const matches = MoneyPay[poolKey];
-  
+        console.log(matches, "matchesche");
+      
         matches.forEach(match => {
           const matchPlayersDetails = match.players_details;
-  
-          // Step 3: Create a unique identifier for player details (e.g., sorted player IDs)
+      
+          // Step 3: Create a unique identifier for player details, including price, pool_name, and pool_type
           const sortedPlayerIds = matchPlayersDetails
             .map(player => player.playerId)
             .sort()
-            .join("-"); // Create a sorted string of player IDs to identify identical groups
-  
-          if (!acc[sortedPlayerIds]) {
-            acc[sortedPlayerIds] = [];
+            .join("-"); // Create a sorted string of player IDs
+      
+          const groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}-${match.price}`; // Include additional properties in the unique identifier
+      
+          if (!acc[groupKey]) {
+            acc[groupKey] = [];
           }
-          acc[sortedPlayerIds].push(match);
+          acc[groupKey].push(match);
         });
-  
+      
         return acc;
       }, {});
-  
-      console.log(identicalPlayerGroups, "Grouped Matches by Identical Players");
+      
+      console.log(identicalPlayerGroups, "Grouped matches by identical players, pool, type, and price");
+      
   
       // Step 4: Process each identical group
       const matchMoneyDeclare = Object.keys(identicalPlayerGroups).map(async (playerKey) => {
@@ -1828,7 +1832,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
               console.log("Winning status updated for all matches.");
   
               if(updatedWinner){
-                await allocateMoneyToWinners(updatedMatchScores, totalMoney); // Pass the updated match scores and totalMoney to allocate
+                await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
                 console.log("Prize money allocated to winners successfully.");
                 await sendNotification(null, {
                   title: "Result Declared!",
