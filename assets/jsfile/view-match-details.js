@@ -46,7 +46,7 @@ async function fetchUserData() {
     console.log('Fetching pool data from:', url2);
     
     const url5 = `https://krinik.in/user_get/`;
-    console.log('Fetching pool data from:', url5);
+    console.log('Fetching user data from:', url5);
 
     const responseurl = await fetch(url1);
     const urlpool = await responseurl.json();
@@ -62,11 +62,15 @@ console.log(urlpooldata,"poll")
     const responseurl2 = await fetch(url2);
     const userMatchData1 = await responseurl2.json();
     const userMatchData = userMatchData1.data
+    // const response5 = await fetch(url5);
+    // const userGetData = await response5.json();
+    //  const  userDatastatus =  userGetData.data
+    // console.log(userDatastatus,"olpolp")
 
     console.log(userMatchData, "userData");
 
     const userMatchData2 = userMatchData.filter((p) => p.match.id ? p.match.id === id : null);
-    const userMatchData3 = userMatchData2.filter((p)=> p.disable_user === false)
+    const userMatchData3 = userMatchData2.filter((p)=> p.user_data.status === "block")
     console.log(userMatchData2,"userMatchData2")
     console.log(userMatchData3,"userMatchData3")
 
@@ -81,9 +85,7 @@ console.log(urlpooldata,"poll")
     if (!response.ok) {
       throw new Error('Failed to fetch player data');
     }
-    const response5 = await fetch(url5);
-    const userGetData = await response5.json();
-    console.log(userGetData,"userGetData")
+   
 
 
     const userData1 = await response.json();

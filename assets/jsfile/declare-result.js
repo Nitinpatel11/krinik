@@ -20,6 +20,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
   let teamData
   let matchName
   let userplayerdata = []
+  let user_match_data1
   let user_match_data
   let totalMoney
   let matchIdData
@@ -67,11 +68,14 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
   
         // Log all IDs in the response data
       if(matchCheck.length > 0){
-        user_match_data = matchCheck.filter((p) => p.match.id === NumberId )
-        matchIdData = user_match_data[0].match.id
+        user_match_data1 = matchCheck.filter((p) => p.match.id === NumberId )
+        matchIdData = user_match_data1[0].match.id
+        console.log(user_match_data1,"user_match_data1")
         console.log(matchIdData,"oplopl")
+        user_match_data = user_match_data1.filter((p)=> p.user_data.status == "block")
       }
       console.log(user_match_data,"user_match_data")
+
       if(matchCheck.length > 0){
       totalMoney = user_match_data.reduce((accumulator, userMatch) => {
           return userMatch.invest_amount + accumulator;
