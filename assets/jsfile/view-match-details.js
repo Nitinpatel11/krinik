@@ -192,18 +192,17 @@ console.log(userId,"pl")
           statusShow.textContent = "Live";
           remainTiming.textContent = "Live";
           matchResult.style = "display:none";
-  document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
-
-
+          
+          
         } else if (remainingTimeEnd && remainingTimeEnd <= 0) {
           // Match has ended if we have the end date and the current time is past the end date
           statusShow.textContent = "Completed";
           remainTiming.textContent = "Completed";
-
+          
           // document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
-          declareResult.style = "display:none"
+          // declareResult.style = "display:none"
           document.getElementById("matchResult").addEventListener("click", () => redirectToHistoryPage('match-name'));
-
+          
           // Stop the countdown as the match is completed
           clearInterval(countdownInterval);
         }
@@ -244,6 +243,7 @@ console.log(userId,"pl")
     }
   }
 
+  document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
 
   function displayTableRows(players, tbodyId) {
     $("#" + tbodyId).empty();

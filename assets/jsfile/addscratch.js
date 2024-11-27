@@ -63,3 +63,23 @@ function uploadCouponFile(file, textInput) {
   });
 
   window.onload = checkAdminAccess();
+
+  let fetchdata = async () => {
+    try {
+        let response = await fetch('https://krinik.in/scratch_coupon_get/');
+        
+        // Check if the response is ok (status in the range 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        let data1 = await response.json();
+        let data = data1.data;
+
+        console.log(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+fetchdata();

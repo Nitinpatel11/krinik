@@ -217,7 +217,7 @@
                 </a>
               </li>
               <li class="otp-exempt" style="display:none">
-                <a href="./scratch-card.html" class="waves-effect">
+                <a href="./manage-scratch.html" class="waves-effect">
                   <div class="icons-sm icon-set ">
                     <span class="material-symbols-outlined icon-margin">
                       award_star
@@ -268,7 +268,7 @@
             <div class="container-fluid">
               <div class="row align-items-center">
                 <div>
-                  <h4 class="page-title mb-1">Scratch_Coupon</h4>
+                  <h4 class="page-title mb-1">Edit Scratch_Coupon</h4>
                 </div>
               </div>
             </div>
@@ -298,7 +298,7 @@
                         <div
                           class="text-center justify-content-center align-items-center"
                         >
-                          <h2 class="text-dark mb-1 mt-4">Upload Scratch_Coupon</h2>
+                          <h2 class="text-dark mb-1 mt-4">Edit Scratch_Coupon</h2>
                         </div>
                       </div>
                     </div>
@@ -307,25 +307,24 @@
                         <form class="form-horizontal" id="uploadForm1">
                           <div class="row">
                             <div class="col-md-12">
-                              <div class="form-group form-group-custom mb-4">
-                               
-                                <input type="file" class="form-control" id="fileInput1" name="file" accept="image/*,video/*" >
-                                <span id="responseMessage1"></span>
-                               
-                              </div>
-                              <div class="form-group form-group-custom mb-4">
-                               
-                                <input type="text" class="form-control" id="fileInput2" name="file" accept="image/*,video/*" placeholder="Enter Value" >
-                                <span id="responseMessage2"></span>
-                               
-                              </div>
+                             <div class="form-group form-group-custom mb-4">
+    <!-- <label for="fileInput1">File Upload:</label> -->
+    <input type="file" class="form-control" id="fileInput1" name="file" accept="image/*,video/*">
+    <!-- Display the file path -->
+    <span id="filePathPreview" style="display: block; margin-top: 5px; color: #555;">No file selected</span>
+</div>
+<div class="form-group form-group-custom mb-4">
+    <!-- <label for="fileInput2">Coupon Points:</label> -->
+    <input type="text" class="form-control" id="fileInput2" name="coupon_point" placeholder="Enter Value">
+</div>
+
 
                               <div class="mt-4 text-center">
                                 <button
                                   class="btn btn-primary w-50"
                                   type="submit"
                                 >
-                                  Submit
+                                  Update
                                 </button>
                               </div>
                             </div>
@@ -378,7 +377,7 @@
     
     <script src="./assets/js/app.js"></script>
     <script type="module" src="./assets/js/admincheck.js"></script>
-    <script type="module" src="./assets/jsfile/scratch.js"></script>
+    <script type="module" src="./assets/jsfile/editscratch.js"></script>
 
   <script type="module" src="./assets/js/initial.js"></script>
     <script
