@@ -1,3 +1,4 @@
+import { refreshpage } from "./pagerefresh.js";
 import {checkAdminAccess,sendNotification}  from "../js/initial.js"
 document.addEventListener('DOMContentLoaded', async function () {
     window.onload = checkAdminAccess();
@@ -742,113 +743,122 @@ if (moment(currentDate, 'DD-MM-YYYY').isBefore(moment(leagueEndDate, 'DD-MM-YYYY
     console.log(existingMatches, "ok")
 
 
+// Function to handle form submission
+async function handleFormSubmit(event) {
+    event.preventDefault();
+
+    // Collect all necessary form data
+    const leagueName = document.getElementById('league-name').value;
+    const teamA = document.getElementById('team-A').value;
+    const teamB = document.getElementById('team-B').value;
+    const startDate = document.getElementById('match-start-date').value;
+
+    const newarr = new Set(arr);
+    console.log(newarr, "newarr");
+
+    // Collect selected players' names for Team A
+    const selectedPlayersA = Array.from(document.querySelectorAll('#selected-players-A .player-option'))
+        .map(player => player.dataset.id.trim());
+    console.log(selectedPlayersA, "playernameche");
+
+    // Collect selected players' names for Team B
+    const selectedPlayersB = Array.from(document.querySelectorAll('#selected-players-B .player-option'))
+        .map(player => player.dataset.id.trim());
+
+    // FormData object to send via fetch
+    const formData = new FormData();
+    formData.append('select_league', leagueName);
+    formData.append('select_team_A', teamA);
+    formData.append('select_team_B', teamB);
+
+    newarr.forEach(playerId => {
+        formData.append('player_list', playerId);
+    });
+
+    selectedPlayersA.forEach(player => {
+        formData.append('select_player_A', player);
+    });
+    console.log("playernamewithid", selectedPlayersA);
+
+    selectedPlayersB.forEach(player => {
+        formData.append('select_player_B', player);
+    });
+
+    formData.append('match_start_date', startDate);
+
+    const overlapResult = checkOverlap(teamA, teamB, startDate, existingMatches);
+
+    // Log form data for verification
+    console.log('Form data before sending:');
+    formData.forEach((value, key) => {
+        console.log(key, value);
+    });
+
+    // Check if the form is valid
+    if (validateForm()) {
+        handleOverlapAndSubmit(overlapResult, formData);
+    } else {
+        console.log('Form validation failed. Please check all fields.');
+    }
+}
+
+// Function to handle overlap errors and submission
+async function handleOverlapAndSubmit(overlapResult, formData) {
+    if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+        document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
+        document.getElementById('error-team-A').style.display = 'inline';
+        document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
+        document.getElementById('error-team-B').style.display = 'inline';
+
+    } else if (overlapResult.teamAOverlap && overlapResult.dateOverlap) {
+        document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
+        document.getElementById('error-team-A').style.display = 'inline';
+
+    } else if (overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+        document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
+        document.getElementById('error-team-B').style.display = 'inline';
+
+    } else {
+        // Proceed with form submission if there are no overlap errors
+        if (confirm("Are you sure you want to add this match?")) {
+            try {
+                const response = await fetch('https://krinik.in/match_get/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Failed to submit match data: ${response.status} ${response.statusText} - ${errorText}`);
+                }
+
+                await sendNotification(null, {
+                    title: "New Match Added!",
+                    body: "New match is live in the app. Check it out and join now!"
+                });
+
+                const responseData = await response.json();
+                console.log('Response data:', responseData);
+
+                window.location.href = './manage-match.html'; // Redirect on successful submission
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the match data.');
+            }
+        }
+    }
+}
+
+// Add event listener to the form
+
+
+
+
     try {
         await fetchLeagues(); // Fetch leagues initially
 
-        const form = document.getElementById('match-form');
-        form.addEventListener('submit', async function (event) {
-            event.preventDefault();
-
-            // Collect all necessary form data
-            const leagueName = document.getElementById('league-name').value;
-
-            const teamA = document.getElementById('team-A').value;
-            const teamB = document.getElementById('team-B').value;
-            const startDate = document.getElementById('match-start-date').value;
-
-            const newarr = new Set(arr) 
-            console.log(newarr,"newarr")
-
-            // Collect selected players' names for Team A
-            const selectedPlayersA = Array.from(document.querySelectorAll('#selected-players-A .player-option'))
-                .map(player => player.dataset.id.trim());
-            console.log(selectedPlayersA, "playernameche")
-
-            // Collect selected players' names for Team B
-            const selectedPlayersB = Array.from(document.querySelectorAll('#selected-players-B .player-option'))
-                .map(player => player.dataset.id.trim());
-
-            // FormData object to send via fetch
-            const formData = new FormData();
-            formData.append('select_league', leagueName);
-            formData.append('select_team_A', teamA);
-            formData.append('select_team_B', teamB);
-               
-            newarr.forEach(playerId => {
-                formData.append('player_list', playerId);
-            });
-
-
-            // Append each player individually to formData for select_player_A
-            selectedPlayersA.forEach(player => {
-                formData.append('select_player_A', player);
-            });
-            console.log("playernamewithid", selectedPlayersA)
-            // Append each player individually to formData for select_player_B
-            selectedPlayersB.forEach(player => {
-                formData.append('select_player_B', player);
-            });
-
-            formData.append('match_start_date', document.getElementById('match-start-date').value);
-            
-            const overlapResult = checkOverlap(teamA, teamB, startDate, existingMatches);
-
-            // Log form data for verification
-            console.log('Form data before sending:');
-            formData.forEach((value, key) => {
-                console.log(key, value);
-            });
-
-            // Check if the form is valid
-            if (validateForm()) {
-
-                // Handle overlap errors
-                if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
-                    document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
-                    document.getElementById('error-team-A').style.display = 'inline';
-                    document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-                    document.getElementById('error-team-B').style.display = 'inline';
-
-                } else if (overlapResult.teamAOverlap && overlapResult.dateOverlap) {
-                    document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
-                    document.getElementById('error-team-A').style.display = 'inline';
-
-                } else if (overlapResult.teamBOverlap && overlapResult.dateOverlap) {
-
-                    document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-                    document.getElementById('error-team-B').style.display = 'inline';
-                } else {
-                    // Proceed with form submission if there are no overlap errors
-                    if (confirm("Are you sure you want to add this match?")) {
-                        try {
-                            const response = await fetch('https://krinik.in/match_get/', {
-                                method: 'POST',
-                                body: formData
-                            });
-
-                            if (!response.ok) {
-                                const errorText = await response.text();
-                                throw new Error(`Failed to submit match data: ${response.status} ${response.statusText} - ${errorText}`);
-                            }
-                            
-                            const responseData = await response.json();
-                            await sendNotification(null, {
-                                title: "New Match Added!",
-                                body: "New match is live in the app. Check it out and join now!"
-                              })
-                            console.log('Response data:', responseData);
-                            window.location.href = './manage-match.html'; // Redirect on successful submission
-                        } catch (error) {
-                            console.error('Error:', error);
-                            alert('An error occurred while submitting the match data.');
-                        }
-                    }
-                }
-            } else {
-                console.log('Form validation failed. Please check all fields.');
-            }
-
-        });
+        const form = document.querySelector('form');
+        form.addEventListener('submit', handleFormSubmit);
 
     } catch (error) {
         console.error('Error during DOMContentLoaded event:', error);
@@ -856,3 +866,5 @@ if (moment(currentDate, 'DD-MM-YYYY').isBefore(moment(leagueEndDate, 'DD-MM-YYYY
 
 });
 
+refreshpage()
+window.onload = checkAdminAccess();

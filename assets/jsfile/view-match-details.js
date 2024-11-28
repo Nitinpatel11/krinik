@@ -54,7 +54,16 @@ async function fetchUserData() {
     if (!response.ok) {
       throw new Error('Failed to fetch player data');
     }
-   
+    const responseurl = await fetch(url1);
+    const urlpool = await responseurl.json();
+    const urlpooldata = urlpool.data;
+console.log(urlpooldata,"poll")
+    const urlpool1 = urlpooldata.find((p) => p.select_match ? p.select_match.match_id == id : null);
+    if (urlpool1) {
+      urlpooltime = urlpool1.date_time;
+    }
+
+    console.log(urlpooltime, "poll1");
 
 
     const userData1 = await response.json();
@@ -63,7 +72,7 @@ async function fetchUserData() {
     userId = userData.id;
 console.log(userId,"pl")
     // Call the editPlayerData function to edit player data
-    editPlayerData(userData);
+    editPlayerData(userData,urlpooltime);
     const responseurl2 = await fetch(url2);
     const userMatchData1 = await responseurl2.json();
     const userMatchData = userMatchData1.data
@@ -88,16 +97,7 @@ console.log(userId,"pl")
       console.log(userMoney,"userMatchData3")
     }
 
-    const responseurl = await fetch(url1);
-    const urlpool = await responseurl.json();
-    const urlpooldata = urlpool.data;
-console.log(urlpooldata,"poll")
-    const urlpool1 = urlpooldata.find((p) => p.select_match ? p.select_match.match_id == id : null);
-    if (urlpool1) {
-      urlpooltime = urlpool1.date_time;
-    }
-
-    console.log(urlpooltime, "poll");
+    
 
    
     
@@ -134,7 +134,7 @@ arr = arr.filter(player => !disabledIds.includes(player));
   fetchUserData1()
 
 
-  function editPlayerData(response) {
+  function editPlayerData(response,urlpooltime) {
     const teamLogo1 = document.getElementById("team-logo-1");
     const teamLogo2 = document.getElementById("team-logo-2");
     const teamLogoName1 = document.getElementById("team-logo-name-1");
@@ -153,7 +153,7 @@ arr = arr.filter(player => !disabledIds.includes(player));
       // Example match start and end dates from response
       const matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
       const matchEndDate = urlpooltime ? urlpooltime : null;  // If urlpooltime is available, use it; otherwise, it's null.
-
+console.log(matchEndDate,"endmatch")
       const matchDateTimeStr = matchStartDate.replace("/", "-"); // Ensures compatibility with Date parsing
       // console.log(matchDateTimeStr, "matchDateTimeStr");
 

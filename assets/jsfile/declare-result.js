@@ -233,7 +233,10 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
       displayIndexButtons();
       highlightIndexButton();
   }
-  
+  window.prev = prev;
+  window.next = next;
+  window.indexPagination = indexPagination;
+
   
   function displayTableRows() {
     $("table tbody").empty();
@@ -266,7 +269,16 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
       var shortNameCell = $("<td colspan='2'></td>").text(showdata["team_name"].team_name || "");
   
       // Use .html() to properly render the input element
-      var enterRun = $("<td class='responsive-td'></td>").html("<input type='text' placeholder='Enter Run' class='run-input p-2 text-center'>");
+      var inputField = $("<input>")
+      .attr("type", "text")
+      .attr("placeholder", "Enter Run")
+      .addClass("run-input p-2 text-center")
+      .on("input", function () {
+        // Allow only digits
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+
+    var enterRun = $("<td class='responsive-td'></td>").append(inputField);
   
       tr.append(noCell)
         .append(fullNameCell)
@@ -1378,6 +1390,11 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
           console.error("Error updating admin wallet balance:", error);
         },
       });
+      await sendNotification(null, {
+        title: "Result Declared!",
+        body: "The results are out! Check the app to see if you’re a winner!"
+    });
+      alert("Match result declare successfully");
     } catch (error) {
       console.error("Error during money allocation process:", error);
     }
@@ -1442,10 +1459,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
               if(updatedWinner){
                 await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
                 console.log("Prize money allocated to winners successfully.");
-                await sendNotification(null, {
-                  title: "Result Declared!",
-                  body: "The results are out! Check the app to see if you’re a winner!"
-              });
+               
               
               }
             }
@@ -1590,7 +1604,23 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
   // };
   window.onload = checkAdminAccess();
   $(document).ready(function() {
-    $("#submitButton").on("click", function() {
+    $("#submitButton").on("click", function(e) {
+      e.preventDefault();
+
+      // Check if all input fields are filled
+      var allFilled = true;
+  
+      $(".run-input").each(function() {
+        if ($(this).val().trim() === "") {
+          allFilled = false;
+          return false; // Exit the loop early if a field is empty
+        }
+      });
+  
+      if (!allFilled) {
+        alert("Please fill in all the run inputs before submitting.");
+        return; // Do not proceed with the submission
+      }
       // postRunData(); // Call the function to post data
       postData()
     });

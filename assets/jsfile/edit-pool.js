@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   const errorPrice = document.getElementById('error-price');
   let prices = [];
   let existingPool = []
-
+let initialData
   const noNumberOrWhitespaceRegex = /^(?!.*[\uD83C-\uDBFF\uDC00-\uDFFF])^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+(?: [a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+)*$/;
   const noNumberOrWhitespaceRegex1 = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
   const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
@@ -232,12 +232,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Assuming the end date and time are part of the matchDisplayName and need to be extracted
     const parts = matchDisplayName.split(" ");
     const matchDateStr = parts.slice(-2).join(" ");
-    const matchDate = flatpickr.parseDate(matchDateStr, "d-m-Y H:i");
+    // const matchDate = flatpickr.parseDate(matchDateStr, "d-m-Y H:i");
 
     // Extract date and time separately for maxDate and maxTime
     return {
-      date: matchDate,
-      time: matchDate.toTimeString().slice(0, 5) // Format time as HH:mm
+      // date: matchDate,
+      time:matchDateStr // Format time as HH:mm
     };
   }
 
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       'Please enter a valid winning price'
     );
 
-    isPriceAdd = checkPriceValidation()
+   let isPriceAdd = checkPriceValidation()
     // const teamValid = validateTeamSelection();
     // const playerValid = validatePlayerSelection();
     const datesValid = validateMatchDates();
