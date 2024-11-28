@@ -1989,3 +1989,83 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
   });
   
   
+
+
+
+
+
+  function displayTableRows1(array) {
+    console.log(array,"uio")
+        $("table tbody").empty();
+        var tab_start = start_index - 1;
+        var tab_end = end_index;
+    
+        if (array.length === 0) {
+          $("#noDataFound").show();
+          $("#pagination").hide();
+          $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+          return;
+        } else {
+          $("#noDataFound").hide();
+          $("#pagination").show();
+          $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+        }
+    
+        for (var i = tab_start; i < tab_end; i++) {
+          var showdata = array[i];
+          // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+    
+          var tr = $("<tr></tr>");
+    
+           const noCell = $("<td></td>").text(i + 1);
+        const userNameCell = $("<td ></td>").text(showdata.user.name || "");
+        const totalAmountCell = $("<td > </td>").text(showdata.totalAmount || 0);
+        const poolCountCell = $("<td ></td>").text(showdata.poolCount || 0);
+    
+        // Append cells to row
+        tr.append(noCell)
+          .append(userNameCell)
+          .append(totalAmountCell)
+          .append(poolCountCell);
+    
+    
+    
+          $("table tbody").append(tr);
+        }
+      }
+
+
+      async function fetchData(userdataId) {
+        try {
+          const result = userdataId.reduce((acc, item) => {
+            const userId = item.user_data.user_id;
+        
+            if (!acc[userId]) {
+                acc[userId] = {
+                    user: item.user_data,
+                    poolCount: 0,
+                    totalAmount: 0
+                };
+            }
+        
+            acc[userId].poolCount += 1;
+            acc[userId].totalAmount += item.invest_amount;
+        
+            return acc;
+        }, {});
+    console.log(result,"result")
+        array = Object.values(result); 
+            console.log(array,"array")
+            if (array.length) {
+    
+              filterAndDisplay(array)
+            } else {
+              // console.log('no data found')
+            }
+            // editPlayerData(array);
+          
+        } catch (error) {
+          console.error("Error fetching data", error);
+        }
+      }
+      fetchData(userMatchData3);

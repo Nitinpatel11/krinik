@@ -48,17 +48,22 @@ async function fetchUserData() {
     const url5 = `https://krinik.in/user_get/`;
     console.log('Fetching user data from:', url5);
 
-    const responseurl = await fetch(url1);
-    const urlpool = await responseurl.json();
-    const urlpooldata = urlpool.data;
-console.log(urlpooldata,"poll")
-    const urlpool1 = urlpooldata.find((p) => p.select_match ? p.select_match.match_id == id : null);
-    if (urlpool1) {
-      urlpooltime = urlpool1.date_time;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch player data');
     }
+   
 
-    console.log(urlpooltime, "poll");
 
+    const userData1 = await response.json();
+    const userData = userData1.data;
+    console.log(userData, "data123");
+    userId = userData.id;
+console.log(userId,"pl")
+    // Call the editPlayerData function to edit player data
+    editPlayerData(userData);
     const responseurl2 = await fetch(url2);
     const userMatchData1 = await responseurl2.json();
     const userMatchData = userMatchData1.data
@@ -73,23 +78,30 @@ console.log(urlpooldata,"poll")
     const userMatchData3 = userMatchData2.filter((p)=> p.user_data.status === "block")
     console.log(userMatchData2,"userMatchData2")
     console.log(userMatchData3,"userMatchData3")
+    if(userMatchData3){
 
+      fetchData(userMatchData3)
+    }
     if (userMatchData3) {
       userMoney = userMatchData3.reduce((total,curr)=> total + curr.invest_amount,0)
       totalAmountData.textContent = userMoney
       console.log(userMoney,"userMatchData3")
     }
-    
-    const response = await fetch(url);
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch player data');
+    const responseurl = await fetch(url1);
+    const urlpool = await responseurl.json();
+    const urlpooldata = urlpool.data;
+console.log(urlpooldata,"poll")
+    const urlpool1 = urlpooldata.find((p) => p.select_match ? p.select_match.match_id == id : null);
+    if (urlpool1) {
+      urlpooltime = urlpool1.date_time;
     }
+
+    console.log(urlpooltime, "poll");
+
    
-
-
-    const userData1 = await response.json();
-    const userData = userData1.data;
+    
+    
     // console.log(userData,"userData che")
     const disabledDataPlayerA = userData.disable_player_A || [];
     const disabledDataPlayerB = userData.disable_player_B || [];
@@ -109,11 +121,7 @@ arr = arr.filter(player => !disabledIds.includes(player));
 // console.log(arr, "Filtered arr (without disabled players)");
   // Corrected this to log the filtered arr
 
-  console.log(userData, "data123");
-    userId = userData.id;
-console.log(userId,"pl")
-    // Call the editPlayerData function to edit player data
-    editPlayerData(userData);
+ 
     // You can call other functions that need the updated arr data if required
 
   } catch (error) {
@@ -140,19 +148,19 @@ console.log(userId,"pl")
       teamLogoName2.textContent = response.select_team_B.team_name;
 
       let defaultTime = new Date();  // Current date and time
-      console.log(defaultTime.getTime(), "defaultTime");
+      // console.log(defaultTime.getTime(), "defaultTime");
 
       // Example match start and end dates from response
       const matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
       const matchEndDate = urlpooltime ? urlpooltime : null;  // If urlpooltime is available, use it; otherwise, it's null.
 
       const matchDateTimeStr = matchStartDate.replace("/", "-"); // Ensures compatibility with Date parsing
-      console.log(matchDateTimeStr, "matchDateTimeStr");
+      // console.log(matchDateTimeStr, "matchDateTimeStr");
 
       let matchDateTimeStrEnd = null;
       if (matchEndDate) {
         matchDateTimeStrEnd = matchEndDate.replace("/", "-"); // Ensures compatibility with Date parsing
-        console.log(matchDateTimeStrEnd, "matchDateTimeStrEnd");
+        // console.log(matchDateTimeStrEnd, "matchDateTimeStrEnd");
       }
 
       // Use moment.js to parse the match start and end dates
@@ -160,16 +168,16 @@ console.log(userId,"pl")
       let formattedMatchEndDate = null;
       if (matchDateTimeStrEnd) {
         formattedMatchEndDate = moment(matchDateTimeStrEnd, 'YYYY-MM-DD HH:mm:ss');  // Match end as a moment object
-        console.log(formattedMatchEndDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchEndDate");
+        // console.log(formattedMatchEndDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchEndDate");
       }
 
-      console.log(formattedMatchDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchDate");
+      // console.log(formattedMatchDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchDate");
 
       // Function to update the live countdown and status
       function updateCountdown() {
         // Get the current time
         let currentTime = moment();  // Current time as a moment object
-        console.log(currentTime.format('DD-MM-YYYY HH:mm:ss'), "Current Time");
+        // console.log(currentTime.format('DD-MM-YYYY HH:mm:ss'), "Current Time");
 
         // Calculate the remaining time until match start
         let remainingTimeStart = formattedMatchDate.diff(currentTime);
@@ -194,13 +202,15 @@ console.log(userId,"pl")
           statusShow.textContent = "Live";
           remainTiming.textContent = "Live";
           matchResult.style = "display:none";
-          
+          declareResult.style = "display:block";
           
         } else if (remainingTimeEnd && remainingTimeEnd <= 0) {
           // Match has ended if we have the end date and the current time is past the end date
           statusShow.textContent = "Completed";
           remainTiming.textContent = "Completed";
-          
+          declareResult.style = "display:none";
+          matchResult.style = "display:block";
+
           // document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
           // declareResult.style = "display:none"
           document.getElementById("matchResult").addEventListener("click", () => redirectToHistoryPage('match-name'));
@@ -411,7 +421,7 @@ window.handleDisable = handleDisable
 
       await fetchPlayer(teamA, playersA, disableplayersA, 'playerCheckboxesA', leagueNameData); // Fetch players for Team A
       await fetchPlayer(teamB, playersB, disableplayersB, 'playerCheckboxesB', leagueNameData);
-      fetchData(userId);
+      
 
 
     } catch (error) {
@@ -420,45 +430,35 @@ window.handleDisable = handleDisable
   }
 
 
-  async function fetchData(userId) {
+   function fetchData(userdataId) {
     try {
-      const response = await fetch(`https://krinik.in/view_contest_details_view_get/`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch pool history data');
-      }
-
-      const userData1 = await response.json();
-
-      if (userData1 && userData1.status === "success" && userData1.data) {
-        rankList = userData1.data;
-        console.log(rankList, "arr");
-        // const totalAmountData = document.getElementById("total-amount-data")
-        // const totalWinData = document.getElementById("total-win-data")
-        // const totalAvailableData = document.getElementById("total-available-data")
-
-        // totalAmountData.textContent = rankList.
-
-        // Filter and log matching data
-        const matchingData = rankList.filter(item => item.user_data.id === userId);
-        if (matchingData.length > 0) {
-          console.log('Matching data found:', matchingData, "okk");
-        } else {
-          // console.log('No matching data found.');
+      const result = userdataId.reduce((acc, item) => {
+        const userId = item.user_data.user_id;
+    
+        if (!acc[userId]) {
+            acc[userId] = {
+                user: item.user_data,
+                poolCount: 0,
+                totalAmount: 0
+            };
         }
-
-        array = matchingData;
-
-
+    
+        acc[userId].poolCount += 1;
+        acc[userId].totalAmount += item.invest_amount;
+    
+        return acc;
+    }, {});
+console.log(result,"result")
+    array = Object.values(result); 
+        console.log(array,"array")
         if (array.length) {
 
-          filterAndDisplay()
+          filterAndDisplay(array)
         } else {
           // console.log('no data found')
         }
         // editPlayerData(array);
-      } else {
-        console.error("Error: Invalid data format or ID mismatch");
-      }
+      
     } catch (error) {
       console.error("Error fetching data", error);
     }
@@ -468,7 +468,9 @@ window.handleDisable = handleDisable
     // filterRankList();
     preLoadCalculations();
     displayIndexButtons();
+    // displayTableRows();
     displayTableRows1();
+
     highlightIndexButton();
   }
 
@@ -569,62 +571,48 @@ window.handleDisable = handleDisable
   window.indexPagination = indexPagination
 
   function displayTableRows1() {
-
-    $("table tbody").empty();
-    var tab_start = start_index - 1;
-    var tab_end = end_index;
-
-    if (array.length === 0) {
-      $("#noDataFound").show();
-      $("#pagination").hide();
-      $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
-      return;
-    } else {
-      $("#noDataFound").hide();
-      $("#pagination").show();
-      $("#table-scrolling").css("overflow-x", "auto"); // Add this line
-    }
-
-    for (var i = tab_start; i < tab_end; i++) {
-      var showdata = array[i];
-      // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
-
-      var tr = $("<tr></tr>");
-
-      var noCell = $("<td></td>").text(i + 1);
-      var userNameCell = $("<td colspan='2'></td>").text(showdata.user_data["name"] || "");
-      var amountCell = $("<td colspan='2'> </td>").text(showdata["entry_fee"] || "");
-
-
-      var pairCell = $("<td colspan='2'></td>").text(showdata.user_data["pool_name"].length || "");
-      var totalPoolCell = $("<td colspan='2'> </td>").text(showdata["player_pair"].length || "");
-
-
-      var deleteCell = $("<td></td>").html(
-        '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-      );
-
-      tr.append(noCell)
-        .append(userNameCell)
-        .append(amountCell)
-        .append(pairCell)
-        .append(totalPoolCell)
-        // .append(logoCell)
-        // .append(dateCell)
-        // .append(statusCell)
-        // .append(viewCell)
-        // .append(editCell)
-        .append(deleteCell);
-
-
-
-      $("table tbody").append(tr);
-    }
-  }
+    console.log(array,"uio")
+        $("table #tbody12").empty();
+        var tab_start = start_index - 1;
+        var tab_end = end_index;
+    
+        if (array.length === 0) {
+          $("#noDataFound").show();
+          $("#pagination").hide();
+          $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
+          return;
+        } else {
+          $("#noDataFound").hide();
+          $("#pagination").show();
+          $("#table-scrolling").css("overflow-x", "auto"); // Add this line
+        }
+    
+        for (var i = tab_start; i < tab_end; i++) {
+          var showdata = array[i];
+          // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+    
+          var tr = $("<tr></tr>");
+    
+           const noCell = $("<td></td>").text(i + 1);
+        const userNameCell = $("<td ></td>").text(showdata.user.name || "");
+        const totalAmountCell = $("<td > </td>").text(showdata.totalAmount || 0);
+        const poolCountCell = $("<td ></td>").text(showdata.poolCount || 0);
+    
+        // Append cells to row
+        tr.append(noCell)
+          .append(userNameCell)
+          .append(totalAmountCell)
+          .append(poolCountCell);
+    
+    
+    
+          $("table #tbody12").append(tr);
+        }
+      }
 
   function redirectToHistoryPage(page) {
     const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get('name');
+    // const name = urlParams.get('name');
 
     if (id) {
       window.location.href = `${page}.html?id=${id}`;
@@ -634,20 +622,6 @@ window.handleDisable = handleDisable
   }
 
 
-  // function declarefun() {
-  //   const declareResultButton = document.getElementById("declareResult");
-  
-  //   if (declareResultButton) {
-  //     declareResultButton.addEventListener("click", () => {
-  //       redirectToHistoryPage('declare-result');
-  //     });
-  //   } else {
-  //     console.error("Element with ID 'declareResult' not found.");
-  //   }
-  // }
-
-
-  // Function to open the modal and populate it with checkboxes
   async function fetchPlayer(teamName, playersName, disablePlayers, checkboxContainerId, leagueNameData) {
     try {
       const response = await fetch('https://krinik.in/player_get/');

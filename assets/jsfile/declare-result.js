@@ -1419,7 +1419,8 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
      
       let user_match_data1 = [];
       if (userMatchData && Array.isArray(userMatchData.data)) {
-        user_match_data1 = userMatchData.data.filter((match) => match.match.id === NumberId);
+       let user_match_data2 = userMatchData.data.filter((match) => match.match.id === NumberId);
+        user_match_data1 = user_match_data2.filter((p)=> p.user_data.status == "block")
       }
   
       // Step 5: Update match scores

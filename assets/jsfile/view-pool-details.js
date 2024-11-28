@@ -11,96 +11,158 @@ import {checkAdminAccess}  from "../js/initial.js"
 let userId
 const urlParams = new URLSearchParams(window.location.search);
 let id = Number(urlParams.get('id'));
+let userMatchDataFiltered
+
+const totalpoolData = document.getElementById("total-league-data") 
 
 
 async function fetchUserData() {
-    try {
-      if (!id) {
-        console.warn('No player ID found in URL.');
-        return;
-      }
-
-      const url = `https://krinik.in/add_pool_get/${id}/`;
-      console.log('Fetching player data from:', url);
-
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch player data');
-      }
-
-      const userData1 = await response.json();
-      const userData = userData1.data;
-    //   console.log(userData, "data");
-      userId = userData.id;
-
-      fetchData(id);
-    } catch (error) {
-      console.error('Error fetching player data:', error);
+  try {
+    if (!id) {
+      console.warn('No player ID found in URL.');
+      return;
     }
+
+    // Fetch player data
+    const playerUrl = `https://krinik.in/add_pool_get/${id}/`;
+    console.log('Fetching player data from:', playerUrl);
+
+    const response = await fetch(playerUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch player data');
+    }
+
+    const userData1 = await response.json();
+    const userData = userData1.data;
+    const userId = userData.id;
+    const matchId = userData.select_match.match_id;
+
+    console.log(matchId, "matchId");
+
+    const poolName = userData.pool_name;
+    const poolType = userData.pool_type;
+    console.log(poolType, "poolType");
+
+    // Fetch pool data
+    const poolUrl = `https://krinik.in/user_match_get/`;
+    console.log('Fetching pool data from:', poolUrl);
+
+    const poolResponse = await fetch(poolUrl);
+    if (!poolResponse.ok) {
+      throw new Error('Failed to fetch pool data');
+    }
+
+    const userMatchData1 = await poolResponse.json();
+    const userMatchData = userMatchData1.data;
+
+    // Check poolType and poolName
+    if (poolType && poolName) {
+      editPlayerData(poolType, poolName);
+    }
+
+    // Filter by match ID and status
+   userMatchDataFiltered = userMatchData.filter(
+      (p) => p.match.id === matchId && p.user_data.status === "block"
+    );
+
+    console.log(userMatchDataFiltered, "Filtered Data");
+
+    // Count money
+    if (userMatchDataFiltered.length) {
+      const totalMoney = userMatchDataFiltered.reduce(
+        (total, curr) => {
+          // Check if poolType and poolName match
+          if (curr.pool_type === poolType && curr.pool_name === poolName) {
+            return total + curr.invest_amount;
+          }
+          return total;
+        },
+        0
+      );
+    
+      totalpoolData.textContent = totalMoney;
+      console.log(totalMoney, "Total Money");
+      fetchData(userMatchDataFiltered,poolType,poolName);
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
-
-  async function fetchData(userId) {
-    try {
-      const response = await fetch(`https://krinik.in/view_contest_details_view_get/`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch pool history data');
-      }
-
-      console.log(userId,"sdaf")
-      const userData1 = await response.json();
-
-      if (userData1 && userData1.status === "success" && userData1.data) {
-        rankList = userData1.data;
-        console.log(rankList, "arr");
-
-        // Filter and log matching data
-        const matchingData = rankList.filter(item => item.pool_name.id == userId);
-        if (matchingData.length > 0) {
-          console.log('Matching data found:', matchingData);
-        } else {
-          console.log('No matching data found.');
-        }
-
-        array = matchingData;
-        // filterAndDisplay();
-
-        // const userData1 = await response.json();
-//         rankList = userData1.data;
-//           array = rankList;
-//           console.log(array)
-        filterAndDisplay()
-        editPlayerData(array);
-      } else {
-        console.error("Error: Invalid data format or ID mismatch");
-      }
-    } catch (error) {
-      console.error("Error fetching data", error);
-    }
-  }
-
-function editPlayerData(response) {
-    const contestName = document.getElementById("contestName");
-    // const teamLogo2 = document.getElementById("team-logo-2");
-    // const teamLogoName1 = document.getElementById("team-logo-name-1");
-    // const teamLogoName2 = document.getElementById("team-logo-name-2");
-
-    if (response) {
-        // const data = response[0];
-
-        // teamLogo1.src = `https://krinik.in${response.select_team_A.team_image}`;
-        // teamLogo2.src = `https://krinik.in${response.select_team_B.team_image}`;
-
-        contestName.textContent = response.pool_name;
-        // teamLogoName2.textContent = response.select_team_B.team_name;
-
-        // displayTableRows(response.select_player_A, "tbody1");
-        // displayTableRows(response.select_player_B, "tbody2");
-    } else {
-        console.error("Data is not in the expected format:", response);
-    }
 }
 
+function editPlayerData(poolType, poolName) {
+  const contestName = document.getElementById("contestName");
+  if (poolType || poolName) {
+    contestName.textContent = `${poolName} - ${poolType}`;
+  } else {
+    console.error("Invalid pool data:", poolType, poolName);
+  }
+}
 
+// function fetchData(filteredData) {
+//   try {
+//     const result = filteredData.reduce((acc, item) => {
+//       const userId = item.user_data.user_id;
+//       if (!acc[userId]) {
+//         acc[userId] = {
+//           user: item.user_data,
+//           totalAmount: 0
+//         };
+//       }
+//       acc[userId].totalAmount += item.invest_amount;
+//       return acc;
+//     }, {});
+
+//     console.log(result, "Aggregated Result");
+
+//     const array = Object.values(result);
+//     console.log(array, "Array");
+
+//     if (array.length) {
+//       filterAndDisplay(array);
+//     } else {
+//       console.log('No data to display');
+//     }
+//   } catch (error) {
+//     console.error("Error processing data", error);
+//   }
+// }
+
+
+
+function fetchData(filteredData, poolType, poolName) {
+  // console.log(typeof poolName,"poo")
+  try {
+    const result = filteredData.reduce((acc, item) => {
+      const userId = item.user_data.user_id;
+
+      // Check if poolType and poolName match
+      if (item.pool_type === poolType && item.pool_name === poolName) {
+        if (!acc[userId]) {
+          acc[userId] = {
+            user: item.user_data,
+            totalAmount: 0
+          };
+        }
+        acc[userId].totalAmount += item.invest_amount;
+      }
+
+      return acc;
+    }, {});
+
+    console.log(result, "Filtered and Aggregated Result");
+
+   array = Object.values(result);
+    console.log(array, "Array");
+
+    if (array.length) {
+      filterAndDisplay(array); // Update your display logic here
+    } else {
+      console.log('No data matching poolType and poolName.');
+    }
+  } catch (error) {
+    console.error("Error processing data", error);
+  }
+}
 
 
 
@@ -109,6 +171,7 @@ fetchUserData();
 
 
   function filterAndDisplay() {
+    
     // filterRankList();
     preLoadCalculations();
     displayIndexButtons();
@@ -214,6 +277,7 @@ window.prev = prev
 
 
   function displayTableRows() {
+ 
     $("table tbody").empty();
     var tab_start = start_index - 1;
     var tab_end = end_index;
@@ -233,21 +297,25 @@ window.prev = prev
       var showdata = array[i];
       // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
 // console.log(showdata,"showdata")
-console.log(showdata["player_pair"].length,"prj")
+// console.log(showdata["player_pair"].length,"prj")
       var tr = $("<tr></tr>");
 
       var noCell = $("<td></td>").text(i + 1);
-      var userNameCell = $("<td colspan='3'></td>").text(showdata.user_data["name"] || "");
-      var amountCell = $("<td colspan='3'> </td>").text(showdata["amount"] || "");
+      var userNameCell = $("<td colspan='3'></td>").text(showdata.user.name || "");
+      var amountCell = $("<td colspan='3'> </td>").text(showdata.totalAmount || 0);
       
+      // const noCell = $("<td></td>").text(i + 1);
+      // const userNameCell = $("<td ></td>").text(showdata.user.name || "");
+      // const totalAmountCell = $("<td > </td>").text(showdata.totalAmount || 0);
+      // const poolCountCell = $("<td ></td>").text(showdata.poolCount || 0);
 
       // var logoCell = $("<td></td>").html(
       //   showdata["league_image"]
       //     ? `<img src="https://krinik.in${showdata["league_image"]}" alt="" class="team-logo lazyload" />`
       //     : ""
       // );
-      var pairCell = $("<td colspan='2'></td>").text(showdata.pool_name["pool_name"].length || "");
-      var totalPoolCell = $("<td colspan='2'> </td>").text(showdata["player_pair"].length || "");
+      // var pairCell = $("<td colspan='2'></td>").text(showdata.pool_name["pool_name"].length || "");
+      // var totalPoolCell = $("<td colspan='2'> </td>").text(showdata["player_pair"].length || "");
 
 
 
@@ -264,50 +332,43 @@ console.log(showdata["player_pair"].length,"prj")
       // var editCell = $("<td></td>").html(
       //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
       // );
-      var deleteCell = $("<td></td>").html(
-        '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="fa-solid fa-ban"></i></span>'
-      );
+      // var deleteCell = $("<td></td>").html(
+      //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="fa-solid fa-ban"></i></span>'
+      // );
 
       tr.append(noCell)
         .append(userNameCell)
         .append(amountCell)
-        .append(totalPoolCell)
-        .append(pairCell)
-        // .append(logoCell)
-        // .append(dateCell)
-        // .append(statusCell)
-        // .append(viewCell)
-        // .append(editCell)
-        .append(deleteCell);
+       
 
-        if (showdata.refund === true) {
-      noCell.addClass("disabled-row");
-      userNameCell.addClass("disabled-row");
-      amountCell.addClass("disabled-row");
-      pairCell.addClass("disabled-row");
-      totalPoolCell.addClass("disabled-row");
-      deleteCell.addClass("disabled-row");
+    //     if (showdata.refund === true) {
+    //   noCell.addClass("disabled-row");
+    //   userNameCell.addClass("disabled-row");
+    //   amountCell.addClass("disabled-row");
+    //   pairCell.addClass("disabled-row");
+    //   totalPoolCell.addClass("disabled-row");
+    //   deleteCell.addClass("disabled-row");
 
       
-    }
+    // }
 
-    async function handleDelete(id) {
+//     async function handleDelete(id) {
   
-  if (confirm('Are you sure you want to delete this league?')) {
-    const url = `https://krinik.in/league_get/${id}/`;
-    try {
-      const response = await fetch(url, { method: "PATCH" });
+//   if (confirm('Are you sure you want to delete this league?')) {
+//     const url = `https://krinik.in/league_get/${id}/`;
+//     try {
+//       const response = await fetch(url, { method: "PATCH" });
 
-      if (response.ok) {
-        await fetchUserData();
-      } else {
-        console.error("Failed to delete the league");
-      }
-    } catch (error) {
-      console.error("Error deleting data:", error);
-    }
-  }
-}
+//       if (response.ok) {
+//         await fetchUserData();
+//       } else {
+//         console.error("Failed to delete the league");
+//       }
+//     } catch (error) {
+//       console.error("Error deleting data:", error);
+//     }
+//   }
+// }
 
     
 
