@@ -1105,26 +1105,26 @@ let startPicker
       }
         else if(hasMatchTimeChanged ) {
          
-          if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
-          document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
-          document.getElementById('error-team-A').style.display = 'inline';
-          document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-          document.getElementById('error-team-B').style.display = 'inline';
+        //   if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+        //   document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
+        //   document.getElementById('error-team-A').style.display = 'inline';
+        //   document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
+        //   document.getElementById('error-team-B').style.display = 'inline';
 
-        } else if (overlapResult.teamAOverlap && overlapResult.dateOverlap) {
-          document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
-          document.getElementById('error-team-A').style.display = 'inline';
+        // } else if (overlapResult.teamAOverlap && overlapResult.dateOverlap) {
+        //   document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
+        //   document.getElementById('error-team-A').style.display = 'inline';
 
-        } else if (overlapResult.teamBOverlap && overlapResult.dateOverlap) {
+        // } else if (overlapResult.teamBOverlap && overlapResult.dateOverlap) {
 
-          document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-          document.getElementById('error-team-B').style.display = 'inline';
-        }else{
+        //   document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
+        //   document.getElementById('error-team-B').style.display = 'inline';
+        // }else{
           if (confirm("Are you sure you want to edit it?")) {
             await submitMatchData(currentData); // Submit updated data
             console.log(currentData, "currentData");
           }
-        }
+        // }
         
       } else {
         if (confirm("Are you sure you want to edit it?")) {
