@@ -176,15 +176,14 @@ let initialData
 
   function initializeDatePickers() {
     const matchDisplayName = matchSelect.value; // Get the selected match display name
-    const matchDateTime = getMatchEndDateTime(matchDisplayName); // Assuming this function extracts end date and time
+    const matchDate = getMatchEndDate(matchDisplayName); // Assuming this function extracts end date
 
     // Initialize the start date picker
     const startPicker = flatpickr('#fantasyStartDate', {
       dateFormat: 'd-m-Y H:i',
       enableTime: true,
       minDate: 'today', // Disable past dates
-      maxDate: matchDateTime.date, // Set the max date to the match date
-      maxTime: matchDateTime.time, // Set the max time to the match time
+      maxDate: matchDate, // Set the max date to the match date
       onReady: function (selectedDates, dateStr, instance) {
         addCustomButtons(instance, '#fantasyStartDate');
       }
@@ -228,33 +227,29 @@ let initialData
       instance.calendarContainer.appendChild(footer);
     }
   }
-  function getMatchEndDateTime(matchDisplayName) {
-    // Assuming the end date and time are part of the matchDisplayName and need to be extracted
+
+
+  function getMatchEndDate(matchDisplayName) {
+    // Assuming the end date is part of the matchDisplayName and needs to be extracted
     const parts = matchDisplayName.split(" ");
     const matchDateStr = parts.slice(-2).join(" ");
-    // const matchDate = flatpickr.parseDate(matchDateStr, "d-m-Y H:i");
-
-    // Extract date and time separately for maxDate and maxTime
-    return {
-      // date: matchDate,
-      time:matchDateStr // Format time as HH:mm
-    };
+    return flatpickr.parseDate(matchDateStr, "d-m-Y H:i");
   }
 
   // Handle match selection change
-  matchSelect.addEventListener('change', function () {
-    const matchDisplayName = this.value;
-    const matchDateTime = getMatchEndDateTime(matchDisplayName);
+  // matchSelect.addEventListener('change', function () {
+  //   const matchDisplayName = this.value;
+  //   const matchDateTime = getMatchEndDateTime(matchDisplayName);
 
-    // Update Flatpickr configurations
-    const startPicker = flatpickr('#fantasyStartDate', {
-      dateFormat: 'd-m-Y H:i',
-      enableTime: true,
-      minDate: 'today',
-      maxDate: matchDateTime.date,
-      maxTime: matchDateTime.time,
-    });
-  });
+  //   // Update Flatpickr configurations
+  //   const startPicker = flatpickr('#fantasyStartDate', {
+  //     dateFormat: 'd-m-Y H:i',
+  //     enableTime: true,
+  //     minDate: 'today',
+  //     maxDate: matchDateTime.date,
+  //     maxTime: matchDateTime.time,
+  //   });
+  // });
   function isValidTeamName1(value) {
     const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}]/u;
     const alphanumericRegex = /^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
