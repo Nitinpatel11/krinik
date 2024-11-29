@@ -1334,6 +1334,9 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
                 data: JSON.stringify({
                   player_id: playerId,
                   total_amount: totalInvestedMoney,
+                  user_data: {
+                    winning_amount: totalInvestedMoney
+                }
                 }),
                 success: (response) => {
                   console.log(`Prize money ${totalInvestedMoney} allocated successfully for player ${playerId} in match ${match.matchId}`, response);
