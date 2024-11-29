@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', async function () {
   let playersData
   let matchData
   let arr = [];
+  let leaguestartDate
+let leagueendDate
+let startPicker
 
   // Initialize Flatpickr date pickers
   // $(function () {
@@ -120,77 +123,79 @@ document.addEventListener('DOMContentLoaded', async function () {
   //   };
   // });
   $(function () {
-    let startPicker = flatpickr('#match-start-date', {
-      dateFormat: 'd-m-Y H:i',
-      enableTime: true,
-      minDate: 'today', // Disable past dates
-      onChange: function (selectedDates, dateStr, instance) {
-        if (selectedDates.length > 0) {
-          // No endPicker, so no need to set minDate for another picker.
+    // Initialize Flatpickr
+     startPicker = flatpickr('#match-start-date', {
+        dateFormat: 'd-m-Y H:i',
+        enableTime: true,
+        minDate: leaguestartDate, // Set the initial minDate
+        maxDate: leagueendDate,  // Set the initial maxDate
+        onChange: function (selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                // No endPicker, so no need to set minDate or maxDate for another picker.
+            }
+        },
+        onReady: function (selectedDates, dateStr, instance) {
+            addCustomButtons(instance, '#match-start-date');
         }
-      },
-      onReady: function (selectedDates, dateStr, instance) {
-        addCustomButtons(instance, '#match-start-date');
-      }
     });
 
     // Open Flatpickr on calendar icon click
     $('#calendarIconStart').click(function () {
-      startPicker.open();
+        startPicker.open();
     });
 
     let okButtonClicked = false;
 
     function addCustomButtons(instance, inputSelector) {
-      // Ensure the calendarContainer is available
-      if (!instance || !instance.calendarContainer) {
-        console.error('Flatpickr instance or calendar container not found.');
-        return;
-      }
+        // Ensure the calendarContainer is available
+        if (!instance || !instance.calendarContainer) {
+            console.error('Flatpickr instance or calendar container not found.');
+            return;
+        }
 
-      // Check if the footer already exists and remove it
-      let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
-      if (existingFooter) {
-        existingFooter.remove();
-      }
+        // Check if the footer already exists and remove it
+        let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
+        if (existingFooter) {
+            existingFooter.remove();
+        }
 
-      // Create footer and buttons
-      const footer = document.createElement('div');
-      footer.className = 'flatpickr-footer';
+        // Create footer and buttons
+        const footer = document.createElement('div');
+        footer.className = 'flatpickr-footer';
 
-      const okButton = document.createElement('button');
-      okButton.type = 'button';
-      okButton.className = 'flatpickr-ok-button';
-      okButton.textContent = 'OK';
-      okButton.addEventListener('click', function () {
-        okButtonClicked = true;
-        instance.close(); // Close the picker
-      });
+        const okButton = document.createElement('button');
+        okButton.type = 'button';
+        okButton.className = 'flatpickr-ok-button';
+        okButton.textContent = 'OK';
+        okButton.addEventListener('click', function () {
+            okButtonClicked = true;
+            instance.close(); // Close the picker
+        });
 
-      const clearButton = document.createElement('button');
-      clearButton.type = 'button';
-      clearButton.className = 'flatpickr-clear-button';
-      clearButton.textContent = 'Clear';
-      clearButton.addEventListener('click', function () {
-        document.querySelector(inputSelector).value = ''; // Clear input value
-        instance.clear(); // Clear picker
-      });
+        const clearButton = document.createElement('button');
+        clearButton.type = 'button';
+        clearButton.className = 'flatpickr-clear-button';
+        clearButton.textContent = 'Clear';
+        clearButton.addEventListener('click', function () {
+            document.querySelector(inputSelector).value = ''; // Clear input value
+            instance.clear(); // Clear picker
+        });
 
-      footer.appendChild(okButton);
-      footer.appendChild(clearButton);
+        footer.appendChild(okButton);
+        footer.appendChild(clearButton);
 
-      // Append the footer to the calendar container
-      instance.calendarContainer.appendChild(footer);
+        // Append the footer to the calendar container
+        instance.calendarContainer.appendChild(footer);
     }
 
     // Modify the onChange event handler to only update the input value when the OK button is clicked
     startPicker.config.onChange = function (selectedDates, dateStr, instance) {
-      if (okButtonClicked) {
-        document.querySelector('#match-start-date').value = dateStr;
-        okButtonClicked = false; // Reset the flag
-      }
+        if (okButtonClicked) {
+            document.querySelector('#match-start-date').value = dateStr;
+            okButtonClicked = false; // Reset the flag
+        }
     };
-  });
+})
 
   async function fetchTeams(leagueName) {
     try {
@@ -241,7 +246,19 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
       matchData = await fetchMatchById(matchId);
       console.log(matchData, "olpi")
+      
       await fetchLeagues();
+      leaguestartDate = matchData.select_league.start_league_date;
+                    leagueendDate = matchData.select_league.end_league_date;
+
+                    console.log({
+                        start: leaguestartDate,
+                        end: leagueendDate
+                    }, "Selected League Dates");
+
+                    // Update the Flatpickr instance minDate and maxDate
+                    startPicker.set('minDate', leaguestartDate);
+                    startPicker.set('maxDate', leagueendDate);
       if (matchData && matchData.select_league) {
         await fetchTeams(matchData.select_league.league_name);
         populateFormFields(matchData);
