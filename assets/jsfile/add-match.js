@@ -3,80 +3,83 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
 document.addEventListener('DOMContentLoaded', async function () {
     window.onload = checkAdminAccess();
     // let leagueName1 = document.getElementById('league-name').value
+let leaguestartDate
+let leagueendDate
+let startPicker
+$(function () {
+    // Initialize Flatpickr
+     startPicker = flatpickr('#match-start-date', {
+        dateFormat: 'd-m-Y H:i',
+        enableTime: true,
+        minDate: leaguestartDate, // Set the initial minDate
+        maxDate: leagueendDate,  // Set the initial maxDate
+        onChange: function (selectedDates, dateStr, instance) {
+            if (selectedDates.length > 0) {
+                // No endPicker, so no need to set minDate or maxDate for another picker.
+            }
+        },
+        onReady: function (selectedDates, dateStr, instance) {
+            addCustomButtons(instance, '#match-start-date');
+        }
+    });
 
-    $(function () {
-let startPicker = flatpickr('#match-start-date', {
-dateFormat: 'd-m-Y H:i',
-enableTime: true,
-minDate: 'today', // Disable past dates
-onChange: function (selectedDates, dateStr, instance) {
-    if (selectedDates.length > 0) {
-        // No endPicker, so no need to set minDate for another picker.
+    // Open Flatpickr on calendar icon click
+    $('#calendarIconStart').click(function () {
+        startPicker.open();
+    });
+
+    let okButtonClicked = false;
+
+    function addCustomButtons(instance, inputSelector) {
+        // Ensure the calendarContainer is available
+        if (!instance || !instance.calendarContainer) {
+            console.error('Flatpickr instance or calendar container not found.');
+            return;
+        }
+
+        // Check if the footer already exists and remove it
+        let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
+        if (existingFooter) {
+            existingFooter.remove();
+        }
+
+        // Create footer and buttons
+        const footer = document.createElement('div');
+        footer.className = 'flatpickr-footer';
+
+        const okButton = document.createElement('button');
+        okButton.type = 'button';
+        okButton.className = 'flatpickr-ok-button';
+        okButton.textContent = 'OK';
+        okButton.addEventListener('click', function () {
+            okButtonClicked = true;
+            instance.close(); // Close the picker
+        });
+
+        const clearButton = document.createElement('button');
+        clearButton.type = 'button';
+        clearButton.className = 'flatpickr-clear-button';
+        clearButton.textContent = 'Clear';
+        clearButton.addEventListener('click', function () {
+            document.querySelector(inputSelector).value = ''; // Clear input value
+            instance.clear(); // Clear picker
+        });
+
+        footer.appendChild(okButton);
+        footer.appendChild(clearButton);
+
+        // Append the footer to the calendar container
+        instance.calendarContainer.appendChild(footer);
     }
-},
-onReady: function (selectedDates, dateStr, instance) {
-    addCustomButtons(instance, '#match-start-date');
-}
-});
 
-// Open Flatpickr on calendar icon click
-$('#calendarIconStart').click(function () {
-startPicker.open();
-});
-
-let okButtonClicked = false;
-
-function addCustomButtons(instance, inputSelector) {
-// Ensure the calendarContainer is available
-if (!instance || !instance.calendarContainer) {
-    console.error('Flatpickr instance or calendar container not found.');
-    return;
-}
-
-// Check if the footer already exists and remove it
-let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
-if (existingFooter) {
-    existingFooter.remove();
-}
-
-// Create footer and buttons
-const footer = document.createElement('div');
-footer.className = 'flatpickr-footer';
-
-const okButton = document.createElement('button');
-okButton.type = 'button';
-okButton.className = 'flatpickr-ok-button';
-okButton.textContent = 'OK';
-okButton.addEventListener('click', function () {
-    okButtonClicked = true;
-    instance.close(); // Close the picker
-});
-
-const clearButton = document.createElement('button');
-clearButton.type = 'button';
-clearButton.className = 'flatpickr-clear-button';
-clearButton.textContent = 'Clear';
-clearButton.addEventListener('click', function () {
-    document.querySelector(inputSelector).value = ''; // Clear input value
-    instance.clear(); // Clear picker
-});
-
-footer.appendChild(okButton);
-footer.appendChild(clearButton);
-
-// Append the footer to the calendar container
-instance.calendarContainer.appendChild(footer);
-}
-
-// Modify the onChange event handler to only update the input value when the OK button is clicked
-startPicker.config.onChange = function (selectedDates, dateStr, instance) {
-if (okButtonClicked) {
-    document.querySelector('#match-start-date').value = dateStr;
-    okButtonClicked = false; // Reset the flag
-}
-};
-});
-
+    // Modify the onChange event handler to only update the input value when the OK button is clicked
+    startPicker.config.onChange = function (selectedDates, dateStr, instance) {
+        if (okButtonClicked) {
+            document.querySelector('#match-start-date').value = dateStr;
+            okButtonClicked = false; // Reset the flag
+        }
+    };
+})
     
     let arr = [];
     console.log(arr)
@@ -147,33 +150,46 @@ if (moment(currentDate, 'DD-MM-YYYY').isBefore(moment(leagueEndDate, 'DD-MM-YYYY
 
 
 
-    async function fetchLeagues() {
-        try {
-            const response = await fetch('https://krinik.in/league_get/');
-            if (!response.ok) throw new Error('Failed to fetch leagues');
-            leaguedata = await response.json();
-            if (leaguedata.status === 'success' && Array.isArray(leaguedata.data)) {
-                console.log(leaguedata.data, "leafuedata1")
-                populateSelect1(leaguedata.data);
+async function fetchLeagues() {
+    try {
+        const response = await fetch('https://krinik.in/league_get/');
+        if (!response.ok) throw new Error('Failed to fetch leagues');
+        let leaguedata = await response.json();
+        if (leaguedata.status === 'success' && Array.isArray(leaguedata.data)) {
+            console.log(leaguedata.data, "leaguedata1");
+            let leaguedata1 = leaguedata.data;
+            populateSelect1(leaguedata.data);
 
-                // initializeDatePickers(leaguedata.data);
-                document.getElementById('league-name').addEventListener('change', function () {
-                    const leagueName = this.value;
+            document.getElementById('league-name').addEventListener('change', function () {
+                const leagueName = this.value;
+                let leagueInfo = leaguedata1.find(p => p.league_name === leagueName);
+                if (leagueInfo) {
+                    leaguestartDate = leagueInfo.start_league_date;
+                    leagueendDate = leagueInfo.end_league_date;
+
+                    console.log({
+                        start: leaguestartDate,
+                        end: leagueendDate
+                    }, "Selected League Dates");
+
+                    // Update the Flatpickr instance minDate and maxDate
+                    startPicker.set('minDate', leaguestartDate);
+                    startPicker.set('maxDate', leagueendDate);
+
                     fetchTeams(leagueName);
                     clearAllSelectedPlayers();
 
-
                     document.getElementById('team-A').value = '';
                     document.getElementById('team-B').value = '';
-
-                });
-            } else {
-                console.error('Invalid data format for leagues:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching leagues:', error);
+                }
+            });
+        } else {
+            console.error('Invalid data format for leagues:', leaguedata);
         }
+    } catch (error) {
+        console.error('Error fetching leagues:', error);
     }
+}
     async function fetchTeams(leagueName) {
         try {
             const response = await fetch(`https://krinik.in/team_get/`);
