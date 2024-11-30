@@ -419,8 +419,8 @@ function getsessionStorage(key) {
       var fullNameCell = $("<td colspan='2'></td>").text(showdata["name"] || "");
       var shortNameCell = $("<td colspan='2'> </td>").text(showdata["mobile_no"] || "");
       var emailCell = $("<td colspan='3'> </td>").text(showdata["email"] || "");
-      var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
-      var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
+      var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || 0);
+      var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || 0);
       var statushow = toCapitalizeCase(showdata["status"])
       var updateStatus = ""
 

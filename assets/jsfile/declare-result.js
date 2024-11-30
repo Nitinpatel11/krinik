@@ -53,7 +53,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
     }
   }
   
-  
+  let notify = sendNotification()
   
   async function fetchData(NumberId,data,teamData,matchCheck) {
     try { 
@@ -1435,12 +1435,13 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
           console.error("Error updating admin wallet balance:", error);
         },
       });
-      await sendNotification(null, {
+      notify(null, {
         title: "Result Declared!",
         body: "The results are out! Check the app to see if you’re a winner!"
     });
       alert("Match result declare successfully");
       window.location.href = "./match-name.html"
+     
     } catch (error) {
       console.error("Error during money allocation process:", error);
     }
@@ -1505,7 +1506,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
               if(updatedWinner){
                 await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
                 console.log("Prize money allocated to winners successfully.");
-               
+                
               
               }
             }
