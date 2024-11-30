@@ -726,6 +726,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
           // Store the total score for this match
           matchScores.push({
               matchId: match.id,
+              userIdName: match.user_data.user_id,
               pool_name: match.pool_name,
               score: totalMatchScore
           });
@@ -1311,20 +1312,22 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
   
         // Step 4: Calculate total invested money for each group
         let totalInvestedMoney;
-        groupMatches.forEach(match => {
+        // groupMatches.forEach(match => {
           
-            totalInvestedMoney = (match.price * match.multiX)/groupMatchesLength;
-            console.log(totalInvestedMoney,"totalInvestedMoney")
+           
+
+            
           
-        });
+        // });
   
        
-        totalMoney -= totalInvestedMoney;
-  
+ 
+        
         // Step 6: Allocate the prize to each player based on their share
         for (const match of groupMatches) {
-          for (const player of match.players_details) {
-            const playerId = player.playerId;
+          totalInvestedMoney = (match.price * match.multiX)/groupMatchesLength;
+          console.log(totalInvestedMoney,"totalInvestedMoney")
+          let currentWinningAmount;
   
             try {
               await $.ajax({
@@ -1332,24 +1335,63 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
                 type: "PATCH",
                 contentType: "application/json",
                 data: JSON.stringify({
-                  player_id: playerId,
-                  total_amount: totalInvestedMoney,
-                  user_data: {
-                    winning_amount: totalInvestedMoney
-                }
+                 
+                  total_amount: totalInvestedMoney        
                 }),
                 success: (response) => {
-                  console.log(`Prize money ${totalInvestedMoney} allocated successfully for player ${playerId} in match ${match.matchId}`, response);
+                  console.log(`Prize money ${totalInvestedMoney} allocated successfully in match ${match.matchId}`, response);
                 },
                 error: (error) => {
-                  console.error(`Error allocating prize money for player ${playerId} in match ${match.matchId}:`, error);
+                  console.error(`Error allocating prize money  in match ${match.matchId}:`, error);
                 },
               });
             } catch (error) {
-              console.error(`Failed to allocate prize money for player ${playerId} in match ${match.matchId}:`, error);
+              console.error(`Failed to allocate prize money  in match ${match.matchId}:`, error);
             }
-          }
+
+
+            await $.ajax({
+              url: `https://krinik.in/user_get/${match.userIdName}/`,
+              type: "GET",
+              success: (response) => {
+                console.log(`Response for user ${match.userIdName}:`, response);
+                currentWinningAmount = response?.data?.winning_amount ?? 0; // Use winning_amount from data or default to 0
+              },
+              error: (error) => {
+                console.error(`Error fetching current winning_amount for user ${match.userIdName}:`, error);
+                currentWinningAmount = 0; // Default to 0 on error
+              },
+            });
+            
+      
+            // Calculate the updated winning amount
+            const updatedWinningAmount = currentWinningAmount + totalInvestedMoney;
+      
+
+            try {
+              await $.ajax({
+                url: `https://krinik.in/user_get/${match.userIdName}/`,
+                type: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({                 
+                 
+                    winning_amount: updatedWinningAmount
+               
+                }),
+                success: (response) => {
+                  console.log(`Updated winning amount ${updatedWinningAmount} for user ${match.userIdName} successfully`, response);
+                },
+                error: (error) => {
+                  console.error(`Error updating winning_amount for user ${match.userIdName}:`, error);
+                },
+              });
+            } catch (error) {
+              console.error(`Failed to update winning amount  in match ${match.matchId}:`, error);
+            }
+          
         }
+
+        totalMoney -= totalInvestedMoney;
       });
   
       // Wait for all prize allocations to complete
