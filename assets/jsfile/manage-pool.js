@@ -435,6 +435,50 @@ function displayTableRows() {
       deleteCell = $("<td></td>").html(
         '<span class="sortable" onclick="handleDelete(' + object["id"] + ')"><i class="far fa-trash-alt"></i></span>'
       );
+
+      if (statusCell.text() == "Completed") {
+        // Disable the edit button
+        editCell.find("button").prop("disabled", true);
+  
+        // Apply dull background and reduced opacity
+        [
+          noCell,
+          teamNameCell,
+          totalPoolCell,
+          fantacyStartCell,
+          totalAmountCell,
+          totalPlayersCell,
+          statusCell,
+          editCell,
+        ].forEach(function (cell) {
+          cell.css({
+            "pointer-events": "none",
+            "background-color": "#f0f0f0", // Light gray background
+            color: "#999", // Dull text color
+            opacity: "1", // Make it slightly transparent
+          });
+        });
+      } else {
+        [
+          noCell,
+          teamNameCell,
+          totalPoolCell,
+          fantacyStartCell,
+          totalAmountCell,
+          totalPlayersCell,
+          statusCell,
+          editCell,
+          deleteCell,
+          viewCell,
+        ].forEach(function (cell) {
+          cell.css({
+            "pointer-events": "none",
+            // Light gray background
+            color: "black", // Dull text color
+            // Make it slightly transparent
+          });
+        });
+      }
     
 
     // Append cells to the row
@@ -443,7 +487,7 @@ function displayTableRows() {
       .append(totalPoolCell)
       .append(fantacyStartCell)
       .append(fantacyEndCell)
-      .append(totalAmountCell)
+      // .append(totalAmountCell)
       .append(totalPlayersCell)
       .append(statusCell)
       .append(viewCell)
