@@ -505,7 +505,7 @@ function displayTableRows() {
         viewCell,
       ].forEach(function (cell) {
         cell.css({
-          "pointer-events": "none",
+          // "pointer-events": "none",
           // Light gray background
           color: "black", // Dull text color
           // Make it slightly transparent
