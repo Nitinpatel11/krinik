@@ -1440,6 +1440,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
         body: "The results are out! Check the app to see if you’re a winner!"
     });
       alert("Match result declare successfully");
+      window.location.href = "./match-name.html"
     } catch (error) {
       console.error("Error during money allocation process:", error);
     }
