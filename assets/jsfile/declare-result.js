@@ -53,7 +53,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
     }
   }
   
-  let notify = sendNotification()
+ 
   
   async function fetchData(NumberId,data,teamData,matchCheck) {
     try { 
@@ -1435,7 +1435,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
           console.error("Error updating admin wallet balance:", error);
         },
       });
-      notify(null, {
+     await sendNotification(null, {
         title: "Result Declared!",
         body: "The results are out! Check the app to see if you’re a winner!"
     });

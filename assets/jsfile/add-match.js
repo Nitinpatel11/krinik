@@ -173,8 +173,19 @@ async function fetchLeagues() {
                     }, "Selected League Dates");
 
                     // Update the Flatpickr instance minDate and maxDate
-                    startPicker.set('minDate', leaguestartDate);
-                    startPicker.set('maxDate', leagueendDate);
+                    const currentDate = moment().format('DD-MM-YYYY HH:mm:ss'); // Format: YYYY-MM-DD
+console.log(currentDate,"op")
+                    // Check if current date is within league start and end date
+                    if (currentDate >= leaguestartDate) {
+                        // If the current date is within the league date range, set min and max as current date
+                        startPicker.set('minDate', currentDate);
+                        startPicker.set('maxDate', leagueendDate);
+                    } else {
+                        // Otherwise, set the minDate and maxDate to league's start and end date
+                        startPicker.set('minDate', leaguestartDate);
+                        startPicker.set('maxDate', leagueendDate);
+                    }
+
 
                     fetchTeams(leagueName);
                     clearAllSelectedPlayers();
