@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>View User Withdraw</title>
+  <title>View User Money</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesdesign" name="author" />
@@ -43,6 +43,18 @@
     background-color: #E20101;
 
   }
+  #preview-image {
+    width: 100%; /* Image takes full width of modal */
+    height: auto;
+    cursor: zoom-in; /* Show zoom cursor */
+    transition: transform 0.3s ease; /* Smooth zoom transition */
+}
+
+/* Enlarge the image when it's zoomed in */
+.zoomed {
+    transform: scale(2); /* Change scale to zoom in the image */
+    cursor: zoom-out; /* Change cursor to indicate zoom-out */
+}
 
   .btnss:hover {
     background-color: #E20101;
@@ -391,7 +403,7 @@
           <div class="container-fluid">
             <div class="row align-items-center">
               <div>
-                <h4 class="page-title mb-1">User Withdrawal Request</h4>
+                <h4 class="page-title mb-1">Add Money</h4>
               </div>
             </div>
           </div>
@@ -429,42 +441,48 @@
 
                     <!-- Buttons Section -->
                     <div class="buttons">
-                      <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3">
-                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock">
+                      <!-- <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3"> -->
+                        <!-- <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock"> -->
                           <!-- <span id="user-unlock-text" ></span> -->
-                          <p id="deposit-amount" class="para-bottom"></p> <span>Deposited Amount</span>
+                          <!-- <p id="deposit-amount" class="para-bottom"></p> <span>Deposited Amount</span>
                         </div>
-                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock1">
+                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock1"> -->
                             <!-- <span id="user-unlock-text" ></span> -->
-                            <p id="bonus-amount" class="para-bottom"></p> <span>Bonus Amount</span>
-                          </div><div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock2">
+                            <!-- <p id="bonus-amount" class="para-bottom"></p> <span>Bonus Amount</span>
+                          </div><div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock2"> -->
                             <!-- <span id="user-unlock-text" ></span> -->
-                            <p id="refer-amount" class="para-bottom"></p> <span>Referral Amount</span>
+                            <!-- <p id="refer-amount" class="para-bottom"></p> <span>Referral Amount</span>
                           </div>
-                        
+                         -->
                         <!-- <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
                         <button class="btn btn-outline-dark m-1" id="user-transaction-history" >Transaction History</button> -->
-                      </div>
+                      <!-- </div> -->
                     
                       <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3 mt-3">
                         <!-- <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
                         <button class="btn btn-outline-dark m-1" id="user-add-amount" data-toggle="modal" data-target="#addAmountModal">Add Amount</button>
                         <button class="btn btn-outline-dark m-1" id="user-game-history">Game History</button>
                         <button class="btn btn-outline-dark m-1" id="user-withdraw" >Withdraw History</button> -->
-                        <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock3">
+                        <!-- <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock3"> -->
                             <!-- <span id="user-unlock-text" ></span> -->
-                            <p id="winning-amount" class="para-bottom"></p> <span>Winning Amount</span>
-                          </div><div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock4">
-                            <!-- <span id="user-unlock-text" ></span> -->
+                            <!-- <p id="winning-amount" class="para-bottom"></p> <span>Winning Amount</span>
+                          </div> -->
+                          
+                          <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock"> 
+                        
+                         <p id="deposit-amount" class="para-bottom"></p> <span>Deposited Amount</span>
+                       </div>
+                          <div class="item  m-1 border rounded p-2  m-1 border-black" id="user-unlock4">
+                            
                             <p id="total-amount" class="para-bottom"></p> <span>Total Amount</span>
                           </div>
-                          <div class="d-flex justify-content-center mt-1">
+                          <!-- <div class="d-flex justify-content-center mt-1">
                             <button class="btn btn-primary" id="gift-bonus-btn" data-bs-toggle="modal" data-bs-target="#giftBonusModal" style=" display: none;">
                               Gift Bonus
                             </button>
-                          </div>
+                          </div> -->
                       </div>
-                      <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3 mt-3">
+                      <!-- <div class="d-flex text-center flex-wrap flex-column flex-md-row justify-content-center gap-3 mt-3"> -->
                         <!-- <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button>
                         <button class="btn btn-outline-dark m-1" id="user-add-amount" data-toggle="modal" data-target="#addAmountModal">Add Amount</button>
                         <button class="btn btn-outline-dark m-1" id="user-game-history">Game History</button>
@@ -474,19 +492,33 @@
                             <!-- <p id="withdraw-amount" class="para-bottom"></p> <span>Withdraw Amount</span>
                           
                       </div> -->
-                      
-                      
+                      <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-responsive-custom">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                            <i class="fa-solid fa-xmark fa-2x colorall" data-bs-dismiss="modal" aria-label="Close"></i>
+                          </div>
+                          <div class="modal-body text-center position-relative">
+                            <img id="preview-image" src="" alt="Preview" class="img-fluid border"
+                              style="width: 100%; height: 300px; object-fit: contain;">
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                      
+                    <!-- </div> -->
 
-                    <div class="modal fade" id="giftBonusModal" tabindex="-1" aria-labelledby="giftBonusModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <!-- <div class="modal fade" id="giftBonusModal" tabindex="-1" aria-labelledby="giftBonusModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="giftBonusModalLabel">Gift Bonus</h5>
+                            <h5 class="modal-title" id="giftBonusModalLabel">Gift Bonus</h5> -->
                             <!-- Close button to close the modal -->
                             <!-- <a class="close" data-bs-dismiss="modal" aria-label="Close">&times;</a> -->
                             <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button> -->
-                            <button type="button" class="close btn-primary4" data-bs-dismiss="modal" aria-label="Close">
+                            <!-- <button type="button" class="close btn-primary4" data-bs-dismiss="modal" aria-label="Close">
                               <span class="material-symbols-outlined close-margin btn-primary5">
                                 close
                                 </span>
@@ -512,7 +544,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
                     <!-- Details Section -->
                     <!-- <div class="button_wrapper buttons mt-5"> -->
@@ -552,12 +584,14 @@
                                     <th data-priority="" colspan="2">
                                       Bank Name
                                     </th> -->
-                                    <th data-priority="" colspan="2">Withdraw Request</th>
-                                    <th data-priority="" colspan="2">TDS Amount</th>
+                                    <th data-priority="" colspan="2">Paid Amount</th>
+                                    <!-- <th data-priority="" colspan="2">TDS Amount</th> -->
 
-                                    <th data-priority="" colspan="2">Withdraw Amount</th>
+                                    <!-- <th data-priority="" colspan="2">Withdraw Amount</th> -->
                                     <th data-priority="" colspan="2">Status</th>
+                                    <th data-priority="" >Payment Screenshot</th>
                                     <th data-priority="" >Approve</th>
+
 
                                     <th data-priority="" >Reject</th>
 
@@ -638,12 +672,13 @@
   
   <script src="./assets/libs/jquery-knob/jquery.knob.min.js"></script>
   <script src="./assets/js/logout.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/zoom.js@0.1.1/dist/zoom.min.js"></script>
+
   
   <script src="./assets/js/app.js"></script>
   <script type="module" src="./assets/js/admincheck.js"></script>
   
-  <script type="module" src="./assets/jsfile/view-user-withdrawal.js"></script>
+  <script type="module" src="./assets/jsfile/view-user-money.js"></script>
   <script type="module" src="./assets/js/initial.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 

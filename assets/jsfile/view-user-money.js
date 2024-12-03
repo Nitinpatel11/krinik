@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
     var end_index = 0;
     var current_index = 1;
     var max_index = 0;
-    let userData5
-    const Approvebtn = document.getElementById("Approvebtn");
-    const Rejectbtn = document.getElementById("Rejectbtn");
+    // let userData5
+    // const Approvebtn = document.getElementById("Approvebtn");
+    // const Rejectbtn = document.getElementById("Rejectbtn");
 
     const userFullName = document.getElementById("user-fullname");
     const userImageView = document.getElementById("user-image-view");
@@ -23,50 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const userEmail = document.getElementById("user-email");
 
     const depositAmount = document.getElementById("deposit-amount");
-    const bonusAmount = document.getElementById("bonus-amount");
-    const referAmount = document.getElementById("refer-amount");
-    const winningAmount = document.getElementById("winning-amount");
+    // const bonusAmount = document.getElementById("bonus-amount");
+    // const referAmount = document.getElementById("refer-amount");
+    // const winningAmount = document.getElementById("winning-amount");
     const totalAmount = document.getElementById("total-amount");
     // const withdrawAmount = document.getElementById("withdraw-amount");
-    const giftBonusButton = document.getElementById("gift-bonus-btn");
+//     const giftBonusButton = document.getElementById("gift-bonus-btn");
     
-    const defaultBonusBtn = document.getElementById('defaultBonusBtn');
-  const manualBonusInput = document.getElementById('manualBonusInput');
-  const giftBonusForm = document.getElementById('gift-bonus-form');
-  const giftBonusModal = document.getElementById('giftBonusModal');
+//     const defaultBonusBtn = document.getElementById('defaultBonusBtn');
+//   const manualBonusInput = document.getElementById('manualBonusInput');
+//   const giftBonusForm = document.getElementById('gift-bonus-form');
+//   const giftBonusModal = document.getElementById('giftBonusModal');
   
   // When "Default Bonus" is clicked, set the value in the input field
-  defaultBonusBtn.addEventListener('click', function() {    
-    manualBonusInput.value = 1000; // Set the input value to 1000
-  });
-
+ 
   // Prevent the modal from closing when the form is submitted and close it manually
-  giftBonusForm.addEventListener('submit',async function(e) {
-    e.preventDefault(); // Prevent the form from submitting normally
-    // Close the modal after submitting the form
-    if (confirm("Are you sure you want to approve it?")) {
-        const currentWalletAmount = parseFloat(totalAmount.textContent);
-        const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
-       
-        // const newWalletAmount1 = currentWalletAmount - parseFloat(withdrawAmount.textContent) ;
-        const newWalletAmount1 = currentWalletAmount - amountWithTDS;
-        // const newWinningAmount2 = winningAmount1 - amountWithTDS;
-     
-        const newWalletAmount = Number(newWalletAmount1) + Number(manualBonusInput.value)
-     
-        
-        const bonusAddAmount = parseFloat(bonusAmount.textContent) + Number(manualBonusInput.value)
-        
 
-        await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
-    }
-
-
-    const modal = new bootstrap.Modal(giftBonusModal);
-    modal.hide();
-    // Optionally, you can handle the bonus submission here
-    console.log('Bonus submitted:', manualBonusInput.value);
-  });
 
 
     async function fetchUserData() {
@@ -77,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const url = `https://krinik.in/user_get/${user_id}/`;
-            const url1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/`;
+            const url1 = `https://krinik.in/payment/user_id/${user_id}/`;
             console.log("Fetching player data from:", url);
             console.log("Fetching withdrawal data from:", url1);
 
@@ -118,9 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
             userMob.textContent = response.mobile_no;
             userEmail.textContent = response.email;
             depositAmount.textContent = response.deposit_amount;
-            bonusAmount.textContent = response.bonus_amount;
-            referAmount.textContent = response.referral_amount;
-            winningAmount.textContent = response.winning_amount;
+            // bonusAmount.textContent = response.bonus_amount;
+            // referAmount.textContent = response.referral_amount;
+            // winningAmount.textContent = response.winning_amount;
             totalAmount.textContent = response.wallet_amount;
             // withdrawAmount.textContent = amount;
             const userWithdrawData = userdetails; // Store in a separate variable
@@ -144,9 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
  
     
 
-    async function patchData(winningAmountValue, walletAmountValue, idCell,bonusAddAmount ) {
+    async function patchData( walletAmountValue,idCell,newDepositAmount ) {
         try {
-            const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
+            const apiUrl1 = `https://krinik.in/payment/${idCell}/`;
             const apiUrl2 = `https://krinik.in/user_get/${user_id}/`;
 
             // First PATCH request to update `winning_amount` and `wallet_amount`
@@ -154,9 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    winning_amount: winningAmountValue,
+                    
                     wallet_amount: walletAmountValue,
-                    bonus_amount : bonusAddAmount,
+                    deposit_amount : newDepositAmount,
                 })
             });
 
@@ -169,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response2 = await fetch(apiUrl1, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ withdraw_status: "approved"  })
+                body: JSON.stringify({payment_status: "approved"  })
             });
 
             if (!response2.ok) {
@@ -187,7 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Patch for amount successful:", await response2.json());
 
             // Re-fetch data to update `totalAmount` and other fields
+            alert("Approved successfully!");
             fetchUserData();
+            editPlayerData()
 
         } catch (error) {
             console.error("Error patching data:", error);
@@ -530,13 +504,13 @@ document.addEventListener("DOMContentLoaded", () => {
       function displayTableRows() {
         console.log(array, "oklp");
         $("table tbody").empty();
-        const approvedRows = array.filter((row) => row["withdraw_status"] == "approved");
-        const rejectedRows = array.filter((row) => row["withdraw_status"] == "rejected"); // Corrected typo here
-        const pendingRows = array.filter((row) => row["withdraw_status"] !== "approved" && row["withdraw_status"] !== "rejected");
+        const approvedRows = array.filter((row) => row["payment_status"] == "approved");
+        const rejectedRows = array.filter((row) => row["payment_status"] == "rejected"); // Corrected typo here
+        const pendingRows = array.filter((row) => row["payment_status"] !== "approved" && row["payment_status"] !== "rejected");
     
         // Reorder array: Pending rows first, then approved, then rejected
         let array1 = [...pendingRows, ...approvedRows, ...rejectedRows];
-    
+    console.log(array1,"array")
         var tab_start = start_index - 1;
         var tab_end = end_index;
     
@@ -562,12 +536,17 @@ document.addEventListener("DOMContentLoaded", () => {
     
             const noCell = $("<td></td>").text(i + 1);
             const idCell = showdata.id
-            const fullNameCell = $("<td colspan='2'></td>").text(showdata["amount_without_tds"] || 0);
-            const shortNameCell = $("<td colspan='2'></td>").text(showdata["tds"] || 0);
-            const emailCell = $("<td colspan='2'></td>").text(showdata["amount_with_tds"] || 0);
+            const fullNameCell = $("<td colspan='2'></td>").text(showdata["paid_amount"] || 0);
+            // const shortNameCell = $("<td colspan='2'></td>").text(showdata["tds"] || 0);
+            // const emailCell = $("<td colspan='2'></td>").text(showdata["amount_with_tds"] || 0);
             const statusCell = $("<td colspan='2'></td>").text(
-                toCapitalizeCase(showdata["withdraw_status"] || "Pending")
+                toCapitalizeCase(showdata["payment_status"] || "Pending")
             );
+            const paymentScreenshot = showdata["payment_screenshot"];
+            const viewCell = $("<td></td>").html(
+                `<span class="sortable view-btn" data-id="${i}" data-set="${showdata.id}" data-screenshot="${paymentScreenshot}" ><i class="far fa-eye"></i></span>`
+            );
+            console.log(idCell,"idcell")
     
             const approveCell = $("<td></td>").html(
                 `<span class="sortable approve-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">✔</span>`
@@ -577,13 +556,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 `<span class="sortable reject-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">❌</span>`
             );
 
-            if (i === 0 && (showdata["withdraw_status"] === "approved" || showdata["withdraw_status"] == "rejected")) {
+            if (i === 0 && (showdata["payment_status"] === "approved" || showdata["payment_status"] == "rejected")) {
                 isDisabled = "pointer-events: none; opacity: 0.5;";
+                approveCell.find(".approve-btn").css({
+                   "font-size": "18px",    /* Larger font size */
+                    "font-weight": "bold"  // This ensures green color for the checkmark
+                });
+                viewCell.find(".view-btn").css({
+                    "color": "black","font-size": "18px",    /* Larger font size */
+                    "font-weight": "bold"  // This ensures green color for the checkmark
+                });
                 [
                     noCell,
                     fullNameCell,
-                    shortNameCell,
-                    emailCell,
+                    // shortNameCell,
+                    // emailCell,
                     statusCell,
                     approveCell,
                     rejectCell,
@@ -597,11 +584,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                   });
             }else if(i !== 0){
+                approveCell.find(".approve-btn").css({
+                    "font-size": "18px",    /* Larger font size */
+                    "font-weight": "bold"  // This ensures green color for the checkmark
+                });
+                viewCell.find(".view-btn").css({
+                    "color": "black","font-size": "18px",    /* Larger font size */
+                    "font-weight": "bold"  // This ensures green color for the checkmark
+                });
                 [
                     noCell,
                     fullNameCell,
-                    shortNameCell,
-                    emailCell,
+                    // shortNameCell,
+                    // emailCell,
                     statusCell,
                     approveCell,
                     rejectCell,
@@ -616,11 +611,19 @@ document.addEventListener("DOMContentLoaded", () => {
                   });
         
             }else{
+                approveCell.find(".approve-btn").css({
+                    "color": "green","font-size": "18px",    /* Larger font size */
+                    "font-weight": "bold"  // This ensures green color for the checkmark
+                });
+                viewCell.find(".view-btn").css({
+                    "color": "black","font-size": "18px",    /* Larger font size */
+                    "font-weight": "bold"  // This ensures green color for the checkmark
+                });
                 [
                     noCell,
                     fullNameCell,
-                    shortNameCell,
-                    emailCell,
+                    // shortNameCell,
+                    viewCell,
                     statusCell,
                     approveCell,
                     rejectCell,
@@ -635,76 +638,128 @@ document.addEventListener("DOMContentLoaded", () => {
                   });
             }
     
+           
             tr.append(noCell)
               .append(fullNameCell)
-              .append(shortNameCell)
-              .append(emailCell)
-              .append(statusCell)
+            //   .append(shortNameCell)
+            .append(statusCell)
+            .append(viewCell)
               .append(approveCell)
               .append(rejectCell);
     
             $("table tbody").append(tr);
         }
     }
+    $("table").on("click", ".view-btn", async function () {
+        const paymentScreenshot = $(this).data("screenshot"); // Retrieve the screenshot URL
+        const modalImage = document.querySelector("#imageModal img");
+    
+        if (paymentScreenshot) {
+            // Remove the zoomed class from any previously zoomed image
+            modalImage.classList.remove("zoomed");
+    
+            // Update the modal image source and open the modal
+            showImage(paymentScreenshot, "Payment Screenshot");
+        } else {
+            alert("No screenshot available.");
+        }
+    });
+    
     
     // Event delegation for buttons
     $("table").on("click", ".approve-btn",async function () {
         const index = $(this).data("id");
-        const idCell = $(this).data("set")
-    console.log(idCell,"idcellnn")
+        const idCell = $(this).data("set");
+    
         // Only allow approval for the first row
         if (index !== 0) return alert("Only the first row can be approved.");
     
         const userData = array[index];
         const userData1 = array.find((p)=>p.id == idCell)
-        const amountWithTDS = parseFloat(userData1.amount_with_tds) || 0;
+        const amountWithTDS = parseFloat(userData1.paid_amount) || 0;
         const currentWalletAmount = Number(parseFloat(totalAmount.textContent)) || 0;       
-        const winningAmount1 = Number(parseFloat(winningAmount.textContent))
-        console.log(amountWithTDS,"amountWithTDS")
-        const newWinningAmount = winningAmount1 - amountWithTDS;
-            const newWalletAmount = currentWalletAmount - amountWithTDS;
-            const bonusAddAmount = parseFloat(bonusAmount.textContent) 
-        console.log(winningAmount1,"winningAmount")
+        const depositAmount1 = Number(parseFloat(depositAmount.textContent))
+        // const newWinningAmount = winningAmount1 - amountWithTDS;
+            const newWalletAmount = currentWalletAmount + amountWithTDS;
+            const newDepositAmount =  depositAmount1 + amountWithTDS
+        // console.log(winningAmount1,"winningAmount")
         console.log(currentWalletAmount,"winningAmount")
+        console.log(newDepositAmount,"newDepositAmount")
 
-        // const idCell = userData.id;  
-        if (amountWithTDS > winningAmount1) {
-            alert("Withdraw amount exceeds the winning amount. Approval denied.");
-            return;
-        }
+
+       
+        console.log(idCell,"idcell") 
+        
     
         if (confirm("Are you sure you want to approve it?")) {
             // Mark as approved
-            await patchData(newWinningAmount, newWalletAmount, idCell,bonusAddAmount );
-            // alert("Approval successful!");
-            alert("Approved successfully!");
-            fetchUserData(); // Refresh data
-    
-            // Reorder the rows
-            // reorderTableRows();
+            await patchData( newWalletAmount, idCell,newDepositAmount );
+           
     
         }
     });
+
+   
+    // function addViewImageListener(elementId, imageSrc, title) {
+    //     console.log("working")
+    //     const element = document.querySelector(`[data-id="${elementId}"]`);
+    //     if (element) {
+    //         element.addEventListener("click", () => {
+    //             showImage(imageSrc, title);
+    //         });
+    //     }
+    // }
+    // Function to show the image and update modal title
+function showImage(imageSrc, title) {
+    console.log(imageSrc,"okok")
+    const imageElement = document.getElementById("preview-image");
+ // Reset any previous zoom state
+ imageElement.classList.remove('zoomed')
+    // Set the image source and title for the modal
+    imageElement.src = `https://krinik.in/${imageSrc}`;
+    document.getElementById("imageModalLabel").innerText = title;
+
+    const imageModal = new bootstrap.Modal(document.getElementById("imageModal"));
+    imageModal.show();
+   
+}
+
+document.querySelector(".modal-body img").addEventListener("click", function () {
+    this.classList.toggle("zoomed"); // Toggle zoomed state
+});
+
+// Remove zoomed state when the modal is closed
+document.getElementById("imageModal").addEventListener("hidden.bs.modal", function () {
+    const modalImage = document.querySelector(".modal-body img");
+    modalImage.classList.remove("zoomed");
+});
+
+// document.getElementById("imageModal").addEventListener('hidden.bs.modal', function () {
+//     imageElement.classList.remove('zoomed'); // Remove the zoom effect when modal is closed
+// });
+
     
     $("table").on("click", ".reject-btn",async function () {
         const index = $(this).data("id");
+        const idCell = $(this).data("set");
         const userData = array[index];
+        const userData1 = array.find((p)=>p.id == idCell)
         // const userData = array[index]; // Get the data for the clicked row
-        const idCell = $(this).data("set")
+        // const idCell = userData.id; 
         if (index !== 0) return alert("Only the first row can be approved.");
-        if (Number(userData.amount) === 0) {
+        if (Number(userData1.amount) === 0) {
             alert("Cannot reject this request. Amount is 0.");
             return;
         }
         if (confirm("Are you sure you want to reject it?")) {
             try {
-                const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
+                const apiUrl1 = `https://krinik.in/payment/${idCell}/`;
                
                 // Second PATCH request to update `amount`
                 const response2 = await fetch(apiUrl1, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ withdraw_status: "rejected"  })
+                    body: JSON.stringify({ payment_status: "rejected"  })
                 });
     
                 if (!response2.ok) {

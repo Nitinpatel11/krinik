@@ -1,8 +1,18 @@
+import { getAdminType } from "../js/initial.js";
 let todaysUserCount;
 let totalUserCount;
 let totalPaidAmount;
 let totalAmountWithTds;
 let totalwalletAmount;
+const adminInfo = getAdminType();
+const isSuperAdmin = adminInfo?.value === "super admin";
+
+// Change the HTML title based on the adminInfo value
+if (isSuperAdmin) {
+    document.title = "Super Admin Dashboard";
+} else {
+    document.title = "Admin Dashboard";
+}
 async function fetchData() {
   try {
     // Fetch user data

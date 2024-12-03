@@ -831,6 +831,7 @@ async function handleFormSubmit(event) {
 
 // Function to handle overlap errors and submission
 async function handleOverlapAndSubmit(overlapResult, formData) {
+    console.log(overlapResult,"overlapresult")
     if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
         document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
         document.getElementById('error-team-A').style.display = 'inline';

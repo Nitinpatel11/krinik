@@ -196,6 +196,7 @@ function addViewImageListener(elementId, imageSrc, title) {
 
 // Function to show the image and update modal title
 function showImage(imageSrc, title) {
+  console.log(imageSrc,"imagesrc")
   document.getElementById("preview-image").src = imageSrc;
   document.getElementById("imageModalLabel").innerText = title;
 

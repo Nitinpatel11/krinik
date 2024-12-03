@@ -273,6 +273,52 @@ if (statusFilter !== 'All Status') {
 }
 
 
+// const startAmount = document.getElementById('startAmountRange').value
+// ? Number(document.getElementById('startAmountRange').value)
+// : 0; // Default to 0 if empty
+// const endAmount = document.getElementById('endAmountRange').value
+// ? Number(document.getElementById('endAmountRange').value)
+// : Infinity;
+
+// var filteredArray = rankList.filter(function (object) {
+// const walletAmount = Number(object.wallet_amount) || 0; // Ensure walletAmount is a number
+// const winningAmount = Number(object.winning_amount) || 0; // Ensure winningAmount is a number
+
+// const matchesText = tab_filter_text
+//   ? (object.name && object.name.toLowerCase().includes(tab_filter_text)) ||
+//     (object.mobile_no && object.mobile_no.toString().includes(tab_filter_text)) ||
+//     (object.email && object.email.toLowerCase().includes(tab_filter_text))
+//   : true;
+
+// const status = object.status.toLowerCase();
+// const statusup = status === 'block' ? 'unblock' : status === 'unblock' ? 'block' : '';
+
+// const matchesStatus =
+//   statusFilter !== 'All Status'
+//       ? statusup === statusFilter.toLowerCase()
+//       : true;
+
+
+// // Filter based on wallet amount range
+// const matchesWalletAmount =
+// walletAmount >= startAmount && walletAmount <= endAmount;
+
+// const matchesWinningAmount =
+// winningAmount >= startAmount && winningAmount <= endAmount;
+
+// console.log('Wallet:', walletAmount, 'Winning:', winningAmount, 'Start:', startAmount, 'End:', endAmount);
+// console.log(
+// 'Matches Text:', matchesText,
+// 'Matches Status:', matchesStatus,
+// 'Matches Wallet Amount:', matchesWalletAmount,
+// 'Matches Winning Amount:', matchesWinningAmount
+// );
+// // Return true only if all conditions are satisfied
+// return matchesText && matchesStatus && (matchesWalletAmount || matchesWinningAmount);
+// });
+
+
+
 
 // function getStatus(start_date, end_date) {
 //   var currentDate = new Date();

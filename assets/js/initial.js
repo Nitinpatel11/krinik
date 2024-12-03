@@ -129,7 +129,7 @@ export function createOTPModal() {
   const mobileError = document.getElementById("mobileError");
   const mobileInput = document.getElementById("mobilenum");
   let timerIntervalId = null;
-//   let confirmationResult = null;
+  let confirmationResult = null;
   let recaptchaVerifier;
   // Private function to start the OTP timer
   let recaptchaRendered = false;  // Flag to check if reCAPTCHA has been rendered

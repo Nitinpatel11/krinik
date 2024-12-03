@@ -1,6 +1,6 @@
 import {checkAdminAccess}  from "../js/initial.js"
 var rankList = [];
-var array = [];
+let array;
 var array_length = 0;
 var table_size = 10;
 var start_index = 1;
@@ -8,7 +8,7 @@ var end_index = 0;
 var current_index = 1;
 var max_index = 0;
 // let totaldataleague = document.querySelector("#total-league-data");
-
+// const uniqueUsers = {};
 async function fetchData() {
   try {
     const data = await $.ajax({
@@ -18,11 +18,15 @@ async function fetchData() {
 
     if (data && data.status === "success") {
       rankList = data.data;
-      console.log(rankList)
-      array = rankList;
+     let withdrawdata = getFirstRecordPerUser(rankList)
+      console.log(withdrawdata,"withdrawdata")
+      
+      array = withdrawdata;
+      console.log(array,"array")
       filterAndDisplay();
+      
       // totaldataleague.innerHTML = array.length;
-      console.log(array)
+      // console.log(array,"olpolop")
     } else {
       console.error("Error: Invalid data format");
     }
@@ -31,9 +35,24 @@ async function fetchData() {
   }
 }
 
+function getFirstRecordPerUser(data) {
+  console.log(data,"ok")
+  const uniqueUsers = {};
+  return data.filter((record) => {
+      const userId = record.user_data.user_id;
+      if (!uniqueUsers[userId]) {
+          uniqueUsers[userId] = true;
+          return true; // Include the first occurrence of this user
+      }
+      return false; // Exclude subsequent occurrences
+  });
+}
+
 fetchData();
 
 function filterAndDisplay() {
+  console.log(array,"nitin")
+  console.log(array.length)
   filterRankList();
   preLoadCalculations();
   displayIndexButtons();
@@ -219,7 +238,7 @@ function filterRankList() {
   // }
 
   // Filter the rankList based on text, status, date range, and amount range
-  var filteredArray = rankList.filter(function (object) {
+  var filteredArray = array.filter(function (object) {
     var matchesText = true 
 
     // Filter based on text input
@@ -373,12 +392,12 @@ console.error("Invalid element:", element); // Debug line
 }
 function getLocalStorage1(key) {
 const item = localStorage.getItem(key);
-console.log("Retrieved item from localStorage:", item); // Log the raw item
+// console.log("Retrieved item from localStorage:", item); // Log the raw item
 
 if (item) {
 try {
   const parsedItem = JSON.parse(item);
-  console.log("Parsed item:", parsedItem); // Log the parsed item
+  // console.log("Parsed item:", parsedItem); // Log the parsed item
 
   // const currentTime = Date.now();
   // if (parsedItem.expirationTime && currentTime > parsedItem.expirationTime) {
@@ -398,6 +417,7 @@ return null;
 }
 
   function displayTableRows() {
+    console.log(array,"oklp")
     $("table tbody").empty();
     var tab_start = start_index - 1;
     var tab_end = end_index;
@@ -412,7 +432,7 @@ return null;
       $("#pagination").show();
       $("#table-scrolling").css("overflow-x", "auto"); // Add this line
     }
-    const admintype = getLocalStorage1("adminType");
+    // const admintype = getLocalStorage1("adminType");
 
     for (var i = tab_start; i < tab_end; i++) {
       var showdata = array[i];
@@ -422,59 +442,36 @@ return null;
 
       var noCell = $("<td></td>").text(i + 1);
       var userIdCell = $("<td colspan='2'></td>").text(showdata.user_data["user_id"] || "");
-console.log(userIdCell,"DATA")
+// console.log(userIdCell,"DATA")
       var fullNameCell = $("<td colspan='2'></td>").text(showdata.user_data["name"] || "");
       var shortNameCell = $("<td colspan='2'> </td>").text(showdata.user_data["mobile_no"] || "");
-      var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
-      var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["bank_name"] || "");
-      var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
-      var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
-    //   var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
-    //   var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
-      // var statushow = toCapitalizeCase(showdata["status"])
-      
-      // var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["profile_status"] || ""));
+      // var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
+      // var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["bank_name"] || "");
+      // var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
+      // var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
+      var requestTimeCell = $("<td colspan='3'> </td>").text(moment(showdata.timestamp).format("DD-MM-YYYY hh:mm:ss ") || "");
     
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         '<span class="sortable" onclick="handleView(\'' + showdata.user_data['user_id'] + '\',\'' + showdata['id'] + '\')"><i class="far fa-eye"></i></span>'
       );
       
-      if (admintype  == "super admin") {
-        viewCell.hide()
-      }else{
-  viewCell.show();
-}
-      // var editCell = $("<td></td>").html(
-      //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
-      // );
-      // var deleteCell = $("<td></td>").html(
-      //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-      // );
-      // if (statushow === "block") {
-        // noCell.addClass("disabled-row");
-        // fullNameCell.addClass("disabled-row");
-        // shortNameCell.addClass("disabled-row");
-        // emailCell.addClass("disabled-row");
-        // walletCell.addClass("disabled-row");
-        // winningCell.addClass("disabled-row");
-        // statusCell.addClass("disabled-row");
-      //   disableButton(noCell);
-      //   disableButton(fullNameCell);
-      //   disableButton(shortNameCell);
-      //   disableButton(emailCell);
-      //   disableButton(walletCell);
-      //   disableButton(winningCell);
-      //   disableButton(statusCell)
-      // }
+//       if (admintype  == "super admin") {
+//         viewCell.hide()
+//       }else{
+//   viewCell.show();
+// }
+     
 
       tr.append(noCell)
       .append(userIdCell)
         .append(fullNameCell)
         .append(shortNameCell)
-        .append(emailCell)
-        .append(bankNameCell)
-        .append(accountNameCell)
-        .append(IFSCCell)
+        .append(requestTimeCell)
+
+        // .append(emailCell)
+        // .append(bankNameCell)
+        // .append(accountNameCell)
+        // .append(IFSCCell)
         .append(viewCell)
         // .append(deleteCell);
         
