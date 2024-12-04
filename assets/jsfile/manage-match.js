@@ -12,7 +12,7 @@ const adminInfo = getAdminType();
 const isSuperAdmin = adminInfo?.value === "super admin";
 const isStatusTrue = adminInfo?.status === "true";
 const otpModalInstance = createOTPModal();
-// let matchendDate
+let matchendDate
 
 let addNewBtn = document.getElementById("addNewBtn");
 async function fetchData() {
@@ -30,6 +30,7 @@ async function fetchData() {
         rankList = data.data;
         array = rankList; // Initialize array with fetched data
         totaldatamatch.innerHTML = array.length;
+      
         console.log(array);
         displayIndexButtons();
 
@@ -53,7 +54,7 @@ async function fetchData() {
     // if(urlpooldata){
     //   matchendDate = urlpooldata
     // }
-console.log(urlpooldata,"okl")
+// console.log(urlpooldata,"okl")
   } catch (error) {
     console.error("Error fetching data", error);
   }
@@ -274,21 +275,26 @@ function showOTP() {
 //         return "Unknown";
 //     }
 // }
-function getStatus(start_date, end_date) {
-  var currentDate = new Date();
-  var startDate = moment(start_date, "DD-MM-YYYY HH:mm:ss").toDate();
-  var endDate = moment(end_date, "DD-MM-YYYY HH:mm:ss").toDate();
-
-  if (startDate < currentDate && currentDate <= endDate) {
-    return "Running";
-  } else if (startDate < currentDate) {
-    return "Completed";
-  } else if (startDate > currentDate) {
-    return "Upcoming";
-  } else {
-    return "unknown";
-  }
+function getStatus(start_date, match_end_status) {
+  var currentDate = new Date(); // Get the current date and time
+  var startDate = moment(start_date, "DD-MM-YYYY HH:mm:ss").toDate(); // Parse start date
+  
+  // Determine status
+  if (currentDate < startDate) {
+    return "Upcoming"; // Match hasn't started yet
+  } 
+  if (match_end_status.toLowerCase() === "completed") {
+    return "Completed"; // Match is completed
+  } 
+  if (match_end_status.toLowerCase() === "live") {
+    return "Running"; // Match is currently running
+  } 
+  
+  // Default fallback
+  return "Unknown"; 
 }
+
+
 
 window.prev = prev;
 window.next = next;
@@ -432,7 +438,8 @@ function displayTableRows() {
   for (var i = tab_start; i < tab_end; i++) {
     var object = array[i];
     var tr = $("<tr></tr>");
-
+    var match_end_date = object.match_end_status
+    console.log(match_end_date)
     // Populate table cells with match data
     var noCell = $("<td></td>").text(i + 1);
     var teamNameCell = $("<td colspan='3'></td>").text(
@@ -448,7 +455,7 @@ function displayTableRows() {
       object.select_player_A.length + object.select_player_B.length
     );
     var statusCell = $("<td colspan='2'></td>").text(
-      getStatus(object.match_start_date, object.match_end_date)
+      getStatus(object.match_start_date,match_end_date)
     );
     console.log(statusCell.text());
 

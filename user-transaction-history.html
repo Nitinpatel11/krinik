@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <!-- <title>Dashboard | Xoric - Responsive Bootstrap 4 Admin Dashboard</title> -->
-  <title>User Transaction History</title>
+  <title>User Payments History</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
@@ -15,35 +15,16 @@
   <!-- App favicon -->
   <!-- <link rel="shortcut icon" href="./assets/images/favicon.ico" /> -->
   <link rel="icon" href="./assets/images/krinikIn_Logo.svg" type="image/x-icon">
-  <!-- DataTables -->
-  <!-- <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /> -->
-  <!-- <link href="./asset  s/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" -->
-  <!-- type="text/css" /> -->
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
 
 
-  <!-- Responsive datatable examples -->
-  <link href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
 
-  <!-- datepicker -->
-  <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" />
 
-  <!-- jvectormap -->
-  <!-- <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" /> -->
-
-  <!-- Bootstrap Css -->
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <!-- Icons Css -->
   <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
   <!-- App Css-->
   <link href="./assets/css/app.css" rel="stylesheet" type="text/css" />
-  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
 
-  <!-- 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
   <style>
@@ -287,7 +268,7 @@
             <div class="row align-items-center">
 
               <div>
-                <h4 class="page-title mb-1">User Transaction History</h4>
+                <h4 class="page-title mb-1">User Payments History</h4>
               </div>
             </div>
           </div>
@@ -349,8 +330,8 @@
 
                         </div>
                         <div id="dropdownContent3" class="dropdown-content3">
-                          <a data-value="success">Success</a>
-                          <a data-value="fail">Fail</a>
+                          <a data-value="approved">Approved</a>
+                          <a data-value="rejected">Rejected</a>
                           <a data-value="pending">Pending</a>
                         </div>
                       </div>
@@ -396,9 +377,9 @@
                                       <!-- <th data-priority="" colspan="3">Pool Type -->
                                       <!-- <th data-priority="" colspan="3">Username</th> -->
                                       <!-- <th data-priority="" colspan="3">Mobile No.</th> -->
-                                      <th data-priority="" colspan="3">Transaction Id</th>
-                                      <th data-priority="" colspan="2">Credit/Debit</th>
+                                      <!-- <th data-priority="" colspan="3">Transaction Id</th> -->
                                       <th data-priority="" colspan="3">Amount</th>
+                                      <th data-priority="" colspan="2">Credit</th>
                                       <th data-priority="" colspan="2">status</th>
 
                                       <th data-priority="" colspan="2">Date & Time</th>

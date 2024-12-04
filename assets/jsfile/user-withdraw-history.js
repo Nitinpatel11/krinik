@@ -1,5 +1,4 @@
 import {checkAdminAccess}  from "../js/initial.js"
-
 var rankList = [];
 var array = [];
 var array_length = 0;
@@ -13,6 +12,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 console.log(id);
 
+
 async function fetchUserData() {
   try {
     if (!id) {
@@ -20,7 +20,7 @@ async function fetchUserData() {
       return;
     }
 
-    const url = `https://krinik.in/user_get/${id}/`;
+    const url = `https://krinik.in/withdraw_amount_get/user_id/${id}/`;
     console.log('Fetching player data from:', url);
 
     const response = await fetch(url);
@@ -29,9 +29,23 @@ async function fetchUserData() {
     }
 
     const userData1 = await response.json();
-    const userDataId = userData1.data.id;
-    console.log(userData1,"olpmn"); 
-    fetchData(userDataId)
+    const userDataId = userData1.data;
+    if(userDataId){
+
+      console.log(userDataId,"olpmn"); 
+  userNameSpan.textContent = userDataId[0].user_data.name
+    }
+
+// console.log(userNameSpan,"olololol")
+    rankList = userDataId
+    if (rankList.length > 0) {
+      array = rankList;
+      console.log(array,"plo")
+      filterAndDisplay(); // Call the function to filter and display data
+    } else {
+      console.error("No matching data found for the given ID");
+    }
+    // fetchData(userDataId)
     // const newAmounts = await addAmount(userData.id);
 
   } catch (error) {
@@ -40,35 +54,35 @@ async function fetchUserData() {
 }
 
 
-async function fetchData(Id) {
-try {
-const response = await $.ajax({
-  url: "https://krinik.in/withdraw_history/",
-  method: "GET"
-});
+// async function fetchData(Id) {
+// try {
+// const response = await $.ajax({
+//   url: "https://krinik.in/all_transaction/",
+//   method: "GET"
+// });
 
-if (response && response.status === "success" && response.data) {
-  // Filter data where id matches the URL id
-  let store =response.data
-console.log(store,"ok")
-          rankList = store.filter(item => item.id === Id);
-          userNameSpan.innerHTML = rankList[0].Player_Name
-          console.log(userNameSpan,"ploik")
-  // Check if the rankList is not empty
-  if (rankList.length > 0) {
-    array = rankList;
-    console.log(array,"plo")
-    filterAndDisplay(); // Call the function to filter and display data
-  } else {
-    console.error("No matching data found for the given ID");
-  }
-} else {
-  console.error("Error: Invalid data format or ID mismatch");
-}
-} catch (error) {
-console.error("Error fetching data", error);
-}
-}
+// if (response && response.status === "success" && response.data) {
+//   // Filter data where id matches the URL id
+//   let store =response.data
+// console.log(store,"ok")
+//           rankList = store.filter(item => item.id === Id);
+//           userNameSpan.innerHTML = rankList[0].user_id
+//   console.log(userNameSpan,"ploik")
+//   // Check if the rankList is not empty
+//   if (rankList.length > 0) {
+//     array = rankList;
+//     console.log(array,"plo")
+//     filterAndDisplay(); // Call the function to filter and display data
+//   } else {
+//     console.error("No matching data found for the given ID");
+//   }
+// } else {
+//   console.error("Error: Invalid data format or ID mismatch");
+// }
+// } catch (error) {
+// console.error("Error fetching data", error);
+// }
+// }
 
 fetchUserData();
 
@@ -144,39 +158,39 @@ $dropdownBtn3.attr('aria-expanded', 'false');
 
 
 // Initialize Flatpickr
-// let picker = flatpickr('#rangePicker', {
-//   mode: 'range',
-//   dateFormat: 'd-m-Y',
-//   onClose: function (selectedDates, dateStr, instance) {
-//     if (!selectedDates || selectedDates.length === 0) {
-//       instance.clear();
-//       $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-//       $('#clearDates').hide();
-//       $('#calendarIcon').show();
-//     } else {
-//       $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
-//       $('#clearDates').show();
-//       $('#calendarIcon').hide();
-//     }
-//     filterRankList();
-//   },
-//   clickOpens: false,
-//   allowInput: false
-// });
+let picker = flatpickr('#rangePicker', {
+  mode: 'range',
+  dateFormat: 'd-m-Y',
+  onClose: function (selectedDates, dateStr, instance) {
+    if (!selectedDates || selectedDates.length === 0) {
+      instance.clear();
+      $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+      $('#clearDates').hide();
+      $('#calendarIcon').show();
+    } else {
+      $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
+      $('#clearDates').show();
+      $('#calendarIcon').hide();
+    }
+    filterRankList();
+  },
+  clickOpens: false,
+  allowInput: false
+});
 
-// $('#rangePicker, #calendarIcon').click(function () {
-//   if (!$('#rangePicker').hasClass('has-dates')) {
-//     picker.open();
-//   }
-// });
+$('#rangePicker, #calendarIcon').click(function () {
+  if (!$('#rangePicker').hasClass('has-dates')) {
+    picker.open();
+  }
+});
 
-// $('#clearDates').click(function () {
-//   picker.clear();
-//   $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-//   $('#clearDates').hide();
-//   $('#calendarIcon').show();
-//   filterRankList();
-// });
+$('#clearDates').click(function () {
+  picker.clear();
+  $('#rangePicker').text('Start & End Date').removeClass('has-dates');
+  $('#clearDates').hide();
+  $('#calendarIcon').show();
+  filterRankList();
+});
 
 function updateAmountFilters() {
 const startAmount = $('#startAmountRange').val().trim();
@@ -232,58 +246,57 @@ filterRankList();
 function filterRankList() {
   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
 console.log('Search Text:', tab_filter_text);
-// var datefilter = $('#rangePicker').text().trim();
+var datefilter = $('#rangePicker').text().trim();
 const statusFilter = $("#selectedStatus").data('value') || ''; 
   var startDate, endDate;
-  var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
-  var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
+  var startAmount = parseFloat($('#startAmountRange').val().trim()) || 0;
+var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
-//   if (datefilter !== '' && datefilter !== 'Start & End Date') {
-//   var dates = datefilter.split(' - ');
-//   startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
-//   endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
-//   // console.log('Parsed Start Date:', startDate);
-//   // console.log('Parsed End Date:', endDate);
-// }
-  var filteredArray = rankList.filter(function (object) {
-    // var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
-    var matchesText = true, matchesStatus = true, matchesAmount = true;
-
-
-    if (tab_filter_text !== '') {
-      matchesText = (object.Player_Name && object.Player_Name.toLowerCase().includes(tab_filter_text)) ||
-        (object.Account && object.Account.toString().toLowerCase().includes(tab_filter_text)) ||
-        (object.Payment_Method && object.Payment_Method.toLowerCase().includes(tab_filter_text)) ;
-    }
-
-    // if (statusFilter !== '') {
-    //   const status = getStatus(object.Status);
-    //   matchesStatus = (status === statusFilter);
-    // }
-    if (statusFilter !== 'All Status') {
-  const status = object.Status.toLowerCase()
-  console.log(status)
-  matchesStatus = (status === statusFilter);
-  console.log(matchesStatus ,"okli")
+if (datefilter !== '' && datefilter !== 'Start & End Date') {
+  var dates = datefilter.split(' - ');
+  startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
+  endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
+  // console.log('Parsed Start Date:', startDate);
+  // console.log('Parsed End Date:', endDate);
 }
 
-  //   if (startDate && endDate) {
-  //   const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
-  //   matchesDate = (objectDate >= startDate && objectDate <= endDate);
-  //   // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
-  // }
+
+  var filteredArray = rankList.filter(function (object) {
+    var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
+
+    if (tab_filter_text !== '') {
+      matchesText = (object.amount_with_tds && object.amount_with_tds.toString().toLowerCase().includes(tab_filter_text)) 
+    }
+
+    if (statusFilter !== 'All Status') {
+  const status = object.withdraw_status.toLowerCase()
+  console.log(status)
+  matchesStatus = (status === statusFilter);
+  // console.log(matchesStatus ,"okli")
+}
+
+
+
+
+    // if (startDate && endDate) {
+    //   matchesDate = (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
+    //     moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
+    // }
+    if (startDate && endDate) {
+    const objectDate = moment(object.timestamp, 'YYYY-MM-DD HH:mm:ss').toDate();
+    matchesDate = (objectDate >= startDate && objectDate <= endDate);
+    // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
+  }
 
   // Filter based on amount range
-  if (!isNaN(object.Amount)) {
-    const amount = parseFloat(object.Amount);
+  if (!isNaN(object.amount_with_tds)) {
+    const amount = parseFloat(object.amount_with_tds);
     matchesAmount = (amount >= startAmount && amount <= endAmount);
-    // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+    console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
   }
 
 
-    // return matchesText && matchesStatus && matchesDate && matchesAmount;
-    return matchesText && matchesStatus && matchesAmount;
-
+  return matchesText && matchesStatus && matchesDate && matchesAmount;
   });
 
   array = filteredArray;
@@ -320,7 +333,6 @@ if (status === "success" || status === "Success") {
 }
 }
 window.getStatus = getStatus
-
 function displayIndexButtons() {
   $(".index_buttons ul").empty();
 
@@ -392,9 +404,6 @@ function prev() {
     highlightIndexButton();
   }
 }
-window.prev = prev;
-window.next = next;
-window.indexPagination = indexPagination;
 
 function next() {
   if (current_index < max_index) {
@@ -410,7 +419,9 @@ function indexPagination(index) {
   highlightIndexButton();
 }
 
-
+window.prev = prev
+window.prev = next
+window.prev = indexPagination
 
 function displayTableRows() {
   $("table tbody").empty();
@@ -430,51 +441,55 @@ function displayTableRows() {
 
   for (var i = tab_start; i < tab_end; i++) {
     var showdata = array[i];
-    console.log(showdata,"showing")
-    // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+    // var status = getStatus(showdata["payment_status"]);
 
     var tr = $("<tr></tr>");
 
     var noCell = $("<td></td>").text(i + 1);
-    var poolNameCell = $("<td colspan='3'></td>").text(showdata["Player_Name"] || "");
-    var poolTypeCell = $("<td colspan='3'> </td>").text(showdata["Payment_Method"] || "");
-    var userNameCell = $("<td colspan='3'> </td>").text(showdata["Account"] || "");
-    // var mobileCell = $("<td colspan='3'> </td>").text(showdata["Amount"] || "");
+    // var poolNameCell = $("<td colspan='3'></td>").text(showdata.pool["pool_name"] || "");
+    // var poolTypeCell = $("<td colspan='3'> </td>").text(showdata.pool["pool_type"] || "");
+    // var userNameCell = $("<td colspan='3'> </td>").text(showdata.username["name"] || "");
+    // var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
 
-    // var transactionId = $("<td colspan='3'> </td>").text(showdata["transactions_id"] || "");
-    // var credit_debitCell = $("<td colspan='2'> </td>").text(showdata["Status"] || "");
-    var amountCell = $("<td colspan='3'> </td>").text(showdata["Amount"] || ""); // Initialize amountCell
+    // var transactionId = $("<td colspan='3'> </td>").text(showdata["order_id"] || "");
+    var credit_debitCell = $("<td colspan='2'> </td>").text("Debit" || "");
+    var amountCell = $("<td colspan='3'> </td>"); // Initialize amountCell
 
-    // if (showdata["credit_debit"] === "credit" || showdata["credit_debit"] === "Credit") {
-    //   amountCell.html(`<span style="color: green;font-weight:600">&#x2b;${showdata["amount"] || ""}</span>`);
-    // } else if (showdata["credit_debit"] === "debit" || showdata["credit_debit"] === "Debit") {
-    //   amountCell.html(`<span style="color: red;font-weight:600">&#x2212;${showdata["amount"] || ""}</span>`);
-    // }
-    var statusCell = $("<td colspan='2'></td>").text(showdata["Status"]);
-    if (showdata["Status"] === "success" || showdata["Status"] === "Success") {
+    // if (credit_debitCell === "credit" || credit_debitCell.text === "Credit") {
+      amountCell.html(`<span style="color: red;font-weight:600">&#x2212;${showdata["amount_with_tds"] || ""}</span>`);
+    // } 
+    var statusCell = $("<td colspan='2'></td>").text(showdata["withdraw_status"]);
+        if (showdata["withdraw_status"] === "approved" || showdata["withdraw_status"] === "Approved") {
       statusCell.html(`<span class="material-symbols-outlined" style="color:green">check_circle</span>`);
-    } else if (showdata["Status"] === "fail" || showdata["Status"]=== "Fail") {
+    } else if (showdata["withdraw_status"] === "rejected" || showdata["withdraw_status"]=== "rejected") {
       statusCell.html(` <span class="material-symbols-outlined" style="color:red">error</span>`);
-    }else if (showdata["Status"] === "pending" || showdata["Status"]=== "Pending") {
+    }else if (showdata["withdraw_status"] === "pending" || showdata["withdraw_status"]=== "Pending") {
       statusCell.html(`<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`);
     }
 
-    var actionCell = $("<td colspan='2'></td>").text(showdata["Action"]);
-    if (showdata["Action"] === "check" || showdata["Action"] === "Check") {
-      actionCell.html(` <span class="material-symbols-outlined" style="color : blue">verified</span> `);
-    }
+    var dateCell = $("<td colspan='2'></td>").text(moment(showdata["timestamp"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
 
+    // var viewCell = $("<td></td>").html(
+    //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
+    //     '<span class="sortable" onclick="viewLeagueDetails(\'' + showdata["league_name"] + '\')"><i class="far fa-eye"></i></span>'
+    // );
+    // var editCell = $("<td></td>").html(
+    //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
+    // );
+    // var deleteCell = $("<td></td>").html(
+    //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
+    // );
    
     tr.append(noCell)
-      .append(poolNameCell)
-      .append(poolTypeCell)
-      .append(userNameCell)
+      // .append(poolNameCell)
+      // .append(poolTypeCell)
+      // .append(userNameCell)
       // .append(mobileCell)
       // .append(transactionId)
-      // .append(credit_debitCell)
       .append(amountCell)
+      .append(credit_debitCell)
       .append(statusCell)
-      .append(actionCell)
+      .append(dateCell)
     // .append(deleteCell);
 
     // if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
@@ -485,7 +500,4 @@ function displayTableRows() {
   }
 
 }
-
-
 window.onload = checkAdminAccess();
-

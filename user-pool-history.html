@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <!-- <title>Dashboard | Xoric - Responsive Bootstrap 4 Admin Dashboard</title> -->
-  <title>User Pool History</title>
+  <title>User Game History</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
@@ -21,16 +21,6 @@
   <!-- type="text/css" /> -->
   <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
 
-
-  <!-- Responsive datatable examples -->
-  <link href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
-
-  <!-- datepicker -->
-  <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" />
-
-  <!-- jvectormap -->
-  <!-- <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" /> -->
 
   <!-- Bootstrap Css -->
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -287,7 +277,7 @@
             <div class="row align-items-center">
 
               <div>
-                <h4 class="page-title mb-1">User Pool History</h4>
+                <h4 class="page-title mb-1">User Game History</h4>
               </div>
             </div>
           </div>
@@ -297,10 +287,10 @@
         <div class="page-content-wrapper">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-xl-3">
-                <div class="card">
-
-                </div>
+              <div class="col-xl-12 mb-4">
+                <!-- <div class="card"> -->
+                  <h4 class="user-name-title"><span id="user-name-span"></span>  | Game History</h4>
+                <!-- </div> -->
               </div>
 
 
@@ -360,6 +350,8 @@
                         <div id="dropdownContent3" class="dropdown-content3">
                           <a data-value="Win">Win</a>
                           <a data-value="Lose">Lose</a>
+                          <a data-value="Live">Live</a>
+
                      
                         </div>
                       </div>
@@ -403,13 +395,13 @@
                                     <tr>
                                       <th data-priority="">No.</th>
                                       <th data-priority="" colspan="3">Pool Name</th>
-                                      <th data-priority=""  colspan="2">Pool Type</th>
+                                      <th data-priority=""  colspan="3">Pool Type</th>
                                       <th data-priority="" colspan="3">League Name</th>
                                       <th data-priority="" colspan="3">Bid Amount</th>
                                       <!-- <th data-priority="" colspan="3">Transaction Id</th> -->
                                       <!-- <th data-priority="" colspan="2">Credit/Debit</th> -->
-                                      <th data-priority="" colspan="2">status</th>
                                       <th data-priority="" colspan="3">Amount</th>
+                                      <th data-priority="" colspan="2">status</th>
 
                                       <th data-priority="" colspan="2">Date & Time</th>
                                       <!-- <th data-priority="">Delete</th> -->

@@ -59,6 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
         
 
         await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
+        await sendNotification(user_id, {
+            title: "Bonus Alert!",
+            body: "Congratulations! A bonus amount has been credited to your wallet. Check it out now!"
+          });
+        fetchUserData();
     }
 
 
@@ -175,14 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response2.ok) {
                 throw new Error("Failed to patch amount in second API");
             }
-            if(response1.ok && response2.ok){
-
-                await sendNotification(user_id, {
-                    title: "Withdrawal Request Accepted!",
-                    body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
-                  });
-                  
-            }
+            
 
             console.log("Patch for amount successful:", await response2.json());
 
@@ -676,9 +674,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (confirm("Are you sure you want to approve it?")) {
             // Mark as approved
             await patchData(newWinningAmount, newWalletAmount, idCell,bonusAddAmount );
-            // alert("Approval successful!");
             alert("Approved successfully!");
-            fetchUserData(); // Refresh data
+            fetchUserData();
+            await sendNotification(user_id, {
+                title: "Withdrawal Request Accepted!",
+                body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
+              });
+              
+            // alert("Approval successful!");
+             // Refresh data
     
             // Reorder the rows
             // reorderTableRows();
@@ -711,10 +715,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     throw new Error("Failed to patch amount in second API");
                 }
                 if(response2.ok){
+                    alert(" Rejected Successfully !!")
+                    fetchUserData();
     
                     await sendNotification(user_id, {
-                        title: "Withdrawal Request Accepted!",
-                        body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
+                        title: "Withdrawal Request Rejected!",
+                        body: "Your withdrawal request has been rejected. The amount is not credited to your wallet!."
                       });
                       
                 }
@@ -722,7 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Patch for amount successful:", await response2.json());
     
                 // Re-fetch data to update `totalAmount` and other fields
-                fetchUserData();
+                
     
             } catch (error) {
                 console.error("Error patching data:", error);

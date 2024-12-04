@@ -20,7 +20,7 @@ async function fetchUserData() {
       return;
     }
 
-    const url = `https://krinik.in/user_get/${id}/`;
+    const url = `https://krinik.in/payment/user_id/${id}/`;
     console.log('Fetching player data from:', url);
 
     const response = await fetch(url);
@@ -29,9 +29,20 @@ async function fetchUserData() {
     }
 
     const userData1 = await response.json();
-    const userDataId = userData1.data.id;
-    console.log(userData1,"olpmn"); 
-    fetchData(userDataId)
+    const userDataId = userData1.data;
+    console.log(userDataId,"olpmn"); 
+userNameSpan.textContent = userDataId[0].user_data.name
+
+// console.log(userNameSpan,"olololol")
+    rankList = userDataId
+    if (rankList.length > 0) {
+      array = rankList;
+      console.log(array,"plo")
+      filterAndDisplay(); // Call the function to filter and display data
+    } else {
+      console.error("No matching data found for the given ID");
+    }
+    // fetchData(userDataId)
     // const newAmounts = await addAmount(userData.id);
 
   } catch (error) {
@@ -40,35 +51,35 @@ async function fetchUserData() {
 }
 
 
-async function fetchData(Id) {
-try {
-const response = await $.ajax({
-  url: "https://krinik.in/all_transaction/",
-  method: "GET"
-});
+// async function fetchData(Id) {
+// try {
+// const response = await $.ajax({
+//   url: "https://krinik.in/all_transaction/",
+//   method: "GET"
+// });
 
-if (response && response.status === "success" && response.data) {
-  // Filter data where id matches the URL id
-  let store =response.data
-console.log(store,"ok")
-          rankList = store.filter(item => item.id === Id);
-          userNameSpan.innerHTML = rankList[0].user_id
-  console.log(userNameSpan,"ploik")
-  // Check if the rankList is not empty
-  if (rankList.length > 0) {
-    array = rankList;
-    console.log(array,"plo")
-    filterAndDisplay(); // Call the function to filter and display data
-  } else {
-    console.error("No matching data found for the given ID");
-  }
-} else {
-  console.error("Error: Invalid data format or ID mismatch");
-}
-} catch (error) {
-console.error("Error fetching data", error);
-}
-}
+// if (response && response.status === "success" && response.data) {
+//   // Filter data where id matches the URL id
+//   let store =response.data
+// console.log(store,"ok")
+//           rankList = store.filter(item => item.id === Id);
+//           userNameSpan.innerHTML = rankList[0].user_id
+//   console.log(userNameSpan,"ploik")
+//   // Check if the rankList is not empty
+//   if (rankList.length > 0) {
+//     array = rankList;
+//     console.log(array,"plo")
+//     filterAndDisplay(); // Call the function to filter and display data
+//   } else {
+//     console.error("No matching data found for the given ID");
+//   }
+// } else {
+//   console.error("Error: Invalid data format or ID mismatch");
+// }
+// } catch (error) {
+// console.error("Error fetching data", error);
+// }
+// }
 
 fetchUserData();
 
@@ -235,7 +246,7 @@ console.log('Search Text:', tab_filter_text);
 var datefilter = $('#rangePicker').text().trim();
 const statusFilter = $("#selectedStatus").data('value') || ''; 
   var startDate, endDate;
-  var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
+  var startAmount = parseFloat($('#startAmountRange').val().trim()) || 0;
 var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
 if (datefilter !== '' && datefilter !== 'Start & End Date') {
@@ -251,11 +262,11 @@ if (datefilter !== '' && datefilter !== 'Start & End Date') {
     var matchesText = true, matchesStatus = true, matchesDate = true, matchesAmount = true;
 
     if (tab_filter_text !== '') {
-      matchesText = (object. order_id && object. order_id.toLowerCase().includes(tab_filter_text)) 
+      matchesText = (object.paid_amount && object.paid_amount.toString().toLowerCase().includes(tab_filter_text)) 
     }
 
     if (statusFilter !== 'All Status') {
-  const status = object.status.toLowerCase()
+  const status = object.payment_status  .toLowerCase()
   console.log(status)
   matchesStatus = (status === statusFilter);
   // console.log(matchesStatus ,"okli")
@@ -269,16 +280,16 @@ if (datefilter !== '' && datefilter !== 'Start & End Date') {
     //     moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
     // }
     if (startDate && endDate) {
-    const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+    const objectDate = moment(object.timestamp, 'YYYY-MM-DD HH:mm:ss').toDate();
     matchesDate = (objectDate >= startDate && objectDate <= endDate);
     // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
   }
 
   // Filter based on amount range
-  if (!isNaN(object.amount)) {
-    const amount = parseFloat(object.amount);
+  if (!isNaN(object.paid_amount)) {
+    const amount = parseFloat(object.paid_amount);
     matchesAmount = (amount >= startAmount && amount <= endAmount);
-    // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+    console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
   }
 
 
@@ -318,7 +329,7 @@ if (status === "success" || status === "Success") {
   return "unknown";
 }
 }
-
+window.getStatus = getStatus
 function displayIndexButtons() {
   $(".index_buttons ul").empty();
 
@@ -405,7 +416,9 @@ function indexPagination(index) {
   highlightIndexButton();
 }
 
-
+window.prev = prev
+window.prev = next
+window.prev = indexPagination
 
 function displayTableRows() {
   $("table tbody").empty();
@@ -425,7 +438,7 @@ function displayTableRows() {
 
   for (var i = tab_start; i < tab_end; i++) {
     var showdata = array[i];
-    // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+    // var status = getStatus(showdata["payment_status"]);
 
     var tr = $("<tr></tr>");
 
@@ -435,25 +448,23 @@ function displayTableRows() {
     // var userNameCell = $("<td colspan='3'> </td>").text(showdata.username["name"] || "");
     // var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
 
-    var transactionId = $("<td colspan='3'> </td>").text(showdata["order_id"] || "");
-    var credit_debitCell = $("<td colspan='2'> </td>").text(showdata["credit_debit"] || "");
+    // var transactionId = $("<td colspan='3'> </td>").text(showdata["order_id"] || "");
+    var credit_debitCell = $("<td colspan='2'> </td>").text("Credit" || "");
     var amountCell = $("<td colspan='3'> </td>"); // Initialize amountCell
 
-    if (showdata["credit_debit"] === "credit" || showdata["credit_debit"] === "Credit") {
-      amountCell.html(`<span style="color: green;font-weight:600">&#x2b;${showdata["amount"] || ""}</span>`);
-    } else if (showdata["credit_debit"] === "debit" || showdata["credit_debit"] === "Debit") {
-      amountCell.html(`<span style="color: red;font-weight:600">&#x2212;${showdata["amount"] || ""}</span>`);
-    }
-    var statusCell = $("<td colspan='2'></td>").text(showdata["status"]);
-    if (showdata["status"] === "success" || showdata["status"] === "Success") {
+    // if (credit_debitCell === "credit" || credit_debitCell.text === "Credit") {
+      amountCell.html(`<span style="color: green;font-weight:600">&#x2b;${showdata["paid_amount"] || ""}</span>`);
+    // } 
+    var statusCell = $("<td colspan='2'></td>").text(showdata["payment_status"]);
+    if (showdata["payment_status"] === "approved" || showdata["payment_status"] === "Approved") {
       statusCell.html(`<span class="material-symbols-outlined" style="color:green">check_circle</span>`);
-    } else if (showdata["status"] === "fail" || showdata["status"]=== "Fail") {
+    } else if (showdata["payment_status"] === "rejected" || showdata["payment_status"]=== "rejected") {
       statusCell.html(` <span class="material-symbols-outlined" style="color:red">error</span>`);
-    }else if (showdata["status"] === "pending" || showdata["status"]=== "Pending") {
+    }else if (showdata["payment_status"] === "pending" || showdata["payment_status"]=== "Pending") {
       statusCell.html(`<span class="material-symbols-outlined" style="color:#fbde08">schedule</span>`);
     }
 
-    var dateCell = $("<td colspan='2'></td>").text(moment(showdata["date_time"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
+    var dateCell = $("<td colspan='2'></td>").text(moment(showdata["timestamp"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
 
     // var viewCell = $("<td></td>").html(
     //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'
@@ -471,16 +482,16 @@ function displayTableRows() {
       // .append(poolTypeCell)
       // .append(userNameCell)
       // .append(mobileCell)
-      .append(transactionId)
-      .append(credit_debitCell)
+      // .append(transactionId)
       .append(amountCell)
+      .append(credit_debitCell)
       .append(statusCell)
       .append(dateCell)
     // .append(deleteCell);
 
-    if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
+    // if (credit_debitCell === "credit" || credit_debitCell === "Credit") {
 
-    }
+    // }
 
     $("table tbody").append(tr);
   }

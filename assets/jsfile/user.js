@@ -196,30 +196,20 @@ filterRankList();
 function filterRankList() {
   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
   console.log('Search Text:', tab_filter_text);
-  // var datefilter = $('#rangePicker').text().trim();
+
   const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
   console.log('Selected Status:', statusFilter);
-  var startDate, endDate;
+ 
 
   // Parse amount range
-  var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
+  var startAmount = parseFloat($('#startAmountRange').val().trim()) || 0;
   var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
 
-  // console.log('Start Amount:', startAmount);
-  // console.log('End Amount:', endAmount);
-
-  // Parse the date range from the range picker
-  // if (datefilter !== '' && datefilter !== 'Start & End Date') {
-    // var dates = datefilter.split(' - ');
-    // startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
-    // endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
-    // console.log('Parsed Start Date:', startDate);
-    // console.log('Parsed End Date:', endDate);
-  // }
 
   // Filter the rankList based on text, status, date range, and amount range
   var filteredArray = rankList.filter(function (object) {
-    var matchesText = true, matchesStatus = true,  matchesAmount = true; matchesAmount1 = true;
+    var matchesText = true, matchesStatus = true,  matchesAmountOrWinning = true; 
+    // matchesWinning = true;
 
     // Filter based on text input
     if (tab_filter_text !== '') {
@@ -241,26 +231,19 @@ if (statusFilter !== 'All Status') {
   matchesStatus = (statusup === statusFilter.toLowerCase());
 }
 
-    // Filter based on date range
-    // if (startDate && endDate) {
-      // const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
-      // matchesDate = (objectDate >= startDate && objectDate <= endDate);
-      // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
-    // }
+   
 
     // Filter based on amount range
-    if (!isNaN(object.wallet_amount)) {
-      const amount = parseFloat(object.wallet_amount);
-      matchesAmount = (amount >= startAmount && amount <= endAmount);
-      // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
-    }
-    if (!isNaN(object.winning_amount )) {
-      const amount = parseFloat(object.winning_amount);
-      matchesAmount1 = (amount >= startAmount && amount <= endAmount);
-      // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+    if (!isNaN(object.wallet_amount) ||  !isNaN(object.winning_amount)) {
+      const walletAmount = parseFloat(object.wallet_amount) || 0;
+      const winningAmount = parseFloat(object.winning_amount) || 0;
+
+      matchesAmountOrWinning =
+        (walletAmount >= startAmount && walletAmount <= endAmount) ||
+        (winningAmount >= startAmount && winningAmount <= endAmount);
     }
 
-    return matchesText && matchesStatus  && matchesAmount && matchesAmount1;
+    return matchesText && matchesStatus && matchesAmountOrWinning;
   });
 
   // Update the table with filtered data
@@ -273,68 +256,16 @@ if (statusFilter !== 'All Status') {
 }
 
 
-// const startAmount = document.getElementById('startAmountRange').value
-// ? Number(document.getElementById('startAmountRange').value)
-// : 0; // Default to 0 if empty
-// const endAmount = document.getElementById('endAmountRange').value
-// ? Number(document.getElementById('endAmountRange').value)
-// : Infinity;
+// const walletAmount = parseFloat(object.wallet_amount) || 0;
+//     const winningAmount = parseFloat(object.winning_amount) || 0;
 
-// var filteredArray = rankList.filter(function (object) {
-// const walletAmount = Number(object.wallet_amount) || 0; // Ensure walletAmount is a number
-// const winningAmount = Number(object.winning_amount) || 0; // Ensure winningAmount is a number
+//     matchesAmounts =
+//       walletAmount >= startAmount &&
+//       walletAmount <= endAmount &&
+//       winningAmount >= startAmount &&
+//       winningAmount <= endAmount;
 
-// const matchesText = tab_filter_text
-//   ? (object.name && object.name.toLowerCase().includes(tab_filter_text)) ||
-//     (object.mobile_no && object.mobile_no.toString().includes(tab_filter_text)) ||
-//     (object.email && object.email.toLowerCase().includes(tab_filter_text))
-//   : true;
-
-// const status = object.status.toLowerCase();
-// const statusup = status === 'block' ? 'unblock' : status === 'unblock' ? 'block' : '';
-
-// const matchesStatus =
-//   statusFilter !== 'All Status'
-//       ? statusup === statusFilter.toLowerCase()
-//       : true;
-
-
-// // Filter based on wallet amount range
-// const matchesWalletAmount =
-// walletAmount >= startAmount && walletAmount <= endAmount;
-
-// const matchesWinningAmount =
-// winningAmount >= startAmount && winningAmount <= endAmount;
-
-// console.log('Wallet:', walletAmount, 'Winning:', winningAmount, 'Start:', startAmount, 'End:', endAmount);
-// console.log(
-// 'Matches Text:', matchesText,
-// 'Matches Status:', matchesStatus,
-// 'Matches Wallet Amount:', matchesWalletAmount,
-// 'Matches Winning Amount:', matchesWinningAmount
-// );
-// // Return true only if all conditions are satisfied
-// return matchesText && matchesStatus && (matchesWalletAmount || matchesWinningAmount);
-// });
-
-
-
-
-// function getStatus(start_date, end_date) {
-//   var currentDate = new Date();
-//   var startDate = moment(start_date, "DD/MM/YYYY").toDate();
-//   var endDate = moment(end_date, "DD/MM/YYYY").toDate();
-
-//   if (startDate < currentDate && currentDate <= endDate) {
-//     return "Running";
-//   } else if (startDate < currentDate && endDate < currentDate) {
-//     return "Completed";
-//   } else if (startDate > currentDate && endDate > currentDate) {
-//     return "Upcoming";
-//   } else {
-//     return "unknown";
-//   }
-// }
+//     return matchesText && matchesStatus && matchesAmounts;
 
 function displayIndexButtons() {
 $(".index_buttons ul").empty();

@@ -1,6 +1,6 @@
 import {checkAdminAccess}  from "../js/initial.js"
-var rankList = [];
-let array;
+let rankList = [];
+var array;
 var array_length = 0;
 var table_size = 10;
 var start_index = 1;
@@ -13,22 +13,27 @@ async function fetchData() {
   try {
     const data = await $.ajax({
       url: "https://krinik.in/payment/",
-      method: "GET"
+      method: "GET",
     });
 
-    if (data && data.status === "success") {
-      rankList = data.data;
-     let withdrawdata = getFirstRecordPerUser(rankList)
-      console.log(withdrawdata,"withdrawdata")
-      
-      array = withdrawdata;
-      console.log(array,"array")
-      filterAndDisplay();
-      
-      // totaldataleague.innerHTML = array.length;
-      // console.log(array,"olpolop")
+    if (data && data.status === "success" && Array.isArray(data.data)) {
+      const rankList1 = data.data;
+      console.log(rankList, "Fetched Data");
+
+      // Filter the data
+      const withdrawdata = getFirstRecordPerUser(rankList1);
+      console.log(withdrawdata, "Filtered Data (First Record Per User)");
+
+      if (withdrawdata) {
+        rankList = withdrawdata
+        array = withdrawdata;
+        console.log(array, "Final Array");
+
+        // Call your display function
+        filterAndDisplay();
+      }
     } else {
-      console.error("Error: Invalid data format");
+      console.error("Error: Invalid data format or status");
     }
   } catch (error) {
     console.error("Error fetching data", error);
@@ -36,24 +41,23 @@ async function fetchData() {
 }
 
 function getFirstRecordPerUser(data) {
-  console.log(data,"ok")
+  console.log(data, "Original Data");
   const uniqueUsers = {};
   return data.filter((record) => {
-      const userId = record.user_data.user_id;
-      if (!uniqueUsers[userId]) {
-          uniqueUsers[userId] = true;
-          return true; // Include the first occurrence of this user
-      }
-      return false; // Exclude subsequent occurrences
+    const userId = record?.user_data?.user_id;
+    if (userId && !uniqueUsers[userId]) {
+      uniqueUsers[userId] = true;
+      return true; // Include the first occurrence of this user
+    }
+    return false; // Exclude subsequent occurrences
   });
 }
 
 fetchData();
 
 function filterAndDisplay() {
-  console.log(array,"nitin")
-  console.log(array.length)
-//   filterRankList();
+ 
+  filterRankList();
   preLoadCalculations();
   displayIndexButtons();
   displayTableRows();
@@ -66,148 +70,10 @@ function preLoadCalculations(filteredArrayLength) {
 }
 
 $(document).ready(function () {
-//   const $dropdownBtn3 = $('#dropdownBtn3');
-// const $dropdownContent3 = $('#dropdownContent3');
-// const $selectedStatus = $('#selectedStatus');
-// const $arrow = $('#arrowBar'); // Ensure this selector matches your HTML
-// const $clearStatus = $('#clearStatus');
 
-// function toggleDropdown() {
-// const isExpanded = $dropdownContent3.toggleClass('show').hasClass('show');
-// $dropdownBtn3.attr('aria-expanded', isExpanded);
-// }
-
-// // Click event for the selected status element to toggle the dropdown
-// $selectedStatus.on('click', function() {
-// toggleDropdown();
-// });
-
-// // Click event for the arrow to toggle the dropdown
-// $arrow.on('click', function() {
-// toggleDropdown();
-// });
-
-// // Click event for selecting an item from the dropdown
-// $dropdownContent3.on('click', 'a', function() {
-// const selectedValue = $(this).data('value');
-// $selectedStatus.text(selectedValue).data('value', selectedValue);
-// $dropdownContent3.removeClass('show');
-
-// if (selectedValue === 'All Status') {
-//   $arrow.show();
-//   $clearStatus.hide();
-// } else {
-//   $arrow.hide();
-//   $clearStatus.show();
-// }
-// filterRankList(); // Filter based on the selected status
-// });
-
-// // Click event for clearing the selected status
-// $clearStatus.on('click', function() {
-// $selectedStatus.text('All Status').data('value', 'All Status');
-// $arrow.show();
-// $clearStatus.hide();
-// $dropdownContent3.removeClass('show'); // Hide the dropdown content
-// $dropdownBtn3.attr('aria-expanded', 'false'); // Ensure dropdown button is collapsed
-// filterRankList(); // Filter with the reset status
-// });
-
-// // Click event for closing the dropdown if clicked outside
-// $(document).on('click', function(event) {
-// if (!$selectedStatus.is(event.target) && !$selectedStatus.has(event.target).length && !$dropdownContent3.has(event.target).length && !$arrow.is(event.target) && !$clearStatus.is(event.target)) {
-//   $dropdownContent3.removeClass('show');
-//   $dropdownBtn3.attr('aria-expanded', 'false');
-// }
-// });
-
-
-
-  // Initialize Flatpickr
-  // let picker = flatpickr('#rangePicker', {
-  //   mode: 'range',
-  //   dateFormat: 'd-m-Y',
-  //   onClose: function (selectedDates, dateStr, instance) {
-  //     if (!selectedDates || selectedDates.length === 0) {
-  //       instance.clear();
-  //       $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-  //       $('#clearDates').hide();
-  //       $('#calendarIcon').show();
-  //     } else {
-  //       $('#rangePicker').text(selectedDates.map(date => instance.formatDate(date, 'd-m-Y')).join(' - ')).addClass('has-dates');
-  //       $('#clearDates').show();
-  //       $('#calendarIcon').hide();
-  //     }
-  //     filterRankList();
-  //   },
-  //   clickOpens: false,
-  //   allowInput: false
-  // });
-
-  // $('#rangePicker, #calendarIcon').click(function () {
-  //   if (!$('#rangePicker').hasClass('has-dates')) {
-  //     picker.open();
-  //   }
-  // });
-
-  // $('#clearDates').click(function () {
-  //   picker.clear();
-  //   $('#rangePicker').text('Start & End Date').removeClass('has-dates');
-  //   $('#clearDates').hide();
-  //   $('#calendarIcon').show();
-  //   filterRankList();
-  // });
-
-  // function updateAmountFilters() {
-// const startAmount = $('#startAmountRange').val().trim();
-// const endAmount = $('#endAmountRange').val().trim();
-
-// Show or hide clear buttons based on input values
-// if (startAmount !== '' && endAmount === '') {
-//   $('#clearAmountStart').show();
-//   $('#clearAmountEnd').hide();
-// } else if (startAmount !== '' && endAmount !== '') {
-//   $('#clearAmountStart').show();
-//   $('#clearAmountEnd').show();
-// } else if (startAmount === '' && endAmount === '') {
-//   $('#clearAmountStart').hide();
-//   $('#clearAmountEnd').hide();
-// } else if (startAmount === '' && endAmount !== '') {
-//   $('#clearAmountStart').hide();
-//   $('#clearAmountEnd').show();
-// }
-
-// Always call filterRankList to apply the filter
-// filterRankList();
-// }
-
-
-// $('#startAmountRange').on('input', function () {
-// updateAmountFilters();
-// });
-
-// Event listeners for the end amount range input
-// $('#endAmountRange').on('input', function () {
-// updateAmountFilters();
-// });
-
-// Event listener for clearing the start amount range
-// $('#clearAmountStart').click(function () {
-// $('#startAmountRange').val('');
-// updateAmountFilters(); // Call the update function to handle the UI changes
-// });
-
-// Event listener for clearing the end amount range
-// $('#clearAmountEnd').click(function () {
-// $('#endAmountRange').val('');
-// updateAmountFilters(); // Call the update function to handle the UI changes
-// });
-
-// Initial call to update filters and hide/show clear buttons on page load
-// updateAmountFilters();
-// $('#tab_filter_text').on('input', function () {
-// filterRankList();
-// });
+$('#tab_filter_text').on('input', function () {
+filterRankList();
+});
 
 
 });
@@ -215,72 +81,30 @@ $(document).ready(function () {
 
 function filterRankList() {
   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
-//   console.log('Search Text:', tab_filter_text);
-  // var datefilter = $('#rangePicker').text().trim();
-  // const statusFilter = $("#selectedStatus").data('value') || ''; // Get the selected status value
-//   console.log('Selected Status:', statusFilter);
-//   var startDate, endDate;
-
-  // Parse amount range
-//   var startAmount = parseFloat($('#startAmountRange').val().trim()) || -Infinity;
-//   var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
-
-  // console.log('Start Amount:', startAmount);
-  // console.log('End Amount:', endAmount);
-
-  // Parse the date range from the range picker
-  // if (datefilter !== '' && datefilter !== 'Start & End Date') {
-    // var dates = datefilter.split(' - ');
-    // startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
-    // endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
-    // console.log('Parsed Start Date:', startDate);
-    // console.log('Parsed End Date:', endDate);
-  // }
 
   // Filter the rankList based on text, status, date range, and amount range
-  var filteredArray = array.filter(function (object) {
-    var matchesText = true 
-
+  var filteredArray = rankList.filter(function (object) {
+    var matchesText = true;
+    console.log("object", object);
+  
     // Filter based on text input
     if (tab_filter_text !== '') {
-      matchesText = (object.user_data.user_id && object.user_data.user_id.toLowerCase().includes(tab_filter_text)) ||
-        (object.user_data.name && object.user_data.name.toString().toLowerCase().includes(tab_filter_text)) ||
-        (object.user_data.email && object.user_data.email.toLowerCase().includes(tab_filter_text)) ||
-        (object.user_data.mobile_no && object.user_data.mobile_no.toString().includes(tab_filter_text)) ||
-        (object.user_data.user_doc.account_number && object.user_data.user_doc.account_number.toString().toLowerCase().includes(tab_filter_text)) ||
-        (object.user_data.user_doc.bank_name && object.user_data.user_doc.bank_name.toLowerCase().includes(tab_filter_text)) ||
-        (object.user_data.user_doc.ifsc_code && object.user_data.user_doc.ifsc_code.toLowerCase().includes(tab_filter_text))    ;
+      matchesText = 
+        (object.user_data?.user_id && object.user_data.user_id.toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data?.name && object.user_data.name.toString().toLowerCase().includes(tab_filter_text)) ||
+        (object.user_data?.mobile_no && object.user_data.mobile_no.toString().includes(tab_filter_text)) ||
+        (object.user_data?.user_doc && object.user_data.user_doc.bank_name &&  object.user_data.user_doc.bank_name.toLowerCase().includes(tab_filter_text));
     }
-
-    // let status = object.profile_status.toLowerCase();
-
-
-// // Filter based on status dropdown
-// if (statusFilter !== 'All Status') {
-//   matchesStatus = (status === statusFilter.toLowerCase());
-// }
-
-    // Filter based on date range
-    // if (startDate && endDate) {
-      // const objectDate = moment(object.date_time, 'YYYY-MM-DD HH:mm:ss').toDate();
-      // matchesDate = (objectDate >= startDate && objectDate <= endDate);
-      // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
-    // }
-
-    // Filter based on amount range
-//     if (!isNaN(object.wallet_amount)) {
-//       const amount = parseFloat(object.wallet_amount);
-//       matchesAmount = (amount >= startAmount && amount <= endAmount);
-//       // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
-//     }
-//     if (!isNaN(object.winning_amount )) {
-//       const amount = parseFloat(object.winning_amount);
-//       matchesAmount1 = (amount >= startAmount && amount <= endAmount);
-//       // console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
-//     }
-
-    return matchesText ;
+  
+    // Ensure objects with `user_data.user_doc` as null are not filtered out
+    if (object.user_data?.user_doc === null) {
+      return true; // Include this object
+    }
+  
+    return matchesText;
   });
+  
+  
 
   // Update the table with filtered data
   array = filteredArray;
@@ -445,10 +269,11 @@ return null;
 // console.log(userIdCell,"DATA")
       var fullNameCell = $("<td colspan='2'></td>").text(showdata.user_data["name"] || "");
       var shortNameCell = $("<td colspan='2'> </td>").text(showdata.user_data["mobile_no"] || "");
-      var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
-      var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["bank_name"] || "");
-      var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
-      var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
+      // var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
+      var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data?.user_doc?.bank_name || ""  );
+      
+      // var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
+      // var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
     //   var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
     //   var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
       // var statushow = toCapitalizeCase(showdata["status"])

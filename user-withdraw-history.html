@@ -22,17 +22,6 @@
   <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
 
 
-  <!-- Responsive datatable examples -->
-  <link href="./assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-    type="text/css" />
-
-  <!-- datepicker -->
-  <link href="./assets/libs/air-datepicker/air-datepicker.css" rel="stylesheet" />
-
-  <!-- jvectormap -->
-  <!-- <link href="./assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" /> -->
-
-  <!-- Bootstrap Css -->
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <!-- Icons Css -->
   <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -299,7 +288,7 @@
             <div class="row">
               <div class="col-xl-12 mb-4">
                 <!-- <div class="card"> -->
-                  <h4 class="user-name-title"><span id="user-name-span"></span></h4>
+                  <h4 class="user-name-title"><span id="user-name-span"></span>  |  Withdraw History</h4>
                 <!-- </div> -->
               </div>
 
@@ -309,18 +298,18 @@
 
                   <form class="app-search  d-lg-block d-flex  ">
                     <div class="d-flex gap-3 flex-wrap">
-                      <!-- <div class="dropdown"> -->
+                      <div class="dropdown">
 
                         <!-- <div class="datepicker-container"> -->
-                        <!-- <div id="rangePicker" class="date-button">Start & End Date -->
-                        <!-- </div> -->
-                        <!-- <i id="calendarIcon" class="fas fa-calendar-alt date-icon"></i> -->
-                        <!-- <i id="clearDates" class="fas fa-times-circle"></i> -->
+                        <div id="rangePicker" class="date-button">Start & End Date
+                        </div>
+                        <i id="calendarIcon" class="fas fa-calendar-alt date-icon"></i>
+                        <i id="clearDates" class="fas fa-times-circle"></i>
                         <!-- </div> -->
 
                         <!-- <i class="mdi mdi-chevron-down"></i> -->
 
-                      <!-- </div> -->
+                      </div>
                       <div class="dropdown d-flex gap-2 justify-content-evenly align-items-center amountWidth1 ">
                         <div class="filter-item ">
 
@@ -349,8 +338,8 @@
 
                         </div>
                         <div id="dropdownContent3" class="dropdown-content3">
-                          <a data-value="success">Success</a>
-                          <a data-value="fail">Fail</a>
+                          <a data-value="approved">Approved</a>
+                          <a data-value="rejected">Rejected</a>
                           <a data-value="pending">Pending</a>
                         </div>
                       </div>
@@ -392,17 +381,17 @@
                                   <thead class="align-items-center">
                                     <tr>
                                       <th data-priority="">No.</th>
-                                      <th data-priority="" colspan="3">Player Name</th>
+                                      <!-- <th data-priority="" colspan="3">Player Name</th> -->
                           
-                                      <th data-priority="" colspan="3">Payment Method</th>
-                                      <th data-priority="" colspan="3">Account</th>
-                                      <!-- <th data-priority="" colspan="3">Transaction Id</th>
-                                      <th data-priority="" colspan="2">Credit/Debit</th> -->
+                                      <!-- <th data-priority="" colspan="3">Payment Method</th> -->
+                                      <!-- <th data-priority="" colspan="3">Account</th> -->
+                                      <!-- <th data-priority="" colspan="3">Transaction Id</th>-->
                                       <th data-priority="" colspan="3">Amount</th>
+                                      <th data-priority="" colspan="2">Debit</th> 
                                       <th data-priority="" colspan="2">status</th>
-                                      <th data-priority="">Action</th>
+                                      <!-- <th data-priority="">Action</th> -->
 
-                                      <!-- <th data-priority="" colspan="2">Date & Time</th> -->
+                                      <th data-priority="" colspan="2">Date & Time</th>
                                     </tr>
                                   </thead>
                                   <tbody>

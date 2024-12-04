@@ -3,9 +3,9 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
-const aadharFront = document.getElementById("aadharFront");
-const aadharBack = document.getElementById("aadharBack");
-const panFront = document.getElementById("panFront");
+// const aadharFront = document.getElementById("aadharFront");
+// const aadharBack = document.getElementById("aadharBack");
+// const panFront = document.getElementById("panFront");
 const rejectionMessageSelect = document.getElementById("RejectionMessage");
 const errorMessageSpan = document.getElementById("error-message");
 const rejectionMessageButton = document.getElementById("rejectionMessageButton");
@@ -19,7 +19,7 @@ const bank_name = document.getElementById("bank_name");
 const branch_name = document.getElementById("branch_name");
 const state = document.getElementById("state");
 
-let apiData = {};
+// let apiData = {};
 // const items = [
 //   "aadhar_card_front",
 //   "aadhar_card_back",
@@ -147,12 +147,14 @@ function setupImageEventListeners() {
     } else {
       errorMessageSpan.textContent = ""; // Clear any previous error messages
       // Proceed with patching the rejection reason
+     
+      patchData("rejection_reason", rejectionMessageSelect.value);
+      alert("Rejected Successfully !")
+      fetchUserData()
       await sendNotification(id, {
         title: "KYC Rejected",
         body: "We're sorry, your KYC verification was unsuccessful. Please check your details and try again."
     });
-      patchData("rejection_reason", rejectionMessageSelect.value);
-    
     }
   });
 
@@ -172,6 +174,8 @@ function setupImageEventListeners() {
   if (userApproved !== "approved") {
     
     await patchData("profile_status", "approved");
+    alert("Approved Successfully !")
+    fetchUserData()
     await sendNotification(id, {
       title: "KYC Approved!",
       body: "Congratulations! Your KYC has been successfully verified. You can now enjoy full access to all features."

@@ -9,6 +9,11 @@ let userScratchData
   const adminInfo = getAdminType();
 const isSuperAdmin = adminInfo?.value === "super admin";
 const isStatusTrue = adminInfo?.status === "true";
+const manualBonusInput = document.getElementById('manualBonusInput');
+const giftBonusForm = document.getElementById('gift-bonus-form');
+const giftBonusModal = document.getElementById('giftBonusModal');
+const walletAmount = document.getElementById("wallet-amount");
+const bonusAmount = document.getElementById("bonus-amount");
 
   async function fetchUserData() {
     try {
@@ -95,6 +100,15 @@ const isStatusTrue = adminInfo?.status === "true";
       }
 
       console.log(`User status updated to: ${newState}`);
+      const notificationMessage = newState === "block" 
+      ? "You have been unblocked and can now access your account."
+      : "You have been blocked from accessing your account." ;
+
+        // Send the notification with dynamic message
+        await sendNotification(id, {
+            title: `${toCapitalizeCase(currentState)} Alert!`,
+            body: notificationMessage
+        });
       // Refresh user data to reflect changes
       fetchUserData();
     } catch (error) {
@@ -182,6 +196,49 @@ async function assignCouponToUser(userId, newCoupon) {
   }
 }
 
+async function patchData( walletAmountValue,bonusAddAmount ) {
+  try {
+      // const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
+      const apiUrl2 = `https://krinik.in/user_get/${id}/`;
+
+      // First PATCH request to update `winning_amount` and `wallet_amount`
+      const response1 = await fetch(apiUrl2, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+              // winning_amount: winningAmountValue,
+              wallet_amount: walletAmountValue,
+              bonus_amount : bonusAddAmount,
+          })
+      });
+
+      if (!response1.ok) {
+          throw new Error("Failed to patch winning_amount and wallet_amount in first API");
+      }
+      console.log("Patch for winning_amount and wallet_amount successful:", await response1.json());
+
+      // Second PATCH request to update `amount`
+      // const response2 = await fetch(apiUrl1, {
+      //     method: "PATCH",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify({ withdraw_status: "approved"  })
+      // });
+
+      // if (!response2.ok) {
+      //     throw new Error("Failed to patch amount in second API");
+      // }
+      
+
+      // console.log("Patch for amount successful:", await response2.json());
+
+      // Re-fetch data to update `totalAmount` and other fields
+      fetchUserData();
+
+  } catch (error) {
+      console.error("Error patching data:", error);
+  }
+}
+
 
   function editPlayerData(response) {
     const userFullName = document.getElementById("user-fullname");
@@ -189,8 +246,7 @@ async function assignCouponToUser(userId, newCoupon) {
     const userMob = document.getElementById("user-mob");
     const userEmail = document.getElementById("user-email");
     const regTime = document.getElementById("reg-time");
-    const walletAmount = document.getElementById("wallet-amount");
-    const bonusAmount = document.getElementById("bonus-amount");
+   
     const referAmount = document.getElementById("refer-amount");
     const userUnlock = document.getElementById("user-unlock-text");
     const userDelete = document.getElementById("user-delete");
@@ -479,42 +535,39 @@ async function assignCouponToUser(userId, newCoupon) {
       redirectToHistoryPage("user-withdraw-history")
     );
 
-  //   document.getElementById('addSubmit').onclick = function(e) {
-  //     // Setup the options for Razorpay payment
-  //     var options = {
-  //         "key": "rzp_test_bilBagOBVTi4lE", // Your API Key from Razorpay Dashboard
-  //         "amount": 50000, // Amount in paise (₹500 = 50000 paise)
-  //         "currency": "INR", // Currency type (INR for Indian Rupees)
-  //         "name": "Your Business Name", // Your business name
-  //         "description": "Payment for XYZ Service", // A description for the transaction
-  //         "image": "https://example.com/your-logo.png", // Your logo (optional)
-  //         "handler": function (response){
-  //             // This function is called when the payment is successful
-  //             alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-              
-  //             // Here you can handle what happens after payment, like sending payment ID to your server
-  //             console.log(response);
-  //         },
-  //         "prefill": {
-  //             "name": "John Doe", // Prefilled name of the customer
-  //             "email": "john@example.com", // Prefilled email of the customer
-  //             "contact": "9999999999" // Prefilled contact number
-  //         },
-  //         "theme": {
-  //             "color": "#F37254" // Theme color of the Razorpay checkout
-  //         }
-  //     };
-
-  //     // Create a new Razorpay instance with the options defined above
-  //     var rzp1 = new Razorpay(options);
-
-  //     // Open the Razorpay checkout popup
-  //     rzp1.open();
-
-  //     // Prevent the form from submitting (optional, since we're not using a form here)
-  //     e.preventDefault();
-  // }
-
+ 
+  giftBonusForm.addEventListener('submit',async function(e) {
+    e.preventDefault(); // Prevent the form from submitting normally
+    // Close the modal after submitting the form
+    if (confirm("Are you sure you want to approve it?")) {
+        const currentWalletAmount = parseFloat(walletAmount.textContent);
+        // const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
+       
+        // const newWalletAmount1 = currentWalletAmount - parseFloat(withdrawAmount.textContent) ;
+        // const newWalletAmount1 = currentWalletAmount - amountWithTDS;
+        // const newWinningAmount2 = winningAmount1 - amountWithTDS;
+     
+        const newWalletAmount = Number(currentWalletAmount) + Number(manualBonusInput.value)
+     
+        
+        const bonusAddAmount = parseFloat(bonusAmount.textContent) + Number(manualBonusInput.value)
+        
+  
+        await patchData(newWalletAmount,bonusAddAmount);
+        fetchUserData();
+        await sendNotification(id, {
+          title: "Bonus Alert!",
+          body: "Congratulations! A bonus amount has been credited to your wallet. Check it out now!"
+        });
+        
+    }
+  
+  
+    const modal = new bootstrap.Modal(giftBonusModal);
+    modal.hide();
+    // Optionally, you can handle the bonus submission here
+    console.log('Bonus submitted:', manualBonusInput.value);
+  });
   fetchUserData();
   // window.onload = checkAdminAccess();
 });
