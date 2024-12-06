@@ -247,7 +247,7 @@ if (datefilter !== '' && datefilter !== 'Start & End Date') {
     }
 
     if (statusFilter !== 'All Status') {
-  const status = object.payment_status  .toLowerCase()
+  const status = object.payment_status.toLowerCase()
   console.log(status)
   matchesStatus = (status === statusFilter);
   // console.log(matchesStatus ,"okli")

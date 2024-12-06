@@ -569,5 +569,5 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
     console.log('Bonus submitted:', manualBonusInput.value);
   });
   fetchUserData();
-  // window.onload = checkAdminAccess();
+  window.onload = checkAdminAccess();
 });
