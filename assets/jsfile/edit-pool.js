@@ -628,9 +628,6 @@ let initialData
   }
 
 
-
-
-
   document.getElementById('submitButton').addEventListener('click', async function () {
     // const selectMatch = matchSelect.value; // Get selected match display name
     const selectMatch = document.getElementById('matchSelect').value;

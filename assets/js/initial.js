@@ -12,6 +12,21 @@ export function initializePage() {
   });
 }
 
+export function showDynamicAlert(message) {
+  // Create alert element dynamically
+  const alertBox = document.createElement('div');
+  alertBox.className = 'custom-alert';
+  alertBox.textContent = message;
+
+  // Append alert to the body
+  document.body.appendChild(alertBox);
+
+  // Remove the alert after 5 seconds
+  setTimeout(() => {
+    alertBox.remove();
+  }, 5000);
+}
+
 // Function to check if the user is a super admin
 export function getAdminType() {
   const adminType = JSON.parse(sessionStorage.getItem("adminType"));
@@ -442,3 +457,61 @@ export function checkAdminAccess() {
   //   body: "Hello! Check out our exclusive offer just for you."
   // });
   
+
+ export let sendNotificationAllUser = async (tokens, allUsers, customPayload = {}) => { 
+    try {
+      if (tokens.length === 0) {
+        console.error('No valid tokens found.');
+        return;
+      }
+  
+      // Define notification payload
+      const payload = {
+        tokens: tokens,
+        title: customPayload.title || "",
+        body: customPayload.body || "",
+      };
+  
+      // Create promises for sending notifications and patching data
+      const notificationPromise = fetch('https://fcm-notification-u6yp.onrender.com/send-notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      const patchPayload = {
+        title: customPayload.title,
+        message: customPayload.body,
+        user_data: allUsers, // Send to all users
+      };
+  
+      const patchPromise = fetch('https://krinik.in/notification_get/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(patchPayload),
+      });
+  
+      // Execute both promises in parallel
+      const [notificationResponse, patchResponse] = await Promise.all([notificationPromise, patchPromise]);
+  
+      // Handle responses
+      if (!notificationResponse.ok) {
+        console.error('Failed to send notifications. Status:', notificationResponse.status);
+      }
+      if (!patchResponse.ok) {
+        console.error('Failed to patch notification data. Status:', patchResponse.status);
+      }
+  
+      if (notificationResponse.ok && patchResponse.ok) {
+        console.log('Notification sent and data patched successfully');
+      }
+  
+      return { notificationResponse, patchResponse };
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };

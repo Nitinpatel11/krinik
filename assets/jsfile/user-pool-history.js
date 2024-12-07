@@ -39,7 +39,7 @@ async function fetchUserData() {
 // console.log(userNameSpan,"olololol")
     rankList = userDataId
     if (rankList.length > 0) {
-      array = rankList;
+      array = rankList.reverse();
       console.log(array,"plo")
       filterAndDisplay(); // Call the function to filter and display data
     } else {
@@ -445,7 +445,9 @@ function displayTableRows() {
   for (var i = tab_start; i < tab_end; i++) {
     var showdata = array[i];
     // var status = getStatus(showdata["payment_status"]);
-
+    const matchDisplayName = showdata.match.match_display_name;
+    const dateTime = matchDisplayName.match(/\d{2}-\d{2}-\d{4} \d{2}:\d{2}/);
+    
     var tr = $("<tr></tr>");
 
     var noCell = $("<td></td>").text(i + 1);
@@ -470,7 +472,7 @@ function displayTableRows() {
       statusCell.html(`<span style="color:black ">Live</span>`);
     }
 
-    var dateCell = $("<td colspan='2'></td>").text(moment(showdata.user_data["date_time"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
+    var dateCell = $("<td colspan='2'></td>").text(dateTime[0]);
 
     // var viewCell = $("<td></td>").html(
     //   // '<span class="sortable" onclick="window.location.href=\'view-league-details.html\'"><i class="far fa-eye"></i></span>'

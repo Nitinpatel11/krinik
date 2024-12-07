@@ -1,4 +1,4 @@
-import { getAdminType, createOTPModal } from "../js/initial.js";
+import { getAdminType, createOTPModal,showDynamicAlert } from "../js/initial.js";
 var rankList = [];
 var array = [];
 var array_length = 0;
@@ -542,7 +542,8 @@ async function handleDelete(id) {
   if (isSuperAdmin && isStatusTrue) {
     showOTP();
   } else {
-    if (confirm("Are you sure you want to delete this match?")) {
+   
+    if (confirm("Are you sure you want to delete this match? after deleting a match, the user's game history and transaction history related to the match will also be deleted !!")) {
       const url = `https://krinik.in/match_get/${id}/`;
       try {
         const response = await fetch(url, {

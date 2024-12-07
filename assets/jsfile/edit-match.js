@@ -1,23 +1,24 @@
-import {checkAdminAccess}  from "../js/initial.js"
-document.addEventListener('DOMContentLoaded', async function () {
+import { checkAdminAccess,sendNotificationAllUser,
+  showDynamicAlert, } from "../js/initial.js";
+document.addEventListener("DOMContentLoaded", async function () {
   let initialData = {};
-  let leagueMatchName
-
+  let leagueMatchName;
+  let tokens, allUsers;
   let allPlayers = {
-    'dropdown-players-A': [],
-    'dropdown-players-B': []
+    "dropdown-players-A": [],
+    "dropdown-players-B": [],
   };
-  let disablePlayerA
-  let disablePlayerB
-  let ActivePlayerA
-  let ActivePlayerB
+  let disablePlayerA;
+  let disablePlayerB;
+  let ActivePlayerA;
+  let ActivePlayerB;
   let teams = [];
-  let playersData
-  let matchData
+  let playersData;
+  let matchData;
   let arr = [];
-  let leaguestartDate
-let leagueendDate
-let startPicker
+  let leaguestartDate;
+  let leagueendDate;
+  let startPicker;
 
   // Initialize Flatpickr date pickers
   // $(function () {
@@ -69,8 +70,6 @@ let startPicker
   //     endPicker.open();
   //   });
   //   let okButtonClicked = false;
-
-
 
   //   function addCustomButtons(instance, inputSelector) {
   //     // Ensure the calendarContainer is available
@@ -124,151 +123,222 @@ let startPicker
   // });
   $(function () {
     // Initialize Flatpickr
-     startPicker = flatpickr('#match-start-date', {
-        dateFormat: 'd-m-Y H:i',
-        enableTime: true,
-        minDate: leaguestartDate, // Set the initial minDate
-        maxDate: leagueendDate,  // Set the initial maxDate
-        onChange: function (selectedDates, dateStr, instance) {
-            if (selectedDates.length > 0) {
-                // No endPicker, so no need to set minDate or maxDate for another picker.
-            }
-        },
-        onReady: function (selectedDates, dateStr, instance) {
-            addCustomButtons(instance, '#match-start-date');
+    startPicker = flatpickr("#match-start-date", {
+      dateFormat: "d-m-Y H:i",
+      enableTime: true,
+      minDate: leaguestartDate, // Set the initial minDate
+      maxDate: leagueendDate, // Set the initial maxDate
+      onChange: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length > 0) {
+          // No endPicker, so no need to set minDate or maxDate for another picker.
         }
+      },
+      onReady: function (selectedDates, dateStr, instance) {
+        addCustomButtons(instance, "#match-start-date");
+      },
     });
 
     // Open Flatpickr on calendar icon click
-    $('#calendarIconStart').click(function () {
-        startPicker.open();
+    $("#calendarIconStart").click(function () {
+      startPicker.open();
     });
 
     let okButtonClicked = false;
 
     function addCustomButtons(instance, inputSelector) {
-        // Ensure the calendarContainer is available
-        if (!instance || !instance.calendarContainer) {
-            console.error('Flatpickr instance or calendar container not found.');
-            return;
-        }
+      // Ensure the calendarContainer is available
+      if (!instance || !instance.calendarContainer) {
+        console.error("Flatpickr instance or calendar container not found.");
+        return;
+      }
 
-        // Check if the footer already exists and remove it
-        let existingFooter = instance.calendarContainer.querySelector('.flatpickr-footer');
-        if (existingFooter) {
-            existingFooter.remove();
-        }
+      // Check if the footer already exists and remove it
+      let existingFooter =
+        instance.calendarContainer.querySelector(".flatpickr-footer");
+      if (existingFooter) {
+        existingFooter.remove();
+      }
 
-        // Create footer and buttons
-        const footer = document.createElement('div');
-        footer.className = 'flatpickr-footer';
+      // Create footer and buttons
+      const footer = document.createElement("div");
+      footer.className = "flatpickr-footer";
 
-        const okButton = document.createElement('button');
-        okButton.type = 'button';
-        okButton.className = 'flatpickr-ok-button';
-        okButton.textContent = 'OK';
-        okButton.addEventListener('click', function () {
-            okButtonClicked = true;
-            instance.close(); // Close the picker
-        });
+      const okButton = document.createElement("button");
+      okButton.type = "button";
+      okButton.className = "flatpickr-ok-button";
+      okButton.textContent = "OK";
+      okButton.addEventListener("click", function () {
+        okButtonClicked = true;
+        instance.close(); // Close the picker
+      });
 
-        const clearButton = document.createElement('button');
-        clearButton.type = 'button';
-        clearButton.className = 'flatpickr-clear-button';
-        clearButton.textContent = 'Clear';
-        clearButton.addEventListener('click', function () {
-            document.querySelector(inputSelector).value = ''; // Clear input value
-            instance.clear(); // Clear picker
-        });
+      const clearButton = document.createElement("button");
+      clearButton.type = "button";
+      clearButton.className = "flatpickr-clear-button";
+      clearButton.textContent = "Clear";
+      clearButton.addEventListener("click", function () {
+        document.querySelector(inputSelector).value = ""; // Clear input value
+        instance.clear(); // Clear picker
+      });
 
-        footer.appendChild(okButton);
-        footer.appendChild(clearButton);
+      footer.appendChild(okButton);
+      footer.appendChild(clearButton);
 
-        // Append the footer to the calendar container
-        instance.calendarContainer.appendChild(footer);
+      // Append the footer to the calendar container
+      instance.calendarContainer.appendChild(footer);
     }
 
     // Modify the onChange event handler to only update the input value when the OK button is clicked
     startPicker.config.onChange = function (selectedDates, dateStr, instance) {
-        if (okButtonClicked) {
-            document.querySelector('#match-start-date').value = dateStr;
-            okButtonClicked = false; // Reset the flag
-        }
+      if (okButtonClicked) {
+        document.querySelector("#match-start-date").value = dateStr;
+        okButtonClicked = false; // Reset the flag
+      }
     };
-})
+  });
 
+  const fetchUserData = async () => {
+    try {
+      // Fetch the user data
+      const userResponse = await fetch("https://krinik.in/user_get/");
+
+      // Check if the response is successful
+      if (!userResponse.ok) {
+        console.error("Failed to fetch users. Status:", userResponse.status);
+        return null; // Return null if fetching fails
+      }
+
+      // Parse the response JSON
+      const userData = await userResponse.json();
+
+      // Extract tokens and user IDs and assign them to global variables
+      tokens = userData.data
+        .map((user) => user.device_token)
+        .filter((token) => token); // Only include valid tokens
+
+      allUsers = userData.data.map((user) => user.user_id);
+
+      console.log("Tokens:", tokens);
+      console.log("All User IDs:", allUsers);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
   async function fetchTeams(leagueName) {
     try {
-      const response = await fetch(`https://krinik.in/team_get/?league_name=${leagueName}`);
-      if (!response.ok) throw new Error('Failed to fetch teams');
+      const response = await fetch(
+        `https://krinik.in/team_get/?league_name=${leagueName}`
+      );
+      if (!response.ok) throw new Error("Failed to fetch teams");
       const data = await response.json();
-      if (data.status === 'success' && Array.isArray(data.data)) {
-        teams = data.data.filter(team => team.league_name === leagueName);
+      if (data.status === "success" && Array.isArray(data.data)) {
+        teams = data.data.filter((team) => team.league_name === leagueName);
         updateTeamSelects();
       } else {
-        console.error('Invalid data format for teams:', data);
+        console.error("Invalid data format for teams:", data);
       }
     } catch (error) {
-      console.error('Error fetching teams:', error);
+      console.error("Error fetching teams:", error);
     }
   }
 
   function updateTeamSelects() {
-    const teamASelected = document.getElementById('team-A').value;
-    const teamBSelected = document.getElementById('team-B').value;
+    const teamASelected = document.getElementById("team-A").value;
+    const teamBSelected = document.getElementById("team-B").value;
 
-    const teamsForA = teams.filter(team => team.team_name !== teamBSelected);
-    const teamsForB = teams.filter(team => team.team_name !== teamASelected);
+    const teamsForA = teams.filter((team) => team.team_name !== teamBSelected);
+    const teamsForB = teams.filter((team) => team.team_name !== teamASelected);
 
-    populateSelect(document.getElementById('team-A'), teamsForA, 'team_name', 'Select Team A');
-    populateSelect(document.getElementById('team-B'), teamsForB, 'team_name', 'Select Team B');
+    populateSelect(
+      document.getElementById("team-A"),
+      teamsForA,
+      "team_name",
+      "Select Team A"
+    );
+    populateSelect(
+      document.getElementById("team-B"),
+      teamsForB,
+      "team_name",
+      "Select Team B"
+    );
 
-    document.getElementById('team-A').value = teamASelected;
-    document.getElementById('team-B').value = teamBSelected;
+    document.getElementById("team-A").value = teamASelected;
+    document.getElementById("team-B").value = teamBSelected;
 
     updatePlayerSelectionEnabled();
   }
 
-  document.getElementById('team-A').addEventListener('change', function () {
-    clearSelectedPlayers('team-A');
+  document.getElementById("team-A").addEventListener("change", function () {
+    clearSelectedPlayers("team-A");
     updateTeamSelects();
   });
 
-  document.getElementById('team-B').addEventListener('change', function () {
-    clearSelectedPlayers('team-B');
+  document.getElementById("team-B").addEventListener("change", function () {
+    clearSelectedPlayers("team-B");
     updateTeamSelects();
   });
 
   const urlParams = new URLSearchParams(window.location.search);
-  const matchId = Number(urlParams.get('id'))
+  const matchId = Number(urlParams.get("id"));
 
   if (matchId) {
     try {
       matchData = await fetchMatchById(matchId);
-      console.log(matchData, "olpi")
-      
+      console.log(matchData, "olpi");
+
       await fetchLeagues();
-      leaguestartDate = matchData.select_league.start_league_date;
-                    leagueendDate = matchData.select_league.end_league_date;
+      await fetchUserData()
+ // Assuming matchData and Flatpickr are already initialized
+ leaguestartDate = matchData.select_league.start_league_date;
+ leagueendDate = matchData.select_league.end_league_date;
 
-                    console.log({
-                        start: leaguestartDate,
-                        end: leagueendDate
-                    }, "Selected League Dates");
+console.log(
+  {
+    start: leaguestartDate,
+    end: leagueendDate,
+  },
+  "Selected League Dates"
+);
 
-                    // Update the Flatpickr instance minDate and maxDate
-                    const currentDate = moment().format('DD-MM-YYYY HH:mm:ss'); // Format: YYYY-MM-DD
-console.log(currentDate,"op")
-                    // Check if current date is within league start and end date
-                    if (currentDate >= leaguestartDate) {
-                        // If the current date is within the league date range, set min and max as current date
-                        startPicker.set('minDate', currentDate);
-                        startPicker.set('maxDate', leagueendDate);
-                    } else {
-                        // Otherwise, set the minDate and maxDate to league's start and end date
-                        startPicker.set('minDate', leaguestartDate);
-                        startPicker.set('maxDate', leagueendDate);
-                    }
+// Get the current date (Format: YYYY-MM-DD)
+const currentDate = new Date();
+
+// Format the current date to DD-MM-YYYY
+const day = String(currentDate.getDate()).padStart(2, '0'); // Get day, pad with 0 if single digit
+const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed), pad with 0 if single digit
+const year = currentDate.getFullYear(); // Get the full year
+const formattedDate = `${day}-${month}-${year}`;
+
+console.log(formattedDate, "Formatted Current Date");
+
+// Convert formattedDate to a Date object for comparison
+const [currentDay, currentMonth, currentYear] = formattedDate.split('-');
+const currentFormattedDate = new Date(`${currentYear}-${currentMonth}-${currentDay}`);
+
+console.log(currentFormattedDate, "Current Date Object");
+
+// Convert league start and end dates to Date objects (if they're strings in DD-MM-YYYY format)
+const [leagueStartDay, leagueStartMonth, leagueStartYear] = leaguestartDate.split('-');
+const [leagueEndDay, leagueEndMonth, leagueEndYear] = leagueendDate.split('-');
+const leagueStartDateObj = new Date(`${leagueStartYear}-${leagueStartMonth}-${leagueStartDay}`);
+const leagueEndDateObj = new Date(`${leagueEndYear}-${leagueEndMonth}-${leagueEndDay}`);
+
+console.log(leagueStartDateObj, "League Start Date Object");
+console.log(leagueEndDateObj, "League End Date Object");
+
+// Update the Flatpickr instance minDate and maxDate
+if (currentFormattedDate >= leagueStartDateObj) {
+  // If the current date is within the league date range, use current date as min
+  startPicker.set("minDate", currentFormattedDate);
+} else {
+  // Otherwise, use league's start date as min
+  startPicker.set("minDate", leagueStartDateObj);
+}
+
+// Set maxDate to league's end date
+startPicker.set("maxDate", leagueEndDateObj);
+
+
       if (matchData && matchData.select_league) {
         await fetchTeams(matchData.select_league.league_name);
         populateFormFields(matchData);
@@ -283,147 +353,159 @@ console.log(currentDate,"op")
 
         select_league: matchData.select_league.league_name,
 
-        select_player_A: matchData.select_player_A.map(player => player.id),
+        select_player_A: matchData.select_player_A.map((player) => player.id),
 
-        select_player_B: matchData.select_player_B.map(player => player.id),
+        select_player_B: matchData.select_player_B.map((player) => player.id),
         select_team_A: matchData.select_team_A.team_name,
 
         select_team_B: matchData.select_team_B.team_name,
-        player_list: matchData.player_list.map(player => player)
-
+        player_list: matchData.player_list.map((player) => player),
       };
-      console.log(initialData, "initial")
+      console.log(initialData, "initial");
     } catch (error) {
-      console.error('Failed to fetch or populate match data:', error);
+      console.error("Failed to fetch or populate match data:", error);
     }
   } else {
-    console.error('Match ID not found in URL');
+    console.error("Match ID not found in URL");
   }
 
   async function fetchMatchById(matchId) {
     try {
       const response = await fetch(`https://krinik.in/match_get/${matchId}/`);
-      if (!response.ok) throw new Error('Failed to fetch match data');
+      if (!response.ok) throw new Error("Failed to fetch match data");
       const data = await response.json();
-      if (data.status === 'success' && data.data) {
-        leagueMatchName = data.data.select_league.league_name
+      if (data.status === "success" && data.data) {
+        leagueMatchName = data.data.select_league.league_name;
         return data.data;
       } else {
-        throw new Error('Invalid data format for match');
+        throw new Error("Invalid data format for match");
       }
     } catch (error) {
-      console.error('Error fetching match data:', error);
+      console.error("Error fetching match data:", error);
       return null;
     }
   }
 
-
-
-
-
   function populateSelect(selectElement, data, key, placeholder) {
     selectElement.innerHTML = `<option value="">${placeholder}</option>`;
-    data.forEach(item => {
-      const option = document.createElement('option');
+    data.forEach((item) => {
+      const option = document.createElement("option");
       option.value = item[key];
       option.textContent = item[key];
       selectElement.appendChild(option);
     });
   }
 
-
   // Event listener for league selection change
 
-  document.getElementById('league-name').addEventListener('change', async function () {
-    const leagueName = this.value;
-    await fetchTeams(leagueName);
-    clearAllSelectedPlayers();
-    document.getElementById('team-A').value = '';
-    document.getElementById('team-B').value = '';
-  });
+  document
+    .getElementById("league-name")
+    .addEventListener("change", async function () {
+      const leagueName = this.value;
+      await fetchTeams(leagueName);
+      clearAllSelectedPlayers();
+      document.getElementById("team-A").value = "";
+      document.getElementById("team-B").value = "";
+    });
 
   async function fetchLeagues() {
     try {
-      const response = await fetch('https://krinik.in/league_get/');
-      if (!response.ok) throw new Error('Failed to fetch leagues');
+      const response = await fetch("https://krinik.in/league_get/");
+      if (!response.ok) throw new Error("Failed to fetch leagues");
       const data = await response.json();
-      if (data.status === 'success' && Array.isArray(data.data)) {
-        populateSelect(document.getElementById('league-name'), data.data, 'league_name', 'Select League');
+      if (data.status === "success" && Array.isArray(data.data)) {
+        populateSelect(
+          document.getElementById("league-name"),
+          data.data,
+          "league_name",
+          "Select League"
+        );
       } else {
-        console.error('Invalid data format for leagues:', data);
+        console.error("Invalid data format for leagues:", data);
       }
     } catch (error) {
-      console.error('Error fetching leagues:', error);
+      console.error("Error fetching leagues:", error);
     }
   }
 
   async function fetchTeams(leagueName) {
     try {
       const response = await fetch(`https://krinik.in/team_get/`);
-      if (!response.ok) throw new Error('Failed to fetch teams');
+      if (!response.ok) throw new Error("Failed to fetch teams");
       const data = await response.json();
-      if (data.status === 'success' && Array.isArray(data.data)) {
-        teams = data.data.filter(team => team.league_name === leagueName);
+      if (data.status === "success" && Array.isArray(data.data)) {
+        teams = data.data.filter((team) => team.league_name === leagueName);
         updateTeamSelects();
       } else {
-        console.error('Invalid data format for teams:', data);
+        console.error("Invalid data format for teams:", data);
       }
     } catch (error) {
-      console.error('Error fetching teams:', error);
+      console.error("Error fetching teams:", error);
     }
   }
 
   function updateTeamSelects() {
-    const teamASelected = document.getElementById('team-A').value;
-    const teamBSelected = document.getElementById('team-B').value;
+    const teamASelected = document.getElementById("team-A").value;
+    const teamBSelected = document.getElementById("team-B").value;
 
-    const teamsForA = teams.filter(team => team.team_name !== teamBSelected);
-    const teamsForB = teams.filter(team => team.team_name !== teamASelected);
+    const teamsForA = teams.filter((team) => team.team_name !== teamBSelected);
+    const teamsForB = teams.filter((team) => team.team_name !== teamASelected);
 
-    populateSelect(document.getElementById('team-A'), teamsForA, 'team_name', 'Select Team A');
-    populateSelect(document.getElementById('team-B'), teamsForB, 'team_name', 'Select Team B');
+    populateSelect(
+      document.getElementById("team-A"),
+      teamsForA,
+      "team_name",
+      "Select Team A"
+    );
+    populateSelect(
+      document.getElementById("team-B"),
+      teamsForB,
+      "team_name",
+      "Select Team B"
+    );
 
-    document.getElementById('team-A').value = teamASelected;
-    document.getElementById('team-B').value = teamBSelected;
+    document.getElementById("team-A").value = teamASelected;
+    document.getElementById("team-B").value = teamBSelected;
 
     updatePlayerSelectionEnabled();
   }
 
-  document.getElementById('team-A').addEventListener('change', function () {
-    clearSelectedPlayers('team-A');
+  document.getElementById("team-A").addEventListener("change", function () {
+    clearSelectedPlayers("team-A");
     updateTeamSelects();
   });
 
-  document.getElementById('team-B').addEventListener('change', function () {
-    clearSelectedPlayers('team-B');
+  document.getElementById("team-B").addEventListener("change", function () {
+    clearSelectedPlayers("team-B");
     updateTeamSelects();
   });
-
-
-
 
   // Function to fetch players for a given team
   async function fetchPlayers(teamName, dropdownId, disabledPlayers) {
     try {
-      const response = await fetch('https://krinik.in/player_get/');
-      if (!response.ok) throw new Error('Failed to fetch players');
+      const response = await fetch("https://krinik.in/player_get/");
+      if (!response.ok) throw new Error("Failed to fetch players");
       const data = await response.json();
 
       console.log(data, "data");
-      if (data.status === 'success' && Array.isArray(data.data)) {
-        playersData = data.data.filter(player => player.team_name.team_name === teamName && player.league_name === leagueMatchName);
+      if (data.status === "success" && Array.isArray(data.data)) {
+        playersData = data.data.filter(
+          (player) =>
+            player.team_name.team_name === teamName &&
+            player.league_name === leagueMatchName
+        );
         allPlayers[dropdownId] = playersData;
         console.log(playersData, "players12");
         populatePlayerDropdown(playersData, dropdownId, disabledPlayers);
       } else {
-        console.error('Invalid data format for players:', data);
+        console.error("Invalid data format for players:", data);
       }
     } catch (error) {
-      console.error('Error fetching players:', error);
+      console.error("Error fetching players:", error);
     }
   }
   async function populateFormFields(matchData) {
-    console.log('Match data:', matchData);
+    console.log("Match data:", matchData);
 
     // Ensure disable_player arrays are defined for populatePlayerDropdown
     disablePlayerA = matchData.disable_player_A || [];
@@ -431,155 +513,199 @@ console.log(currentDate,"op")
     ActivePlayerA = matchData.select_player_A || [];
     ActivePlayerB = matchData.select_player_B || [];
 
-    console.log(disablePlayerA, "disableo")
-    arr = matchData.player_list
-    console.log(arr, "ayu")
-    populatePlayerDropdown(ActivePlayerA, 'dropdown-players-A', disablePlayerA);
-    populatePlayerDropdown(ActivePlayerB, 'dropdown-players-B', disablePlayerB);
+    console.log(disablePlayerA, "disableo");
+    arr = matchData.player_list;
+    console.log(arr, "ayu");
+    populatePlayerDropdown(ActivePlayerA, "dropdown-players-A", disablePlayerA);
+    populatePlayerDropdown(ActivePlayerB, "dropdown-players-B", disablePlayerB);
 
     // Adding players to selected-players-A by default
-    const selectedPlayersDivA = document.getElementById('selected-players-A');
+    const selectedPlayersDivA = document.getElementById("selected-players-A");
     if (selectedPlayersDivA) {
-      selectedPlayersDivA.innerHTML = ''; // Clear existing content
+      selectedPlayersDivA.innerHTML = ""; // Clear existing content
 
-      (Array.isArray(matchData.select_player_A) ? matchData.select_player_A : []).forEach(player => {
+      (Array.isArray(matchData.select_player_A)
+        ? matchData.select_player_A
+        : []
+      ).forEach((player) => {
         const playerId = String(player.id);
-        console.log(playerId, "playedIdche")
+        console.log(playerId, "playedIdche");
         const playerName = player.player_name;
 
-        selectedPlayersDivA.insertAdjacentHTML('beforeend', `
+        selectedPlayersDivA.insertAdjacentHTML(
+          "beforeend",
+          `
             <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
                 <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
                     ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
                 </p>
             </div>
-        `);
+        `
+        );
       });
     }
 
     // Adding players to selected-players-B by default
-    const selectedPlayersDivB = document.getElementById('selected-players-B');
+    const selectedPlayersDivB = document.getElementById("selected-players-B");
     if (selectedPlayersDivB) {
-      selectedPlayersDivB.innerHTML = ''; // Clear existing content
+      selectedPlayersDivB.innerHTML = ""; // Clear existing content
 
-      (Array.isArray(matchData.select_player_B) ? matchData.select_player_B : []).forEach(player => {
+      (Array.isArray(matchData.select_player_B)
+        ? matchData.select_player_B
+        : []
+      ).forEach((player) => {
         const playerId = String(player.id);
         const playerName = player.player_name;
 
-        selectedPlayersDivB.insertAdjacentHTML('beforeend', `
+        selectedPlayersDivB.insertAdjacentHTML(
+          "beforeend",
+          `
             <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
                 <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
                     ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
                 </p>
             </div>
-        `);
+        `
+        );
       });
     }
 
     // Populate other form fields if elements exist
-    const leagueNameInput = document.getElementById('league-name');
-    const teamAInput = document.getElementById('team-A');
-    const teamBInput = document.getElementById('team-B');
-    const startDateInput = document.getElementById('match-start-date');
+    const leagueNameInput = document.getElementById("league-name");
+    const teamAInput = document.getElementById("team-A");
+    const teamBInput = document.getElementById("team-B");
+    const startDateInput = document.getElementById("match-start-date");
 
-    if (leagueNameInput) leagueNameInput.value = matchData.select_league?.league_name || '';
-    if (teamAInput) teamAInput.value = matchData.select_team_A?.team_name || '';
-    if (teamBInput) teamBInput.value = matchData.select_team_B?.team_name || '';
-    if (startDateInput) startDateInput.value = matchData.match_start_date || '';
+    if (leagueNameInput)
+      leagueNameInput.value = matchData.select_league?.league_name || "";
+    if (teamAInput) teamAInput.value = matchData.select_team_A?.team_name || "";
+    if (teamBInput) teamBInput.value = matchData.select_team_B?.team_name || "";
+    if (startDateInput) startDateInput.value = matchData.match_start_date || "";
 
-    console.log('Form fields populated');
+    console.log("Form fields populated");
   }
-
-
-
 
   function populatePlayerDropdown(players, dropdownId, disabledPlayers) {
     const dropdown = document.getElementById(dropdownId);
-    const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
-    const selectedPlayers = Array.from(document.getElementById(selectedPlayersDiv).querySelectorAll('.player-option'))
-      .map(option => option.dataset.id);
-    console.log(selectedPlayers, "plokpoil12345566")
-    dropdown.innerHTML = '';
+    const selectedPlayersDiv =
+      dropdownId === "dropdown-players-A"
+        ? "selected-players-A"
+        : "selected-players-B";
+    const selectedPlayers = Array.from(
+      document
+        .getElementById(selectedPlayersDiv)
+        .querySelectorAll(".player-option")
+    ).map((option) => option.dataset.id);
+    console.log(selectedPlayers, "plokpoil12345566");
+    dropdown.innerHTML = "";
 
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search players...';
-    searchInput.className = 'search-input';
-    searchInput.addEventListener('input', function (event) {
-      filterPlayers(event.target.value, dropdownId, disabledPlayers, selectedPlayers); // Pass disabledPlayers here
+    const searchInput = document.createElement("input");
+    searchInput.type = "text";
+    searchInput.placeholder = "Search players...";
+    searchInput.className = "search-input";
+    searchInput.addEventListener("input", function (event) {
+      filterPlayers(
+        event.target.value,
+        dropdownId,
+        disabledPlayers,
+        selectedPlayers
+      ); // Pass disabledPlayers here
     });
     dropdown.appendChild(searchInput);
 
-    const playerContainer = document.createElement('div');
-    playerContainer.className = 'player-container';
+    const playerContainer = document.createElement("div");
+    playerContainer.className = "player-container";
 
     const disabledPlayerIds = Array.isArray(disabledPlayers)
-      ? disabledPlayers.map(player => String(player.id))
+      ? disabledPlayers.map((player) => String(player.id))
       : [];
-    console.log(disabledPlayerIds, "selectedplayers")
+    console.log(disabledPlayerIds, "selectedplayers");
 
     // Filter players to exclude selected and disabled players
-    const filteredPlayers = players.filter(player => !selectedPlayers.includes(String(player.id)) && !disabledPlayerIds.includes((player.id)));
-
+    const filteredPlayers = players.filter(
+      (player) =>
+        !selectedPlayers.includes(String(player.id)) &&
+        !disabledPlayerIds.includes(player.id)
+    );
 
     filteredPlayers.forEach((player, index) => {
-      if (index < 6) { // Limit to display only the first 6 players
-        const playerOption = document.createElement('a');
-        playerOption.href = '#';
-        playerOption.className = 'player-option';
+      if (index < 6) {
+        // Limit to display only the first 6 players
+        const playerOption = document.createElement("a");
+        playerOption.href = "#";
+        playerOption.className = "player-option";
         playerOption.dataset.id = player.id;
         playerOption.textContent = player.player_name;
-        playerOption.addEventListener('click', function (event) {
+        playerOption.addEventListener("click", function (event) {
           event.preventDefault();
           const playerId = player.id;
           const playerName = player.player_name;
-          const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
-          if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
-            document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
+          const selectedPlayersDiv =
+            dropdownId === "dropdown-players-A"
+              ? "selected-players-A"
+              : "selected-players-B";
+          if (
+            !document.querySelector(
+              `#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`
+            )
+          ) {
+            document.getElementById(selectedPlayersDiv).insertAdjacentHTML(
+              "beforeend",
+              `
                   <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
                     <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
                       ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
                     </p>
                   </div>
-                `);
+                `
+            );
           }
           if (!arr.includes(Number(playerId))) {
             arr.push(Number(playerId)); // Convert playerId to a number before pushing
           }
 
-
           console.log(arr, "arrr");
 
           playerOption.remove();
 
-          dropdown.style.display = 'none';
+          dropdown.style.display = "none";
         });
         playerContainer.appendChild(playerOption);
       }
     });
 
     if (filteredPlayers.length > 6) {
-      playerContainer.style.maxHeight = '200px'; // Set max height with scrollbar if more than 6 players
-      playerContainer.style.overflowY = 'auto'; // Enable vertical scrollbar
+      playerContainer.style.maxHeight = "200px"; // Set max height with scrollbar if more than 6 players
+      playerContainer.style.overflowY = "auto"; // Enable vertical scrollbar
     }
 
     dropdown.appendChild(playerContainer);
 
-    dropdown.addEventListener('click', function (event) {
-      if (event.target.classList.contains('player-option')) {
+    dropdown.addEventListener("click", function (event) {
+      if (event.target.classList.contains("player-option")) {
         event.preventDefault();
         const playerId = event.target.dataset.id;
         const playerName = event.target.textContent;
-        const selectedPlayersDiv = dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B';
+        const selectedPlayersDiv =
+          dropdownId === "dropdown-players-A"
+            ? "selected-players-A"
+            : "selected-players-B";
 
-        if (!document.querySelector(`#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`)) {
-          document.getElementById(selectedPlayersDiv).insertAdjacentHTML('beforeend', `
+        if (
+          !document.querySelector(
+            `#${selectedPlayersDiv} .player-option[data-id="${playerId}"]`
+          )
+        ) {
+          document.getElementById(selectedPlayersDiv).insertAdjacentHTML(
+            "beforeend",
+            `
                 <div class="col-md-6 d-flex align-items-center justify-content-between player-wrapper">
                     <p class="form-control p-3 d-flex align-content-center justify-content-between player-option" data-id="${playerId}">
                         ${playerName} <span class="remove-player" data-id="${playerId}"><i class="bi bi-x"></i></span>
                     </p>
                 </div>
-            `);
+            `
+          );
         }
 
         // Check if the player ID is already in the array
@@ -587,99 +713,112 @@ console.log(currentDate,"op")
           arr.push(Number(playerId)); // Convert playerId to a number before pushing
         }
 
-
         console.log(arr, "arrr");
 
-        dropdown.style.display = 'none';
+        dropdown.style.display = "none";
       }
     });
   }
 
-  function filterPlayers(searchText, dropdownId, disabledPlayers, selectedPlayers) {
+  function filterPlayers(
+    searchText,
+    dropdownId,
+    disabledPlayers,
+    selectedPlayers
+  ) {
     const dropdown = document.getElementById(dropdownId);
     const players = allPlayers[dropdownId];
 
     // Extract IDs of selected players and disabled players
     const selectedPlayerIds = Array.from(
-      document.querySelectorAll(`#${dropdownId === 'dropdown-players-A' ? 'selected-players-A' : 'selected-players-B'} .player-option`)
-    ).map(player => Number(player.dataset.id)); // Ensure IDs are numbers
+      document.querySelectorAll(
+        `#${
+          dropdownId === "dropdown-players-A"
+            ? "selected-players-A"
+            : "selected-players-B"
+        } .player-option`
+      )
+    ).map((player) => Number(player.dataset.id)); // Ensure IDs are numbers
 
-    const disabledPlayerIds = disabledPlayers.map(player => player.id);
+    const disabledPlayerIds = disabledPlayers.map((player) => player.id);
 
     // Filter out players who are selected, disabled, or don't match the search text
-    const filteredPlayers = players.filter(player =>
-      !selectedPlayerIds.includes(player.id) &&          // Exclude selected players
-      !disabledPlayerIds.includes(player.id) &&          // Exclude disabled players
-      player.player_name.toLowerCase().includes(searchText.toLowerCase()) // Match search text
+    const filteredPlayers = players.filter(
+      (player) =>
+        !selectedPlayerIds.includes(player.id) && // Exclude selected players
+        !disabledPlayerIds.includes(player.id) && // Exclude disabled players
+        player.player_name.toLowerCase().includes(searchText.toLowerCase()) // Match search text
     );
 
     // Clear dropdown and add filtered players
-    dropdown.innerHTML = '';
+    dropdown.innerHTML = "";
 
     // Add search input to dropdown
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search players...';
-    searchInput.className = 'search-input';
+    const searchInput = document.createElement("input");
+    searchInput.type = "text";
+    searchInput.placeholder = "Search players...";
+    searchInput.className = "search-input";
     searchInput.value = searchText;
-    searchInput.addEventListener('input', function (event) {
-      filterPlayers(event.target.value, dropdownId, disabledPlayers, selectedPlayers);
+    searchInput.addEventListener("input", function (event) {
+      filterPlayers(
+        event.target.value,
+        dropdownId,
+        disabledPlayers,
+        selectedPlayers
+      );
     });
     dropdown.appendChild(searchInput);
     searchInput.focus(); // Keep the input field focused
 
     // Append each filtered player to the dropdown
-    filteredPlayers.forEach(player => {
-      const playerOption = document.createElement('a');
-      playerOption.href = '#';
-      playerOption.className = 'player-option';
+    filteredPlayers.forEach((player) => {
+      const playerOption = document.createElement("a");
+      playerOption.href = "#";
+      playerOption.className = "player-option";
       playerOption.dataset.id = player.id;
       playerOption.textContent = player.player_name;
       dropdown.appendChild(playerOption);
     });
   }
   function clearAllSelectedPlayers() {
-    document.getElementById('selected-players-A').innerHTML = '';
-    document.getElementById('selected-players-B').innerHTML = '';
+    document.getElementById("selected-players-A").innerHTML = "";
+    document.getElementById("selected-players-B").innerHTML = "";
   }
 
   function clearSelectedPlayers(teamId) {
-    if (teamId === 'team-A') {
-      document.getElementById('selected-players-A').innerHTML = '';
-    } else if (teamId === 'team-B') {
-      document.getElementById('selected-players-B').innerHTML = '';
+    if (teamId === "team-A") {
+      document.getElementById("selected-players-A").innerHTML = "";
+    } else if (teamId === "team-B") {
+      document.getElementById("selected-players-B").innerHTML = "";
     }
   }
   function populateSelect(selectElement, data, key, placeholder) {
     selectElement.innerHTML = `<option value="">${placeholder}</option>`;
-    data.forEach(item => {
-      const option = document.createElement('option');
+    data.forEach((item) => {
+      const option = document.createElement("option");
       option.value = item[key];
       option.textContent = item[key];
       selectElement.appendChild(option);
     });
   }
 
-
   function updatePlayerSelectionEnabled() {
-    const leagueSelected = document.getElementById('league-name').value;
-    const teamASelected = document.getElementById('team-A').value;
-    const teamBSelected = document.getElementById('team-B').value;
+    const leagueSelected = document.getElementById("league-name").value;
+    const teamASelected = document.getElementById("team-A").value;
+    const teamBSelected = document.getElementById("team-B").value;
 
     if (leagueSelected && teamASelected) {
-      fetchPlayers(teamASelected, 'dropdown-players-A');
-      document.getElementById('select-player-A').disabled = false;
+      fetchPlayers(teamASelected, "dropdown-players-A");
+      document.getElementById("select-player-A").disabled = false;
     } else {
-      document.getElementById('select-player-A').disabled = true;
+      document.getElementById("select-player-A").disabled = true;
     }
 
     if (leagueSelected && teamBSelected) {
-      fetchPlayers(teamBSelected, 'dropdown-players-B');
-      document.getElementById('select-player-B').disabled = false;
-
+      fetchPlayers(teamBSelected, "dropdown-players-B");
+      document.getElementById("select-player-B").disabled = false;
     } else {
-      document.getElementById('select-player-B').disabled = true;
-
+      document.getElementById("select-player-B").disabled = true;
     }
   }
 
@@ -701,55 +840,73 @@ console.log(currentDate,"op")
   //   }
   // });
 
-
-
-  document.addEventListener('click', function (event) {
+  document.addEventListener("click", function (event) {
     // Check if the clicked element is a remove button
-    if (event.target.classList.contains('remove-player') || event.target.closest('.remove-player')) {
-      const parentDiv = event.target.closest('.player-wrapper');
-      const playerId = Number(event.target.dataset.id || event.target.closest('.remove-player').dataset.id); // Convert to number
+    if (
+      event.target.classList.contains("remove-player") ||
+      event.target.closest(".remove-player")
+    ) {
+      const parentDiv = event.target.closest(".player-wrapper");
+      const playerId = Number(
+        event.target.dataset.id ||
+          event.target.closest(".remove-player").dataset.id
+      ); // Convert to number
 
       // Remove player element from the DOM
       parentDiv.remove();
 
       // Update arr to remove the playerId
-      arr = arr.filter(id => id !== playerId);
+      arr = arr.filter((id) => id !== playerId);
       console.log(arr, "Updated arr after removal");
     }
   });
 
-
-  document.getElementById('select-player-A').addEventListener('click', function () {
-    const dropdown = document.getElementById('dropdown-players-A');
-    if (!dropdown.disabled) {
-      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-      if (dropdown.style.display === 'block') {
-        const searchInput = dropdown.querySelector('.search-input');
-        if (searchInput) {
-          searchInput.value = ''; // Clear input field
-          filterPlayers('', 'dropdown-players-A', disablePlayerA, ActivePlayerA); // Reset player list with disabled players
-          searchInput.focus();
+  document
+    .getElementById("select-player-A")
+    .addEventListener("click", function () {
+      const dropdown = document.getElementById("dropdown-players-A");
+      if (!dropdown.disabled) {
+        dropdown.style.display =
+          dropdown.style.display === "none" ? "block" : "none";
+        if (dropdown.style.display === "block") {
+          const searchInput = dropdown.querySelector(".search-input");
+          if (searchInput) {
+            searchInput.value = ""; // Clear input field
+            filterPlayers(
+              "",
+              "dropdown-players-A",
+              disablePlayerA,
+              ActivePlayerA
+            ); // Reset player list with disabled players
+            searchInput.focus();
+          }
         }
       }
-    }
-  });
+    });
 
   // Click event for 'select-player-B'
-  document.getElementById('select-player-B').addEventListener('click', function () {
-    const dropdown = document.getElementById('dropdown-players-B');
-    if (!dropdown.disabled) {
-      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-      if (dropdown.style.display === 'block') {
-        const searchInput = dropdown.querySelector('.search-input');
-        if (searchInput) {
-          searchInput.value = ''; // Clear input field
-          filterPlayers('', 'dropdown-players-B', disablePlayerB, ActivePlayerB); // Reset player list with disabled players
-          searchInput.focus();
+  document
+    .getElementById("select-player-B")
+    .addEventListener("click", function () {
+      const dropdown = document.getElementById("dropdown-players-B");
+      if (!dropdown.disabled) {
+        dropdown.style.display =
+          dropdown.style.display === "none" ? "block" : "none";
+        if (dropdown.style.display === "block") {
+          const searchInput = dropdown.querySelector(".search-input");
+          if (searchInput) {
+            searchInput.value = ""; // Clear input field
+            filterPlayers(
+              "",
+              "dropdown-players-B",
+              disablePlayerB,
+              ActivePlayerB
+            ); // Reset player list with disabled players
+            searchInput.focus();
+          }
         }
       }
-    }
-  });
-
+    });
 
   updatePlayerSelectionEnabled();
 
@@ -778,10 +935,9 @@ console.log(currentDate,"op")
   //   });
   // }
 
-
   function checkOverlap(teamA, teamB, startDate1, existingMatches) {
     // console.log(leagueExist, "leagueche");
-    const startDate = document.getElementById('match-start-date').value;
+    const startDate = document.getElementById("match-start-date").value;
 
     if (!existingMatches || existingMatches.length === 0) {
       return { teamAOverlap: false, teamBOverlap: false, dateOverlap: false };
@@ -791,13 +947,21 @@ console.log(currentDate,"op")
     // const leagueOverlap = existingMatches.some(match => match.select_league.league_name === leagueExist);
     // console.log('league Overlap:', leagueOverlap);
 
-    const teamAOverlap = existingMatches.some(match => match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA);
-    console.log('Team A Overlap:', teamAOverlap);
+    const teamAOverlap = existingMatches.some(
+      (match) =>
+        match.select_team_A.team_name === teamA ||
+        match.select_team_B.team_name === teamA
+    );
+    console.log("Team A Overlap:", teamAOverlap);
 
-    const teamBOverlap = existingMatches.some(match => match.select_team_A.team_name === teamB || match.select_team_B.team_name === teamB);
-    console.log('Team B Overlap:', teamBOverlap);
+    const teamBOverlap = existingMatches.some(
+      (match) =>
+        match.select_team_A.team_name === teamB ||
+        match.select_team_B.team_name === teamB
+    );
+    console.log("Team B Overlap:", teamBOverlap);
 
-    const dateOverlap = existingMatches.some(match => {
+    const dateOverlap = existingMatches.some((match) => {
       const matchStartDateStr = match.match_start_date;
       const [year, month, day] = matchStartDateStr.split(/[- ]+/); // Assuming date is in "YYYY-MM-DD"
       const matchStartDate = `${year}-${month}-${day}`;
@@ -806,16 +970,18 @@ console.log(currentDate,"op")
       const startDateObj = `${startYear}-${startMonth}-${startDay}`;
 
       // Check if dates and teams overlap
-      const teamsOverlap = (match.select_team_A.team_name === teamA || match.select_team_B.team_name === teamA) ||
-        (match.select_team_A.team_name === teamB || match.select_team_B.team_name === teamB);
+      const teamsOverlap =
+        match.select_team_A.team_name === teamA ||
+        match.select_team_B.team_name === teamA ||
+        match.select_team_A.team_name === teamB ||
+        match.select_team_B.team_name === teamB;
 
       return startDateObj === matchStartDate && teamsOverlap;
     });
-    console.log('Date and Teams Overlap:', dateOverlap);
+    console.log("Date and Teams Overlap:", dateOverlap);
 
     return { teamAOverlap, teamBOverlap, dateOverlap };
   }
-
 
   function arraysEqual(arr1, arr2) {
     if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false; // Ensure both are arrays
@@ -826,8 +992,6 @@ console.log(currentDate,"op")
     return true;
   }
 
-
-
   async function myFetch(url, type, data) {
     try {
       let responseData;
@@ -836,8 +1000,8 @@ console.log(currentDate,"op")
         const res = await fetch(url, {
           method: type,
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
 
         if (res.ok) {
@@ -852,8 +1016,8 @@ console.log(currentDate,"op")
         const res = await fetch(url, {
           method: type,
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
 
         if (res.ok) {
@@ -867,9 +1031,9 @@ console.log(currentDate,"op")
         const res = await fetch(url, {
           method: type,
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         });
 
         if (res.ok) {
@@ -886,58 +1050,58 @@ console.log(currentDate,"op")
       throw error; // Re-throw the error to handle it where myFetch is called
     }
   }
-  let existingMatches = []
+  let existingMatches = [];
   existingMatches = await myFetch("https://krinik.in/match_get/", "GET");
-  console.log(existingMatches, "ok")
+  console.log(existingMatches, "ok");
 
   function validateLeagueSelection() {
-    const leagueSelect = document.getElementById('league-name');
-    const errorSpan = document.getElementById('error-league-name');
+    const leagueSelect = document.getElementById("league-name");
+    const errorSpan = document.getElementById("error-league-name");
     if (!leagueSelect || !errorSpan) {
-      console.error('League selection elements not found');
+      console.error("League selection elements not found");
       return false;
     }
 
     function validate() {
-      if (leagueSelect.value === '') {
-        errorSpan.innerHTML = 'Please select a league';
-        errorSpan.style.display = 'inline';
+      if (leagueSelect.value === "") {
+        errorSpan.innerHTML = "Please select a league";
+        errorSpan.style.display = "inline";
         return false;
       } else {
-        errorSpan.style.display = 'none';
+        errorSpan.style.display = "none";
         return true;
       }
     }
 
-    leagueSelect.addEventListener('change', validate);
+    leagueSelect.addEventListener("change", validate);
     return validate();
   }
 
   // Validate team selection
   function validateTeamSelection() {
-    const teamSelectA = document.getElementById('team-A');
-    const teamSelectB = document.getElementById('team-B');
-    const errorSpanA = document.getElementById('error-team-A');
-    const errorSpanB = document.getElementById('error-team-B');
+    const teamSelectA = document.getElementById("team-A");
+    const teamSelectB = document.getElementById("team-B");
+    const errorSpanA = document.getElementById("error-team-A");
+    const errorSpanB = document.getElementById("error-team-B");
 
     function validateTeam(teamSelect, errorSpan) {
       if (!teamSelect || !errorSpan) {
-        console.error('Team selection elements not found');
+        console.error("Team selection elements not found");
         return false;
       }
 
       function validate() {
-        if (teamSelect.value === '') {
-          errorSpan.innerHTML = 'Please select a team';
-          errorSpan.style.display = 'inline';
+        if (teamSelect.value === "") {
+          errorSpan.innerHTML = "Please select a team";
+          errorSpan.style.display = "inline";
           return false;
         } else {
-          errorSpan.style.display = 'none';
+          errorSpan.style.display = "none";
           return true;
         }
       }
 
-      teamSelect.addEventListener('change', validate);
+      teamSelect.addEventListener("change", validate);
       return validate();
     }
 
@@ -950,72 +1114,74 @@ console.log(currentDate,"op")
   // Validate player selection
   // Validate player selection
   function validatePlayerSelection() {
-    const teamASelected = document.getElementById('team-A').value;
-    const teamBSelected = document.getElementById('team-B').value;
-    const errorSpanA = document.getElementById('error-players-A');
-    const errorSpanB = document.getElementById('error-players-B');
+    const teamASelected = document.getElementById("team-A").value;
+    const teamBSelected = document.getElementById("team-B").value;
+    const errorSpanA = document.getElementById("error-players-A");
+    const errorSpanB = document.getElementById("error-players-B");
 
     function validatePlayers(teamSelect, errorSpan, teamId) {
       if (!teamSelect || !errorSpan) {
-        console.error('Team selection elements not found');
+        console.error("Team selection elements not found");
         return false;
       }
 
       function validate() {
-        const selectedPlayers = document.querySelectorAll(`#selected-players-${teamId} .player-option`);
+        const selectedPlayers = document.querySelectorAll(
+          `#selected-players-${teamId} .player-option`
+        );
         if (selectedPlayers.length === 0) {
           errorSpan.innerHTML = `Please select at least one player for Team ${teamId}`;
-          errorSpan.style.display = 'inline';
+          errorSpan.style.display = "inline";
           return false;
         } else {
-          errorSpan.style.display = 'none';
+          errorSpan.style.display = "none";
           return true;
         }
       }
 
       const playerSelect = document.getElementById(`select-player-${teamId}`);
-      playerSelect.addEventListener('change', validate);
+      playerSelect.addEventListener("change", validate);
       return validate();
     }
 
-    const validTeamA = validatePlayers(teamASelected, errorSpanA, 'A');
-    const validTeamB = validatePlayers(teamBSelected, errorSpanB, 'B');
+    const validTeamA = validatePlayers(teamASelected, errorSpanA, "A");
+    const validTeamB = validatePlayers(teamBSelected, errorSpanB, "B");
 
     return validTeamA && validTeamB;
   }
 
   // Validate match dates
   function validateMatchDates() {
-    const startDate = document.getElementById('match-start-date');
+    const startDate = document.getElementById("match-start-date");
     // const endDate = document.getElementById('match-end-date');
-    const errorSpanStart = document.getElementById('error-match-start-date');
+    const errorSpanStart = document.getElementById("error-match-start-date");
     // const errorSpanEnd = document.getElementById('error-match-end-date');
 
     function validateDate(dateInput, errorSpan) {
       if (!dateInput || !errorSpan) {
-        console.error('Date input elements not found');
+        console.error("Date input elements not found");
         return false;
       }
 
       function validate() {
         if (!dateInput.value) {
-          errorSpan.innerHTML = 'Please select a date';
-          errorSpan.style.display = 'inline';
+          errorSpan.innerHTML = "Please select a date";
+          errorSpan.style.display = "inline";
           return false;
         } else {
-          errorSpan.style.display = 'none';
+          errorSpan.style.display = "none";
           return true;
         }
       }
 
-      dateInput.addEventListener('change', validate);
+      dateInput.addEventListener("change", validate);
       return validate();
     }
 
     const validStartDate = validateDate(startDate, errorSpanStart);
     // const validEndDate = validateDate(endDate, errorSpanEnd);
 
-    return validStartDate
+    return validStartDate;
     // && validEndDate;
   }
   function validateForm() {
@@ -1028,64 +1194,67 @@ console.log(currentDate,"op")
   }
 
   async function submitMatchData(data) {
-
     // If all data is valid, prepare the payload
     const payload = {
       select_league: data.select_league,
       select_team_A: data.select_team_A,
       select_team_B: data.select_team_B,
-      select_player_A: data.select_player_A.map(player => player), // Only IDs
-      select_player_B: data.select_player_B.map(player => player), // Only IDs
+      select_player_A: data.select_player_A.map((player) => player), // Only IDs
+      select_player_B: data.select_player_B.map((player) => player), // Only IDs
       match_start_date: data.match_start_date, // Ensure the date is correctly formatted
-      player_list: data.player_list
+      player_list: data.player_list,
     };
 
-    console.log('Form data before sending:');
+    console.log("Form data before sending:");
     // Log each field of the payload
-    Object.keys(payload).forEach(key => {
+    Object.keys(payload).forEach((key) => {
       console.log(key, payload[key]);
     });
 
     try {
       const response = await fetch(`https://krinik.in/match_get/${matchId}/`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to submit match data: ${response.status} ${response.statusText} - ${errorText}`);
+        throw new Error(
+          `Failed to submit match data: ${response.status} ${response.statusText} - ${errorText}`
+        );
       }
 
-      const responseData = await response.json();
-      console.log('Response data:', responseData);
-       window.location.href = "./manage-match.html"
+      
+      // const responseData = await response.json();
+      // console.log("Response data:", responseData);
+     
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while submitting the match data.');
+      console.error("Error:", error);
+      alert("An error occurred while submitting the match data.");
     }
   }
 
-
-  const form = document.getElementById('match-form');
-  form.addEventListener('submit', async function (event) {
+  const form = document.getElementById("match-form");
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
     console.log(arr, "submit arr"); // Should reflect updated list after removals
 
     // Collect form values
-    const leagueName = document.getElementById('league-name').value;
-    const teamA = document.getElementById('team-A').value;
-    const teamB = document.getElementById('team-B').value;
-    const startDate = document.getElementById('match-start-date').value;
+    const leagueName = document.getElementById("league-name").value;
+    const teamA = document.getElementById("team-A").value;
+    const teamB = document.getElementById("team-B").value;
+    const startDate = document.getElementById("match-start-date").value;
 
     // Collect selected players' IDs for Team A and Team B
-    const selectedPlayersA = Array.from(document.querySelectorAll('#selected-players-A .player-option'))
-      .map(player => Number(player.dataset.id.trim()));
-    const selectedPlayersB = Array.from(document.querySelectorAll('#selected-players-B .player-option'))
-      .map(player => Number(player.dataset.id.trim()));
+    const selectedPlayersA = Array.from(
+      document.querySelectorAll("#selected-players-A .player-option")
+    ).map((player) => Number(player.dataset.id.trim()));
+    const selectedPlayersB = Array.from(
+      document.querySelectorAll("#selected-players-B .player-option")
+    ).map((player) => Number(player.dataset.id.trim()));
     const currentData = {
       match_start_date: startDate,
       select_league: leagueName,
@@ -1093,66 +1262,63 @@ console.log(currentDate,"op")
       select_player_B: selectedPlayersB || [],
       select_team_A: teamA,
       select_team_B: teamB,
-      player_list: arr // Updated arr with any removed players excluded
+      player_list: arr, // Updated arr with any removed players excluded
     };
-
 
     // console.log(currentData, "current")
     // FormData object to send via fetch
-    const overlapResult = checkOverlap(teamA, teamB, startDate, existingMatches);
+    const overlapResult = checkOverlap(
+      teamA,
+      teamB,
+      startDate,
+      existingMatches
+    );
 
     // Check if the form is valid
     if (validateForm()) {
-      const hasMatchTimeChanged = currentData.match_start_date !== initialData.match_start_date;
-      const hasPlayerAChanged = !arraysEqual(currentData.select_player_A, initialData.select_player_A);
-      const hasPlayerBChanged = !arraysEqual(currentData.select_player_B, initialData.select_player_B);
+      const hasMatchTimeChanged =
+        currentData.match_start_date !== initialData.match_start_date;
+      const hasPlayerAChanged = !arraysEqual(
+        currentData.select_player_A,
+        initialData.select_player_A
+      );
+      const hasPlayerBChanged = !arraysEqual(
+        currentData.select_player_B,
+        initialData.select_player_B
+      );
 
-      if ( hasPlayerAChanged || hasPlayerBChanged) {
+      if (hasPlayerAChanged || hasPlayerBChanged) {
         if (confirm("Are you sure you want to edit it?")) {
-            await submitMatchData(currentData); // Submit updated data
-            console.log(currentData, "currentData");
-          }
-      }
-        else if(hasMatchTimeChanged ) {
-         
-        //   if (overlapResult.teamAOverlap && overlapResult.teamBOverlap && overlapResult.dateOverlap) {
-        //   document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
-        //   document.getElementById('error-team-A').style.display = 'inline';
-        //   document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-        //   document.getElementById('error-team-B').style.display = 'inline';
-
-        // } else if (overlapResult.teamAOverlap && overlapResult.dateOverlap) {
-        //   document.getElementById('error-team-A').innerHTML = 'Team-A name already exists';
-        //   document.getElementById('error-team-A').style.display = 'inline';
-
-        // } else if (overlapResult.teamBOverlap && overlapResult.dateOverlap) {
-
-        //   document.getElementById('error-team-B').innerHTML = 'Team-B name already exists';
-        //   document.getElementById('error-team-B').style.display = 'inline';
-        // }else{
-          if (confirm("Are you sure you want to edit it?")) {
-            await submitMatchData(currentData); // Submit updated data
-            console.log(currentData, "currentData");
-          }
+          await submitMatchData(currentData); // Submit updated data
+          console.log(currentData, "currentData");
+        }
+      } else if (hasMatchTimeChanged) {
+       
+        if (confirm("Are you sure you want to edit it?")) {
+          await submitMatchData(currentData);
+          showDynamicAlert("Match Updated Successfully !!")
+     
+        await sendNotificationAllUser(tokens, allUsers, {
+          title: "Match Updated !",
+          body: "Match is updated in the app. Check it out and join now!",
+        });
+        window.location.href = "./manage-match.html";
+      
+        }
         // }
-        
       } else {
         if (confirm("Are you sure you want to edit it?")) {
           await submitMatchData(initialData);
+          window.location.href = "./manage-match.html";
           console.log(initialData, "initialData");
         }
-        
       }
-    
-      // Proceed with form submission if there are no overlap errors
-     
-      
-    } else {
-      console.log('Form validation failed. Please check all fields.');
-    }
 
+      // Proceed with form submission if there are no overlap errors
+    } else {
+      console.log("Form validation failed. Please check all fields.");
+    }
   });
 
-
   window.onload = checkAdminAccess();
-})
+});

@@ -1,4 +1,4 @@
-import {checkAdminAccess,sendNotification}  from "../js/initial.js"
+import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial.js"
 
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -147,7 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response2.ok) {
                 throw new Error("Failed to patch amount in second API");
             }
+           
             if(response1.ok && response2.ok){
+                showDynamicAlert("Withdraw Successfully !!")
 
                 await sendNotification(user_id, {
                     title: "Withdrawal Request Accepted!",
@@ -155,13 +157,13 @@ document.addEventListener("DOMContentLoaded", () => {
                   });
                   
             }
-
+            fetchUserData();
+            editPlayerData()
             console.log("Patch for amount successful:", await response2.json());
 
             // Re-fetch data to update `totalAmount` and other fields
-            alert("Approved successfully!");
-            fetchUserData();
-            editPlayerData()
+            // alert("Approved successfully!");
+           
 
         } catch (error) {
             console.error("Error patching data:", error);
@@ -694,7 +696,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (confirm("Are you sure you want to approve it?")) {
             // Mark as approved
             await patchData( newWalletAmount, idCell,newDepositAmount );
-           
+            fetchUserData();
+            editPlayerData()
     
         }
     });
@@ -748,7 +751,7 @@ document.getElementById("imageModal").addEventListener("hidden.bs.modal", functi
         // const idCell = userData.id; 
         if (index !== 0) return alert("Only the first row can be approved.");
         if (Number(userData1.amount) === 0) {
-            alert("Cannot reject this request. Amount is 0.");
+            showDynamicAlert("Cannot reject this request. Amount is 0.");
             return;
         }
         if (confirm("Are you sure you want to reject it?")) {
@@ -778,6 +781,7 @@ document.getElementById("imageModal").addEventListener("hidden.bs.modal", functi
     
                 // Re-fetch data to update `totalAmount` and other fields
                 fetchUserData();
+            editPlayerData()
     
             } catch (error) {
                 console.error("Error patching data:", error);
@@ -813,65 +817,7 @@ document.getElementById("imageModal").addEventListener("hidden.bs.modal", functi
         }
       });
       
-      function createActionButton(type, index) {
-        const buttonClass = type === "approve" ? "approve-btn" : "reject-btn";
-        const buttonSymbol = type === "approve" ? "✔" : "❌";
-        
-        // Disable buttons for rows other than the first
-        const isDisabled = index !== 0 ? "pointer-events: none; opacity: 0.5;" : "";
-        return $("<td></td>").html(
-            `<span class="sortable ${buttonClass}" data-id="${index}" style="${isDisabled}">${buttonSymbol}</span>`
-        );
-    }
-    async function handleApproval(index) {
-        const userData = array[index]; // Get the data for the clicked row
-    
-        // Extract amount_with_tds from userData
-        const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
-    
-        if (amountWithTDS === 0) {
-            alert("Cannot approve this request. Amount is 0.");
-            return;
-        }
-    
-        if (confirm("Are you sure you want to approve it?")) {
-            const currentWalletAmount = parseFloat(totalAmount.textContent);
-            const newWalletAmount = currentWalletAmount - amountWithTDS;
-            const bonusAddAmount = parseFloat(bonusAmount.textContent) || 0;
-    
-            try {
-                await patchData(updateWinning, newWalletAmount, bonusAddAmount);
-                fetchUserData(); // Refresh data
-                alert("Approval successful!");
-            } catch (error) {
-                console.error("Error approving the request:", error);
-            }
-        }
-    }
-    
-    
-    // Function to handle rejection
-    async function handleRejection(index) {
-        const userData = array[index]; // Get the data for the clicked row
-    
-        if (Number(userData.amount) === 0) {
-            alert("Cannot reject this request. Amount is 0.");
-            return;
-        }
-    
-        if (confirm("Are you sure you want to reject it?")) {
-            try {
-                await sendNotification(user_id, {
-                    title: "Withdrawal Request Rejected",
-                    body: "Unfortunately, your withdrawal request has been rejected. Please contact support for further assistance or to resolve any issues."
-                });
-                alert("Rejection successful!");
-                window.location.href = "./withdrawal.html";
-            } catch (error) {
-                console.error("Error rejecting the request:", error);
-            }
-        }
-    }
+   
 
     fetchUserData();
     window.onload = checkAdminAccess();

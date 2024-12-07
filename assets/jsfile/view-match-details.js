@@ -35,103 +35,75 @@ async function fetchUserData() {
       return;
     }
 
-    const url = `https://krinik.in/match_get/${id}/`;
-    console.log('Fetching player data from:', url);
+    const urls = {
+      playerData: `https://krinik.in/match_get/${id}/`,
+      poolData: `https://krinik.in/pool_declare/match_id/${id}/`,
+      userMatchData: `https://krinik.in/user_match_get/`,
+    };
 
-    const url1 = `https://krinik.in/pool_declare/`;
-    console.log('Fetching pool data from:', url1);
+    // Fetch all data concurrently
+    const [playerResponse, poolResponse, userMatchResponse] = await Promise.all([
+      fetch(urls.playerData),
+      fetch(urls.poolData),
+      fetch(urls.userMatchData),
+    ]);
 
-    
-    const url2 = `https://krinik.in/user_match_get/`;
-    console.log('Fetching pool data from:', url2);
-    
-    const url5 = `https://krinik.in/user_get/`;
-    console.log('Fetching user data from:', url5);
-
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch player data');
+    // Check if the responses are OK, otherwise throw errors
+    if (!playerResponse.ok) throw new Error('Failed to fetch player data');
+    if (!poolResponse.ok) {
+      console.warn('No pool data found for this match ID'); // Log the warning for pool data
     }
-    const responseurl = await fetch(url1);
-    const urlpool = await responseurl.json();
-    const urlpooldata = urlpool.data;
-console.log(urlpooldata,"poll")
-    const urlpool1 = urlpooldata.find((p) => p.select_match ? p.select_match.match_id == id : null);
-    if (urlpool1) {
-      urlpooltime = urlpool1.date_time;
+    if (!userMatchResponse.ok) throw new Error('Failed to fetch user match data');
+
+    // Parse the JSON data
+    const playerData = await playerResponse.json();
+    const poolData = poolResponse.ok ? await poolResponse.json() : null; // Only parse if successful
+    const userMatchData = await userMatchResponse.json();
+
+    const playerDataList = playerData.data;
+    const poolDataList = poolData ? poolData.data : [];
+    const userMatchList = userMatchData.data;
+
+    // Process pool data if it exists
+    if (poolDataList) {
+      const urlpool1 = poolDataList.find((p) => p.select_match ? p.select_match.match_id == id : null);
+      if (urlpool1) {
+        const urlpooltime = urlpool1.date_time;
+        console.log('Pool Time:', urlpooltime);
+      }
     }
 
-    console.log(urlpooltime, "poll1");
+    // Call the next function to handle player data
+    fetchUserData1(playerDataList);
+    userId = playerDataList.id;
 
+    // Filter user match data
+    const userMatchData2 = userMatchList.filter((p) => p.match.id ? p.match.id === id : null);
+    const userMatchData3 = userMatchData2.filter((p) => p.user_data.status === "block");
 
-    const userData1 = await response.json();
-    const userData = userData1.data;
-    console.log(userData, "data123");
-    userId = userData.id;
-console.log(userId,"pl")
-    // Call the editPlayerData function to edit player data
-    editPlayerData(userData,urlpooltime);
-    const responseurl2 = await fetch(url2);
-    const userMatchData1 = await responseurl2.json();
-    const userMatchData = userMatchData1.data
-    // const response5 = await fetch(url5);
-    // const userGetData = await response5.json();
-    //  const  userDatastatus =  userGetData.data
-    // console.log(userDatastatus,"olpolp")
-
-    console.log(userMatchData, "userData");
-
-    const userMatchData2 = userMatchData.filter((p) => p.match.id ? p.match.id === id : null);
-    const userMatchData3 = userMatchData2.filter((p)=> p.user_data.status === "block")
-    console.log(userMatchData2,"userMatchData2")
-    console.log(userMatchData3,"userMatchData3")
-    if(userMatchData3){
-
-      fetchData(userMatchData3)
-    }
+    // If blocked data exists, call fetchData function
     if (userMatchData3) {
-      userMoney = userMatchData3.reduce((total,curr)=> total + curr.invest_amount,0)
-      totalAmountData.textContent = userMoney
-      console.log(userMoney,"userMatchData3")
+      fetchData(userMatchData3);
     }
 
-    
+    // Calculate user money from the blocked match data
+    if (userMatchData3) {
+      const userMoney = userMatchData3.reduce((total, curr) => total + curr.invest_amount, 0);
+      totalAmountData.textContent = userMoney;
+    }
 
-   
-    
-    
-    // console.log(userData,"userData che")
-    const disabledDataPlayerA = userData.disable_player_A || [];
-    const disabledDataPlayerB = userData.disable_player_B || [];
-    arr = userData.player_list || [];  // Use global arr
-console.log(arr, "plplpl");
-
-// Combine the IDs from both disabled lists
-const disabledIds = [
-  ...disabledDataPlayerA.map(player => player.id),
-  ...disabledDataPlayerB.map(player => player.id)
-];
-// console.log(disabledIds, "disabled");
-
-// Filter out players in arr whose IDs are in the disabled list
-arr = arr.filter(player => !disabledIds.includes(player));
-
-// console.log(arr, "Filtered arr (without disabled players)");
-  // Corrected this to log the filtered arr
-
- 
-    // You can call other functions that need the updated arr data if required
+    // Edit player data
+    editPlayerData(playerDataList, poolDataList ? poolDataList.date_time : null);
 
   } catch (error) {
     console.error('Error fetching player data:', error);
   }
 }
 
+
   fetchUserData();
 
-  fetchUserData1()
+
 
 
   function editPlayerData(response,urlpooltime) {
@@ -148,19 +120,17 @@ arr = arr.filter(player => !disabledIds.includes(player));
       teamLogoName2.textContent = response.select_team_B.team_name;
 
       let defaultTime = new Date();  // Current date and time
-      // console.log(defaultTime.getTime(), "defaultTime");
-
-      // Example match start and end dates from response
+   
       const matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
       const matchEndDate = urlpooltime ? urlpooltime : null;  // If urlpooltime is available, use it; otherwise, it's null.
-console.log(matchEndDate,"endmatch")
+
       const matchDateTimeStr = matchStartDate.replace("/", "-"); // Ensures compatibility with Date parsing
-      // console.log(matchDateTimeStr, "matchDateTimeStr");
+    
 
       let matchDateTimeStrEnd = null;
       if (matchEndDate) {
         matchDateTimeStrEnd = matchEndDate.replace("/", "-"); // Ensures compatibility with Date parsing
-        // console.log(matchDateTimeStrEnd, "matchDateTimeStrEnd");
+     
       }
 
       // Use moment.js to parse the match start and end dates
@@ -168,17 +138,15 @@ console.log(matchEndDate,"endmatch")
       let formattedMatchEndDate = null;
       if (matchDateTimeStrEnd) {
         formattedMatchEndDate = moment(matchDateTimeStrEnd, 'YYYY-MM-DD HH:mm:ss');  // Match end as a moment object
-        // console.log(formattedMatchEndDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchEndDate");
+   
       }
 
-      // console.log(formattedMatchDate.format('DD-MM-YYYY HH:mm:ss'), "formattedMatchDate");
 
       // Function to update the live countdown and status
       function updateCountdown() {
         // Get the current time
         let currentTime = moment();  // Current time as a moment object
-        // console.log(currentTime.format('DD-MM-YYYY HH:mm:ss'), "Current Time");
-
+       
         // Calculate the remaining time until match start
         let remainingTimeStart = formattedMatchDate.diff(currentTime);
         let remainingTimeEnd = formattedMatchEndDate ? formattedMatchEndDate.diff(currentTime) : null;
@@ -229,14 +197,14 @@ console.log(matchEndDate,"endmatch")
 
       selectingPlayerA = response.select_player_A
       selectingPlayerB = response.select_player_B
-      console.log(selectingPlayerA, "olp")
+ 
       // disablePlayersA = response.disable_player_A
       // disablePlayersB = response.disable_player_B
       disablePlayersA = (response.disable_player_A || []).map(player => ({
         ...player,
         disable: "disable"
       }))
-      console.log(disablePlayersA, "oklp")
+    
       disablePlayersB = (response.disable_player_B || []).map(player => ({
         ...player,
         disable: "disable"
@@ -245,9 +213,7 @@ console.log(matchEndDate,"endmatch")
       let aPlayer = [...disablePlayersA, ...selectingPlayerA,]
       let bPlayer = [...disablePlayersB, ...selectingPlayerB,]
 
-      console.log(aPlayer, "yui")
-
-      console.log(disablePlayersA, "ok1")
+      
       displayTableRows(aPlayer, "tbody1");
       displayTableRows(bPlayer, "tbody2");
     } else {
@@ -276,7 +242,7 @@ console.log(matchEndDate,"endmatch")
             </span>
         `);
       const dis = player.disable
-      console.log(dis, "dis")
+    
 
       if (dis == "disable") {
         noCell.addClass("disabled-row")
@@ -296,7 +262,7 @@ console.log(matchEndDate,"endmatch")
   }
 window.handleDisable = handleDisable
   async function handleDisable(playerId) {
-    if (confirm('Are you sure you want to delete this player?')) {
+    if (confirm('Are you sure you want to disable this player?')) {
       const matchUrl = `https://krinik.in/match_get/${id}/`;
       try {
         // Fetch existing match data
@@ -340,8 +306,7 @@ window.handleDisable = handleDisable
           });
 
           if (response.ok) {
-            console.log('Player successfully removed');
-            fetchUserData1();
+        
             fetchUserData();
           } else {
             const errorText = await response.text();
@@ -373,8 +338,7 @@ window.handleDisable = handleDisable
           });
 
           if (response.ok) {
-            console.log('Player successfully removed');
-            fetchUserData1();
+          
             fetchUserData();
           } else {
             const errorText = await response.text();
@@ -389,35 +353,20 @@ window.handleDisable = handleDisable
     }
   }
 
-  async function fetchUserData1() {
+  async function fetchUserData1(playerDataList) {
     try {
-      if (!id) {
-        console.warn('No player ID found in URL.');
-        return;
-      }
 
-      const url = `https://krinik.in/match_get/${id}/`;
-      console.log('Fetching player data from:', url);
+      // userId = playerDataList.id;
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch player data');
-      }
+      const leagueNameData = playerDataList.select_league.league_name
 
-      const userData1 = await response.json();
-      const userData = userData1.data;
-      userId = userData.id;
+      const teamA = playerDataList.select_team_A.id;
+      const teamB = playerDataList.select_team_B.id;
+      const playersA = playerDataList.select_player_A;
+      const playersB = playerDataList.select_player_B;
+      disableplayersA = playerDataList.disable_player_A;
+      disableplayersB = playerDataList.disable_player_B
 
-      const leagueNameData = userData.select_league.league_name
-
-      const teamA = userData.select_team_A.id;
-      const teamB = userData.select_team_B.id;
-      const playersA = userData.select_player_A;
-      const playersB = userData.select_player_B;
-      disableplayersA = userData.disable_player_A;
-      disableplayersB = userData.disable_player_B
-
-      console.log(disableplayersA, disableplayersB, "data3");
 
       await fetchPlayer(teamA, playersA, disableplayersA, 'playerCheckboxesA', leagueNameData); // Fetch players for Team A
       await fetchPlayer(teamB, playersB, disableplayersB, 'playerCheckboxesB', leagueNameData);
@@ -448,16 +397,16 @@ window.handleDisable = handleDisable
     
         return acc;
     }, {});
-console.log(result,"result")
+
     array = Object.values(result); 
-        console.log(array,"array")
+       
         if (array.length) {
 
           filterAndDisplay(array)
         } else {
-          // console.log('no data found')
+         
         }
-        // editPlayerData(array);
+    
       
     } catch (error) {
       console.error("Error fetching data", error);
@@ -571,7 +520,7 @@ console.log(result,"result")
   window.indexPagination = indexPagination
 
   function displayTableRows1() {
-    console.log(array,"uio")
+    
         $("table #tbody12").empty();
         var tab_start = start_index - 1;
         var tab_end = end_index;
@@ -635,10 +584,9 @@ console.log(result,"result")
         const rankList = userData1.data;
 
 
-        console.log(rankList, "league che")
         // Filter players by team name
         const matchingData = rankList.filter(item => item.team_name.id === teamName && item.league_name === leagueNameData);
-        console.log(matchingData, 'matchdata che')
+       
         if (matchingData.length > 0) {
           // Filter out players already in playersName and those in disablePlayers
           const playerFilters = matchingData.filter(play =>
@@ -671,7 +619,7 @@ console.log(result,"result")
 
           });
         } else {
-          console.log('No matching data found.');
+         
         }
       }
     } catch (error) {
@@ -687,8 +635,7 @@ console.log(result,"result")
       player_name: checkbox.nextElementSibling.textContent
     }));
 
-  console.log('Selected Players for Team A:', selectedPlayersA);
-
+ 
   // Fetch existing match data
   const matchUrl = `https://krinik.in/match_get/${id}/`;
   try {
@@ -716,8 +663,6 @@ console.log(result,"result")
       }
     });
 
-    console.log('arr after adding Team A players:', arr);
-
     // Save the updated players list for Team A
     const response = await fetch(matchUrl, {
       method: 'PATCH',
@@ -735,15 +680,14 @@ console.log(result,"result")
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Error response:', errorText);
+      
       throw new Error('Failed to save selected players for Team A');
     }
 
     const result = await response.json();
-    console.log('Save result for Team A:', result);
+   
 
-    // Refresh user data
-    fetchUserData1();
+
     fetchUserData();
     
   } catch (error) {
@@ -760,7 +704,6 @@ async function saveSelectedPlayersB() {
       player_name: checkbox.nextElementSibling.textContent
     }));
 
-  console.log('Selected Players for Team B:', selectedPlayersB);
 
   // Fetch existing match data
   const matchUrl = `https://krinik.in/match_get/${id}/`;
@@ -789,8 +732,7 @@ async function saveSelectedPlayersB() {
       }
     });
 
-    console.log('arr after adding Team B players:', arr);
-
+   
     // Save the updated players list for Team B
     const response = await fetch(matchUrl, {
       method: 'PATCH',
@@ -811,10 +753,8 @@ async function saveSelectedPlayersB() {
     }
 
     const result = await response.json();
-    console.log('Save result for Team B:', result);
+   
 
-    // Refresh user data
-    fetchUserData1();
     fetchUserData();
     
   } catch (error) {

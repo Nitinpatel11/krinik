@@ -56,12 +56,9 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
  
   
   async function fetchData(NumberId,data,teamData,matchCheck) {
-    try { 
-      
+    try {    
     
-  
-      
-  
+        
       if (data && data.status === "success") {
         console.log(data.data);
         console.log(NumberId, "fit");
