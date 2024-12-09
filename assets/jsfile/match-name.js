@@ -21,21 +21,32 @@ async function fetchData() {
         "Content-Type": "application/json",
       },
     });
+    const response1 = await fetch(`https://krinik.in/match_get/${id}/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     
     if (response.ok) {
       const data = await response.json();
+      const data1 = await response1.json();
+
       if (data && data.status === "success") {
 
         let userMatchData1 = data.data
        let  user_match_data = userMatchData1.filter((p) => p.match.id === id && p.user_data.status == "block" )
        console.log(user_match_data,"okk")
-       let user_match_data1 = user_match_data[0]
+       let user_match_data1 = data1.data
        console.log(user_match_data1,"object")
-        rankList = user_match_data;
-        array = rankList; // Initialize array with fetched data
+       if(user_match_data){
+
+         rankList = user_match_data;
+         array = rankList; // Initialize array with fetched data
+       }
         // totaldatamatch.innerHTML = array.length;
       
-        // console.log(array);
+        console.log(array);
         displayIndexButtons();
 
         editPlayerData(user_match_data1,user_match_data)
@@ -50,109 +61,54 @@ async function fetchData() {
     console.error("Error fetching data", error);
   }
 }
-// async function fetchData(NumberId,data,teamData,matchCheck) {
-//   try {    
-  
-      
-//     if (data && data.status === "success") {
-//       console.log(data.data);
-//       console.log(NumberId, "fit");
-
-//       // Log all IDs in the response data
-//     if(matchCheck.length > 0){
-//       user_match_data1 = matchCheck.filter((p) => p.match.id === NumberId )
-//       matchIdData = user_match_data1[0].match.id
-//       console.log(user_match_data1,"user_match_data1")
-//       console.log(matchIdData,"oplopl")
-//       user_match_data = user_match_data1.filter((p)=> p.user_data.status == "block")
-//     }
-//     console.log(user_match_data,"user_match_data")
-
-//     if(matchCheck.length > 0){
-//     totalMoney = user_match_data.reduce((accumulator, userMatch) => {
-//         return userMatch.invest_amount + accumulator;
-//       }, 0);
-//     }
-//     console.log("Total Money:", totalMoney);
-//       // Compare the values directly
-//       let filtermatchview = data.data.find((p) => p.id === NumberId);
-//       matchName = filtermatchview.match_display_name
-//       console.log(filtermatchview,"matchName")
-//       let Players1 = filtermatchview.select_player_A.map((p)=>p)
-//       let Players2 = filtermatchview.select_player_B.map((p)=>p)
-
-//       let AllPlayers = [...Players1,...Players2]
-//       console.log(AllPlayers,"Allplayers")
-
-//       let Players12 = filtermatchview.player_list
-      
-//       if (filtermatchview) {
-//         let filteredPlayers = Players12
-//    .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId exists in AllPlayers
-//    .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
-
-
-//         console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
-//         let sortfiltereplayers = [...new Set(filteredPlayers)]
-      
-//         rankList = sortfiltereplayers;
-
-//         array = rankList;
-//         filterAndDisplay();
-//       } else {
-//         console.error("No match found for the given ID.");
-//       }
-//     } else {
-//       console.error("Error: Invalid data format");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching data", error);
-//   }
-// }
 
 
 
-function editPlayerData(user_match_data1,user_match_data) {
+
+function editPlayerData(user_match_data1, user_match_data = null) {
   const teamlogo1 = document.getElementById("teamlogo1");
   const teamlogo2 = document.getElementById("teamlogo2");
   const teamshortname1 = document.getElementById("teamshortname1");
   const teamshortname2 = document.getElementById("teamshortname2");
   const matchName = document.getElementById("match-name");
- 
-  // const matchTime = document.getElementById("match-time");
   const totWinnAmount = document.getElementById("totWinnAmount");
   const totWin = document.getElementById("totWin");
- 
- 
-  
-  // console.log(user_match_data,"tot")
-  if(user_match_data ){
+
+  let totalMoney = 0; // Default value
+  let noOfWinners = 0; // Default value
+console.log(user_match_data1,"ononon")
+  // Check if user_match_data exists
+  if (user_match_data) {
     totalMoney = user_match_data.reduce((accumulator, userMatch) => {
       if (userMatch.winning_status && userMatch.winning_status.toLowerCase() === "winner") {
         noOfWinners++;
       }
-        return userMatch.invest_amount + accumulator;
-      }, 0);
-    }
+      return userMatch.invest_amount + accumulator;
+    }, 0);
+  }
 
+  // Check if user_match_data1 exists
   if (user_match_data1) {
-    const match = user_match_data1.match;
-    console.log(user_match_data1,"ok2k")
-    const teamA = match.select_team_A || {};
-    const teamB = match.select_team_B || {};
-    // Update image source
-    teamlogo1.src = `https://krinik.in${teamA.team_image}`;
-    teamlogo2.src = `https://krinik.in${teamB.team_image}`;
-    teamshortname1.textContent = teamA.team_short_name
-    teamshortname2.textContent = teamB.team_short_name
-    matchName.textContent = match.match_display_name
-    totWinnAmount.textContent = totalMoney
-    totWin.textContent = noOfWinners;
-    console.log(totalMoney)
+    // const match = user_match_data1.match || {};
+    const teamA = user_match_data1.select_team_A || {};
+    const teamB = user_match_data1.select_team_B || {};
+
+    // Update image source and text content
+    teamlogo1.src = teamA.team_image ? `https://krinik.in${teamA.team_image}` : "";
+    teamlogo2.src = teamB.team_image ? `https://krinik.in${teamB.team_image}` : "";
+    teamshortname1.textContent = teamA.team_short_name || "N/A";
+    teamshortname2.textContent = teamB.team_short_name || "N/A";
+    matchName.textContent = user_match_data1.match_display_name || "No Match Name";
+    totWinnAmount.textContent = totalMoney || "0";
+    totWin.textContent = noOfWinners || "0";
+
+    console.log("Total Money:", totalMoney);
+    console.log("Number of Winners:", noOfWinners);
   } else {
-    console.error("Data is not in the expected format:", response);
+    console.error("Data is not in the expected format:", user_match_data1);
   }
 }
+
 
 function preLoadCalculations() {
   array_length = array.length;
@@ -508,6 +464,7 @@ function displayTableRows() {
     }
   });
   if (array.length === 0) {
+   
     $("#noDataFound").show();
     $("#pagination").hide();
     $("#table-scrolling").css("overflow-x", "hidden");
@@ -588,24 +545,8 @@ function indexPagination(index) {
   highlightIndexButton();
 }
 
-const table = document.getElementById("matchTable");
-const downloadBtn = document.getElementById("download-btn");
 
-downloadBtn.addEventListener("click", () => {
-  const workbook = XLSX.utils.table_to_book(table, { sheet: "Match Data" });
-  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-  const data = new Blob([excelBuffer], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
-  const url = URL.createObjectURL(data);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "match_data.xlsx";
-  a.click();
 
-  URL.revokeObjectURL(url);
-  a.remove();
-});
 
 history.pushState(null, null, window.location.href);
 window.onload = checkAdminAccess();

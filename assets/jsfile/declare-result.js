@@ -55,57 +55,138 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
   
  
   
-  async function fetchData(NumberId,data,teamData,matchCheck) {
-    try {    
+  // async function fetchData(NumberId,data,teamData,matchCheck) {
+  //   try {    
     
         
+  //     if (data && data.status === "success") {
+  //       console.log(data.data);
+  //       console.log(NumberId, "fit");
+  
+  //       // Log all IDs in the response data
+  //     if(matchCheck.length > 0){
+  //       console.log(matchCheck,"yes")
+  //       user_match_data1 = matchCheck.filter((p) => p.match.id === NumberId )
+  //       if(user_match_data1){
+  //         console.log(user_match_data1)
+  //         matchIdData = user_match_data1[0].match.id
+  //         console.log(user_match_data1,"user_match_data1")
+  //         console.log(matchIdData,"oplopl")
+
+  //       }
+  //       user_match_data = user_match_data1.filter((p)=> p.user_data.status == "block")
+  //     }
+  //     console.log(user_match_data,"user_match_data")
+
+  //     if(matchCheck.length > 0){
+  //     totalMoney = user_match_data.reduce((accumulator, userMatch) => {
+  //         return userMatch.invest_amount + accumulator;
+  //       }, 0);
+  //     }
+  //     console.log("Total Money:", totalMoney);
+  //       // Compare the values directly
+  //       let filtermatchview = data.data.find((p) => p.id === NumberId);
+  //       matchName = filtermatchview.match_display_name
+  //       console.log(filtermatchview,"matchName")
+  //       let Players1 = filtermatchview.select_player_A.map((p)=>p)
+  //       let Players2 = filtermatchview.select_player_B.map((p)=>p)
+  
+  //       let AllPlayers = [...Players1,...Players2]
+  //       console.log(AllPlayers,"Allplayers")
+  
+  //       let Players12 = filtermatchview.player_list
+        
+  //       if (filtermatchview) {
+  //         let filteredPlayers = Players12
+  //    .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId exists in AllPlayers
+  //    .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
+  
+  
+  //         console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
+  //         let sortfiltereplayers = [...new Set(filteredPlayers)]
+        
+  //         rankList = sortfiltereplayers;
+  
+  //         array = rankList;
+  //         filterAndDisplay();
+  //       } else {
+  //         console.error("No match found for the given ID.");
+  //       }
+  //     } else {
+  //       console.error("Error: Invalid data format");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data", error);
+  //   }
+  // }
+  async function fetchData(NumberId, data, teamData, matchCheck) {
+    try {
       if (data && data.status === "success") {
         console.log(data.data);
         console.log(NumberId, "fit");
   
         // Log all IDs in the response data
-      if(matchCheck.length > 0){
-        user_match_data1 = matchCheck.filter((p) => p.match.id === NumberId )
-        matchIdData = user_match_data1[0].match.id
-        console.log(user_match_data1,"user_match_data1")
-        console.log(matchIdData,"oplopl")
-        user_match_data = user_match_data1.filter((p)=> p.user_data.status == "block")
-      }
-      console.log(user_match_data,"user_match_data")
-
-      if(matchCheck.length > 0){
-      totalMoney = user_match_data.reduce((accumulator, userMatch) => {
-          return userMatch.invest_amount + accumulator;
-        }, 0);
-      }
-      console.log("Total Money:", totalMoney);
-        // Compare the values directly
-        let filtermatchview = data.data.find((p) => p.id === NumberId);
-        matchName = filtermatchview.match_display_name
-        console.log(filtermatchview,"matchName")
-        let Players1 = filtermatchview.select_player_A.map((p)=>p)
-        let Players2 = filtermatchview.select_player_B.map((p)=>p)
+        if (matchCheck && matchCheck.length > 0) {
+          console.log(matchCheck, "yes");
   
-        let AllPlayers = [...Players1,...Players2]
-        console.log(AllPlayers,"Allplayers")
+          // Filter user_match_data1 based on match.id === NumberId
+          let user_match_data1 = matchCheck.filter((p) => p.match && p.match.id === NumberId);
+          
+          if (user_match_data1.length > 0) {
+            console.log(user_match_data1);
+            let matchIdData = user_match_data1[0].match.id;
+            console.log(matchIdData, "matchIdData");
   
-        let Players12 = filtermatchview.player_list
-        
-        if (filtermatchview) {
-          let filteredPlayers = Players12
-     .filter(playerId => AllPlayers.some(player => player.id === playerId)) // Check if playerId exists in AllPlayers
-     .map(playerId => teamData.find(player => player.id === playerId)); // Map to actual player data from teamData
+            user_match_data = user_match_data1.filter((p) => p.user_data && p.user_data.status === "block");
+          } else {
+            console.log("No matching data found in matchCheck for the given match ID.");
+            user_match_data = [];
+          }
   
+          console.log(user_match_data, "user_match_data");
   
-          console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
-          let sortfiltereplayers = [...new Set(filteredPlayers)]
-        
-          rankList = sortfiltereplayers;
+          if (user_match_data.length > 0) {
+            totalMoney = user_match_data.reduce((accumulator, userMatch) => {
+              return userMatch.invest_amount + accumulator;
+            }, 0);
+          } else {
+            totalMoney = 0;
+          }
   
-          array = rankList;
-          filterAndDisplay();
+          console.log("Total Money:", totalMoney);
+  
+          // Compare the values directly to find the match in the data
+          let filtermatchview = data.data.find((p) => p.id === NumberId);
+          if (filtermatchview) {
+            let matchName = filtermatchview.match_display_name;
+            console.log(filtermatchview, "matchName");
+  
+            let Players1 = filtermatchview.select_player_A.map((p) => p);
+            let Players2 = filtermatchview.select_player_B.map((p) => p);
+  
+            let AllPlayers = [...Players1, ...Players2];
+            console.log(AllPlayers, "AllPlayers");
+  
+            let Players12 = filtermatchview.player_list;
+  
+            // Filter players based on their presence in AllPlayers
+            let filteredPlayers = Players12
+              .filter(playerId => AllPlayers.some(player => player.id === playerId))
+              .map(playerId => teamData.find(player => player.id === playerId));
+  
+            console.log(filteredPlayers, "Filtered team players (Order matches Players12)");
+  
+            // Remove duplicates (if any) and sort the players
+            let sortfiltereplayers = [...new Set(filteredPlayers)];
+            rankList = sortfiltereplayers;
+  
+            array = rankList;
+            filterAndDisplay();
+          } else {
+            console.error("No match found for the given ID.");
+          }
         } else {
-          console.error("No match found for the given ID.");
+          console.error("Error: matchCheck is empty or invalid");
         }
       } else {
         console.error("Error: Invalid data format");
@@ -114,6 +195,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
       console.error("Error fetching data", error);
     }
   }
+  
   
   
   apiCall()
@@ -235,6 +317,57 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
   window.indexPagination = indexPagination;
 
   
+  // function displayTableRows() {
+  //   $("table tbody").empty();
+  //   var tab_start = start_index - 1;
+  //   var tab_end = end_index;
+  
+  //   if (array.length === 0) {
+  //     $("#noDataFound").show();
+  //     $("#pagination").hide();
+  //     $("#table-scrolling").css("overflow-x", "hidden");
+  //     return;
+  //   } else {
+  //     $("#noDataFound").hide();
+  //     $("#pagination").show();
+  //     $("#table-scrolling").css("overflow-x", "auto");
+  //   }
+  
+  //   // Loop through the array for the specified range
+  //   for (var i = tab_start; i < tab_end && i < array.length; i++) {
+  //     var showdata = array[i];
+  
+  //     console.log(showdata, "showData");
+  
+  //     var tr = $("<tr></tr>")
+  //       .attr("data-player-id", showdata["id"]) // Store playerId in a data attribute
+  //       .attr("data-match-id", showdata["team_name"].id); // Store matchId in a data attribute
+  
+  //     var noCell = $("<td></td>").text(i + 1);
+  //     var fullNameCell = $("<td colspan='2'></td>").text(showdata["player_name"] || "");
+  //     var shortNameCell = $("<td colspan='2'></td>").text(showdata["team_name"].team_name || "");
+  
+  //     // Use .html() to properly render the input element
+  //     var inputField = $("<input>")
+  //     .attr("type", "text")
+  //     .attr("placeholder", "Enter Run")
+  //     .addClass("run-input p-2 text-center")
+  //     .on("input", function () {
+  //       // Allow only digits
+  //       this.value = this.value.replace(/[^0-9]/g, "");
+  //     });
+
+  //   var enterRun = $("<td class='responsive-td'></td>").append(inputField);
+  
+  //     tr.append(noCell)
+  //       .append(fullNameCell)
+  //       .append(shortNameCell)
+  //       .append(enterRun);
+  
+  //     $("table tbody").append(tr);
+  //   }
+  // }
+
   function displayTableRows() {
     $("table tbody").empty();
     var tab_start = start_index - 1;
@@ -267,15 +400,28 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
   
       // Use .html() to properly render the input element
       var inputField = $("<input>")
-      .attr("type", "text")
-      .attr("placeholder", "Enter Run")
-      .addClass("run-input p-2 text-center")
-      .on("input", function () {
-        // Allow only digits
-        this.value = this.value.replace(/[^0-9]/g, "");
-      });
-
-    var enterRun = $("<td class='responsive-td'></td>").append(inputField);
+        .attr("type", "text")
+        .attr("placeholder", "Enter Run")
+        .addClass("run-input p-2 text-center")
+        .on("input", function () {
+          // Allow only digits
+          this.value = this.value.replace(/[^0-9]/g, "");
+        })
+        .on("keydown", function (e) {
+          // Check if the Enter key was pressed
+          if (e.key === "Enter") {
+            e.preventDefault(); // Prevent form submission
+            // Find the next input field
+            var nextInput = $(this).closest('tr').next('tr').find('.run-input');
+            if (nextInput.length > 0) {
+              nextInput.focus(); // Focus on the next input field
+            } else{
+              $("#submitButton").click()
+            }
+          }
+        });
+  
+      var enterRun = $("<td class='responsive-td'></td>").append(inputField);
   
       tr.append(noCell)
         .append(fullNameCell)
@@ -287,253 +433,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
   }
   
   
-  // async function postRunData() {
-  //   // Array to hold player data objects
-  //   var dataToPost = [];
-  
-  //   $("table tbody tr").each(function() {
-  //     // Get the run value and convert it to a number
-  //     var runValue = $(this).find(".run-input").val();
-  //     runValue = runValue ? Number(runValue) : 0; // Convert to number
-  
-  //     // Get playerId and matchId from the data attributes
-  //     var playerId = $(this).data("player-id");
-  //     var matchId = $(this).data("match-id");
-  
-  //     // Create player data object with playerId and matchId
-  //     var playerData = {
-  //       player_declare: playerId,  // Use playerId instead of playerName
-  //       team_declare: matchId,     // Use matchId instead of teamName
-  //       total_run: runValue,
-  //       select_match: matchName    // Use matchName as it is
-  //     };
-  //     var playerData1 = {
-  //       player_id: playerId,  // Use playerId instead of playerName
-  //           // Use matchId instead of teamName
-  //       run: runValue,
-  //          // Use matchName as it is
-  //     };
-  
-  //     // Push the playerData to the array
-  //     dataToPost.push(playerData);
-  //     userplayerdata.push(playerData1)
-  //   });
-  
-  
-  //   // Send each player data object individually to the API
-  //   dataToPost.forEach(function(data) {
-  //     // POST request to submit the run data to the pool_declare endpoint
-  //     $.ajax({
-  //       url: 'https://krinik.in/pool_declare/', // Replace with your API endpoint
-  //       type: 'POST',
-  //       contentType: 'application/json',
-  //       data: JSON.stringify(data), // Convert the playerData object to JSON string
-  
-  //       success: function(response) {
-  //         // console.log("Data posted successfully for", data.player_declare, response);
-  //       },
-  //       error: function(error) {
-  //         console.error("Error posting data for", data.player_declare, error);
-  //         alert("Failed to submit run data for " + data.player_declare + ".");
-  //       }
-  //     });
-  
-  //     // First, get the current total_run value from the player_get endpoint
-  //     $.ajax({
-  //   url: `https://krinik.in/player_get/${data.player_declare}/`, // Use playerId to fetch the player's current total_run
-  //   type: 'GET',
-  //   success: function(response) {
-  //     console.log(response,"olp")
-  //     // Check if the total_run is present in the response and log it
-  //     if (response && typeof response.data.total_run == 'number') {
-  //       var currentRun = response.data.total_run; // Get the current total_run from the API response
-  //       console.log("Current total_run from API for player", data.player_declare, ":", currentRun);
-  
-  //       // Add the new run value to the existing total_run
-  //       var updatedRun = currentRun + data.total_run;
-  //       console.log("Updated total_run (current + new):", updatedRun);
-  
-  //       // PATCH request to update the total_run field with the new value
-  //       $.ajax({
-  //         url: `https://krinik.in/player_get/${data.player_declare}/`, // Use playerId to update the player's total_run
-  //         type: 'PATCH',
-  //         contentType: 'application/json',
-  //         data: JSON.stringify({
-  //           total_run: updatedRun // Send the updated total_run value
-  //         }),
-  //         success: function(patchResponse) {
-  //           console.log("Total run updated successfully for player", data.player_declare, patchResponse);
-  //         },
-  //         error: function(patchError) {
-  //           console.error("Error updating total run for player", data.player_declare, patchError);
-  //           alert("Failed to update total run for " + data.player_declare + ".");
-  //         }
-  //       });
-  //     } else {
-  //       console.error("Error: total_run is not present or invalid in the API response for player", data.player_declare);
-  //     }
-  //   },
-  //   error: function(getError) {
-  //     console.error("Error fetching current total run for player", data.player_declare, getError);
-  //     alert("Failed to fetch current total run for " + data.player_declare + ".");
-  //   }
-  // });
-  
-  //   });
-  
-  //   let matchScores = []; // Array to store match scores
-  
-  // // Use Promise.all to handle asynchronous operations in the forEach loop
-  // const matchPromises = user_match_data.map(async (match) => {
-  //     let totalMatchScore = 0;  // Reset totalMatchScore for each match
-  
-  //     // Loop through match players
-  //     match.player.forEach(player => {
-  //         // Find the corresponding player in userplayerdata using player_id
-  //         const matchedPlayer = userplayerdata.find(p => p.player_id === player.id);
-  
-  //         if (matchedPlayer) {
-  //             // If the player is found, get their run, default to 0 if not available
-  //             const playerRun = matchedPlayer.run || 0;
-  //             console.log(playerRun, "player");
-  //             let finalRun = playerRun;
-  
-  //             // Adjust player run based on captain and vice-captain conditions
-  //             if (player.match_captain) {
-  //                 finalRun = playerRun * 2;  // Double the run if the player is the captain
-  //             } else if (player.match_vice_captain) {
-  //                 finalRun = playerRun * 1.5;  // 1.5x the run if the player is the vice-captain
-  //             }
-  
-  //             // Add the adjusted run to totalMatchScore
-  //             totalMatchScore += finalRun;
-  //         }
-  //     });
-  
-  //     // Output total match score for debugging
-  //     console.log(`Total Match Score for match ${match.id}:`, totalMatchScore);
-  
-  //     // Store the total score for each match
-  //     matchScores.push({
-  //         matchId: match.id,
-  //         pool_name: match.pool_name,
-  //         score: totalMatchScore
-  //     });
-  //     console.log(matchScores, "matchScores");
-  
-  //     // PATCH the total match score to the API for each match
-  //     try {
-  //         await $.ajax({
-  //             url: `https://krinik.in/user_match_get/${match.id}`,  // Use match ID for updating
-  //             type: 'PATCH',
-  //             contentType: 'application/json',
-  //             data: JSON.stringify({
-  //                 score: totalMatchScore  // Send the calculated total score
-  //             }),
-  //             success: function(response) {
-  //                 console.log(`Total match score updated successfully for match ${match.id}`, response);
-  //             },
-  //             error: function(error) {  // Error handling for the AJAX call
-  //                 console.error(`Error updating match score for match ${match.id}:`, error);
-  //             }
-  //         });
-  //     } catch (error) {
-  //         console.error(`Failed to update score for match ${match.id}:`, error);
-  //     }
-  // });
-  
-  // Wait for all match score calculations and PATCH requests to complete
-  // Promise.all(matchPromises).then(() => {
-  //     // Group match scores by pool_name
-  //     const groupedScores = matchScores.reduce((acc, match) => {
-  //         // If the pool_name does not exist in the accumulator, create an array for it
-  //         if (!acc[match.pool_name]) {
-  //             acc[match.pool_name] = [];
-  //         }
-  //         // Add the match to the corresponding pool_name group
-  //         acc[match.pool_name].push(match);
-  //         return acc;
-  //     }, {});
-  
-  //     console.log(groupedScores, "Grouped Scores by Pool");
-  
-  //     // Iterate over each pool group to calculate the highest score and update the winning status
-  //     Object.keys(groupedScores).forEach(poolName => {
-  //         const poolMatches = groupedScores[poolName];
-  
-  //         // Find the highest score in the current pool
-  //         const maxScore = Math.max(...poolMatches.map(match => match.score));
-  
-  //         // Update the winning status for each match in the pool
-  //         poolMatches.forEach(async (match) => {
-  //             let winningStatus = match.score === maxScore ? "Winner" : "Contestant"; // Determine winner based on maxScore
-  
-  //             // PATCH the winning status to the API for each match
-  //             try {
-  //                 await $.ajax({
-  //                     url: `https://krinik.in/user_match_get/${match.matchId}`,  // Use match ID for updating
-  //                     type: 'PATCH',
-  //                     contentType: 'application/json',
-  //                     data: JSON.stringify({
-  //                         winning_status: winningStatus  // Send the winning status
-  //                     }),
-  //                     success: function(response) {
-  //                         console.log(`Winning status updated successfully for match ${match.matchId}`, response);
-  //                     },
-  //                     error: function(error) {
-  //                         console.error(`Error updating winning status for match ${match.matchId}:`, error);
-  //                     }
-  //                 });
-  //             } catch (error) {
-  //                 console.error(`Failed to update winning status for match ${match.matchId}:`, error);
-  //             }
-  //         });
-  //     });
-  // }).catch(error => {
-  //     console.error('Error in processing matches:', error);
-  // });
-  
-      // Next, POST individual player scores in players_score
-  //     user_match_data.forEach((match) => {
-  //     const players_score = [];
-  
-  //     // Loop through the players in the match
-  //     match.player.forEach((player) => {
-  //         // Find the corresponding player in userplayerdata using player_id
-  //         const matchedPlayer = userplayerdata.find(p => p.player_id === player.id);
-  
-  //         if (matchedPlayer) {
-  //             // Push the matched player data to the players_score array
-  //             players_score.push(matchedPlayer);
-  //         }
-  //     });
-  
-  //     // Prepare data without checking players_score length
-  //     const updatedData = {
-  //         players_score: players_score  // Set players_score with the filtered players
-  //     };
-  
-  //     // Send a PATCH request to update the players_score field
-  //     $.ajax({
-  //         url: `https://krinik.in/user_match_get/${match.id}`, // API endpoint with match ID
-  //         type: 'PATCH',
-  //         contentType: 'application/json',
-  //         data: JSON.stringify(updatedData), // Send only the players_score field as an array
-  //         success: function(response) {
-  //             console.log("Player scores posted successfully for match", match.id, response);
-  //         },
-  //         error: function(error) {
-  //             console.error("Error posting player scores for match", match.id, error);
-  //             alert("Failed to submit player scores for match " + match.id + ".");
-  //         }
-  //     });
-  // });
-  
-  
-  
-      // Optionally redirect after submitting
-    // window.location.href = "match-name.html";
-  // }
+
   
   let matchScores = []; 
   const processPlayerData = () => {
@@ -1432,12 +1332,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
           console.error("Error updating admin wallet balance:", error);
         },
       });
-     await sendNotification(null, {
-        title: "Result Declared!",
-        body: "The results are out! Check the app to see if you’re a winner!"
-    });
-    showDynamicAlert("Match result declare successfully");
-      window.location.href = "./match-name.html"
+      
      
     } catch (error) {
       console.error("Error during money allocation process:", error);
@@ -1459,6 +1354,33 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
     }
   };
   // console.log(fetchUserMatchData(),"oklokl")
+  function handleSubmitButton(submitButtonSelector, inputSelector, postDataCallback) {
+    $(submitButtonSelector).on("click", function (e) {
+      e.preventDefault();
+  
+      // Check if all input fields are filled
+      let allFilled = true;
+  
+      $(inputSelector).each(function () {
+        if ($(this).val().trim() === "") {
+          allFilled = false;
+          return false; // Exit the loop early if a field is empty
+        }
+      });
+  
+      if (!allFilled) {
+        alert("Please fill in all the run inputs before submitting.");
+        return; // Do not proceed with the submission
+      }
+  
+      // Call the postData callback if validation passes
+      if (typeof postDataCallback === "function") {
+        postDataCallback();
+      } else {
+        console.error("No postData callback function provided.");
+      }
+    });
+  }
   
   
   const postData = async () => {
@@ -1485,7 +1407,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
       }
   
       // Step 5: Update match scores
-      if (user_match_data1.length > 0) {
+      if (user_match_data1) {
         
         await updatePlayerScores(user_match_data1, userplayerdata); 
         const matchScores = await updateMatchScores(user_match_data1, userplayerdata);
@@ -1503,7 +1425,13 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
               if(updatedWinner){
                 await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
                 console.log("Prize money allocated to winners successfully.");
-              
+                showDynamicAlert("Match result declare successfully");
+                await sendNotification(null, {
+                   title: "Result Declared!",
+                   body: "The results are out! Check the app to see if you’re a winner!"
+               });
+                 // window.location.href = "./match-name.html"
+                 window.location.href = `match-name.html?id=${id}`
               }
             }
           }
@@ -1647,26 +1575,27 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
   // };
   window.onload = checkAdminAccess();
   $(document).ready(function() {
-    $("#submitButton").on("click", function(e) {
-      e.preventDefault();
+    // $("#submitButton").on("click", function(e) {
+    //   e.preventDefault();
 
-      // Check if all input fields are filled
-      var allFilled = true;
+    //   // Check if all input fields are filled
+    //   var allFilled = true;
   
-      $(".run-input").each(function() {
-        if ($(this).val().trim() === "") {
-          allFilled = false;
-          return false; // Exit the loop early if a field is empty
-        }
-      });
+    //   $(".run-input").each(function() {
+    //     if ($(this).val().trim() === "") {
+    //       allFilled = false;
+    //       return false; // Exit the loop early if a field is empty
+    //     }
+    //   });
   
-      if (!allFilled) {
-        alert("Please fill in all the run inputs before submitting.");
-        return; // Do not proceed with the submission
-      }
-      // postRunData(); // Call the function to post data
-      postData()
-    });
+    //   if (!allFilled) {
+    //     alert("Please fill in all the run inputs before submitting.");
+    //     return; // Do not proceed with the submission
+    //   }
+    //   // postRunData(); // Call the function to post data
+    //   postData()
+    // });
+    handleSubmitButton("#submitButton", ".run-input", postData);
   });
   
   
