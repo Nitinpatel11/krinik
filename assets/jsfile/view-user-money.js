@@ -152,8 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 showDynamicAlert("User Money Added Successfully !!")
 
                 await sendNotification(user_id, {
-                    title: "Withdrawal Request Accepted!",
-                    body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
+                    title: "Deposit Successful!",
+                    body: "Your deposit request has been successfully processed. The amount has been credited to your wallet!"
                   });
                   
             }
