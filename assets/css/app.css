@@ -2924,6 +2924,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 .data-padding{
   padding: 3px 15px;
+ font-weight: 900;
 }
 .table-editable .editable-buttons .editable-submit .glyphicon-ok::before {
   content: "\f12c";

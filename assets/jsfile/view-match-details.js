@@ -68,7 +68,7 @@ async function fetchUserData() {
     if (poolDataList) {
       const urlpool1 = poolDataList.find((p) => p.select_match ? p.select_match.match_id == id : null);
       if (urlpool1) {
-        const urlpooltime = urlpool1.date_time;
+         urlpooltime = urlpool1.date_time;
         console.log('Pool Time:', urlpooltime);
       }
     }
@@ -93,7 +93,7 @@ async function fetchUserData() {
     }
 
     // Edit player data
-    editPlayerData(playerDataList, poolDataList ? poolDataList.date_time : null);
+    editPlayerData(playerDataList, urlpooltime);
 
   } catch (error) {
     console.error('Error fetching player data:', error);
@@ -107,6 +107,7 @@ async function fetchUserData() {
 
 
   function editPlayerData(response,urlpooltime) {
+    console.log(urlpooltime,"urlpooldata")
     const teamLogo1 = document.getElementById("team-logo-1");
     const teamLogo2 = document.getElementById("team-logo-2");
     const teamLogoName1 = document.getElementById("team-logo-name-1");

@@ -1,4 +1,4 @@
-import {checkAdminAccess,sendNotification}  from "../js/initial.js"
+import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial.js"
 
   
   var rankList = [];
@@ -1436,7 +1436,7 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
         title: "Result Declared!",
         body: "The results are out! Check the app to see if you’re a winner!"
     });
-      alert("Match result declare successfully");
+    showDynamicAlert("Match result declare successfully");
       window.location.href = "./match-name.html"
      
     } catch (error) {
@@ -1503,7 +1503,6 @@ import {checkAdminAccess,sendNotification}  from "../js/initial.js"
               if(updatedWinner){
                 await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
                 console.log("Prize money allocated to winners successfully.");
-                
               
               }
             }

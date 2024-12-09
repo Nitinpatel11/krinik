@@ -70,6 +70,12 @@
             justify-content: center;
             font-size: 0.9em;
             text-align: center;
+          }
+          .team-logo img{
+            width: 100%;
+            border-radius: 50%;
+          height: 100%;
+          border: 1px solid black;
         }
 
         .team {
@@ -357,7 +363,7 @@
                 <div class="page-content-wrapper">
                     <div class="container-fluid">
                         <div class="row justify-content-between">
-                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 ">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 ">
 
                                 <div class="card">
                                     <div class="py-2">
@@ -387,10 +393,10 @@
 
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 ms-3">
+                                <div class="col-xl-12 col-lg-12 col-md-12 ms-3">
                                     <div class="row ">
                                         <h4 >Match Name : <span id="match-name"></span></h4>
-                                        <h5 class="mt-2">Time Date : <span id="match-time"></span></h5>
+                                        <!-- <h5 class="mt-2 mb-4">Time Date : <span id="match-time"></span></h5> -->
                                     </div>
                                 </div>
                             </div>
@@ -402,7 +408,10 @@
                                     <div class="card-body">
                                         <div class="row text-center">
                                             <h5>Total Winners</h5>
-                                            <h6 class="" id="totWin"></h6>
+                                            <div class="mt-2 d-flex align-items-center justify-content-center">
+                                              <span class="btn btn-primary btn-sm data-padding" id="totWin"></span>
+                                              
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -412,7 +421,10 @@
                                     <div class="card-body">
                                         <div class="row text-center">
                                             <h5>Total Winning Amount</h5>
-                                            <h6 class="" id="totWinnAmount"></h6>
+                                            <div class="mt-2 d-flex align-items-center justify-content-center">
+                                              <span class="btn btn-primary btn-sm data-padding" id="totWinnAmount"></span>
+                                              <!-- <span href="#" class="btn btn-primary btn-sm data-padding btn-font ${extraClass}">${value}</span> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -435,144 +447,17 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Image</th>
-                                                        <th>Username</th>
-                                                        <th>Team(Pairs)</th>
-                                                        <th>Contest Name</th>
-                                                        <th>Score</th>
-                                                        <th>Inv. Amt</th>
+                                                        <th colspan="3">Username</th>                                                       
+                                                        <th colspan="2">Status</th>
+                                                        <th colspan="2">Score</th>
+                                                        <th colspan="2">Inv. Amt</th>
                                                         <th>Multi X</th>
-                                                        <th>Bet Amt</th>
-                                                        <th>Total Amount</th>
+                                                        <th colspan="2">Bet Amt</th>
+                                                        <th colspan="2">Winning Amount</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>User1</td>
-                                                        <td>100</td>
-                                                        <td>1</td>
-                                                        <td>1</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>User2</td>
-                                                        <td>150</td>
-                                                        <td>2</td>
-                                                        <td>2</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>User3</td>
-                                                        <td>200</td>
-                                                        <td>2</td>
-                                                        <td>3</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>User4</td>
-                                                        <td>452</td>
-                                                        <td>4</td>
-                                                        <td>6</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>User5</td>
-                                                        <td>310</td>
-                                                        <td>5</td>
-                                                        <td>5</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>6</td>
-                                                        <td>User6</td>
-                                                        <td>470</td>
-                                                        <td>6</td>
-                                                        <td>6</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>7</td>
-                                                        <td>User7</td>
-                                                        <td>120</td>
-                                                        <td>7</td>
-                                                        <td>7</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>8</td>
-                                                        <td>User8</td>
-                                                        <td>270</td>
-                                                        <td>8</td>
-                                                        <td>8</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>9</td>
-                                                        <td>User9</td>
-                                                        <td>770</td>
-                                                        <td>9</td>
-                                                        <td>9</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>10</td>
-                                                        <td>User10</td>
-                                                        <td>570</td>
-                                                        <td>10</td>
-                                                        <td>10</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
+                                              
 
                                                 </tbody>
                                             </table>
