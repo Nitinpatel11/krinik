@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
            
             if(response1.ok && response2.ok){
-                showDynamicAlert("Withdraw Successfully !!")
+                showDynamicAlert("User Money Added Successfully !!")
 
                 await sendNotification(user_id, {
                     title: "Withdrawal Request Accepted!",

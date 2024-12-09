@@ -256,11 +256,16 @@ return null;
       $("#pagination").show();
       $("#table-scrolling").css("overflow-x", "auto"); // Add this line
     }
-    const admintype = getLocalStorage1("adminType");
+    const statusOrder = ["pending", "approved", "rejected"];
+    const sortedArray = array.sort((a, b) => {
+      const statusA = a.payment_status ? a.payment_status.toLowerCase() : "";
+      const statusB = b.payment_status ? b.payment_status.toLowerCase() : "";
+      return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+    });
 
     for (var i = tab_start; i < tab_end; i++) {
-      var showdata = array[i];
-      // var status = getStatus(showdata["start_league_date"], showdata["end_league_date"]);
+      var showdata = sortedArray[i];
+   
 
       var tr = $("<tr></tr>");
 
@@ -272,45 +277,13 @@ return null;
       // var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
       var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data?.user_doc?.bank_name || ""  );
       
-      // var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
-      // var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
-    //   var walletCell = $("<td colspan='3'> </td>").text(showdata["wallet_amount"] || "");
-    //   var winningCell = $("<td colspan='3'> </td>").text(showdata["winning_amount"] || "");
-      // var statushow = toCapitalizeCase(showdata["status"])
-      
-      // var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["profile_status"] || ""));
+    
+      var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["payment_status"] || ""));
     
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         '<span class="sortable" onclick="handleView(\'' + showdata.user_data['user_id'] + '\',\'' + showdata['id'] + '\')"><i class="far fa-eye"></i></span>'
       );
       
-      if (admintype  == "super admin") {
-        viewCell.hide()
-      }else{
-  viewCell.show();
-}
-      // var editCell = $("<td></td>").html(
-      //   '<span class="sortable" onclick="handleEdit(' + showdata["id"] + ')"><i class="far fa-edit"></i></span>'
-      // );
-      // var deleteCell = $("<td></td>").html(
-      //   '<span class="sortable" onclick="handleDelete(' + showdata["id"] + ')"><i class="far fa-trash-alt"></i></span>'
-      // );
-      // if (statushow === "block") {
-        // noCell.addClass("disabled-row");
-        // fullNameCell.addClass("disabled-row");
-        // shortNameCell.addClass("disabled-row");
-        // emailCell.addClass("disabled-row");
-        // walletCell.addClass("disabled-row");
-        // winningCell.addClass("disabled-row");
-        // statusCell.addClass("disabled-row");
-      //   disableButton(noCell);
-      //   disableButton(fullNameCell);
-      //   disableButton(shortNameCell);
-      //   disableButton(emailCell);
-      //   disableButton(walletCell);
-      //   disableButton(winningCell);
-      //   disableButton(statusCell)
-      // }
 
       tr.append(noCell)
       .append(userIdCell)
@@ -319,7 +292,7 @@ return null;
         // .append(emailCell)
         .append(bankNameCell)
         // .append(accountNameCell)
-        // .append(IFSCCell)
+        .append(statusCell)
         .append(viewCell)
         // .append(deleteCell);
         

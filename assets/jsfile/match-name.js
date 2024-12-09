@@ -588,24 +588,24 @@ function indexPagination(index) {
   highlightIndexButton();
 }
 
-// const table = document.getElementById("matchTable");
-// const downloadBtn = document.getElementById("download-btn");
+const table = document.getElementById("matchTable");
+const downloadBtn = document.getElementById("download-btn");
 
-// downloadBtn.addEventListener("click", () => {
-//   const workbook = XLSX.utils.table_to_book(table, { sheet: "Match Data" });
-//   const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-//   const data = new Blob([excelBuffer], {
-//     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-//   });
-//   const url = URL.createObjectURL(data);
-//   const a = document.createElement("a");
-//   a.href = url;
-//   a.download = "match_data.xlsx";
-//   a.click();
+downloadBtn.addEventListener("click", () => {
+  const workbook = XLSX.utils.table_to_book(table, { sheet: "Match Data" });
+  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const data = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  const url = URL.createObjectURL(data);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "match_data.xlsx";
+  a.click();
 
-//   URL.revokeObjectURL(url);
-//   a.remove();
-// });
+  URL.revokeObjectURL(url);
+  a.remove();
+});
 
 history.pushState(null, null, window.location.href);
 window.onload = checkAdminAccess();

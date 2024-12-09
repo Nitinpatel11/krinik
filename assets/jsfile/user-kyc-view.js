@@ -19,7 +19,7 @@ const bank_name = document.getElementById("bank_name");
 const branch_name = document.getElementById("branch_name");
 const state = document.getElementById("state");
 
-// let apiData = {};
+let apiData = {};
 // const items = [
 //   "aadhar_card_front",
 //   "aadhar_card_back",
