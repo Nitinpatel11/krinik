@@ -94,7 +94,7 @@ async function fetchData() {
 
     if (walletData && walletData.data && walletData.data[0]) {
       // Extract wallet data
-      totalwalletAmount = walletData.data[0].total_amount ;
+      totalwalletAmount = parseFloat(walletData.data[0].total_amount).toFixed(2) ;
       console.log("Total Wallet Amount:", totalwalletAmount);
     } else {
       console.error("Error: Invalid wallet data format");

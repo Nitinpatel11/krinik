@@ -549,6 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `<span class="sortable view-btn" data-id="${i}" data-set="${showdata.id}" data-screenshot="${paymentScreenshot}" ><i class="far fa-eye"></i></span>`
             );
             console.log(idCell,"idcell")
+            const timeCell = $("<td colspan='3'></td>").text(moment(showdata["timestamp"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
     
             const approveCell = $("<td></td>").html(
                 `<span class="sortable approve-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">✔</span>`
@@ -572,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     noCell,
                     fullNameCell,
                     // shortNameCell,
-                    // emailCell,
+                    timeCell,
                     statusCell,
                     approveCell,
                     rejectCell,
@@ -598,7 +599,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     noCell,
                     fullNameCell,
                     // shortNameCell,
-                    // emailCell,
+                    timeCell,
                     statusCell,
                     approveCell,
                     rejectCell,
@@ -624,7 +625,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 [
                     noCell,
                     fullNameCell,
-                    // shortNameCell,
+                    timeCell,
                     viewCell,
                     statusCell,
                     approveCell,
@@ -643,8 +644,8 @@ document.addEventListener("DOMContentLoaded", () => {
            
             tr.append(noCell)
               .append(fullNameCell)
-            //   .append(shortNameCell)
-            .append(statusCell)
+              .append(statusCell)
+              .append(timeCell)
             .append(viewCell)
               .append(approveCell)
               .append(rejectCell);

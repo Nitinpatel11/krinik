@@ -21,10 +21,13 @@ import {checkAdminAccess}  from "../js/initial.js"
   let declareResult = document.getElementById('declareResult')
   let matchResult = document.getElementById('matchResult')
   let totalAmountData = document.getElementById('total-amount-data')
+let addingplayer1 = document.getElementById("addingplayer1")
+let addingplayer2 = document.getElementsByClassName("addingplayer2")
 
 let userData
 let userMoney
-
+let matchStartDate
+let defaultTime1 = new Date(); 
   let urlpooltime
   let arr = [];  // Declare arr globally if you need to use it outside the function
 let userId
@@ -63,7 +66,7 @@ async function fetchUserData() {
     const playerDataList = playerData.data;
     const poolDataList = poolData ? poolData.data : [];
     const userMatchList = userMatchData.data;
-
+console.log(playerDataList,"player")
     // Process pool data if it exists
     if (poolDataList) {
       const urlpool1 = poolDataList.find((p) => p.select_match ? p.select_match.match_id == id : null);
@@ -122,7 +125,7 @@ async function fetchUserData() {
 
       let defaultTime = new Date();  // Current date and time
    
-      const matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
+       matchStartDate = response.match_start_date;  // Example: "11-09-2024 17:15"
       const matchEndDate = urlpooltime ? urlpooltime : null;  // If urlpooltime is available, use it; otherwise, it's null.
 
       const matchDateTimeStr = matchStartDate.replace("/", "-"); // Ensures compatibility with Date parsing
@@ -252,7 +255,30 @@ async function fetchUserData() {
         disableCell.addClass("disabled-row")
 
       }
+// console.log(matchStartDate,"startdate")
+let matchStartDateObj = new Date(matchStartDate);
 
+// Check if the match start date is today or in the past
+if (matchStartDateObj <= defaultTime1) { 
+    // noCell.addClass("disabled-row");
+    // playerNameCell.addClass("disabled-row");
+    // logoCell.addClass("disabled-row");
+    disableCell.addClass("disabled-row");
+    // addingplayer1.addClass("disabled-row")
+    // addingplayer2.addClass("disabled-row")
+
+}
+if (matchStartDateObj <= defaultTime1) { 
+  // Disable the button
+  $("#addingplayer1").prop("disabled", true);
+  $("#addingplayer2").prop("disabled", true);
+
+} else {
+  // Enable the button (in case it was previously disabled)
+  $("#addingplayer1").prop("disabled", false);
+  $("#addingplayer2").prop("disabled", false);
+
+}
       tr.append(noCell)
         .append(playerNameCell)
         .append(logoCell)

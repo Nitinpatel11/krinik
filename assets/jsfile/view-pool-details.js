@@ -37,7 +37,7 @@ async function fetchUserData() {
     const userId = userData.id;
     const matchId = userData.select_match.match_id;
 
-    console.log(matchId, "matchId");
+    console.log(userData, "matchId");
 
     const poolName = userData.pool_name;
     const poolType = userData.pool_type;
@@ -53,7 +53,7 @@ async function fetchUserData() {
     }
 
     const userMatchData1 = await poolResponse.json();
-    const userMatchData = userMatchData1.data;
+   let userMatchData = userMatchData1.data;
 
     // Check poolType and poolName
     if (poolType && poolName) {
@@ -62,10 +62,9 @@ async function fetchUserData() {
 
     // Filter by match ID and status
    userMatchDataFiltered = userMatchData.filter(
-      (p) => p.match.id === matchId && p.user_data.status === "block"
-    );
+      (p) => p.match.id === matchId );
 
-    console.log(userMatchDataFiltered, "Filtered Data");
+    console.log(userMatchDataFiltered,userMatchData, "Filtered Data");
 
     // Count money
     if (userMatchDataFiltered.length) {
@@ -130,20 +129,22 @@ function editPlayerData(poolType, poolName) {
 
 
 function fetchData(filteredData, poolType, poolName) {
-  // console.log(typeof poolName,"poo")
+  console.log(filteredData, poolType, poolName, "poo");
   try {
     const result = filteredData.reduce((acc, item) => {
       const userId = item.user_data.user_id;
 
-      // Check if poolType and poolName match
       if (item.pool_type === poolType && item.pool_name === poolName) {
         if (!acc[userId]) {
           acc[userId] = {
-            user: item.user_data,
-            totalAmount: 0
+            user: item.user_data, // Store only user data here for clarity
+            totalAmount: 0,
           };
+          console.log(item);
         }
         acc[userId].totalAmount += item.invest_amount;
+
+        // Add all player scores for this item to the user's playerDetails
       }
 
       return acc;
@@ -151,18 +152,41 @@ function fetchData(filteredData, poolType, poolName) {
 
     console.log(result, "Filtered and Aggregated Result");
 
-   array = Object.values(result);
+    // Fixing the second part: Mapping and filtering the result correctly
+    const result1 = filteredData
+      .filter(item => item.pool_type === poolType && item.pool_name === poolName)
+      .map(item => {
+        const playerDetails = item.players_score.map(player => {
+          const playerName = player.player_id?.player_name || "Unknown";
+          const runs = player.run || 0;
+          return `${playerName}-R[${runs}]`;
+        });
+
+        return {
+          user: item,
+          playerDetails: playerDetails.join("--"), // Combine player details as a string
+        };
+      });
+
+    console.log(result1, "Filtered and Processed Result");
+
+    // Converting result1 to an array (no need to use a Set here)
+     array = result1;
+
     console.log(array, "Array");
 
     if (array.length) {
       filterAndDisplay(array); // Update your display logic here
     } else {
-      console.log('No data matching poolType and poolName.');
+      console.log("No data matching poolType and poolName.");
     }
   } catch (error) {
     console.error("Error processing data", error);
   }
 }
+
+
+
 
 
 
@@ -277,7 +301,7 @@ window.prev = prev
 
 
   function displayTableRows() {
- 
+ console.log(array,"ayy")
     $("table tbody").empty();
     var tab_start = start_index - 1;
     var tab_end = end_index;
@@ -301,10 +325,13 @@ window.prev = prev
       var tr = $("<tr></tr>");
 
       var noCell = $("<td></td>").text(i + 1);
-      var userNameCell = $("<td colspan='3'></td>").text(showdata.user.name || "");
-      var amountCell = $("<td colspan='3'> </td>").text(showdata.totalAmount || 0);
+      var userNameCell = $("<td colspan='3'></td>").text(showdata.user.user_data.name || "");
+      var amountCell = $("<td colspan='3'> </td>").text(showdata.user.invest_amount  || 0);
       
-      // const noCell = $("<td></td>").text(i + 1);
+      var playerCell = $("<td></td>").html(showdata.playerDetails.replace(/--/g, "<br>"));
+
+
+
       // const userNameCell = $("<td ></td>").text(showdata.user.name || "");
       // const totalAmountCell = $("<td > </td>").text(showdata.totalAmount || 0);
       // const poolCountCell = $("<td ></td>").text(showdata.poolCount || 0);
@@ -338,6 +365,7 @@ window.prev = prev
 
       tr.append(noCell)
         .append(userNameCell)
+        .append(playerCell)
         .append(amountCell)
        
 

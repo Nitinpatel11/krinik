@@ -14,64 +14,64 @@ document.addEventListener("DOMContentLoaded", () => {
     var current_index = 1;
     var max_index = 0;
     let userData5
-    const Approvebtn = document.getElementById("Approvebtn");
-    const Rejectbtn = document.getElementById("Rejectbtn");
+    // const Approvebtn = document.getElementById("Approvebtn");
+    // const Rejectbtn = document.getElementById("Rejectbtn");
 
     const userFullName = document.getElementById("user-fullname");
     const userImageView = document.getElementById("user-image-view");
     const userMob = document.getElementById("user-mob");
     const userEmail = document.getElementById("user-email");
 
-    const depositAmount = document.getElementById("deposit-amount");
-    const bonusAmount = document.getElementById("bonus-amount");
-    const referAmount = document.getElementById("refer-amount");
-    const winningAmount = document.getElementById("winning-amount");
-    const totalAmount = document.getElementById("total-amount");
+    // const depositAmount = document.getElementById("deposit-amount");
+    // const bonusAmount = document.getElementById("bonus-amount");
+    // const referAmount = document.getElementById("refer-amount");
+    // const winningAmount = document.getElementById("winning-amount");
+    // const totalAmount = document.getElementById("total-amount");
     // const withdrawAmount = document.getElementById("withdraw-amount");
-    const giftBonusButton = document.getElementById("gift-bonus-btn");
+//     const giftBonusButton = document.getElementById("gift-bonus-btn");
     
-    const defaultBonusBtn = document.getElementById('defaultBonusBtn');
-  const manualBonusInput = document.getElementById('manualBonusInput');
-  const giftBonusForm = document.getElementById('gift-bonus-form');
-  const giftBonusModal = document.getElementById('giftBonusModal');
+//     const defaultBonusBtn = document.getElementById('defaultBonusBtn');
+//   const manualBonusInput = document.getElementById('manualBonusInput');
+//   const giftBonusForm = document.getElementById('gift-bonus-form');
+//   const giftBonusModal = document.getElementById('giftBonusModal');
   
   // When "Default Bonus" is clicked, set the value in the input field
-  defaultBonusBtn.addEventListener('click', function() {    
-    manualBonusInput.value = 1000; // Set the input value to 1000
-  });
+//   defaultBonusBtn.addEventListener('click', function() {    
+//     manualBonusInput.value = 1000; // Set the input value to 1000
+//   });
 
   // Prevent the modal from closing when the form is submitted and close it manually
-  giftBonusForm.addEventListener('submit',async function(e) {
-    e.preventDefault(); // Prevent the form from submitting normally
-    // Close the modal after submitting the form
-    if (confirm("Are you sure you want to approve it?")) {
-        const currentWalletAmount = parseFloat(totalAmount.textContent);
-        const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
+//   giftBonusForm.addEventListener('submit',async function(e) {
+//     e.preventDefault(); // Prevent the form from submitting normally
+//     // Close the modal after submitting the form
+//     if (confirm("Are you sure you want to approve it?")) {
+//         const currentWalletAmount = parseFloat(totalAmount.textContent);
+//         const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
        
-        // const newWalletAmount1 = currentWalletAmount - parseFloat(withdrawAmount.textContent) ;
-        const newWalletAmount1 = currentWalletAmount - amountWithTDS;
-        // const newWinningAmount2 = winningAmount1 - amountWithTDS;
+//         // const newWalletAmount1 = currentWalletAmount - parseFloat(withdrawAmount.textContent) ;
+//         const newWalletAmount1 = currentWalletAmount - amountWithTDS;
+//         // const newWinningAmount2 = winningAmount1 - amountWithTDS;
      
-        const newWalletAmount = Number(newWalletAmount1) + Number(manualBonusInput.value)
+//         const newWalletAmount = Number(newWalletAmount1) + Number(manualBonusInput.value)
      
         
-        const bonusAddAmount = parseFloat(bonusAmount.textContent) + Number(manualBonusInput.value)
+//         const bonusAddAmount = parseFloat(bonusAmount.textContent) + Number(manualBonusInput.value)
         
 
-        await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
-        await sendNotification(user_id, {
-            title: "Bonus Alert!",
-            body: "Congratulations! A bonus amount has been credited to your wallet. Check it out now!"
-          });
-        fetchUserData();
-    }
+//         await patchData(updateWinning, 0, newWalletAmount,bonusAddAmount);
+//         await sendNotification(user_id, {
+//             title: "Bonus Alert!",
+//             body: "Congratulations! A bonus amount has been credited to your wallet. Check it out now!"
+//           });
+//         fetchUserData();
+//     }
 
 
-    const modal = new bootstrap.Modal(giftBonusModal);
-    modal.hide();
-    // Optionally, you can handle the bonus submission here
-    console.log('Bonus submitted:', manualBonusInput.value);
-  });
+//     const modal = new bootstrap.Modal(giftBonusModal);
+//     modal.hide();
+//     // Optionally, you can handle the bonus submission here
+//     console.log('Bonus submitted:', manualBonusInput.value);
+//   });
 
 
     async function fetchUserData() {
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const url = `https://krinik.in/user_get/${user_id}/`;
-            const url1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/`;
+            const url1 = `https://krinik.in/user_query_get/user_id/${user_id}/`;
             console.log("Fetching player data from:", url);
             console.log("Fetching withdrawal data from:", url1);
 
@@ -122,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
             userFullName.textContent = response.name;
             userMob.textContent = response.mobile_no;
             userEmail.textContent = response.email;
-            depositAmount.textContent = response.deposit_amount;
-            bonusAmount.textContent = response.bonus_amount;
-            referAmount.textContent = response.referral_amount;
-            winningAmount.textContent = response.winning_amount;
-            totalAmount.textContent = response.wallet_amount;
+            // depositAmount.textContent = response.deposit_amount;
+            // bonusAmount.textContent = response.bonus_amount;
+            // referAmount.textContent = response.referral_amount;
+            // winningAmount.textContent = response.winning_amount;
+            // totalAmount.textContent = response.wallet_amount;
             // withdrawAmount.textContent = amount;
             const userWithdrawData = userdetails; // Store in a separate variable
 
@@ -149,48 +149,48 @@ document.addEventListener("DOMContentLoaded", () => {
  
     
 
-    async function patchData(winningAmountValue, walletAmountValue, idCell,bonusAddAmount ) {
-        try {
-            const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
-            const apiUrl2 = `https://krinik.in/user_get/${user_id}/`;
+    // async function patchData(winningAmountValue, walletAmountValue, idCell,bonusAddAmount ) {
+    //     try {
+    //         const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
+    //         const apiUrl2 = `https://krinik.in/user_get/${user_id}/`;
 
-            // First PATCH request to update `winning_amount` and `wallet_amount`
-            const response1 = await fetch(apiUrl2, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    winning_amount: winningAmountValue,
-                    wallet_amount: walletAmountValue,
-                    bonus_amount : bonusAddAmount,
-                })
-            });
+    //         // First PATCH request to update `winning_amount` and `wallet_amount`
+    //         const response1 = await fetch(apiUrl2, {
+    //             method: "PATCH",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({
+    //                 winning_amount: winningAmountValue,
+    //                 wallet_amount: walletAmountValue,
+    //                 bonus_amount : bonusAddAmount,
+    //             })
+    //         });
 
-            if (!response1.ok) {
-                throw new Error("Failed to patch winning_amount and wallet_amount in first API");
-            }
-            console.log("Patch for winning_amount and wallet_amount successful:", await response1.json());
+    //         if (!response1.ok) {
+    //             throw new Error("Failed to patch winning_amount and wallet_amount in first API");
+    //         }
+    //         console.log("Patch for winning_amount and wallet_amount successful:", await response1.json());
 
-            // Second PATCH request to update `amount`
-            const response2 = await fetch(apiUrl1, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ withdraw_status: "approved"  })
-            });
+    //         // Second PATCH request to update `amount`
+    //         const response2 = await fetch(apiUrl1, {
+    //             method: "PATCH",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({ withdraw_status: "approved"  })
+    //         });
 
-            if (!response2.ok) {
-                throw new Error("Failed to patch amount in second API");
-            }
+    //         if (!response2.ok) {
+    //             throw new Error("Failed to patch amount in second API");
+    //         }
             
 
-            console.log("Patch for amount successful:", await response2.json());
+    //         console.log("Patch for amount successful:", await response2.json());
 
-            // Re-fetch data to update `totalAmount` and other fields
-            fetchUserData();
+    //         // Re-fetch data to update `totalAmount` and other fields
+    //         fetchUserData();
 
-        } catch (error) {
-            console.error("Error patching data:", error);
-        }
-    }
+    //     } catch (error) {
+    //         console.error("Error patching data:", error);
+    //     }
+    // }
 
 
     function filterAndDisplay() {
@@ -528,12 +528,12 @@ document.addEventListener("DOMContentLoaded", () => {
       function displayTableRows() {
         console.log(array, "oklp");
         $("table tbody").empty();
-        const approvedRows = array.filter((row) => row["withdraw_status"] == "approved");
-        const rejectedRows = array.filter((row) => row["withdraw_status"] == "rejected"); // Corrected typo here
-        const pendingRows = array.filter((row) => row["withdraw_status"] !== "approved" && row["withdraw_status"] !== "rejected");
+        // const approvedRows = array.filter((row) => row["withdraw_status"] == "approved");
+        // const rejectedRows = array.filter((row) => row["withdraw_status"] == "rejected"); // Corrected typo here
+        // const pendingRows = array.filter((row) => row["withdraw_status"] !== "approved" && row["withdraw_status"] !== "rejected");
     
         // Reorder array: Pending rows first, then approved, then rejected
-        let array1 = [...pendingRows, ...approvedRows, ...rejectedRows];
+        // let array1 = [...pendingRows, ...approvedRows, ...rejectedRows];
     
         var tab_start = start_index - 1;
         var tab_end = end_index;
@@ -550,8 +550,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     
         for (var i = tab_start; i < tab_end; i++) {
-            const showdata = array1[i];
-            let isDisabled = "";
+            const showdata = array[i];
+            // let isDisabled = "";
     
     // Disable the row if the status is "approved" or "rejected", but not for the first row
    
@@ -559,194 +559,194 @@ document.addEventListener("DOMContentLoaded", () => {
             const tr = $("<tr></tr>").attr("data-index", i);
     
             const noCell = $("<td></td>").text(i + 1);
-            const idCell = showdata.id
-            const fullNameCell = $("<td colspan='2'></td>").text(showdata["amount_without_tds"] || 0);
-            const shortNameCell = $("<td colspan='2'></td>").text(showdata["tds"] || 0);
-            const emailCell = $("<td colspan='2'></td>").text(showdata["amount_with_tds"] || 0);
-            const statusCell = $("<td colspan='2'></td>").text(
-                toCapitalizeCase(showdata["withdraw_status"] || "Pending")
-            );
+            // const idCell = showdata.id
+            const fullNameCell = $("<td colspan='2'></td>").text(showdata["message"] || "");
+            // const shortNameCell = $("<td colspan='2'></td>").text(showdata["tds"] || 0);
+            // const emailCell = $("<td colspan='2'></td>").text(showdata["amount_with_tds"] || 0);
+            // const statusCell = $("<td colspan='2'></td>").text(
+            //     toCapitalizeCase(showdata["withdraw_status"] || "Pending")
+            // );
             const timeCell = $("<td colspan='3'></td>").text(moment(showdata["timestamp"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
-            const approveCell = $("<td></td>").html(
-                `<span class="sortable approve-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">✔</span>`
-            );
+            // const approveCell = $("<td></td>").html(
+            //     `<span class="sortable approve-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">✔</span>`
+            // );
     
-            const rejectCell = $("<td></td>").html(
-                `<span class="sortable reject-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">❌</span>`
-            );
+            // const rejectCell = $("<td></td>").html(
+            //     `<span class="sortable reject-btn" data-id="${i}" data-set="${idCell}" style="${isDisabled}">❌</span>`
+            // );
 
-            if (i === 0 && (showdata["withdraw_status"] === "approved" || showdata["withdraw_status"] == "rejected")) {
-                isDisabled = "pointer-events: none; opacity: 0.5;";
-                [
-                    noCell,
-                    fullNameCell,
-                    shortNameCell,
-                    emailCell,
-                    statusCell,
-                    timeCell,
-                    approveCell,
-                    rejectCell,
+            // if (i === 0 && (showdata["withdraw_status"] === "approved" || showdata["withdraw_status"] == "rejected")) {
+            //     isDisabled = "pointer-events: none; opacity: 0.5;";
+            //     [
+            //         noCell,
+            //         fullNameCell,
+            //         shortNameCell,
+            //         emailCell,
+            //         statusCell,
+            //         timeCell,
+            //         approveCell,
+            //         rejectCell,
                     
-                  ].forEach(function (cell) {
-                    cell.css({
-                      "pointer-events": "none",
-                      "background-color": "#f0f0f0", // Light gray background
-                      color: "#999", // Dull text color
-                      opacity: "1", // Make it slightly transparent
-                    });
-                  });
-            }else if(i !== 0){
-                [
-                    noCell,
-                    fullNameCell,
-                    shortNameCell,
-                    emailCell,
-                    statusCell,
-                    timeCell,
-                    approveCell,
-                    rejectCell,
+            //       ].forEach(function (cell) {
+            //         cell.css({
+            //           "pointer-events": "none",
+            //           "background-color": "#f0f0f0", // Light gray background
+            //           color: "#999", // Dull text color
+            //           opacity: "1", // Make it slightly transparent
+            //         });
+            //       });
+            // }else if(i !== 0){
+            //     [
+            //         noCell,
+            //         fullNameCell,
+            //         shortNameCell,
+            //         emailCell,
+            //         statusCell,
+            //         timeCell,
+            //         approveCell,
+            //         rejectCell,
                     
-                  ].forEach(function (cell) {
-                    cell.css({
-                      "pointer-events": "none",
-                      "background-color": "#f0f0f0", // Light gray background
-                      color: "#999", // Dull text color
-                      opacity: "1", // Make it slightly transparent
-                    });
-                  });
+            //       ].forEach(function (cell) {
+            //         cell.css({
+            //           "pointer-events": "none",
+            //           "background-color": "#f0f0f0", // Light gray background
+            //           color: "#999", // Dull text color
+            //           opacity: "1", // Make it slightly transparent
+            //         });
+            //       });
         
-            }else{
-                [
-                    noCell,
-                    fullNameCell,
-                    shortNameCell,
-                    emailCell,
-                    statusCell,
-                    timeCell,
-                    approveCell,
-                    rejectCell,
+            // }else{
+            //     [
+            //         noCell,
+            //         fullNameCell,
+            //         shortNameCell,
+            //         emailCell,
+            //         statusCell,
+            //         timeCell,
+            //         approveCell,
+            //         rejectCell,
                     
-                  ].forEach(function (cell) {
-                    cell.css({
-                      // "pointer-events": "none",
-                      // Light gray background
-                      color: "black", // Dull text color
-                      // Make it slightly transparent
-                    });
-                  });
-            }
+            //       ].forEach(function (cell) {
+            //         cell.css({
+            //           // "pointer-events": "none",
+            //           // Light gray background
+            //           color: "black", // Dull text color
+            //           // Make it slightly transparent
+            //         });
+            //       });
+            // }
     
             tr.append(noCell)
-              .append(fullNameCell)
-              .append(shortNameCell)
-              
-              .append(emailCell)
-              .append(timeCell)
-              .append(statusCell)
-              .append(approveCell)
-              .append(rejectCell);
+            //   .append(shortNameCell)
+            
+            //   .append(emailCell)
+            .append(timeCell)
+            .append(fullNameCell)
+            //   .append(statusCell)
+            //   .append(approveCell)
+            //   .append(rejectCell);
     
             $("table tbody").append(tr);
         }
     }
     
     // Event delegation for buttons
-    $("table").on("click", ".approve-btn",async function () {
-        const index = $(this).data("id");
-        const idCell = $(this).data("set")
-    console.log(idCell,"idcellnn")
-        // Only allow approval for the first row
-        if (index !== 0) return alert("Only the first row can be approved.");
+    // $("table").on("click", ".approve-btn",async function () {
+    //     const index = $(this).data("id");
+    //     const idCell = $(this).data("set")
+    // console.log(idCell,"idcellnn")
+    //     // Only allow approval for the first row
+    //     if (index !== 0) return alert("Only the first row can be approved.");
     
-        const userData = array[index];
-        const userData1 = array.find((p)=>p.id == idCell)
-        const amountWithTDS = parseFloat(userData1.amount_with_tds) || 0;
-        const currentWalletAmount = Number(parseFloat(totalAmount.textContent)) || 0;       
-        const winningAmount1 = Number(parseFloat(winningAmount.textContent))
-        console.log(amountWithTDS,"amountWithTDS")
-        const newWinningAmount = winningAmount1 - amountWithTDS;
-            const newWalletAmount = currentWalletAmount - amountWithTDS;
-            const bonusAddAmount = parseFloat(bonusAmount.textContent) 
-        console.log(winningAmount1,"winningAmount")
-        console.log(currentWalletAmount,"winningAmount")
+    //     const userData = array[index];
+    //     const userData1 = array.find((p)=>p.id == idCell)
+    //     const amountWithTDS = parseFloat(userData1.amount_with_tds) || 0;
+    //     const currentWalletAmount = Number(parseFloat(totalAmount.textContent)) || 0;       
+    //     const winningAmount1 = Number(parseFloat(winningAmount.textContent))
+    //     console.log(amountWithTDS,"amountWithTDS")
+    //     const newWinningAmount = winningAmount1 - amountWithTDS;
+    //         const newWalletAmount = currentWalletAmount - amountWithTDS;
+    //         const bonusAddAmount = parseFloat(bonusAmount.textContent) 
+    //     console.log(winningAmount1,"winningAmount")
+    //     console.log(currentWalletAmount,"winningAmount")
 
-        // const idCell = userData.id;  
-        if (amountWithTDS > winningAmount1) {
-            alert("Withdraw amount exceeds the winning amount. Approval denied.");
-            return;
-        }
+    //     // const idCell = userData.id;  
+    //     if (amountWithTDS > winningAmount1) {
+    //         alert("Withdraw amount exceeds the winning amount. Approval denied.");
+    //         return;
+    //     }
     
-        if (confirm("Are you sure you want to approve it?")) {
-            // Mark as approved
-            await patchData(newWinningAmount, newWalletAmount, idCell,bonusAddAmount );
-            // alert("Approved successfully!");
-          showDynamicAlert("Approved Successfully !!")
+    //     if (confirm("Are you sure you want to approve it?")) {
+    //         // Mark as approved
+    //         await patchData(newWinningAmount, newWalletAmount, idCell,bonusAddAmount );
+    //         // alert("Approved successfully!");
+    //       showDynamicAlert("Approved Successfully !!")
 
-            fetchUserData();
-            await sendNotification(user_id, {
-                title: "Withdrawal Request Accepted!",
-                body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
-              });
+    //         fetchUserData();
+    //         await sendNotification(user_id, {
+    //             title: "Withdrawal Request Accepted!",
+    //             body: "Your withdrawal request has been successfully accepted. The amount is credited to your wallet!."
+    //           });
               
-            // alert("Approval successful!");
-             // Refresh data
+    //         // alert("Approval successful!");
+    //          // Refresh data
     
-            // Reorder the rows
-            // reorderTableRows();
+    //         // Reorder the rows
+    //         // reorderTableRows();
     
-        }
-    });
+    //     }
+    // });
     
-    $("table").on("click", ".reject-btn",async function () {
-        const index = $(this).data("id");
-        const userData = array[index];
-        // const userData = array[index]; // Get the data for the clicked row
-        const idCell = $(this).data("set")
-        if (index !== 0) return alert("Only the first row can be approved.");
-        if (Number(userData.amount) === 0) {
-            showDynamicAlert("Cannot reject this request. Amount is 0.");
-            return;
-        }
-        if (confirm("Are you sure you want to reject it?")) {
-            try {
-                const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
+    // $("table").on("click", ".reject-btn",async function () {
+    //     const index = $(this).data("id");
+    //     const userData = array[index];
+    //     // const userData = array[index]; // Get the data for the clicked row
+    //     const idCell = $(this).data("set")
+    //     if (index !== 0) return alert("Only the first row can be approved.");
+    //     if (Number(userData.amount) === 0) {
+    //         showDynamicAlert("Cannot reject this request. Amount is 0.");
+    //         return;
+    //     }
+    //     if (confirm("Are you sure you want to reject it?")) {
+    //         try {
+    //             const apiUrl1 = `https://krinik.in/withdraw_amount_get/user_id/${user_id}/id/${idCell}/`;
                
-                // Second PATCH request to update `amount`
-                const response2 = await fetch(apiUrl1, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ withdraw_status: "rejected"  })
-                });
+    //             // Second PATCH request to update `amount`
+    //             const response2 = await fetch(apiUrl1, {
+    //                 method: "PATCH",
+    //                 headers: { "Content-Type": "application/json" },
+    //                 body: JSON.stringify({ withdraw_status: "rejected"  })
+    //             });
     
-                if (!response2.ok) {
-                    throw new Error("Failed to patch amount in second API");
-                }
-                if(response2.ok){
-                    // alert(" Rejected Successfully !!")
-                    showDynamicAlert("Rejected Successfully !!")
+    //             if (!response2.ok) {
+    //                 throw new Error("Failed to patch amount in second API");
+    //             }
+    //             if(response2.ok){
+    //                 // alert(" Rejected Successfully !!")
+    //                 showDynamicAlert("Rejected Successfully !!")
 
-                    fetchUserData();
+    //                 fetchUserData();
     
-                    await sendNotification(user_id, {
-                        title: "Withdrawal Request Rejected!",
-                        body: "Your withdrawal request has been rejected. The amount is not credited to your wallet!."
-                      });
+    //                 await sendNotification(user_id, {
+    //                     title: "Withdrawal Request Rejected!",
+    //                     body: "Your withdrawal request has been rejected. The amount is not credited to your wallet!."
+    //                   });
                       
-                }
+    //             }
     
-                console.log("Patch for amount successful:", await response2.json());
+    //             console.log("Patch for amount successful:", await response2.json());
     
-                // Re-fetch data to update `totalAmount` and other fields
+    //             // Re-fetch data to update `totalAmount` and other fields
                 
     
-            } catch (error) {
-                console.error("Error patching data:", error);
-            }
+    //         } catch (error) {
+    //             console.error("Error patching data:", error);
+    //         }
     
     
-            // showDynamicAlert("Rejected successfully!");
-        }
-    });
+    //         // showDynamicAlert("Rejected successfully!");
+    //     }
+    // });
       
       function toCapitalizeCase(str) {
         return str.replace(/\b\w/g, function(char) {
@@ -773,65 +773,65 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       
-      function createActionButton(type, index) {
-        const buttonClass = type === "approve" ? "approve-btn" : "reject-btn";
-        const buttonSymbol = type === "approve" ? "✔" : "❌";
+    //   function createActionButton(type, index) {
+    //     const buttonClass = type === "approve" ? "approve-btn" : "reject-btn";
+    //     const buttonSymbol = type === "approve" ? "✔" : "❌";
         
-        // Disable buttons for rows other than the first
-        const isDisabled = index !== 0 ? "pointer-events: none; opacity: 0.5;" : "";
-        return $("<td></td>").html(
-            `<span class="sortable ${buttonClass}" data-id="${index}" style="${isDisabled}">${buttonSymbol}</span>`
-        );
-    }
-    async function handleApproval(index) {
-        const userData = array[index]; // Get the data for the clicked row
+    //     // Disable buttons for rows other than the first
+    //     const isDisabled = index !== 0 ? "pointer-events: none; opacity: 0.5;" : "";
+    //     return $("<td></td>").html(
+    //         `<span class="sortable ${buttonClass}" data-id="${index}" style="${isDisabled}">${buttonSymbol}</span>`
+    //     );
+    // }
+    // async function handleApproval(index) {
+    //     const userData = array[index]; // Get the data for the clicked row
     
-        // Extract amount_with_tds from userData
-        const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
+    //     // Extract amount_with_tds from userData
+    //     const amountWithTDS = parseFloat(userData.amount_with_tds) || 0;
     
-        if (amountWithTDS === 0) {
-            alert("Cannot approve this request. Amount is 0.");
-            return;
-        }
+    //     if (amountWithTDS === 0) {
+    //         alert("Cannot approve this request. Amount is 0.");
+    //         return;
+    //     }
     
-        if (confirm("Are you sure you want to approve it?")) {
-            const currentWalletAmount = parseFloat(totalAmount.textContent);
-            const newWalletAmount = currentWalletAmount - amountWithTDS;
-            const bonusAddAmount = parseFloat(bonusAmount.textContent) || 0;
+    //     if (confirm("Are you sure you want to approve it?")) {
+    //         const currentWalletAmount = parseFloat(totalAmount.textContent);
+    //         const newWalletAmount = currentWalletAmount - amountWithTDS;
+    //         const bonusAddAmount = parseFloat(bonusAmount.textContent) || 0;
     
-            try {
-                await patchData(updateWinning, newWalletAmount, bonusAddAmount);
-                fetchUserData(); // Refresh data
-                alert("Approval successful!");
-            } catch (error) {
-                console.error("Error approving the request:", error);
-            }
-        }
-    }
+    //         try {
+    //             await patchData(updateWinning, newWalletAmount, bonusAddAmount);
+    //             fetchUserData(); // Refresh data
+    //             alert("Approval successful!");
+    //         } catch (error) {
+    //             console.error("Error approving the request:", error);
+    //         }
+    //     }
+    // }
     
     
     // Function to handle rejection
-    async function handleRejection(index) {
-        const userData = array[index]; // Get the data for the clicked row
+    // async function handleRejection(index) {
+    //     const userData = array[index]; // Get the data for the clicked row
     
-        if (Number(userData.amount) === 0) {
-            alert("Cannot reject this request. Amount is 0.");
-            return;
-        }
+    //     if (Number(userData.amount) === 0) {
+    //         alert("Cannot reject this request. Amount is 0.");
+    //         return;
+    //     }
     
-        if (confirm("Are you sure you want to reject it?")) {
-            try {
-                await sendNotification(user_id, {
-                    title: "Withdrawal Request Rejected",
-                    body: "Unfortunately, your withdrawal request has been rejected. Please contact support for further assistance or to resolve any issues."
-                });
-                alert("Rejection successful!");
-                window.location.href = "./withdrawal.html";
-            } catch (error) {
-                console.error("Error rejecting the request:", error);
-            }
-        }
-    }
+    //     if (confirm("Are you sure you want to reject it?")) {
+    //         try {
+    //             await sendNotification(user_id, {
+    //                 title: "Withdrawal Request Rejected",
+    //                 body: "Unfortunately, your withdrawal request has been rejected. Please contact support for further assistance or to resolve any issues."
+    //             });
+    //             alert("Rejection successful!");
+    //             window.location.href = "./withdrawal.html";
+    //         } catch (error) {
+    //             console.error("Error rejecting the request:", error);
+    //         }
+    //     }
+    // }
 
     fetchUserData();
     window.onload = checkAdminAccess();

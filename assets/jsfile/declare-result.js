@@ -134,7 +134,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
           
           if (user_match_data1.length > 0) {
             console.log(user_match_data1);
-            let matchIdData = user_match_data1[0].match.id;
+             matchIdData = user_match_data1[0].match.id;
             console.log(matchIdData, "matchIdData");
   
             user_match_data = user_match_data1.filter((p) => p.user_data && p.user_data.status === "block");
@@ -1431,7 +1431,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
                    body: "The results are out! Check the app to see if you’re a winner!"
                });
                  // window.location.href = "./match-name.html"
-                 window.location.href = `match-name.html?id=${id}`
+                //  window.location.href = `match-name.html?id=${id}`
               }
             }
           }

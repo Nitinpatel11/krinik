@@ -12,7 +12,7 @@ var max_index = 0;
 async function fetchData() {
   try {
     const data = await $.ajax({
-      url: "https://krinik.in/withdraw_amount_get/",
+      url: "https://krinik.in/user_query_get/",
       method: "GET"
     });
 
@@ -432,10 +432,10 @@ return null;
       var shortNameCell = $("<td colspan='2'> </td>").text(showdata.user_data["mobile_no"] || "");
       // var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
       // var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["bank_name"] || "");
-      var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
-      var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
+    //   var accountNameCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["account_number"] || "");
+    //   var IFSCCell = $("<td colspan='2'></td>").text(showdata.user_data.user_doc["ifsc_code"] || "");
       var requestTimeCell = $("<td colspan='3'> </td>").text(moment(showdata.timestamp).format("DD-MM-YYYY hh:mm:ss ") || "");
-      var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["withdraw_status"] || ""));
+    //   var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["withdraw_status"] || ""));
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         '<span class="sortable" onclick="handleView(\'' + showdata.user_data['user_id'] + '\',\'' + showdata['id'] + '\')"><i class="far fa-eye"></i></span>'
       );
@@ -453,10 +453,10 @@ return null;
         .append(shortNameCell)
         
         // .append(emailCell)
-        .append(accountNameCell)
-        .append(IFSCCell)
+        // .append(accountNameCell)
+        // .append(IFSCCell)
         .append(requestTimeCell)
-        .append(statusCell)
+        // .append(statusCell)
         .append(viewCell)
         // .append(deleteCell);
         
@@ -485,12 +485,12 @@ window.handleView = handleView;
 
 async function handleView(user_id,id) {
   
-  const url = `https://krinik.in/user_get/${user_id}/`;
+  const url = `https://krinik.in/user_query_get/${user_id}/`;
   try {
     const response = await fetch(url);
 
     if (response.ok) {
-      window.location.href = `view-withdrawal.html?id=${id}&user_id=${user_id}`;
+      window.location.href = `view-feedback.html?id=${id}&user_id=${user_id}`;
     } else {
       console.error("Failed to fetch the league data");
     }

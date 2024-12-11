@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   let leaguestartDate;
   let leagueendDate;
   let startPicker;
-
+  let matchStartDate1
+  let defaultTime1 = new Date(); 
   // Initialize Flatpickr date pickers
   // $(function () {
   //   let startPicker = flatpickr('#match-start-date', {
@@ -376,6 +377,34 @@ startPicker.set("maxDate", leagueEndDateObj);
       const data = await response.json();
       if (data.status === "success" && data.data) {
         leagueMatchName = data.data.select_league.league_name;
+        matchStartDate1 = data.data.match_start_date
+        // console.log(leagueMatchName,"lplp")
+
+        let matchStartDateObj = new Date(matchStartDate1);
+        console.log(matchStartDate1, "matchstartdating");
+        
+        const currentDateTime = new Date();
+        
+        // Check if the match start date is today or in the past
+        if (matchStartDateObj <= currentDateTime) { 
+            // Disable player selection
+            $("#select-player-A").prop("disabled", true); // Disable the A player button
+            $("#select-player-B").prop("disabled", true); // Disable the B player button
+            $("#dropdown-players-A").hide(); // Hide the A player dropdown
+            $("#dropdown-players-B").hide(); // Hide the B player dropdown
+            $("#playerbox1").addClass("disabled"); // Optional: Add class to style disabled box
+            $("#playerbox2").addClass("disabled"); // Optional: Add class to style disabled box
+        } else {
+            // Enable player selection
+            $("#select-player-A").prop("disabled", false); // Enable the A player button
+            $("#select-player-B").prop("disabled", false); // Enable the B player button
+            // $("#dropdown-players-A").show(); // Show the A player dropdown
+            // $("#dropdown-players-B").show(); // Show the B player dropdown
+            $("#playerbox1").removeClass("disabled"); // Optional: Remove disabled class if added
+            $("#playerbox2").removeClass("disabled"); // Optional: Remove disabled class if added
+        }
+        
+
         return data.data;
       } else {
         throw new Error("Invalid data format for match");

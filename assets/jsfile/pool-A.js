@@ -325,7 +325,7 @@ import {checkAdminAccess}  from "../js/initial.js"
           limit: pair.limit,
           pool_type: "Silver"
         };
-
+// console.log(payload,"payload")
         fetch('https://krinik.in/pair_get/', {
           method: 'POST',
           headers: {

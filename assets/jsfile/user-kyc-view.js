@@ -1,4 +1,4 @@
-import {checkAdminAccess,sendNotification}  from "../js/initial.js"
+import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial.js"
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
@@ -149,7 +149,7 @@ function setupImageEventListeners() {
       // Proceed with patching the rejection reason
      
       patchData("rejection_reason", rejectionMessageSelect.value);
-      alert("Rejected Successfully !")
+      showDynamicAlert("Rejected Successfully !")
       fetchUserData()
       await sendNotification(id, {
         title: "KYC Rejected",
@@ -174,7 +174,7 @@ function setupImageEventListeners() {
   if (userApproved !== "approved") {
     
     await patchData("profile_status", "approved");
-    alert("Approved Successfully !")
+    showDynamicAlert("Approved Successfully !")
     fetchUserData()
     await sendNotification(id, {
       title: "KYC Approved!",

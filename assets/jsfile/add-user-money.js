@@ -277,7 +277,7 @@ return null;
       // var emailCell = $("<td colspan='3'> </td>").text(showdata.user_data["email"] || "");
       var bankNameCell = $("<td colspan='2'></td>").text(showdata.user_data?.user_doc?.bank_name || ""  );
       
-    
+      const timeCell = $("<td colspan='3'></td>").text(moment(showdata["timestamp"], 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm:ss'));
       var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(showdata["payment_status"] || ""));
     
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
@@ -291,7 +291,7 @@ return null;
         .append(shortNameCell)
         // .append(emailCell)
         .append(bankNameCell)
-        // .append(accountNameCell)
+        .append(timeCell)
         .append(statusCell)
         .append(viewCell)
         // .append(deleteCell);
