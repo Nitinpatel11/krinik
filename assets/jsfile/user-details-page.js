@@ -1,4 +1,4 @@
-import {getAdminType,sendNotification}  from "../js/initial.js"
+import {getAdminType,sendNotification,showDynamicAlert}  from "../js/initial.js"
 
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -60,6 +60,7 @@ const bonusAmount = document.getElementById("bonus-amount");
         const response = await fetch(url, { method: "DELETE" });
   
         if (response.ok) {
+          showDynamicAlert("User Deleted Successfully !!")
           fetchUserData();
           window.location.href = "user.html"
         } else {
@@ -103,8 +104,10 @@ const bonusAmount = document.getElementById("bonus-amount");
       const notificationMessage = newState === "block" 
       ? "You have been unblocked and can now access your account."
       : "You have been blocked from accessing your account." ;
+      // let toCapitalizeCurrentStata = toCapitalizeCase() 
 
         // Send the notification with dynamic message
+        showDynamicAlert(`User ${toCapitalizeCase(currentState)} Successfully `)
         await sendNotification(id, {
             title: `${toCapitalizeCase(currentState)} Alert!`,
             body: notificationMessage
@@ -180,7 +183,7 @@ async function assignCouponToUser(userId, newCoupon) {
       });
 
       if (response.ok) {
-        alert('Scratch Coupon assigned successfully!');
+        showDynamicAlert('Scratch Coupon assigned successfully!');
         await sendNotification(userId, {
           title: "Congratulations! 🎉",
           body: `You've received a new scratch coupon. Check your account now to reveal the surprise!`
@@ -217,21 +220,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
       }
       console.log("Patch for winning_amount and wallet_amount successful:", await response1.json());
 
-      // Second PATCH request to update `amount`
-      // const response2 = await fetch(apiUrl1, {
-      //     method: "PATCH",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify({ withdraw_status: "approved"  })
-      // });
-
-      // if (!response2.ok) {
-      //     throw new Error("Failed to patch amount in second API");
-      // }
-      
-
-      // console.log("Patch for amount successful:", await response2.json());
-
-      // Re-fetch data to update `totalAmount` and other fields
+  
       fetchUserData();
 
   } catch (error) {
@@ -254,7 +243,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
       "user-transaction-history"
     );
     // const userDeduction = document.getElementById("user-deduction");
-    // const userAddAmount = document.getElementById("user-add-amount");
+    const userAddAmount = document.getElementById("user-add-amount");
     const userScratch = document.getElementById("user-scratch-gift");
 
     const userGameHistory = document.getElementById("user-game-history");
@@ -280,7 +269,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
         disableButton(userDelete);
         disableButton(userTransactionHistory);
         // disableButton(userDeduction);
-        // disableButton(userAddAmount);
+        disableButton(userAddAmount);
         disableButton(userScratch);
 
         disableButton(userGameHistory);
@@ -290,7 +279,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
         enableButton(userScratch);
         enableButton(userTransactionHistory);
         // enableButton(userDeduction);
-        // enableButton(userAddAmount);
+        enableButton(userAddAmount);
         enableButton(userGameHistory);
         enableButton(userWithdraw);
       }
@@ -311,177 +300,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
     }
   }
 
-  // async function addAmount(response1) {
-  //   if (!id) {
-  //     console.warn("No player ID found in URL.");
-  //     return;
-  //   }
-  
-  //   try {
-  //     const url = `https://krinik.in/add_wallet/`;
-  //     console.log("Fetching player data from:", url);
-  
-  //     const response = await fetch(url);
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch player data");
-  //     }
-  
-  //     const addAmount1 = await response.json();
-  //     const addAmount = addAmount1.data;
-  
-  //     // Find matching data
-  //     const matchingData = addAmount ? addAmount.find((item) => item.user_id == response1) : null;
-  
-  //     if (!matchingData) {
-  //       console.warn("No matching data found for player ID:", response1);
-  //       return;
-  //     }
-  
-  //     // Set global mainId if matchingData is found
-  //     const mainId = matchingData.id;
-  //     console.log(matchingData, "data");
-  
-  //     // Get DOM elements for updating
-  //     const playerId = document.getElementById("playerid");
-  //     const playerName = document.getElementById("player-name");
-  //     const playerTotalAmount = document.getElementById("player-total-amount");
-  //     const playerTotalWinning = document.getElementById("player-total-winning");
-  //     const playerAddAmount = document.getElementById("player-add-amount");
-  //     const playerWinningAmount = document.getElementById("player-winning-amount");
-  //     const playerId1 = document.getElementById("playerid1");
-  //     const playerName1 = document.getElementById("player-name1");
-  //     const playerTotalAmount1 = document.getElementById("player-total-amount1");
-  //     const playerTotalWinning1 = document.getElementById("player-total-winning1");
-  //     const playerDeductAmount = document.getElementById("deductAmountInPlay");
-  //     const playerWinningAmount1 = document.getElementById("deductAmountInWinning");
-  
-  //     // Populate fields if matchingData exists
-  //     playerId.value = matchingData.user_id;
-  //     playerName.value = matchingData.user_name;
-  //     playerTotalAmount.value = matchingData.Total_Play_Coin;
-  //     playerTotalWinning.value = matchingData.Total_Winning_Coin;
-  //     playerId1.value = matchingData.user_id;
-  //     playerName1.value = matchingData.user_name;
-  //     playerTotalAmount1.value = matchingData.Total_Play_Coin;
-  //     playerTotalWinning1.value = matchingData.Total_Winning_Coin;
-  
-  //     // Clear input fields for new amounts
-  //     playerAddAmount.value = "";
-  //     playerWinningAmount.value = "";
-  //     playerDeductAmount.value = "";
-  //     playerWinningAmount1.value = "";
-  
-  //     // Store matching data globally or within a closure
-  //     window.currentMatchingData = matchingData;
-  
-  //     return {
-  //       totalPlayCoin: matchingData.Total_Play_Coin,
-  //       totalWinningCoin: matchingData.Total_Winning_Coin,
-  //     };
-  //   } catch (error) {
-  //     console.error("Error fetching player data:", error);
-  //   }
-  // }
-  
-
-  // Event listener for the Submit button in the Add Amount modal
-  // document.querySelector("#addSubmit").addEventListener("click", async () => {
-  //   const matchingData = window.currentMatchingData;
-  //   const playerTotalAmount = document.getElementById(
-  //     "player-total-amount"
-  //   ).value;
-  //   const playerTotalWinning = document.getElementById(
-  //     "player-total-winning"
-  //   ).value;
-  //   const playerAddAmount = document.getElementById("player-add-amount").value;
-  //   const playerWinningAmount = document.getElementById(
-  //     "player-winning-amount"
-  //   ).value;
-
-  //   if (!matchingData) {
-  //     console.error("No matching data found for submission.");
-  //     return;
-  //   }
-
-  //   const amount1 =
-  //     parseFloat(playerTotalAmount) + parseFloat(playerAddAmount || 0);
-  //   const amount2 =
-  //     parseFloat(playerTotalWinning) + parseFloat(playerWinningAmount || 0);
-
-  //   const matchUrl = `https://krinik.in/add_wallet/${mainId}/`;
-
-  //   try {
-  //     const patchResponse = await fetch(matchUrl, {
-  //       method: "PATCH",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         Total_Play_Coin: amount1,
-  //         Total_Winning_Coin: amount2,
-  //       }),
-  //     });
-
-  //     if (!patchResponse.ok) {
-  //       throw new Error("Failed to update player amounts");
-  //     }
-
-  //     console.log("Player amounts updated successfully");
-  //     // Optionally, refresh the data to reflect the changes
-  //     fetchUserData();
-  //   } catch (error) {
-  //     console.error("Error updating player amounts:", error);
-  //   }
-  // });
-
-  // document.querySelector("#deductAmount").addEventListener("click", async () => {
-  //     const matchingData = window.currentMatchingData;
-  //     const playerTotalAmount = document.getElementById(
-  //       "player-total-amount"
-  //     ).value;
-  //     const playerTotalWinning = document.getElementById(
-  //       "player-total-winning"
-  //     ).value;
-  //     const playerDeductAmount =
-  //       document.getElementById("deductAmountInPlay").value;
-  //     const playerWinningAmount1 = document.getElementById("deductAmountInWinning").value;
-
-  //     if (!matchingData) {
-  //       console.error("No matching data found for submission.");
-  //       return;
-  //     }
-
-  //     const amount1 =
-  //       parseFloat(playerTotalAmount) - parseFloat(playerDeductAmount || 0);
-  //     const amount2 =
-  //       parseFloat(playerTotalWinning) - parseFloat(playerWinningAmount1 || 0);
-
-  //     const matchUrl = `https://krinik.in/add_wallet/${mainId}/`;
-
-  //     try {
-  //       const patchResponse = await fetch(matchUrl, {
-  //         method: "PATCH",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           Total_Play_Coin: amount1,
-  //           Total_Winning_Coin: amount2,
-  //         }),
-  //       });
-
-  //       if (!patchResponse.ok) {
-  //         throw new Error("Failed to update player amounts");
-  //       }
-
-  //       console.log("Player amounts updated successfully");
-  //       // Optionally, refresh the data to reflect the changes
-  //       fetchUserData();
-  //     } catch (error) {
-  //       console.error("Error updating player amounts:", error);
-  //     }
-  //   });
-
+ 
   function disableButton(button) {
     button.classList.add("disabled");
     button.setAttribute("disabled", true);
@@ -555,6 +374,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
   
         await patchData(newWalletAmount,bonusAddAmount);
         fetchUserData();
+        showDynamicAlert("Bonus Added Successfully !!")
         await sendNotification(id, {
           title: "Bonus Alert!",
           body: "Congratulations! A bonus amount has been credited to your wallet. Check it out now!"

@@ -1,5 +1,5 @@
 
-import {getAdminType,createOTPModal}  from "../js/initial.js"
+import {getAdminType,createOTPModal,showDynamicAlert}  from "../js/initial.js"
 
 // Firebase Configuration
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
@@ -478,6 +478,7 @@ async function handleDelete(id) {
       const response = await fetch(url, { method: "DELETE" });
 
       if (response.ok) {
+        showDynamicAlert("League Deleted Successfully !!")
         await fetchData();
       } else {
         console.error("Failed to delete the league");

@@ -220,6 +220,9 @@ $('#tab_filter_text').on('input', function () {
 filterRankList();
 });
 });
+window.prev = prev
+window.prev = next
+window.indexPagination = indexPagination
 
 function filterRankList() {
   var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
@@ -284,21 +287,7 @@ if (datefilter !== '' && datefilter !== 'Start & End Date') {
   highlightIndexButton()
   displayTableRows();
 }
-// function getStatus(start_date, end_date) {
-//   var currentDate = new Date();
-//   var startDate = moment(start_date, "DD/MM/YYYY").toDate();
-//   var endDate = moment(end_date, "DD/MM/YYYY").toDate();
 
-//   if (startDate < currentDate && currentDate <= endDate) {
-//     return "Running";
-//   } else if (startDate < currentDate && endDate < currentDate) {
-//     return "Completed";
-//   } else if (startDate > currentDate && endDate > currentDate) {
-//     return "Upcoming";
-//   } else {
-//     return "unknown";
-//   }
-// }
 function getStatus(status) {
 if (status === "success" || status === "Success") {
   return `<span class="material-symbols-outlined" style="color:green">check_circle</span>`;
@@ -397,9 +386,7 @@ function indexPagination(index) {
   highlightIndexButton();
 }
 
-window.prev = prev
-window.prev = next
-window.prev = indexPagination
+
 
 function displayTableRows() {
   $("table tbody").empty();

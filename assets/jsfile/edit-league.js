@@ -1,5 +1,5 @@
 
-import {checkAdminAccess}  from "../js/initial.js"
+import {checkAdminAccess,showDynamicAlert}  from "../js/initial.js"
 
         document.addEventListener('DOMContentLoaded', async () => {
             const noNumberOrWhitespaceRegex = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
@@ -204,10 +204,9 @@ import {checkAdminAccess}  from "../js/initial.js"
                     }
 
                     console.log(response);
-                    alert('League edited successfully!');
+                    // alert('League edited successfully!');
                     // document.getElementById('league-form').reset();
                     // document.getElementById('preview-image').src = defaultImageSrc;
-                    window.location.href = 'manage-league.html';
                 } catch (error) {
                     console.error('Error:', error);
                     alert('An error occurred while editing the league.');
@@ -279,6 +278,11 @@ import {checkAdminAccess}  from "../js/initial.js"
                         if (confirm("are you confirm to edit it?")) {
 
                             await submitFormData(currentData, 'PATCH');
+                            showDynamicAlert("League updated Successfully !!")
+
+                            setTimeout(() => {
+                                window.location.href = 'manage-league.html';
+                            }, 2000);
                         }
                     } else {
                         if (hasLeagueNameChanged) {
@@ -296,12 +300,22 @@ import {checkAdminAccess}  from "../js/initial.js"
                                         if (confirm("are you confirm to edit it?")) {
 
                                             await submitFormData(currentData, 'PATCH');
+                                            showDynamicAlert("League updated Successfully !!")
+
+                                            setTimeout(() => {
+                                                window.location.href = 'manage-league.html';
+                                            }, 3000);
                                         }
                                     }
                                 } else {
                                     if (confirm("are you confirm to edit it?")) {
 
                                         await submitFormData(currentData, 'PATCH');
+                                        showDynamicAlert("League updated Successfully !!")
+
+                                        setTimeout(() => {
+                                            window.location.href = 'manage-league.html';
+                                        }, 3000);
                                     }
                                 }
                             }
@@ -314,6 +328,11 @@ import {checkAdminAccess}  from "../js/initial.js"
                                 if (confirm("are you confirm to edit it?")) {
 
                                     await submitFormData(currentData, 'PATCH');
+                                    showDynamicAlert("League updated Successfully !!")
+
+                            setTimeout(() => {
+                                window.location.href = 'manage-league.html';
+                            }, 3000);
                                 }
                             }
                         } else {
@@ -321,6 +340,8 @@ import {checkAdminAccess}  from "../js/initial.js"
 
 
                                 await submitFormData(initialData, 'PATCH');
+                    window.location.href = 'manage-league.html';
+
                             }
                         }
                     

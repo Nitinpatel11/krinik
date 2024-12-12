@@ -12,20 +12,31 @@ export function initializePage() {
   });
 }
 
-export function showDynamicAlert(message) {
-  // Create alert element dynamically
-  const alertBox = document.createElement('div');
-  alertBox.className = 'custom-alert';
-  alertBox.textContent = message;
+// export function showDynamicAlert(message) {
+//   // Create alert element dynamically
+//   const alertBox = document.createElement('div');
+//   alertBox.className = 'custom-alert';
+//   alertBox.textContent = message;
 
-  // Append alert to the body
-  document.body.appendChild(alertBox);
+//   // Append alert to the body
+//   document.body.appendChild(alertBox);
 
-  // Remove the alert after 5 seconds
-  setTimeout(() => {
-    alertBox.remove();
-  }, 5000);
+//   // Remove the alert after 5 seconds
+//   setTimeout(() => {
+//     alertBox.remove();
+//   }, 5000);
+// }
+
+export function showDynamicAlert(message){
+  Swal.fire({
+    position: "center", // Default: top-end
+    icon: "success" , // Default: success
+    title: message, // Default: Operation completed
+    showConfirmButton: false,
+    timer: 2000,
+  });
 }
+
 
 // Function to check if the user is a super admin
 export function getAdminType() {
@@ -400,14 +411,15 @@ export function checkAdminAccess() {
       };
   
       // Send the notification request
-      const response2 = await fetch('https://fcm-notification-u6yp.onrender.com/send-notifications', {
+      const response2 = await fetch(' https://krinik.in/send_notification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
-  
+      https://krinik.in/send_notification
+      // https://fcm-notification-u6yp.onrender.com/send-notifications
       if (!response2.ok) {
         console.error('Network response was not ok. Status:', response2.status, 'Status Text:', response2.statusText);
         throw new Error('Network response was not ok');

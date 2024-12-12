@@ -1,4 +1,4 @@
-import {checkAdminAccess}  from "../js/initial.js"
+import {checkAdminAccess,showDynamicAlert}  from "../js/initial.js"
 document.addEventListener('DOMContentLoaded', async function () {
   const matchSelect = document.getElementById('matchSelect');
   const priceInput = document.getElementById('priceInput');
@@ -683,6 +683,11 @@ let initialData
         if (confirm("Are you sure you want to add this match?")) {
           try {
             submitPoolData(currentData, 'PATCH');
+            showDynamicAlert("Pool Updated Successfully !!")
+            // await sendNotification(null, {
+            //     title: "Pool Updated!",
+            //     body: "Place your bets! A new pool is live in the app. Check it out and join now!"
+            //   })
           } catch (error) {
             console.error('Error:', error);
           }

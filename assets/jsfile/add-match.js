@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   let leagueendDate;
   let startPicker;
   let tokens, allUsers;
+  let existingMatches = [];
+  existingMatches = await myFetch("https://krinik.in/match_get/", "GET");
+  console.log(existingMatches, "ok");
   $(function () {
     // Initialize Flatpickr
     startPicker = flatpickr("#match-start-date", {
@@ -899,9 +902,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       throw error; // Re-throw the error to handle it where myFetch is called
     }
   }
-  let existingMatches = [];
-  existingMatches = await myFetch("https://krinik.in/match_get/", "GET");
-  console.log(existingMatches, "ok");
+ 
 
   // Function to handle form submission
   async function handleFormSubmit(event) {
@@ -1007,14 +1008,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             );
           }
           showDynamicAlert("Match Added Successfully !!")
-          if (response.ok) {
+          // if (response.ok) {
             await sendNotificationAllUser(tokens, allUsers, {
               title: "New Match Added!",
               body: "New match is live in the app. Check it out and join now!",
             });
             // const responseData = await response.json();
             // console.log("Response data:", responseData);
-        }
+        // }
         window.location.href = "./manage-match.html"; // Redirect on successful submission
         } catch (error) {
           console.error("Error:", error);
@@ -1035,7 +1036,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   } catch (error) {
     console.error("Error during DOMContentLoaded event:", error);
   }
+  refreshpage();
+  window.onload = checkAdminAccess();
 });
 
-refreshpage();
-window.onload = checkAdminAccess();

@@ -309,6 +309,7 @@ window.prev = prev
     if (array.length === 0) {
       $("#noDataFound").show();
       $("#pagination").hide();
+      // console.log("okdata")
       $("#table-scrolling").css("overflow-x", "hidden"); // Add this line
       return;
     } else {

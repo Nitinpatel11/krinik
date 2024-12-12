@@ -1,4 +1,4 @@
-import {checkAdminAccess}  from "../js/initial.js"
+import {checkAdminAccess,showDynamicAlert}  from "../js/initial.js"
 $(function () {
     let startPicker = flatpickr('#startDate', {
         dateFormat: 'd-m-Y',
@@ -362,9 +362,11 @@ this.value = toCapitalizeCase(this.value);
                             if (!response.ok) {
                                 throw new Error('Failed to add league');
                             }
+                            showDynamicAlert("League Added Successfully !!")
 
-
-                            window.location.href = 'manage-league.html';
+                            setTimeout(() => {
+                                window.location.href = 'manage-league.html';
+                            }, 2000);
                         } catch (error) {
                             console.error('Error:', error);
                             alert('An error occurred while adding the league.');

@@ -1,4 +1,4 @@
-import {checkAdminAccess}  from "../js/initial.js"
+import {checkAdminAccess,showDynamicAlert}  from "../js/initial.js"
 
 document.addEventListener('DOMContentLoaded', async () => {
     const noNumberOrWhitespaceRegex = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
@@ -128,8 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error('Failed to edit team');
             }
 
-            alert('Team edited successfully!');
-            window.location.href = "manage-team.html"
+           
 
         } catch (error) {
             console.error('Error:', error);
@@ -221,6 +220,11 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasLeagueChanged && hasTeamNameChanged) {
@@ -231,6 +235,11 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasLeagueChanged && hasShortTeamNameChanged) {
@@ -241,6 +250,11 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasTeamNameChanged && hasShortTeamNameChanged) {
@@ -257,6 +271,11 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasLeagueChanged) {
@@ -273,6 +292,11 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasTeamNameChanged) {
@@ -283,6 +307,11 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasShortTeamNameChanged) {
@@ -293,17 +322,28 @@ return true; // Valid input
                     if (confirm("are you confirm to edit it?")) {
 
                         await submitFormData(currentData, 'PATCH');
+                        showDynamicAlert("Team updated Successfully !!")
+
+                        setTimeout(() => {         
+                            window.location.href = "manage-team.html"
+                        }, 2000);
                     }
                 }
             } else if (hasImageChanged) {
                 if (confirm("are you confirm to edit it?")) {
 
                     await submitFormData(currentData, 'PATCH');
+                    showDynamicAlert("Team updated Successfully !!")
+
+                    setTimeout(() => {         
+                        window.location.href = "manage-team.html"
+                    }, 2000);
                 }
             } else {
                 if (confirm("are you confirm to edit it?")) {
 
                     await submitFormData(initialData, 'PATCH');
+                    window.location.href = "manage-team.html"
                 }
             }
         }

@@ -1,4 +1,4 @@
-import {getAdminType,createOTPModal}  from "../js/initial.js"
+import {getAdminType,createOTPModal,showDynamicAlert}  from "../js/initial.js"
 var rankList = [];
 var array = [];
 var array_length = 0;
@@ -517,6 +517,7 @@ async function handleDelete(id) {
 
         if (response.ok) {
           // Fetch the updated list of leagues after deletion
+          showDynamicAlert("Pool Deleted Successfully !!")
           await fetchData();
         } else {
           console.error("Failed to delete the league");

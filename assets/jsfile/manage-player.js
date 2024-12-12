@@ -1,4 +1,4 @@
-import {getAdminType,createOTPModal}  from "../js/initial.js"
+import {getAdminType,createOTPModal,showDynamicAlert}  from "../js/initial.js"
   var rankList = [];
     var array = [];
     var array_length = 0;
@@ -480,6 +480,9 @@ function displayIndexButtons() {
               });
 
               if (response.ok) {
+                showDynamicAlert("Player Deleted Successfully !!")
+
+               
                   await fetchData();
               } else {
                   console.error("Failed to delete the player");

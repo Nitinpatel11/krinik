@@ -1,5 +1,6 @@
 import { checkAdminAccess,sendNotificationAllUser,
   showDynamicAlert, } from "../js/initial.js";
+import { refreshpage } from "./pagerefresh.js";
 document.addEventListener("DOMContentLoaded", async function () {
   let initialData = {};
   let leagueMatchName;
@@ -1320,6 +1321,7 @@ startPicker.set("maxDate", leagueEndDateObj);
         if (confirm("Are you sure you want to edit it?")) {
           await submitMatchData(currentData); // Submit updated data
           console.log(currentData, "currentData");
+          showDynamicAlert("Match Updated Successfully !!")
         }
       } else if (hasMatchTimeChanged) {
        
@@ -1348,6 +1350,6 @@ startPicker.set("maxDate", leagueEndDateObj);
       console.log("Form validation failed. Please check all fields.");
     }
   });
-
+  refreshpage()
   window.onload = checkAdminAccess();
 });

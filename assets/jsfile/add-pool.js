@@ -3,7 +3,7 @@
 
 
 import { refreshpage } from "./pagerefresh.js";
-import {checkAdminAccess,sendNotification}  from "../js/initial.js"
+import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial.js"
 
 document.addEventListener('DOMContentLoaded', async function () {
   const matchSelect = document.getElementById('matchSelect');
@@ -663,7 +663,7 @@ document.addEventListener('DOMContentLoaded', async function () {
               console.error('Network response was not ok. Status:', response.status, 'Status Text:', response.statusText);
               throw new Error('Network response was not ok');
             }
-
+            showDynamicAlert("Pool Added Successfully !!")
             await sendNotification(null, {
                 title: "New Pool Added!",
                 body: "Place your bets! A new pool is live in the app. Check it out and join now!"

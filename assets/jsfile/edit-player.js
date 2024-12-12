@@ -1,4 +1,4 @@
-import {checkAdminAccess}  from "../js/initial.js"
+import {checkAdminAccess,showDynamicAlert}  from "../js/initial.js"
 
 // Regular expression to validate input (no numbers or whitespace)
 const noNumberOrWhitespaceRegex = /^(?!.*[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{1FB00}-\u{1FBFF}])^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/u;
@@ -233,7 +233,7 @@ async function submitFormData(data, method) {
 
     const responseData = await response.json();
     console.log('Response data:', responseData);
-    window.location.href = 'manage-player.html';
+   
 
   } catch (error) {
     console.error('Error:', error);
@@ -436,6 +436,12 @@ document.addEventListener('DOMContentLoaded', async function () {
               if (confirm("are you confirm to edit it?")) {
 
                 await submitFormData(currentData, 'PATCH');
+                showDynamicAlert("Player Updated Successfully !!")
+
+                setTimeout(() => {         
+                    
+                    window.location.href = 'manage-player.html';
+                }, 2000);
               }
             }
             else if (overlapResult.playerNameOverlap && overlapResult.shortPlayerNameOverlap) {
@@ -451,9 +457,17 @@ document.addEventListener('DOMContentLoaded', async function () {
               document.getElementById('error-short-player-name').style.display = 'inline';
             } else {
               await submitFormData(currentData, 'PATCH');
+              showDynamicAlert("Player Updated Successfully !!")
+
+              setTimeout(() => {         
+                  
+                  window.location.href = 'manage-player.html';
+              }, 2000);
             }
           } else {
             await submitFormData(initialData, 'PATCH');
+            window.location.href = 'manage-player.html';
+
           }
         }
 
