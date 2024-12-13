@@ -524,7 +524,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
             fetch(`https://krinik.in/player_get/${data.player_declare}/`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ total_run: updatedRun }),
+              body: JSON.stringify({ total_run: updatedRun,run : currentRun }),
             })
               .then((patchResponse) => {
                 if (!patchResponse.ok) {
@@ -1173,7 +1173,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
       console.log(MoneyPay, "Grouped Money Pay for Winners Only by Pool, Type, Price, and MultiX");
   
       // Step 2: Identify identical player groups, including price, pool_name, and pool_type
-      const identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
+      let identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
         const matches = MoneyPay[poolKey];
   
         matches.forEach(match => {
@@ -1191,9 +1191,11 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
             acc[groupKey] = [];
           }
           acc[groupKey].push(match);
+          console.log(Object.keys(acc).length,"length acc")
         });
-  
         return acc;
+
+
       }, {});
   
       console.log(identicalPlayerGroups, "Grouped matches by identical players, pool, type, and price");
@@ -1202,23 +1204,23 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
       const matchMoneyDeclare = Object.keys(identicalPlayerGroups).map(async (playerKey) => {
         const groupMatches = identicalPlayerGroups[playerKey];
         // const finalPrizePerGroup = groupMatches[0].price * groupMatches[0].multiX;
-        let groupMatchesLength = groupMatches.length
+        let groupMatchesLength = Object.keys(identicalPlayerGroups).length
         console.log(groupMatches, "Group Matches for Identical Players");
         // console.log(finalPrizePerGroup, "Initial Prize");
-        console.log(groupMatchesLength, "Group Matches for Identical Players");
+        console.log(groupMatchesLength, "Group Matches length for Identical Players");
   
         // Step 4: Calculate total invested money for each group
-        let totalInvestedMoney;
         // groupMatches.forEach(match => {
           
-           
-
-            
           
-        // });
-  
-       
- 
+          
+          
+          
+          // });
+          
+          
+          
+          let totalInvestedMoney;
         
         // Step 6: Allocate the prize to each player based on their share
         for (const match of groupMatches) {

@@ -413,8 +413,8 @@ function displayTableRows() {
     var noCell = $("<td></td>").text(i + 1);
     // var poolNameCell = $("<td colspan='3'></td>").text(showdata.pool["pool_name"] || "");
     // var poolTypeCell = $("<td colspan='3'> </td>").text(showdata.pool["pool_type"] || "");
-    var userNameCell = $("<td colspan='3'> </td>").text(showdata.user_data["user_id"] || "");
-    // var mobileCell = $("<td colspan='3'> </td>").text(showdata.username["mobile_no"] || "");
+    // var userNameCell = $("<td colspan='3'> </td>").text(showdata.user_data["user_id"] || "");
+    var mobileCell = $("<td colspan='3'> </td>").text(showdata.user_data["mobile_no"] || "");
     var debitAmount = showdata.amount_with_tds ? "Debit" : null
     var creditAmount = showdata.paid_amount  ? "Credit" : null
     var amountCell = $("<td colspan='3'> </td>"); // Initialize amountCell
@@ -465,8 +465,8 @@ function displayTableRows() {
     tr.append(noCell)
       // .append(poolNameCell)
       // .append(poolTypeCell)
-      .append(userNameCell)
-      // .append(mobileCell)
+      // .append(userNameCell)
+      .append(mobileCell)
       // .append(transactionId)
       .append(credit_debitCell)
       .append(amountCell)

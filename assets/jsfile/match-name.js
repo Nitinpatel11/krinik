@@ -489,8 +489,11 @@ function displayTableRows() {
     var nameCell = $("<td colspan='3'></td>").text(object.user_data["name"]);
     var statusCell = $("<td colspan='2'></td>").text(toCapitalizeCase(object.winning_status));
     // var numberContestCell = $("<td colspan='2'></td>").text(participationCount);
+    var poolNameCell = $("<td></td>").text(object.pool_name);
+    var poolTypeCell = $("<td></td>").text(object.pool_type);
     var scoreCell = $("<td colspan='2'></td>").text(object.score);
     var investAmountCell = $("<td></td>").text(object.invest_amount);
+
     var multiXCell = $("<td colspan='2'></td>").text(object.multi_x);
     var betAmountCell = $("<td colspan='2'></td>").text(object.multi_x * object.invest_amount);
     var totalAmountCell = $("<td colspan='2'></td>").text(object.total_amount);
@@ -504,7 +507,9 @@ function displayTableRows() {
       // .append(totalPoolCell)
       .append(nameCell)
       .append(statusCell)
-      // .append(numberContestCell)
+      .append(poolNameCell)
+      .append(poolTypeCell)
+
       .append(scoreCell)
       .append(investAmountCell)
       .append(multiXCell)

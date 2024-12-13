@@ -39,7 +39,9 @@ File: Main Css File
   background-color: var(--bs-header-bg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
-
+.dropbtn-color-3{
+  padding: 10px;
+}
 .contest-name{
   color: white !important;
 }

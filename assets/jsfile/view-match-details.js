@@ -226,6 +226,7 @@ console.log(playerDataList,"player")
   }
 
   document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
+  document.getElementById("playerRun").addEventListener("click", () => redirectToHistoryPage('player-run'));
 
   function displayTableRows(players, tbodyId) {
     $("#" + tbodyId).empty();
