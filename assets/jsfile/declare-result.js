@@ -504,46 +504,46 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
   
       // GET request to fetch the current total_run value for the player
       fetch(`https://krinik.in/player_get/${data.player_declare}/`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to fetch total_run for player ${data.player_declare}`);
-          }
-          return response.json();
-        })
-        .then((responseData) => {
-          console.log(responseData, "Response from player_get");
-          if (responseData && typeof responseData.data.total_run === 'number') {
-            const currentRun = responseData.data.total_run; // Current total_run from API
-            console.log(`Current total_run for player ${data.player_declare}: ${currentRun}`);
-  
-            // Add the new run value to the existing total_run
-            const updatedRun = currentRun + data.total_run;
-            console.log(`Updated total_run (current + new) for player ${data.player_declare}: ${updatedRun}`);
-  
-            // PATCH request to update the total_run field with the new value
-            fetch(`https://krinik.in/player_get/${data.player_declare}/`, {
-              method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ total_run: updatedRun,run : currentRun }),
-            })
-              .then((patchResponse) => {
-                if (!patchResponse.ok) {
-                  throw new Error(`Failed to update total_run for player ${data.player_declare}`);
-                }
-                console.log(`Total run updated successfully for player ${data.player_declare}`);
-              })
-              .catch((patchError) => {
-                console.error(`Error updating total run for player ${data.player_declare}:`, patchError);
-                alert(`Failed to update total run for player ${data.player_declare}.`);
-              });
-          } else {
-            console.error(`Error: total_run is not present or invalid for player ${data.player_declare}`);
-          }
-        })
-        .catch((getError) => {
-          console.error(`Error fetching current total_run for player ${data.player_declare}:`, getError);
-          alert(`Failed to fetch current total_run for player ${data.player_declare}.`);
-        });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch total_run for player ${data.player_declare}`);
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log(responseData, "Response from player_get");
+        const currentRun = responseData?.data?.total_run;
+        if (typeof currentRun === 'number') {
+          const updatedRun = currentRun + data.total_run;
+          const playerRun = data.total_run;
+    
+          console.log(`Player: ${data.player_declare}`);
+          console.log(`Current total_run: ${currentRun}`);
+          console.log(`New run: ${playerRun}`);
+          console.log(`Updated total_run: ${updatedRun}`);
+    
+          return fetch(`https://krinik.in/player_get/${data.player_declare}/`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ total_run: updatedRun, run: playerRun }),
+          });
+        } else {
+          console.error(`Error: Invalid total_run for player ${data.player_declare}`);
+          alert(`Could not update runs for player ${data.player_declare}. Invalid data received.`);
+          return Promise.reject(new Error('Invalid total_run'));
+        }
+      })
+      .then((patchResponse) => {
+        if (!patchResponse.ok) {
+          throw new Error(`Failed to update total_run for player ${data.player_declare}`);
+        }
+        console.log(`Total run updated successfully for player ${data.player_declare}`);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error.message}`);
+        alert(error.message);
+      });
+    
     });
   };
   
@@ -1224,7 +1224,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
         
         // Step 6: Allocate the prize to each player based on their share
         for (const match of groupMatches) {
-          totalInvestedMoney = (match.price * match.multiX)/groupMatchesLength;
+          totalInvestedMoney = Math.round((match.price * match.multiX)/groupMatchesLength);
           console.log(totalInvestedMoney,"totalInvestedMoney")
           let currentWinningAmount;
   
@@ -1433,7 +1433,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
                    body: "The results are out! Check the app to see if you’re a winner!"
                });
                  // window.location.href = "./match-name.html"
-                //  window.location.href = `match-name.html?id=${id}`
+                 window.location.href = `match-name.html?id=${id}`
               }
             }
           }
