@@ -367,9 +367,9 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
           if (!response.ok) {
             throw new Error(`Failed to post data for ${data.player_declare}`);
           }
-          let datashowing1 =  response.json();
-          let datashowing = datashowing1.data
-          console.log(datashowing,"pool_declare")
+          // let datashowing1 =  response.json();
+          // let datashowing = datashowing1.data
+          // console.log(datashowing,"pool_declare")
 
         })
         .catch((error) => {
@@ -606,7 +606,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
           contentType: "application/json",
           data: JSON.stringify({ winning_status: winningStatus }),
           success: function (response) {
-            console.log(`Winning status updated successfully for match ${match.matchId}`, response);
+            // console.log(`Winning status updated successfully for match ${match.matchId}`, response);
           },
           error: function (error) {
             console.error(`Error updating winning status for match ${match.matchId}:`, error);
@@ -828,14 +828,44 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
         return; // Do not proceed with the submission
       }
   
+      // Show loader
+      
+      showDynamicAlert("Match result declare successfully");
+      
       // Call the postData callback if validation passes
       if (typeof postDataCallback === "function") {
-        postDataCallback();
+        setTimeout(() => {
+          showLoader();
+      }, 2000);
+        
+        // Execute the callback and handle the loader visibility
+        Promise.resolve(postDataCallback())
+          .then(() => {
+            hideLoader(); // Hide the loader on success
+          })
+          .catch((err) => {
+            console.error("An error occurred:", err);
+            hideLoader(); // Ensure loader hides even on error
+          });
       } else {
         console.error("No postData callback function provided.");
+        hideLoader(); // Ensure loader hides if no callback is provided
       }
     });
   }
+  
+  // Loader control functions
+  function showLoader() {
+    document.getElementById('loader').style.display = 'block';
+    document.getElementById('content').style.display = 'none';
+
+}
+
+function hideLoader() {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+}
+  
   
   
   const postData = async () => {
@@ -880,7 +910,6 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
               if(updatedWinner){
                 await allocateMoneyToWinners(updatedWinner, totalMoney); // Pass the updated match scores and totalMoney to allocate
                
-                showDynamicAlert("Match result declare successfully");
                 await sendNotification(null, {
                    title: "Result Declared!",
                    body: "The results are out! Check the app to see if you’re a winner!"
@@ -926,6 +955,8 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
     //   // postRunData(); // Call the function to post data
     //   postData()
     // });
+    
+
     handleSubmitButton("#submitButton", ".run-input", postData);
   });
   
