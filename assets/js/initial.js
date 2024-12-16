@@ -34,8 +34,30 @@ export function showDynamicAlert(message){
     title: message, // Default: Operation completed
     showConfirmButton: false,
     timer: 2000,
+    zindex: 2001,
   });
 }
+export function showDynamicAlert1(message) {
+  Swal.fire({
+    position: "center",
+    icon: "error",
+    title: message,
+    showConfirmButton: false,
+    timer: 2000,
+    // zindex: 5000,
+  });
+}
+export function showDynamicAlert2(message ) {
+  Swal.fire({
+    position: "center",
+    icon: "info",
+    title: message,
+    showConfirmButton: false,
+    timer: 2000,
+    // zindex: 5000,
+  });
+}
+
 
 
 // Function to check if the user is a super admin
@@ -214,21 +236,7 @@ function initializeRecaptcha() {
         });
     }
 }
-  // Private function to send OTP
-//   function validateMobile() {
-//     const mobileInput = document.getElementById("mobilenum").value.trim();
-//     const mobileError = document.getElementById("mobileError");
 
-//     // Check if the mobile number is exactly 10 digits
-//     if (!/^\d{10}$/.test(mobileInput)) {
-//         mobileError.style.display = "block";
-//         mobileError.innerText = "Please enter a valid mobile number";
-//     } else {
-//         mobileError.style.display = "none";
-//     }
-// }
-
-// Validate on input (typing) and on button click
 
 function sendOTP() {
     // document.getElementById("mobilenum").addEventListener("input", validateMobile);
@@ -266,22 +274,22 @@ function sendOTP() {
             })
             .catch(function (error) {
                 if (error.code === 'auth/too-many-requests') {
-                    alert("Too many OTP requests. Please try again later.");
+                  showDynamicAlert("Too many OTP requests. Please try again later.");
                     hideOTPModal()
                     window.location.reload();
                 } else if (error.code === 'auth/invalid-phone-number') {
-                    alert("Invalid phone number. Please enter a valid number.");
+                  showDynamicAlert("Invalid phone number. Please enter a valid number.");
                     hideOTPModal()
                     window.location.reload();
                 } else {
                     console.error("Error during signInWithPhoneNumber", error);
-                    alert("An error occurred. Please try again.");
+                    showDynamicAlert("An error occurred. Please try again.");
                     hideOTPModal()
                     window.location.reload();
                 }
             });
     } else {
-        alert("Please enter a valid phone number.");
+      showDynamicAlert("Please enter a valid phone number.");
     }
 }
 
@@ -301,7 +309,7 @@ function sendOTP() {
       window.confirmationResult
         .confirm(otp)
         .then(function (result) {
-          alert("Phone number verified successfully!");
+          showDynamicAlert("Phone number verified successfully!");
           const user = result.user;
           console.log(user);
           const adminType = JSON.parse(sessionStorage.getItem("adminType"));
@@ -316,7 +324,7 @@ function sendOTP() {
           console.error("Error verifying OTP", error);
         });
     } else {
-      alert("Please enter the OTP code.");
+      showDynamicAlert("Please enter the OTP code.");
     }
   }
 
@@ -459,15 +467,7 @@ export function checkAdminAccess() {
     }
   };
   
-  // Usage examples
-  // Send notification to all users and patch data with default payload
-  // sendNotification();
-  
-  // Send notification to a specific user and patch data with custom payload
-  // sendNotification('specific_user_id_here', {
-  //   title: "Exclusive Offer!",
-  //   body: "Hello! Check out our exclusive offer just for you."
-  // });
+
   
 
  export let sendNotificationAllUser = async (tokens, allUsers, customPayload = {}) => { 
@@ -527,3 +527,336 @@ export function checkAdminAccess() {
       console.error('Error:', error);
     }
   };
+
+
+  export function createOTPModal1() {
+    // Modal HTML structure
+    // const otpModalHTML = `
+    // <div id="otpModal" class="modal" style="display:none;z-index:2000">
+    //     <div class="modal-content">
+    //         <div class="col-md-12 d-flex justify-content-between align-items-center">
+    //             <h2>OTP Verification</h2>
+    //             <span class="close">&times;</span>
+    //         </div>
+            
+    //         <div class="col-md-12 d-flex justify-content-between align-items-center">
+    //             <div class="form-group form-group-custom">
+    //                 <input type="text" class="form-control" id="mobilenum" style="text-align: center;" maxlength="10" placeholder="Enter mobile number" />
+    //             </div>
+    //             <div class="text-center">
+    //                 <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
+    //             </div>
+    //         </div>
+            
+    //         <p id="mobileError" style="color:red;display:none;">Please enter a valid 10-digit mobile number.</p>
+            
+    //         <div id="showotptimer" style="display:none;">
+    //             <div class="otp-inputs text-center">
+    //                 <input type="text" maxlength="1" class="otp-input" />
+    //                 <input type="text" maxlength="1" class="otp-input" />
+    //                 <input type="text" maxlength="1" class="otp-input" />
+    //                 <input type="text" maxlength="1" class="otp-input" />
+    //                 <input type="text" maxlength="1" class="otp-input" />
+    //                 <input type="text" maxlength="1" class="otp-input" />
+    //             </div>
+    //             <p class="resend-timer text-end">
+    //                 Resend in <span id="timer">30</span> sec
+    //                 <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
+    //             </p>
+    //             <button id="submitOTP" class="btn btn-primary">Submit</button>
+    //             <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
+    //         </div>
+    //     </div>
+    //     <div id="otpOverlay" class="overlay" style="display:none;"></div>
+    // </div>`;
+    const otpModalHTML = `
+    <div id="otpModal" class="modal" style="display:none;z-index:2000">
+        <div class="modal-content">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <h2>OTP Verification</h2>
+                <span class="close">&times;</span>
+            </div>
+            
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <div class="form-group ">
+                    <select class="" id="mobilenum" style="text-align: center;">
+                        <option value="" disabled selected>Select mobile number</option>
+                        <option value="7801804996">7801804996</option>
+                    
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" id="get-otp-btn">Get OTP</button>
+                </div>
+            </div>
+            
+            <p id="mobileError" style="color:red;display:none;">Please select a mobile number.</p>
+            
+            <div id="showotptimer" style="display:none;">
+                <div class="otp-inputs text-center">
+                    <input type="text" maxlength="1" class="otp-input" />
+                    <input type="text" maxlength="1" class="otp-input" />
+                    <input type="text" maxlength="1" class="otp-input" />
+                    <input type="text" maxlength="1" class="otp-input" />
+                    <input type="text" maxlength="1" class="otp-input" />
+                    <input type="text" maxlength="1" class="otp-input" />
+                </div>
+                <p class="resend-timer text-end">
+                    Resend in <span id="timer">30</span> sec
+                    <button id="resend-otp-btn" style="display:none;">Resend OTP</button>
+                </p>
+                <button id="submitOTP" class="btn btn-primary">Submit</button>
+                <p id="otpError" style="color:red;display:none;">Invalid OTP. Please try again.</p>
+            </div>
+        </div>
+        <div id="otpOverlay" class="overlay" style="display:none;"></div>
+    </div>`;
+
+  
+    // Append the modal HTML to the body
+    document.body.insertAdjacentHTML("beforeend", otpModalHTML);
+    function initializeOtpInputNavigation() {
+      const otpInputs = document.querySelectorAll('.otp-input');
+  
+      otpInputs.forEach((input, index, inputs) => {
+          input.addEventListener('input', () => {
+              if (input.value.length === 1 && index < inputs.length - 1) {
+                  // Move focus to the next input if it's not the last input
+                  inputs[index + 1].focus();
+              }
+          });
+  
+          input.addEventListener('keydown', (e) => {
+              if (e.key === 'Backspace' && !input.value && index > 0) {
+                  // Move focus to the previous input if Backspace is pressed and current input is empty
+                  inputs[index - 1].focus();
+              }
+          });
+      });
+  }
+  
+  // Call the function to initialize OTP input navigation
+  
+  const ADMIN_TYPE_COOKIE_NAME = "adminType";
+  const adminType = "admin"
+
+// const STATUS_ADMIN = "true";
+const STATUS_ADMIN1 = "false";
+  
+    const otpModal = document.getElementById("otpModal");
+    const otpOverlay = document.getElementById("otpOverlay");
+    const closeModal = otpModal.querySelector(".close");
+    const submitOTP = document.getElementById("submitOTP");
+    const getOTPbtn = document.getElementById("get-otp-btn");
+  
+    const otpError = document.getElementById("otpError");
+    const timerElement = document.getElementById("timer");
+    const timerContainer = document.getElementById("showotptimer");
+    const resendOtpButton = document.getElementById("resend-otp-btn");
+    const mobileError = document.getElementById("mobileError");
+    const mobileInput = document.getElementById("mobilenum");
+    let timerIntervalId = null;
+    let confirmationResult = null;
+    let recaptchaVerifier;
+    // Private function to start the OTP timer
+    let recaptchaRendered = false;  // Flag to check if reCAPTCHA has been rendered
+    function startTimer() {
+        clearInterval(timerIntervalId);
+      let time = 30;
+      timerIntervalId = setInterval(() => {
+        time--;
+        timerElement.textContent = time;
+        if (time <= 0) {
+          clearInterval(timerIntervalId);
+          timerElement.textContent = "0";
+          resendOtpButton.style.display = "inline-block";
+        }
+      }, 1000);
+    }
+  
+    // Private function to reset the OTP timer
+    function resetTimer() {
+      clearInterval(timerIntervalId);
+      timerIntervalId = null;
+      timerElement.textContent = "30";
+      resendOtpButton.style.display = "none";
+    }
+  
+    // Private function to hide the OTP modal
+    function hideOTPModal() {
+      otpModal.style.display = "none";
+      otpOverlay.style.display = "none";
+      mobileInput.value = "";
+      mobileInput.readOnly = false;
+      timerContainer.style.display = "none";
+      getOTPbtn.style.display = "block";
+      submitOTP.style.display = "none";
+      recaptchaRendered = false
+      resetTimer();
+    }
+   
+    // Global recaptchaVerifier variable
+  
+  // Initialize invisible reCAPTCHA
+  function initializeRecaptcha() {
+      if (!recaptchaRendered) {
+          recaptchaVerifier = new RecaptchaVerifier(
+              "get-otp-btn", // Button ID that triggers the reCAPTCHA
+              {
+                  size: "invisible", // Make it invisible
+                  callback: () => {
+                      console.log("reCAPTCHA verified");
+                  },
+              },
+              auth
+          );
+          recaptchaVerifier.render().then(function() {
+              recaptchaRendered = true; // Mark as rendered to avoid re-rendering
+          });
+      }
+  }
+  
+  
+  function sendOTP() {
+      // document.getElementById("mobilenum").addEventListener("input", validateMobile);
+      let phoneNumber = document.getElementById("mobilenum").value.trim();
+      
+  
+      if (!/^\d{10}$/.test(phoneNumber)) {
+          mobileError.style.display = "block";
+          mobileError.innerText = "Please enter a valid mobile number.";
+          return;
+      } else {
+          mobileError.style.display = "none";
+      }
+  
+      // Ensure the number starts with +91
+      if (!phoneNumber.startsWith("+91")) {
+          phoneNumber = "+91" + phoneNumber;
+      }
+
+      const authorizedNumbers = ["+917801804996","+918160272564","+919664753223"]; // Add authorized numbers here
+      if (!authorizedNumbers.includes(phoneNumber)) {
+        hideOTPModal();
+        showDynamicAlert1("You are not authorized to receive an OTP.");
+        
+        // Delay the page reload to allow the alert to display for 2 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000); // 2000 milliseconds = 2 seconds
+        
+        return;
+    }
+      
+  
+     else {
+          if (!recaptchaVerifier) {
+              initializeRecaptcha();
+          }
+          mobileInput.readOnly = true;
+          const appVerifier = recaptchaVerifier;
+          signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+              .then(function (confirmationResult) {
+                  window.confirmationResult = confirmationResult;
+                  startTimer();
+                  timerContainer.style.display = "block";
+                  initializeOtpInputNavigation();
+                  getOTPbtn.style.display = "none";
+                  submitOTP.style.display = "block";
+              })
+              .catch(function (error) {
+                handleError(error);
+              });
+      }
+  }
+
+
+
+function handleError(error) {
+    if (error.code === "auth/too-many-requests") {
+        showDynamicAlert1("Too many OTP requests. Please try again later.");
+    } else if (error.code === "auth/invalid-phone-number") {
+        showDynamicAlert1("Invalid phone number. Please enter a valid number.");
+    } else {
+        console.error("Error during signInWithPhoneNumber", error);
+        showDynamicAlert1("An error occurred. Please try again.");
+    }
+    setTimeout(() => {
+      hideOTPModal();
+      window.location.reload();
+  }, 2000);
+}
+
+  
+  function setsessionStorage(key, value, status) {
+    sessionStorage.setItem(key, JSON.stringify({ value, status }));
+  }
+    // Private function to setup reCAPTCHA
+  
+    // Private function to verify OTP
+    function verifyOTP() {
+      const otpInputs = document.querySelectorAll(".otp-input");
+      const otp = Array.from(otpInputs)
+        .map((input) => input.value)
+        .join("");
+  
+      console.log("Verifying OTP:", otp);
+  
+      if (otp) {
+        window.confirmationResult
+          .confirm(otp)
+          .then(function (result) {
+            showDynamicAlert("Phone number verified successfully!");
+            const user = result.user;
+            console.log(user);
+            showDynamicAlert("Login successful!")
+            setTimeout(() => {
+              setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
+            hideOTPModal()
+            window.location.href = "dashboard.html"
+          }, 2000);
+            ;
+          })
+          .catch(function (error) {
+            console.error("Error verifying OTP", error);
+          });
+      } else {
+        showDynamicAlert2("Please enter the OTP code.");
+      }
+    }
+  
+    // Private function to handle resend OTP
+    function resendOTP() {
+      const otpInputs = document.querySelectorAll(".otp-input");
+
+      // Clear all OTP input fields
+      otpInputs.forEach(input => {
+        input.value = "";
+      });
+
+      sendOTP();
+      resendOtpButton.style.display = "none";
+      resetTimer();
+      startTimer();
+    }
+  
+    // Public function to show the OTP modal
+    function showOTPModal() {
+      otpModal.style.display = "block";
+      otpOverlay.style.display = "block";
+     
+    }
+  
+    // Event Listeners
+    closeModal.addEventListener("click", hideOTPModal);
+    otpOverlay.addEventListener("click", hideOTPModal);
+    submitOTP.addEventListener("click", verifyOTP);
+    resendOtpButton.addEventListener("click", resendOTP);
+    document.getElementById("get-otp-btn").addEventListener("click", sendOTP);
+  
+    // Return an object with functions to interact with the OTP modal
+    return {
+      show: showOTPModal,
+      hide: hideOTPModal,
+    };
+  }

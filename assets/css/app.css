@@ -4636,3 +4636,10 @@ width: auto !important;
     transform: rotate(360deg);
   }
 }
+.modal-overlay {
+  z-index: 4000; /* Ensure this is less than your SweetAlert2 z-index */
+}
+
+.swal2-container {
+  z-index: 5000 !important; /* Forces higher precedence */
+}

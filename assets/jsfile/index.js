@@ -1,6 +1,7 @@
 // index.js
 import { redirectToPage } from './loader.js';
 import { refreshpage } from './pagerefresh.js';
+import {createOTPModal1} from "../js/initial.js"
 
 const loginForm = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
@@ -10,6 +11,9 @@ const errorEmail = document.getElementById("error-email");
 const errorPassword = document.getElementById("error-password");
 const errorAdminType = document.getElementById("error-admin-type");
 const errorMessage = document.getElementById("error-message");
+
+
+let otpModal = createOTPModal1()
 
 const ADMIN_TYPE_COOKIE_NAME = "adminType";
 
@@ -72,6 +76,16 @@ function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
   return validate;
 }
 
+
+adminTypeInput.addEventListener("change", () => {
+  if (adminTypeInput.value === "super admin") {
+    document.getElementById("LoginOTP").textContent = "Login";
+  } else {
+    document.getElementById("LoginOTP").textContent = "Get OTP";
+  }
+});
+
+
 let loginApi = async () => {
   try {
     const response = await fetch("https://krinik.in/login/");
@@ -83,6 +97,8 @@ let loginApi = async () => {
     return null; // Handle error and return null if API call fails
   }
 };
+
+
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault(); // Prevent form from submitting by default
@@ -185,11 +201,13 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
     if (adminType === "super admin") {
       // setsessionStorage(COOKIE_NAME, email, COOKIE_EXPIRATION_HOURS_SUPER_ADMIN, STATUS_ADMIN);
       setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN);
+      redirectToPage("dashboard.html");
     } else {
+      otpModal.show();
+      
       // setsessionStorage(COOKIE_NAME, email, null, STATUS_ADMIN1);
-      setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
+      // setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
     }
-    redirectToPage("dashboard.html");
   } catch (error) {
     console.error("Error during login:", error);
   }
