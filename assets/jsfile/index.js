@@ -74,7 +74,7 @@ function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
 
 let loginApi = async () => {
   try {
-    const response = await fetch("https://krinik.pythonanywhere.com/login/");
+    const response = await fetch("https://krinik.in/login/");
     let data1 = await response.json();
     // console.log("API Data:", data1.data); // Log the fetched data for debugging
     return data1.data; // return the data array for validation

@@ -726,14 +726,18 @@
                     <div class="card-body">
 
                       <div class="container">
-                        <div class="status-buttons">
-                          <button class="btn btn-primary1 btn-ponter" id="statusShow">Status</button>
-                          <button class="btn btn-primary1 mt-2" id="declareResult">Declare Result</button>
-                          <button class="btn btn-primary1 mt-2" id="matchResult">Match Result</button>
-                          <button class="btn btn-primary1 mt-2" id="playerRun" >Player Run</button>
-
-
+                        <div class="d-flex flex-column flex-sm-row justify-content-between">
+                          <div class="status-buttons">
+                            <button class="btn btn-primary1 btn-pointer" id="matchCancel">Match Cancel</button>
+                          </div>
+                          <div class="status-buttons ">
+                            <button class="btn btn-primary1 btn-pointer " id="statusShow">Status</button>
+                            <button class="btn btn-primary1 " id="declareResult" style="display: none;">Declare Result</button>
+                            <button class="btn btn-primary1 " id="matchResult" style="display: none;">Match Result</button>
+                            <button class="btn btn-primary1 " id="playerRun" style="display: none;">Player Run</button>
+                          </div>
                         </div>
+                        
                         <div class="table-wrapper mt-3">
                           <table class="table table-bordered text-center" >
                             <thead>

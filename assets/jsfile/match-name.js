@@ -455,14 +455,27 @@ function displayTableRows() {
 
 
   array.sort((a, b) => {
-    if (a.winning_status.toLowerCase() === "winner" && b.winning_status.toLowerCase() !== "winner") {
-      return -1; // Place winners first
-    } else if (a.winning_status.toLowerCase() !== "winner" && b.winning_status.toLowerCase() === "winner") {
-      return 1; // Place contestants later
-    } else {
-      return 0; // Maintain order if same status
+    // If both a and b are "winner" and have invest_amount, sort by invest_amount
+    if (a.winning_status.toLowerCase() === "winner" && b.winning_status.toLowerCase() === "winner") {
+      if (a.invest_amount && b.invest_amount) {
+        return b.invest_amount - a.invest_amount; // Sort by invest_amount in descending order
+      }
     }
+    
+    // If a is a "winner" and b is not, a should come first
+    if (a.winning_status.toLowerCase() === "winner" && b.winning_status.toLowerCase() !== "winner") {
+      return -1;
+    }
+    
+    // If b is a "winner" and a is not, b should come first
+    if (a.winning_status.toLowerCase() !== "winner" && b.winning_status.toLowerCase() === "winner") {
+      return 1;
+    }
+  
+    // If both are non-winners or no `invest_amount`, keep the original order
+    return 0;
   });
+  
   if (array.length === 0) {
    
     $("#noDataFound").show();
@@ -496,7 +509,9 @@ function displayTableRows() {
 
     var multiXCell = $("<td colspan='2'></td>").text(object.multi_x);
     var betAmountCell = $("<td colspan='2'></td>").text(object.multi_x * object.invest_amount);
-    var totalAmountCell = $("<td colspan='2'></td>").text(object.total_amount);
+    var totalAmountCell = $("<td colspan='2'></td>").text(
+      object.winning_status.toLowerCase() === "winner" ? object.total_amount : "--"
+    );
 
     // console.log(statusCell.text());
 

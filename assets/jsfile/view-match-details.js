@@ -19,11 +19,13 @@ import {checkAdminAccess}  from "../js/initial.js"
   let remainTiming = document.querySelector('#remainTiming')
   let statusShow = document.getElementById('statusShow')
   let declareResult = document.getElementById('declareResult')
+  let matchCancel = document.getElementById('matchCancel')
+
   let matchResult = document.getElementById('matchResult')
   let totalAmountData = document.getElementById('total-amount-data')
 let addingplayer1 = document.getElementById("addingplayer1")
 let addingplayer2 = document.getElementsByClassName("addingplayer2")
-
+let userMatchData3
 let userData
 let userMoney
 let matchStartDate
@@ -82,10 +84,17 @@ console.log(playerDataList,"player")
 
     // Filter user match data
     const userMatchData2 = userMatchList.filter((p) => p.match.id ? p.match.id === id : null);
-    const userMatchData3 = userMatchData2.filter((p) => p.user_data.status === "block");
+    userMatchData3 = userMatchData2.filter((p) => p.user_data.status === "unblock");
+console.log(userMatchData3,"okok1")
+    let userMatchData4 = userMatchData3.every((p)=> p.invest_amount === 0)
+    if(userMatchData4){
+     document.getElementById('declareResult').classList.add("disabled-row")
+     document.getElementById('matchCancel').classList.add("disabled-row")
 
+    }
     // If blocked data exists, call fetchData function
     if (userMatchData3) {
+      // updateInvestAmount(userMatchData3)
       fetchData(userMatchData3);
     }
 
@@ -96,7 +105,7 @@ console.log(playerDataList,"player")
     }
 
     // Edit player data
-    editPlayerData(playerDataList, urlpooltime);
+    editPlayerData(playerDataList, urlpooltime,playerDataList);
 
   } catch (error) {
     console.error('Error fetching player data:', error);
@@ -109,13 +118,14 @@ console.log(playerDataList,"player")
 
 
 
-  function editPlayerData(response,urlpooltime) {
+  function editPlayerData(response,urlpooltime,playerDataList) {
     console.log(urlpooltime,"urlpooldata")
     const teamLogo1 = document.getElementById("team-logo-1");
     const teamLogo2 = document.getElementById("team-logo-2");
     const teamLogoName1 = document.getElementById("team-logo-name-1");
     const teamLogoName2 = document.getElementById("team-logo-name-2");
-
+    const cancelMatch = playerDataList.match_end_status
+    
     if (response) {
       teamLogo1.src = `https://krinik.in${response.select_team_A.team_image}`;
       teamLogo2.src = `https://krinik.in${response.select_team_B.team_image}`;
@@ -145,7 +155,7 @@ console.log(playerDataList,"player")
    
       }
 
-
+statusShow.style.pointerEvents = "none"
       // Function to update the live countdown and status
       function updateCountdown() {
         // Get the current time
@@ -156,7 +166,14 @@ console.log(playerDataList,"player")
         let remainingTimeEnd = formattedMatchEndDate ? formattedMatchEndDate.diff(currentTime) : null;
 
         // Check the current status
-        if (remainingTimeStart > 0) {
+        if(cancelMatch == "canceled"){
+          remainTiming.textContent = "Canceled";
+          statusShow.textContent = "Canceled";
+          matchResult.style = "display:none";
+          declareResult.style = "display:none";
+          matchCancel.classList.add("disabled-row");
+        }
+        else if (remainingTimeStart > 0) {
           // Match hasn't started yet
           statusShow.textContent = "Upcoming";
           declareResult.style = "display:none";
@@ -186,6 +203,7 @@ console.log(playerDataList,"player")
           // document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
           // declareResult.style = "display:none"
           document.getElementById("matchResult").addEventListener("click", () => redirectToHistoryPage('match-name'));
+          document.getElementById("playerRun").addEventListener("click", () => redirectToHistoryPage('player-run'));
           
           // Stop the countdown as the match is completed
           clearInterval(countdownInterval);
@@ -225,8 +243,76 @@ console.log(playerDataList,"player")
     }
   }
 
+  // Function to update bonus_amount and reset invest_amount
+  async function updateInvestAmount(userMatchData3, matchId) {
+    console.log(userMatchData3, "okok");
+
+    // Data to update the match status
+    const updatedMatchStatus = {
+        match_end_status: "canceled"
+    };
+
+    try {
+        // Loop through user data and update bonus amounts
+        for (const item of userMatchData3) {
+            const updatedBonus = (item.invest_amount || 0) + (item.user_data.bonus_amount || 0); // Fallback to 0 if undefined
+            const updatedUserData = { bonus_amount: updatedBonus };
+
+            // PATCH request to update user's bonus_amount
+            const userResponse = await fetch(`https://krinik.in/user_get/${item.user_data.user_id}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedUserData),
+            });
+
+            const userData = await userResponse.json();
+
+            if (userData.status === 'success') {
+                console.log(`Successfully updated bonus_amount for user ID ${item.user_data.user_id}:`, userData);
+            } else {
+                console.error(`Failed to update bonus_amount for user ID ${item.user_data.user_id}:`, userData);
+            }
+        }
+
+        // Update match status to "canceled"
+        const matchResponse = await fetch(`https://krinik.in/match_get/${matchId}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedMatchStatus),
+        });
+
+        const matchData = await matchResponse.json();
+
+        if (matchData.status === 'success') {
+            console.log(`Successfully canceled the match:`, matchData);
+        } else {
+            console.error(`Failed to cancel the match:`, matchData);
+        }
+
+        // Fetch updated data after all updates
+        console.log("All updates completed. Fetching updated data...");
+       setTimeout(()=>{
+        fetchUserData();
+       },1000)
+
+    } catch (error) {
+        console.error("An error occurred during the update process:", error);
+    }
+}
+
+
+
+
+
+
   document.getElementById("declareResult").addEventListener("click", () => redirectToHistoryPage('declare-result'));
-  document.getElementById("playerRun").addEventListener("click", () => redirectToHistoryPage('player-run'));
+ 
+
+
 
   function displayTableRows(players, tbodyId) {
     $("#" + tbodyId).empty();
@@ -395,6 +481,7 @@ window.handleDisable = handleDisable
       disableplayersA = playerDataList.disable_player_A;
       disableplayersB = playerDataList.disable_player_B
 
+//    
 
       await fetchPlayer(teamA, playersA, disableplayersA, 'playerCheckboxesA', leagueNameData); // Fetch players for Team A
       await fetchPlayer(teamB, playersB, disableplayersB, 'playerCheckboxesB', leagueNameData);
@@ -425,8 +512,8 @@ window.handleDisable = handleDisable
     
         return acc;
     }, {});
-
     array = Object.values(result); 
+    console.log(array,"usermoney")
        
         if (array.length) {
 
@@ -794,6 +881,13 @@ async function saveSelectedPlayersB() {
   document.getElementById("saveSelectedPlayersBtnA").addEventListener("click", saveSelectedPlayersA);
   document.getElementById("saveSelectedPlayersBtnB").addEventListener("click", saveSelectedPlayersB);
 
+  document.getElementById("matchCancel").addEventListener("click", async () => {
+    if (userMatchData3 && confirm("Are you sure you want to cancel the match?")) {
+        await updateInvestAmount(userMatchData3,id);
+    } else {
+        console.error("Error: userMatchData3 is not defined or empty.");
+    }
+});
 
   window.onload = checkAdminAccess();
 

@@ -3,7 +3,7 @@ import {getAdminType,sendNotification,showDynamicAlert}  from "../js/initial.js"
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
-  const userUnlockText = document.getElementById("user-unlock-text");
+  // const userUnlockText = document.getElementById("user-unlock-text");
 let userScratchData
   console.log(id);
   const adminInfo = getAdminType();
@@ -14,7 +14,9 @@ const giftBonusForm = document.getElementById('gift-bonus-form');
 const giftBonusModal = document.getElementById('giftBonusModal');
 const walletAmount = document.getElementById("wallet-amount");
 const bonusAmount = document.getElementById("bonus-amount");
+let userUnlockText = document.getElementById("user-unlock-text");
 
+let statusUpdated 
   async function fetchUserData() {
     try {
       if (!id) {
@@ -34,11 +36,14 @@ const bonusAmount = document.getElementById("bonus-amount");
 
       const userData1 = await response.json();
       const userData = userData1.data;
+      statusUpdated = userData.status
       userScratchData = userData.scrach_list.map(p=>p.value.id);
 
       // const userData5 = userData.user_id;
+      const newState1 = statusUpdated === "block" ? "unblock" : "block";
+      userUnlockText.textContent = toCapitalizeCase(newState1);
 
-      console.log(userScratchData, "id che nathi");
+      console.log(statusUpdated, "id che nathi");
       editPlayerData(userData);
       // const newAmounts = await addAmount(userData5);
       //  console.log(newAmounts ,"id che")
@@ -72,20 +77,18 @@ const bonusAmount = document.getElementById("bonus-amount");
     }
   }
   async function lock() {
-    const userUnlockText = document.getElementById("user-unlock-text");
-
+  
     if (!userUnlockText) {
       console.error("Element with ID user-unlock-text not found");
       return;
     }
+  
+    // Toggle the user status
+    const newState = statusUpdated === "block" ? "unblock" : "block";
+    const newState1 = newState === "block" ? "unblock" : "block";
+  console.log(newState,"newstate")
+  console.log(newState1,"newstate1")
 
-    const currentState = userUnlockText.textContent.toLowerCase();
-    const newState = currentState === "block" ? "unblock" : "block";
-
-    // Update the text content
-    userUnlockText.textContent = toCapitalizeCase(newState);
-
-    // Send PATCH request to update the state on the server
     try {
       const url = `https://krinik.in/user_get/${id}/`; // Updated URL
       const response = await fetch(url, {
@@ -95,29 +98,33 @@ const bonusAmount = document.getElementById("bonus-amount");
         },
         body: JSON.stringify({ status: newState }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to update user status");
       }
-
-      console.log(`User status updated to: ${newState}`);
-      const notificationMessage = newState === "block" 
-      ? "You have been unblocked and can now access your account."
-      : "You have been blocked from accessing your account." ;
-      // let toCapitalizeCurrentStata = toCapitalizeCase() 
-
-        // Send the notification with dynamic message
-        showDynamicAlert(`User ${toCapitalizeCase(currentState)} Successfully `)
-        await sendNotification(id, {
-            title: `${toCapitalizeCase(currentState)} Alert!`,
-            body: notificationMessage
-        });
+  
+      userUnlockText.textContent = toCapitalizeCase(newState1);
+      console.log(`User status updated to: ${newState1}`);
+  
+      const notificationMessage = newState === "block"
+      ? "You have been blocked from accessing your account."
+        : "You have been unblocked and can now access your account."
+  
+      showDynamicAlert(`User ${toCapitalizeCase(newState)} Successfully `);
+  
+      // Send notification to the user
+      await sendNotification(id, {
+        title: `${toCapitalizeCase(newState)} Alert!`,
+        body: notificationMessage
+      });
+  
       // Refresh user data to reflect changes
-      fetchUserData();
+      await fetchUserData();
     } catch (error) {
       console.error("Error updating user status:", error);
     }
   }
+  
 
   async function assignRandomCouponToUser(userId) {
     if(confirm("Are you sure to gift coupon to user?")){
@@ -237,7 +244,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
     const regTime = document.getElementById("reg-time");
    
     const referAmount = document.getElementById("refer-amount");
-    const userUnlock = document.getElementById("user-unlock-text");
+    // const userUnlock = document.getElementById("user-unlock-text");
     const userDelete = document.getElementById("user-delete");
     const userTransactionHistory = document.getElementById(
       "user-transaction-history"
@@ -248,7 +255,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
 
     const userGameHistory = document.getElementById("user-game-history");
     const userWithdraw = document.getElementById("user-withdraw");
-    let mainId
+    // let mainId
 
     if (response) {
       // Update image source
@@ -262,10 +269,9 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
       walletAmount.textContent = response.wallet_amount;
       bonusAmount.textContent = response.bonus_amount;
       referAmount.textContent = response.referral_amount;
-      userUnlock.textContent = toCapitalizeCase(response.status);
 
       // Update button states based on userUnlock text
-      if (userUnlock.textContent === "Unblock") {
+      if (userUnlockText.textContent === "Unblock") {
         disableButton(userDelete);
         disableButton(userTransactionHistory);
         // disableButton(userDeduction);
@@ -274,7 +280,7 @@ async function patchData( walletAmountValue,bonusAddAmount ) {
 
         disableButton(userGameHistory);
         disableButton(userWithdraw);
-      } else if (userUnlock.textContent === "Block") {
+      } else if (userUnlockText.textContent === "Block") {
         enableButton(userDelete);
         enableButton(userScratch);
         enableButton(userTransactionHistory);
