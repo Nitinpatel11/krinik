@@ -677,8 +677,11 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
         
         // Step 6: Allocate the prize to each player based on their share
         for (const match of groupMatches) {
-          totalInvestedMoney = Math.round((match.price * match.multiX)/groupMatchesLength);
-    
+          if (groupMatchesLength > 1) {
+            totalInvestedMoney = Math.round((match.price * match.multiX) / 2);
+          } else {
+            totalInvestedMoney = Math.round(match.price * match.multiX);
+          }
           let currentWinningAmount;
   
             try {
