@@ -203,10 +203,10 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
       setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN);
       redirectToPage("dashboard.html");
     } else {
-      otpModal.show();
+      // otpModal.show();
       
       // setsessionStorage(COOKIE_NAME, email, null, STATUS_ADMIN1);
-      // setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
+      setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
     }
   } catch (error) {
     console.error("Error during login:", error);
