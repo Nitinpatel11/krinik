@@ -207,6 +207,8 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
       
       // setsessionStorage(COOKIE_NAME, email, null, STATUS_ADMIN1);
       setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
+      redirectToPage("dashboard.html");
+
     }
   } catch (error) {
     console.error("Error during login:", error);
