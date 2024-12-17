@@ -355,7 +355,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
     return { dataToPost, userplayerdata };
   };  
   
-  const postAndUpdateRuns = (dataToPost) => {
+  const postAndUpdateRuns = async (dataToPost) => {
     dataToPost.forEach((data) => {
       // POST request to submit the run data to the pool_declare endpoint
       fetch('https://krinik.in/pool_declare/', {
@@ -622,6 +622,7 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
  
 
   const allocateMoneyToWinners = async (matchScores, totalMoney) => {
+
     try {
       // Step 1: Group matches by pool, type, price, and multiX
       const MoneyPay = matchScores.reduce((acc, match) => {
@@ -888,11 +889,18 @@ function hideLoader() {
   
       const userMatchData = await response.json(); // Assume it returns an array of matches
      
+      // let user_match_data1 = [];
+      // if (userMatchData && Array.isArray(userMatchData.data)) {
+      //  let user_match_data2 = userMatchData.data.filter((match) => match.match.id === NumberId);
+      //   user_match_data1 = user_match_data2.filter((p)=> p.user_data.status == "unblock")
+      // }
       let user_match_data1 = [];
-      if (userMatchData && Array.isArray(userMatchData.data)) {
-       let user_match_data2 = userMatchData.data.filter((match) => match.match.id === NumberId);
-        user_match_data1 = user_match_data2.filter((p)=> p.user_data.status == "block")
-      }
+
+if (userMatchData?.data?.length) {
+  user_match_data1 = userMatchData.data.filter(
+    (match) => match.match.id === NumberId && match.user_data.status === "unblock"
+  );
+}
   
       // Step 5: Update match scores
       if (user_match_data1) {
@@ -938,29 +946,29 @@ function hideLoader() {
   
   window.onload = checkAdminAccess();
   $(document).ready(function() {
-    // $("#submitButton").on("click", function(e) {
-    //   e.preventDefault();
-
-    //   // Check if all input fields are filled
-    //   var allFilled = true;
-  
-    //   $(".run-input").each(function() {
-    //     if ($(this).val().trim() === "") {
-    //       allFilled = false;
-    //       return false; // Exit the loop early if a field is empty
-    //     }
-    //   });
-  
-    //   if (!allFilled) {
-    //     alert("Please fill in all the run inputs before submitting.");
-    //     return; // Do not proceed with the submission
-    //   }
-    //   // postRunData(); // Call the function to post data
-    //   postData()
-    // });
     
-
     handleSubmitButton("#submitButton", ".run-input", postData);
   });
+  
+  // $("#submitButton").on("click", function(e) {
+  //   e.preventDefault();
+
+  //   // Check if all input fields are filled
+  //   var allFilled = true;
+
+  //   $(".run-input").each(function() {
+  //     if ($(this).val().trim() === "") {
+  //       allFilled = false;
+  //       return false; // Exit the loop early if a field is empty
+  //     }
+  //   });
+
+  //   if (!allFilled) {
+  //     alert("Please fill in all the run inputs before submitting.");
+  //     return; // Do not proceed with the submission
+  //   }
+  //   // postRunData(); // Call the function to post data
+  //   postData()
+  // });
   
   
