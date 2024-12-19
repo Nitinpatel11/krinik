@@ -415,9 +415,9 @@ function getsessionStorage(key) {
       // );
       var statusCell = $("<td colspan='2'></td>");
       if(statushow === "Block"){
-        statusCell.text("Unblock")
-      }else if (statushow === "Unblock"){
         statusCell.text("Block")
+      }else if (statushow === "Unblock"){
+        statusCell.text("Unblock")
       }
       var viewCell = $("<td class='otp-exempt' style='border:none'></td>").html(
         '<span class="sortable" onclick="handleView(\'' + showdata['user_id'] + '\')"><i class="far fa-eye"></i></span>'

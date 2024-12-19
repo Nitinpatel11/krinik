@@ -443,16 +443,16 @@
                         <button class="btn btn-outline-dark m-1" id="user-unlock">
                           <span id="user-unlock-text" ></span>
                         </button>
-                        <button class="btn btn-outline-dark m-1" id="user-delete">Delete</button>
-                        <button class="btn btn-outline-dark m-1 otp-exempt" style="display:none" id="user-transaction-history" >Transaction History</button>
+                        <button class="btn btn-outline-dark m-1" style="display:none" id="user-delete">Delete</button>
+                        <button class="btn btn-outline-dark m-1 otp-exempt"  id="user-transaction-history" >Transaction History</button>
                       </div>
                     
                       <div class="d-flex flex-wrap flex-column flex-md-row justify-content-center gap-3">
                         <!-- <button class="btn btn-outline-dark m-1" id="user-deduction" data-toggle="modal" data-target="#deductAmountModal">Deduction</button> -->
                         <button class="btn btn-outline-dark m-1 otp-exempt"  style="display:none" id="user-add-amount" data-bs-toggle="modal" data-bs-target="#giftBonusModal">Add Amount</button>
                         <button class="btn btn-outline-dark m-1 otp-exempt" style="display:none" id="user-scratch-gift">Scratch Gift</button>
-                        <button class="btn btn-outline-dark m-1 otp-exempt" style="display:none" id="user-game-history">Game History</button>
-                        <button class="btn btn-outline-dark m-1 otp-exempt" style="display:none" id="user-withdraw" >Withdraw History</button>
+                        <button class="btn btn-outline-dark m-1 otp-exempt"  id="user-game-history">Game History</button>
+                        <button class="btn btn-outline-dark m-1 otp-exempt"  id="user-withdraw" >Withdraw History</button>
                       </div>
 
                       <!-- Add Amount Modal -->
@@ -577,6 +577,8 @@
                       <div class="details d-flex justify-content-between w-100 text-center mt-5">
                         <div class="item border rounded p-2 flex-fill m-1 border-black h-100"><p id="wallet-amount" class="para-bottom"></p> <span>Wallet Amount</span>
                         </div>
+                        <!-- <div class="item border rounded p-2 flex-fill m-1 border-black h-100"><p id="deposit-amount" class="para-bottom"></p> <span>deposit Amount</span>
+                        </div> -->
                         <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="bonus-amount" class="para-bottom"></p> <span>Bonus Amount</span>
                         </div>
                         <div class="item border rounded p-2 flex-fill m-1 h-100 border-black"><p id="refer-amount" class="para-bottom"></p> <span>Refer Amount</span>
