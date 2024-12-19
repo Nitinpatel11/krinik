@@ -4643,3 +4643,7 @@ width: auto !important;
 .swal2-container {
   z-index: 5000 !important; /* Forces higher precedence */
 }
+.fontSizebig{
+  font-size: 18px !important;
+  font-weight: 600;
+}

@@ -80,8 +80,11 @@ function validateInput(inputId, errorId, regex, emptyMessage, invalidMessage) {
 adminTypeInput.addEventListener("change", () => {
   if (adminTypeInput.value === "super admin") {
     document.getElementById("LoginOTP").textContent = "Login";
+    document.getElementById("forget-div").style = "display:none";    
+
   } else {
     document.getElementById("LoginOTP").textContent = "Get OTP";
+    document.getElementById("forget-div").style = "display:block";
   }
 });
 
@@ -203,11 +206,11 @@ const matchingAdminType = loginData.find(user => user.admin_type == adminType &&
       setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN);
       redirectToPage("dashboard.html");
     } else {
-      // otpModal.show();
+      otpModal.show();
       
       // setsessionStorage(COOKIE_NAME, email, null, STATUS_ADMIN1);
-      setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
-      redirectToPage("dashboard.html");
+      // setsessionStorage(ADMIN_TYPE_COOKIE_NAME, adminType, STATUS_ADMIN1);
+      // redirectToPage("dashboard.html");
 
     }
   } catch (error) {

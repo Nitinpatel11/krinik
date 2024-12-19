@@ -639,45 +639,224 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
     
   
       // Step 2: Identify identical player groups, including price, pool_name, and pool_type
+      // let identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
+      //   const matches = MoneyPay[poolKey];
+  
+      //   matches.forEach(match => {
+      //     const matchPlayersDetails = match.players_details;
+  
+      //     // Create a unique identifier for player details (sorted list of playerIds)
+      //     const sortedPlayerIds = matchPlayersDetails
+      //       .map(player => player.playerId)
+      //       .sort()
+      //       .join("-"); // Create a sorted string of player IDs
+  
+      //     const groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}`; // Include additional properties in the unique identifier
+  
+      //     if (!acc[groupKey]) {
+      //       acc[groupKey] = [];
+      //     }
+      //     acc[groupKey].push(match);
+      
+      //   });
+      //   return acc;
+
+
+      // }, {});
+
+      // let identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
+      //   const matches = MoneyPay[poolKey];
+      
+      //   matches.forEach(match => {
+      //     const matchPlayersDetails = match.players_details;
+      
+      //     // Create a unique identifier for player details (sorted list of playerIds)
+      //     const sortedPlayerIds = matchPlayersDetails
+      //       .map(player => player.playerId)
+      //       .sort()
+      //       .join("-"); // Create a sorted string of player IDs
+      
+      //     // Identify captain and vice-captain
+      //     const captains = matchPlayersDetails
+      //       .filter(player => player.isCaptain)
+      //       .map(player => player.playerId)
+      //       .join("-");
+      //     const viceCaptains = matchPlayersDetails
+      //       .filter(player => player.isViceCaptain)
+      //       .map(player => player.playerId)
+      //       .join("-");
+      
+      //     // Build the groupKey based on pool type
+      //     let groupKey;
+      //     if (match.pool_type === "Gold") {
+      //       groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}-${captains}`;
+      //     } else if (match.pool_type === "Platinum") {
+      //       groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}-${captains}-${viceCaptains}`;
+      //     } else {
+      //       groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}`;
+      //     }
+      
+      //     // Group matches by the groupKey
+      //     if (!acc[groupKey]) {
+      //       acc[groupKey] = [];
+      //     }
+      //     acc[groupKey].push(match);
+      //   });
+      
+      //   return acc;
+      // }, {});
+      
       let identicalPlayerGroups = Object.keys(MoneyPay).reduce((acc, poolKey) => {
         const matches = MoneyPay[poolKey];
-  
+    
         matches.forEach(match => {
-          const matchPlayersDetails = match.players_details;
-  
-          // Create a unique identifier for player details (sorted list of playerIds)
-          const sortedPlayerIds = matchPlayersDetails
-            .map(player => player.playerId)
-            .sort()
-            .join("-"); // Create a sorted string of player IDs
-  
-          const groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}`; // Include additional properties in the unique identifier
-  
-          if (!acc[groupKey]) {
-            acc[groupKey] = [];
-          }
-          acc[groupKey].push(match);
-      
+            const matchPlayersDetails = match.players_details;
+    
+            // Separate players into captains, vice-captains, and others
+            const captains = matchPlayersDetails
+                .filter(player => player.isCaptain)
+                .map(player => player.playerId)
+                .sort(); // Sort captain IDs
+            const viceCaptains = matchPlayersDetails
+                .filter(player => player.isViceCaptain)
+                .map(player => player.playerId)
+                .sort(); // Sort vice-captain IDs
+            const otherPlayers = matchPlayersDetails
+                .filter(player => !player.isCaptain && !player.isViceCaptain)
+                .map(player => player.playerId)
+                .sort(); // Sort other player IDs
+    
+            // Combine sorted arrays into a single sorted list for uniqueness
+            const sortedPlayerIds = [...captains, ...viceCaptains, ...otherPlayers].join("-");
+    
+            // Build the groupKey based on pool type
+            let groupKey;
+            if (match.pool_type === "Gold") {
+                groupKey = `${match.pool_name}-${match.pool_type}-${captains.join("-")}`;
+            } else if (match.pool_type === "Platinum") {
+                groupKey = `${match.pool_name}-${match.pool_type}-${captains.join("-")}-${viceCaptains.join("-")}`;
+            } else {
+                groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}`;
+            }
+    
+            // Group matches by the groupKey
+            if (!acc[groupKey]) {
+                acc[groupKey] = [];
+            }
+            acc[groupKey].push(match);
         });
+    
         return acc;
+    }, {});
+    
+      
 
+        console.log(identicalPlayerGroups,"Identical player")
 
-      }, {});
+        const separatedPools = {
+          Gold: [],
+          Platinum: [],
+          Silver: [],
+          // Other: [] // Add other pool types as needed
+      };
+      
+      // Step 1: Separate matches by pool type
+      Object.values(identicalPlayerGroups).forEach(group => {
+          group.forEach(match => {
+              const poolType = match.pool_type;
+      
+              // Add the match to the appropriate pool type
+              if (poolType === "Gold") {
+                  separatedPools.Gold.push(match);
+              } else if (poolType === "Platinum") {
+                  separatedPools.Platinum.push(match);
+              } else if (poolType === "Silver") {
+                  separatedPools.Silver.push(match);
+              } else {
+                  separatedPools.Other.push(match);
+              }
+          });
+      });
+      
+      // Step 2: Function to group matches by identical groups
+      function groupMatchesByIdenticalPlayers(matches) {
+          return matches.reduce((acc, match) => {
+              const matchPlayersDetails = match.players_details;
+      
+              // Separate players into captains, vice-captains, and others
+              const captains = matchPlayersDetails
+                  .filter(player => player.isCaptain)
+                  .map(player => player.playerId)
+                  .sort(); // Sort captain IDs
+              const viceCaptains = matchPlayersDetails
+                  .filter(player => player.isViceCaptain)
+                  .map(player => player.playerId)
+                  .sort(); // Sort vice-captain IDs
+              const otherPlayers = matchPlayersDetails
+                  .filter(player => !player.isCaptain && !player.isViceCaptain)
+                  .map(player => player.playerId)
+                  .sort(); // Sort other player IDs
+      
+              // Combine sorted arrays into a single sorted list for uniqueness
+              const sortedPlayerIds = [...captains, ...viceCaptains, ...otherPlayers].join("-");
+      
+              // Build the groupKey based on pool type
+              let groupKey;
+              if (match.pool_type === "Gold") {
+                  groupKey = `${match.pool_name}-${match.pool_type}-${captains.join("-")}`;
+              } else if (match.pool_type === "Platinum") {
+                  groupKey = `${match.pool_name}-${match.pool_type}-${captains.join("-")}-${viceCaptains.join("-")}`;
+              } else {
+                  groupKey = `${sortedPlayerIds}-${match.pool_name}-${match.pool_type}`;
+              }
+      
+              // Group matches by the groupKey
+              if (!acc[groupKey]) {
+                  acc[groupKey] = [];
+              }
+              acc[groupKey].push(match);
+      
+              return acc;
+          }, {});
+      }
+      
+      // Step 3: Apply grouping within each pool type
+      const finalSeparatedPools = {
+          Gold: groupMatchesByIdenticalPlayers(separatedPools.Gold),
+          Platinum: groupMatchesByIdenticalPlayers(separatedPools.Platinum),
+          Silver: groupMatchesByIdenticalPlayers(separatedPools.Silver),
+          // Other: groupMatchesByIdenticalPlayers(separatedPools.Other)
+      };
+      
+      console.log(finalSeparatedPools,"final separated");
+      
+        
+        // Step 2: Declare and process prize money based on pool groups
+        const matchMoneyDeclare = Object.keys(finalSeparatedPools).map(async (poolType) => {
+          const poolGroups = finalSeparatedPools[poolType]; // Get the groups for the pool type
+      console.log(poolGroups,"poolGroups")
+      const groupMatches1 = Object.keys(poolGroups); // Matches in the current group
+      console.log(groupMatches1,"groupMatches1")
+         // Matches in the current group
+        const groupMatchesLength = groupMatches1.length;
+        console.log(groupMatchesLength, "Group length for pool:", poolType);
+          // Loop through each identical group in the pool
+          let groupMatches = Object.values(poolGroups);
 
-  
-      // Step 3: Process each identical group
-      const matchMoneyDeclare = Object.keys(identicalPlayerGroups).map(async (playerKey) => {
-        const groupMatches = identicalPlayerGroups[playerKey];
-        // const finalPrizePerGroup = groupMatches[0].price * groupMatches[0].multiX;
-        let groupMatchesLength = Object.keys(identicalPlayerGroups).length
-   
-  
+          // console.log(groupKeys,"groupkeys")
+          // for (const groupKey of groupKeys) {
+          //   const groupMatches = poolGroups[groupKey];
+            console.log(groupMatches,"groupMatches1")
+
+          
+      
           
           
           let totalInvestedMoney;
         
         // Step 6: Allocate the prize to each player based on their share
         for (const match of groupMatches) {
+          console.log(match,"match")
           if (groupMatchesLength > 1) {
             totalInvestedMoney = Math.round((match.price * match.multiX) / 2);
           } else {
@@ -748,7 +927,9 @@ import {checkAdminAccess,sendNotification,showDynamicAlert}  from "../js/initial
         }
 
         totalMoney -= totalInvestedMoney;
+      // }
       });
+  
   
       // Wait for all prize allocations to complete
       await Promise.all(matchMoneyDeclare);
@@ -926,7 +1107,7 @@ if (userMatchData?.data?.length) {
                    body: "The results are out! Check the app to see if you’re a winner!"
                });
                  // window.location.href = "./match-name.html"
-                 window.location.href = `match-name.html?id=${id}`
+                //  window.location.href = `match-name.html?id=${id}`
               }
             }
           }

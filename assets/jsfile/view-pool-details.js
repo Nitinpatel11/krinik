@@ -169,9 +169,9 @@ function fetchData(filteredData, poolType, poolName) {
       });
 
     console.log(result1, "Filtered and Processed Result");
-
+      rankList = result1
     // Converting result1 to an array (no need to use a Set here)
-     array = result1;
+     array = rankList;
 
     console.log(array, "Array");
 
@@ -196,7 +196,7 @@ fetchUserData();
 
   function filterAndDisplay() {
     
-    // filterRankList();
+    filterRankList();
     preLoadCalculations();
     displayIndexButtons();
     displayTableRows();
@@ -208,6 +208,74 @@ fetchUserData();
     max_index = Math.ceil(array_length / table_size);
   }
 
+  $('#tab_filter_text').on('input', function () {
+    filterRankList();
+    });
+   
+    
+    function filterRankList() {
+      var tab_filter_text = $("#tab_filter_text").val().toLowerCase().trim();
+    console.log('Search Text:', tab_filter_text);
+    // var datefilter = $('#rangePicker').text().trim();
+    // const statusFilter = $("#selectedStatus").data('value') || ''; 
+    //   var startDate, endDate;
+    //   var startAmount = parseFloat($('#startAmountRange').val().trim()) || 0;
+    // var endAmount = parseFloat($('#endAmountRange').val().trim()) || Infinity;
+    
+    // if (datefilter !== '' && datefilter !== 'Start & End Date') {
+    //   var dates = datefilter.split(' - ');
+    //   startDate = moment(dates[0], 'D-M-YYYY').startOf('day').toDate();
+    //   endDate = moment(dates[1], 'D-M-YYYY').endOf('day').toDate();
+    //   // console.log('Parsed Start Date:', startDate);
+    //   // console.log('Parsed End Date:', endDate);
+    // }
+    
+    
+      var filteredArray = rankList.filter(function (object) {
+        var matchesText = true;
+    
+        if (tab_filter_text !== '') {
+          matchesText = (object.playerDetails && object.playerDetails.toString().toLowerCase().includes(tab_filter_text)) 
+        }
+    
+    //     if (statusFilter !== 'All Status') {
+    //   const status = object.payment_status  .toLowerCase()
+    //   console.log(status)
+    //   matchesStatus = (status === statusFilter);
+    //   // console.log(matchesStatus ,"okli")
+    // }
+    
+    
+    
+    
+        // if (startDate && endDate) {
+        //   matchesDate = (moment(object.start_league_date, 'DD/MM/YYYY').toDate() >= startDate &&
+        //     moment(object.end_league_date, 'DD/MM/YYYY').toDate() <= endDate);
+        // }
+      //   if (startDate && endDate) {
+      //   const objectDate = moment(object.timestamp, 'YYYY-MM-DD HH:mm:ss').toDate();
+      //   matchesDate = (objectDate >= startDate && objectDate <= endDate);
+      //   // console.log('Object Date:', objectDate, 'Matches Date:', matchesDate);
+      // }
+    
+      // Filter based on amount range
+      // if (!isNaN(object.paid_amount)) {
+      //   const amount = parseFloat(object.paid_amount);
+      //   matchesAmount = (amount >= startAmount && amount <= endAmount);
+      //   console.log('Object Amount:', amount, 'Matches Amount:', matchesAmount);
+      // }
+    
+    
+      return matchesText ;
+      });
+    
+      array = filteredArray;
+      preLoadCalculations();
+      current_index = 1;
+      displayIndexButtons();
+      highlightIndexButton()
+      displayTableRows();
+    }
 
   function displayIndexButtons() {
   $(".index_buttons ul").empty();
